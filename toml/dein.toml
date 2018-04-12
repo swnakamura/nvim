@@ -1,0 +1,91 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+hook_post_update = '''
+  let cmd = 'make'
+  let g:dein#plugin.build = cmd
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'Shougo/vimfiler'
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+[[plugins]]
+repo = 'kana/vim-smartinput'
+
+
+[[plugins]]
+repo = 'hynek/vim-python-pep8-indent'
+[[plugins]]
+repo = 'plytophogy/vim-virtualenv'
+[[plugins]]
+repo = 'osyo-manga/shabadou.vim'
+[[plugins]] # カラースキーマ
+repo = 'w0ng/vim-hybrid'
+
+[[plugins]]
+repo = 'kana/vim-operator-user'
+[[plugins]]
+repo = 'rhysd/vim-operator-surround'
+
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+[[plugins]]
+repo = 'kana/vim-textobj-syntax'
+[[plugins]]
+repo = 'thinca/vim-textobj-between'
+[[plugins]]
+repo = 'osyo-manga/vim-textobj-multiblock'
+[[plugins]]
+repo = 'thinca/vim-textobj-between'
+[[plugins]]
+repo = 'bps/vim-textobj-python'
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+
+hook_source = '''
+let g:airline_theme='hybrid'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_section_z = airline#section#create(['windowswap', '%3p%% ', 'linenr', ':%3v'])
+" virtulenvを認識しているか確認用に、現在activateされているvirtualenvを表示(vim-virtualenvの拡張)
+let g:airline#extensions#virtualenv#enabled = 1
+" Powerline系フォントを利用する
+let g:airline_powerline_fonts = 1
+
+" タブバーのカスタマイズを有効にする
+let g:airline#extensions#tabline#enabled = 1
+
+" タブバーの右領域を非表示にする
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#show_close_button = 0
+'''
+
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes'
+
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+hook_post_source='''
+let NERDTreeShowHidden = 1
+'''
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+hook_post_source='''
+IndentLinesEnable
+'''
+
+[[plugins]]
+repo = 'scrooloose/nerdcommenter'
+hook_post_source='''
+let g:NERDSpaceDelims=1
+let g:NERDDefaultAlign='left'
+'''
