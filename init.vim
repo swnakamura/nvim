@@ -6,7 +6,13 @@ if !isdirectory(s:dein_repo_dir)
   call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
 endif
 let &runtimepath = s:dein_repo_dir .",". &runtimepath
-let g:python3_host_prog = expand('~/.virtualenvs/nvim/bin/python3')
+if exists("$VIRTUAL_ENV")
+  if !empty(glob("$VIRTUAL_ENV/bin/python3"))
+    let g:python3_host_prog = substitute(system("which python"), '\n', '', 'g')
+  else
+    let g:python_host_prog = substitute(system("which python"), '\n', '', 'g')
+  endif
+endif
 
 if &compatible
   set nocompatible
@@ -96,8 +102,7 @@ let g:python_highlight_all = 1
 "let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
 syntax enable
 autocmd ColorScheme * highlight LineNr guifg=#b5bd68
-colorscheme hybrid
-set background=dark
+colorscheme alduin
 
 "key mapping
 inoremap <silent> <C-j> <ESC>
@@ -156,6 +161,7 @@ noremap <Space>e :cd %:h<CR>:e .<CR>
 nnoremap <Space>ap :Autopep8<CR>
 nnoremap rp :QuickRun<Space>python<Space>-outputter/buffer/split<Space>":botright"<Space>-outputter/buffer/close_on_empty<Space>1<Space>-hook/time/enable<Space>1<CR>
 nnoremap rc :QuickRun<Space>cpp/g++<Space>-outputter/buffer/split<Space>":botright"<Space>-outputter/buffer/close_on_empty<Space>1<Space>-hook/time/enable<Space>1<Space>-cmdopt<Space>'-std=c++11'<CR>
+nmap rl stszilatexmk<CR>
 nmap <Space>m <Plug>(quickhl-manual-this)
 xmap <Space>m <Plug>(quickhl-manual-this)
 nmap <Space>M <Plug>(quickhl-manual-reset)

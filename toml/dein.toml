@@ -25,8 +25,9 @@ repo = 'hynek/vim-python-pep8-indent'
 repo = 'plytophogy/vim-virtualenv'
 [[plugins]]
 repo = 'osyo-manga/shabadou.vim'
-[[plugins]] # カラースキーマ
-repo = 'w0ng/vim-hybrid'
+
+[[plugins]]
+repo = 'flazz/vim-colorschemes'
 
 [[plugins]]
 repo = 'kana/vim-operator-user'
@@ -49,7 +50,6 @@ repo = 'bps/vim-textobj-python'
 repo = 'vim-airline/vim-airline'
 
 hook_source = '''
-let g:airline_theme='hybrid'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_section_z = airline#section#create(['windowswap', '%3p%% ', 'linenr', ':%3v'])
 " virtulenvを認識しているか確認用に、現在activateされているvirtualenvを表示(vim-virtualenvの拡張)
@@ -68,6 +68,9 @@ let g:airline#extensions#tabline#show_close_button = 0
 
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
+hook_post_source = '''
+let g:airline_theme='alduin'
+'''
 
 [[plugins]]
 repo = 'scrooloose/nerdtree'
