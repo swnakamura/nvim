@@ -90,7 +90,7 @@ augroup fileTypeIndent
 augroup END
 
 set clipboard=unnamed
-
+set foldmethod=indent
 set backspace=eol,indent,start
 
 set wildmenu
@@ -106,10 +106,14 @@ colorscheme alduin
 
 "key mapping
 inoremap <silent> <C-j> <ESC>
-noremap <Space>h  ^
-noremap <Space>l  $
-noremap <Space>k gg
-noremap <Space>j G
+let mapleader = "\<Space>"
+vnoremap <silent> y y`]
+vnoremap <silent> p p`]
+nnoremap <silent> p p`]
+noremap <leader>h  ^
+noremap <leader>l  $
+noremap <leader>k gg
+noremap <leader>j G
 noremap t /
 noremap / t
 nnoremap ss :split<CR>
@@ -136,7 +140,6 @@ nnoremap so <C-w>_<C-w>|
 nnoremap sO <C-w>=
 nnoremap x "_x
 nnoremap D "_D
-nnoremap <Space>t gt
 noremap j gj
 noremap k gk
 nnoremap gg ggzz
@@ -147,29 +150,29 @@ nnoremap <Tab> %
 vnoremap <Tab> %
 nnoremap + <C-a>
 nnoremap - <C-x>
-nnoremap <silent> <Space>w :<C-u>update<CR>
-nnoremap <silent> <Space>q :<C-u>q<CR>
+nnoremap <silent> <leader>w :<C-u>update<CR>
+nnoremap <silent> <leader>q :<C-u>q<CR>
 "Denite vim
-nnoremap <silent> <Space>uc   :<C-u>Denite file_mru<CR>
-nnoremap <silent> <Space>ub   :<C-u>Denite buffer<CR>
-nnoremap <silent> <Space>uy   :<C-u>Denite neoyank<CR>
-nnoremap <silent> <Space>ur :<C-u>Denite file_rec<CR>
+nnoremap <silent> <leader>uc   :<C-u>Denite file_mru<CR>
+nnoremap <silent> <leader>ub   :<C-u>Denite buffer<CR>
+nnoremap <silent> <leader>uy   :<C-u>Denite neoyank<CR>
+nnoremap <silent> <leader>ur :<C-u>Denite file_rec<CR>
 
 "other plugins
-noremap <Space>n :NERDTree .<CR>
-noremap <Space>e :cd %:h<CR>:e .<CR>
-nnoremap <Space>ap :Autopep8<CR>
+noremap <leader>n :NERDTree .<CR>
+noremap <leader>e :cd %:h<CR>:e .<CR>
+nnoremap <leader>ap :Autopep8<CR>
 nnoremap rp :QuickRun<Space>python<Space>-outputter/buffer/split<Space>":botright"<Space>-outputter/buffer/close_on_empty<Space>1<Space>-hook/time/enable<Space>1<CR>
 nnoremap rc :QuickRun<Space>cpp/g++<Space>-outputter/buffer/split<Space>":botright"<Space>-outputter/buffer/close_on_empty<Space>1<Space>-hook/time/enable<Space>1<Space>-cmdopt<Space>'-std=c++11'<CR>
 nmap rl stszilatexmk<CR>
-nmap <Space>m <Plug>(quickhl-manual-this)
-xmap <Space>m <Plug>(quickhl-manual-this)
-nmap <Space>M <Plug>(quickhl-manual-reset)
-xmap <Space>M <Plug>(quickhl-manual-reset)
+nmap <leader>m <Plug>(quickhl-manual-this)
+xmap <leader>m <Plug>(quickhl-manual-this)
+nmap <leader>M <Plug>(quickhl-manual-reset)
+xmap <leader>M <Plug>(quickhl-manual-reset)
 
 " カーソル下のURLや単語をブラウザで開く
-nmap <Space>b <Plug>(openbrowser-smart-search)
-vmap <Space>b <Plug>(openbrowser-smart-search)
+nmap <leader>b <Plug>(openbrowser-smart-search)
+vmap <leader>b <Plug>(openbrowser-smart-search)
 
 " operator mappings
 map <silent>sa <Plug>(operator-surround-append)
@@ -179,9 +182,6 @@ omap ab <Plug>(textobj-multiblock-a)
 omap ib <Plug>(textobj-multiblock-i)
 vmap ab <Plug>(textobj-multiblock-a)
 vmap ib <Plug>(textobj-multiblock-i)
-
-"commenting out
-map co \c<Space>
 
 " delete or replace most inner surround
 
