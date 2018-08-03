@@ -104,9 +104,24 @@ syntax enable
 autocmd ColorScheme * highlight LineNr guifg=#b5bd68
 colorscheme alduin
 
+set mouse=a
+
 "key mapping
+
+noremap あ a
+noremap い i
+noremap う u
+noremap え e
+noremap お o
+noremap ア a
+noremap イ i
+noremap ウ u
+noremap エ e
+noremap オ o
+
 inoremap <silent> <C-j> <ESC>
 let mapleader = "\<Space>"
+"ペースとした後にその文章の後に移動
 vnoremap <silent> y y`]
 vnoremap <silent> p p`]
 nnoremap <silent> p p`]
@@ -139,7 +154,6 @@ nnoremap sw <C-w>w
 nnoremap so <C-w>_<C-w>|
 nnoremap sO <C-w>=
 nnoremap x "_x
-nnoremap D "_D
 noremap j gj
 noremap k gk
 nnoremap gg ggzz
@@ -152,6 +166,10 @@ nnoremap + <C-a>
 nnoremap - <C-x>
 nnoremap <silent> <leader>w :<C-u>update<CR>
 nnoremap <silent> <leader>q :<C-u>q<CR>
+nnoremap <Space>v :vim  *<Left><Left>
+nnoremap cn :cn<CR>
+nnoremap cp :cp<CR>
+nnoremap cN :cN<CR>
 "Denite vim
 nnoremap <silent> <leader>uc   :<C-u>Denite file_mru<CR>
 nnoremap <silent> <leader>ub   :<C-u>Denite buffer<CR>
@@ -161,10 +179,6 @@ nnoremap <silent> <leader>ur :<C-u>Denite file_rec<CR>
 "other plugins
 noremap <leader>n :NERDTree .<CR>
 noremap <leader>e :cd %:h<CR>:e .<CR>
-nnoremap <leader>ap :Autopep8<CR>
-nnoremap rp :QuickRun<Space>python<Space>-outputter/buffer/split<Space>":botright"<Space>-outputter/buffer/close_on_empty<Space>1<Space>-hook/time/enable<Space>1<CR>
-nnoremap rc :QuickRun<Space>cpp/g++<Space>-outputter/buffer/split<Space>":botright"<Space>-outputter/buffer/close_on_empty<Space>1<Space>-hook/time/enable<Space>1<Space>-cmdopt<Space>'-std=c++11'<CR>
-nmap rl stszilatexmk<CR>
 nmap <leader>m <Plug>(quickhl-manual-this)
 xmap <leader>m <Plug>(quickhl-manual-this)
 nmap <leader>M <Plug>(quickhl-manual-reset)

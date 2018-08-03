@@ -31,16 +31,29 @@ depends = ['neosnippet-snippets']
 [[plugins]]
 repo = 'davidhalter/jedi'
 on_ft = 'python'
-on_i = 1
+
 [[plugins]]
 repo = 'zchee/deoplete-jedi'
 hook_source = '''
 let g:deoplete#sources#jedi#server_timeout = 20
 '''
-on_source = ['jedi']
+on_ft = 'python'
+
+[[plugins]]
+repo = 'hynek/vim-python-pep8-indent'
+on_ft = 'python'
+
+[[plugins]]
+repo = 'bps/vim-textobj-python'
+on_ft = 'python'
 
 [[plugins]]
 repo = 'https://github.com/tweekmonster/deoplete-clang2'
+hook_source = '''
+nnoremap <leader>ac :ClangFormat<CR>
+let g:clang_format#code_style='LLVM'
+nnoremap rc :QuickRun<Space>cpp/g++<Space>-outputter/buffer/split<Space>":botright"<Space>-outputter/buffer/close_on_empty<Space>1<Space>-hook/time/enable<Space>1<Space>-cmdopt<Space>'-std=c++11'<CR>
+'''
 
 [[plugins]]
 repo = 'Shougo/neomru.vim'
@@ -60,6 +73,10 @@ on_source = ['denite.nvim']
 
 [[plugins]]
 repo = 'tell-k/vim-autopep8'
+hook_source = '''
+nnoremap <leader>ap :Autopep8<CR>
+nnoremap rp :QuickRun<Space>python<Space>-outputter/buffer/split<Space>":botright"<Space>-outputter/buffer/close_on_empty<Space>1<Space>-hook/time/enable<Space>1<CR>
+'''
 
 [[plugins]]
 repo = 'vim-jp/vim-cpp'
@@ -68,3 +85,100 @@ on_ft = ['cpp']
 [[plugins]]
 repo = 'lervag/vimtex'
 on_ft = ['tex']
+hook_source = '''
+let g:tex_conceal = ''
+nmap rl stszilatexmk<CR>
+'''
+
+#ここを参考https://qiita.com/alpaca_taichou/items/056a4c42fe7a928973e6
+
+[[plugins]]
+repo = 'rhysd/vim-clang-format'
+on_ft = ['c','cpp']
+
+[[plugins]]
+repo = 'mattn/emmet-vim'
+on_ft = ['html','htm']
+hook_source = '''
+let g:user_emmet_leader_key='<C-M>'
+'''
+
+[[plugins]]
+repo = 'https://github.com/tyru/open-browser.vim'
+on_ft = ['html','htm']
+hook_source = '''
+" カーソル下のURLをブラウザで開く
+nmap <Leader>o <Plug>(openbrowser-open)
+vmap <Leader>o <Plug>(openbrowser-open)
+" ググる
+nnoremap <Leader>g :<C-u>OpenBrowserSearch<Space><C-r><C-w><Enter>
+'''
+
+[[plugins]]
+repo = 'https://github.com/tell-k/vim-browsereload-mac'
+on_ft = ['html','htm']
+hook_post_source = '''
+" リロード後に戻ってくるアプリ 変更してください
+let g:returnApp = "iTerm"
+nmap <Space>bc :ChromeReloadStart<CR>
+nmap <Space>bC :ChromeReloadStop<CR>
+nmap <Space>bf :FirefoxReloadStart<CR>
+nmap <Space>bF :FirefoxReloadStop<CR>
+nmap <Space>bs :SafariReloadStart<CR>
+nmap <Space>bS :SafariReloadStop<CR>
+nmap <Space>bo :OperaReloadStart<CR>
+nmap <Space>bO :OperaReloadStop<CR>
+nmap <Space>ba :AllBrowserReloadStart<CR>
+nmap <Space>bA :AllBrowserReloadStop<CR>
+"うまく動かない...
+augroup htmlreload
+    autocmd!
+    autocmd BufNewFile,BufRead *.html ChromeReloadStart
+    autocmd BufNewFile,BufRead *.htm ChromeReloadStart
+augroup END
+'''
+
+[[plugins]]
+repo = 'https://github.com/hail2u/vim-css3-syntax'
+on_ft = ['html','htm']
+
+[[plugins]]
+repo = 'https://github.com/pangloss/vim-javascript'
+on_ft = ['html','htm']
+
+[[plugins]]
+repo = 'https://github.com/kchmck/vim-coffee-script'
+on_ft = ['html','htm']
+
+[[plugins]]
+repo = 'AtsushiM/search-parent.vim'
+on_ft = ['html','htm']
+
+[[plugins]]
+repo = 'https://github.com/AtsushiM/sass-compile.vim'
+on_ft = ['html','htm']
+hook_source = '''
+let g:sass_compile_auto = 1
+let g:sass_compile_cdloop = 5
+let g:sass_compile_cssdir = ['css', 'stylesheet']
+let g:sass_compile_file = ['scss', 'sass']
+let g:sass_started_dirs = []
+autocmd FileType less,sass  setlocal sw=2 sts=2 ts=2 et
+au! BufWritePost * SassCompile
+'''
+
+[[plugins]]
+repo = 'https://github.com/akiyan/vim-textobj-php'
+on_ft = ['html','htm']
+
+[[plugins]]
+repo = 'https://github.com/tpope/vim-surround'
+on_ft = ['html','htm']
+
+[[plugins]]
+repo = 'https://github.com/ap/vim-css-color'
+on_ft = ['html','htm']
+
+[[plugins]]
+repo = 'https://github.com/cakebaker/scss-syntax.vim'
+on_ft = ['html','htm']

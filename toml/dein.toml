@@ -20,8 +20,6 @@ repo = 'kana/vim-smartinput'
 
 
 [[plugins]]
-repo = 'hynek/vim-python-pep8-indent'
-[[plugins]]
 repo = 'plytophogy/vim-virtualenv'
 [[plugins]]
 repo = 'osyo-manga/shabadou.vim'
@@ -42,10 +40,6 @@ repo = 'kana/vim-textobj-syntax'
 repo = 'thinca/vim-textobj-between'
 [[plugins]]
 repo = 'osyo-manga/vim-textobj-multiblock'
-[[plugins]]
-repo = 'thinca/vim-textobj-between'
-[[plugins]]
-repo = 'bps/vim-textobj-python'
 [[plugins]]
 repo = 'vim-airline/vim-airline'
 
@@ -92,3 +86,6 @@ hook_post_source='''
 let g:NERDSpaceDelims=1
 let g:NERDDefaultAlign='left'
 '''
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
