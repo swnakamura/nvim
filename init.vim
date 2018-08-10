@@ -102,7 +102,7 @@ let g:python_highlight_all = 1
 "let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
 syntax enable
 autocmd ColorScheme * highlight LineNr guifg=#b5bd68
-colorscheme alduin
+colorscheme wombat
 
 set mouse=a
 
