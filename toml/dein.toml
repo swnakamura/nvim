@@ -89,3 +89,6 @@ let g:NERDDefaultAlign='left'
 
 [[plugins]]
 repo = 'cohama/lexima.vim'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'

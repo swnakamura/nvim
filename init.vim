@@ -183,6 +183,10 @@ nmap <leader>m <Plug>(quickhl-manual-this)
 xmap <leader>m <Plug>(quickhl-manual-this)
 nmap <leader>M <Plug>(quickhl-manual-reset)
 xmap <leader>M <Plug>(quickhl-manual-reset)
+nnoremap <Space>gs :Gstatus<CR>
+nnoremap <Space>ga :Gwrite<CR>
+nnoremap <Space>gc :Gcommit<CR>
+nnoremap <Space>gb :Gblame<CR>
 
 " カーソル下のURLや単語をブラウザで開く
 nmap <leader>b <Plug>(openbrowser-smart-search)
