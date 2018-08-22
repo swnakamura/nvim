@@ -88,7 +88,7 @@ repo = 'lervag/vimtex'
 on_ft = ['tex']
 hook_source = '''
 let g:tex_conceal = ''
-nmap rl stszilatexmk<CR>
+nnoremap rl stszilatexmk<CR>
 '''
 
 #ここを参考https://qiita.com/alpaca_taichou/items/056a4c42fe7a928973e6
@@ -96,6 +96,9 @@ nmap rl stszilatexmk<CR>
 [[plugins]]
 repo = 'rhysd/vim-clang-format'
 on_ft = ['c','cpp']
+hook_source = '''
+nnoremap <leader>ac :ClangFormat<CR>
+'''
 
 [[plugins]]
 repo = 'mattn/emmet-vim'
