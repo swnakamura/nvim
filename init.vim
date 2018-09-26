@@ -87,6 +87,7 @@ augroup fileType
     autocmd BufNewFile,BufRead *.c   setlocal tabstop=2 softtabstop=2 shiftwidth=2 foldmethod=syntax
     autocmd BufNewFile,BufRead *.cpp setlocal tabstop=2 softtabstop=2 shiftwidth=2 foldmethod=syntax
     autocmd BufNewFile,BufRead *.tex setlocal tabstop=1 softtabstop=0 shiftwidth=0 foldmethod=indent
+    autocmd BufNewFile,BufRead *.html setlocal nowrap
 augroup END
 
 set clipboard=unnamed
@@ -118,9 +119,9 @@ noremap ウ u
 noremap エ e
 noremap オ o
 
-inoremap <silent> <C-j> <ESC>
+inoremap <silent> fd <ESC>
 let mapleader = "\<Space>"
-"ペースとした後にその文章の後に移動
+"ペーストした後にその文章の後に移動
 vnoremap <silent> y y`]
 vnoremap <silent> p p`]
 nnoremap <silent> p p`]
@@ -128,52 +129,53 @@ noremap <leader>h  ^
 noremap <leader>l  $
 noremap <leader>k gg
 noremap <leader>j G
-noremap t /
-noremap / t
-nnoremap ss :split<CR>
-nnoremap s <Nop>
-nnoremap sv :vsplit<CR>
-nnoremap sj <C-w>j
-nnoremap sk <C-w>k
-nnoremap sl <C-w>l
-nnoremap sh <C-w>h
-nnoremap sJ <C-w>J
-nnoremap sK <C-w>K
-nnoremap sL <C-w>L
-nnoremap sH <C-w>H
-nnoremap st :tabnew<CR>
-nnoremap sn gt
-nnoremap sp gT
+nnoremap <leader>ws :split<CR>
+nnoremap <space>wv :vsplit<CR>
+nnoremap <space>wj <C-w>j
+nnoremap <space>wk <C-w>k
+nnoremap <space>wl <C-w>l
+nnoremap <space>wh <C-w>h
+nnoremap <space>wJ <C-w>J
+nnoremap <space>wK <C-w>K
+nnoremap <space>wL <C-w>L
+nnoremap <space>wH <C-w>H
+nnoremap <space>wt :tabnew<CR>
+nnoremap <leader>wn gt
+nnoremap <leader>wp gT
 nnoremap sz :terminal<CR>
 tnoremap <C-j> <C-\><C-n>
 tnoremap <C-q> <C-\><C-n>:q<CR>
-nnoremap sr <C-w>r
-nnoremap s= <C-w>=
-nnoremap sw <C-w>w
-nnoremap so <C-w>_<C-w>|
-nnoremap sO <C-w>=
+nnoremap <space>wr <C-w>r
+nnoremap <space>w= <C-w>=
+nnoremap <space>ww <C-w>w
+nnoremap <space>wo <C-w>_<C-w>|
+nnoremap <space>wO <C-w>=
 nnoremap x "_x
 noremap j gj
 noremap k gk
-nnoremap gg ggzz
 noremap gj j
 noremap gk k
-vnoremap v $h
+nnoremap t /
+nnoremap / t
+nnoremap gg ggzz
 nnoremap <Tab> %
 vnoremap <Tab> %
 nnoremap + <C-a>
 nnoremap - <C-x>
-nnoremap <silent> <leader>w :<C-u>update<CR>
-nnoremap <silent> <leader>q :<C-u>q<CR>
+nnoremap <silent> <leader>fs :<C-u>update<CR>
+nnoremap <silent> <leader>wd :<C-u>q<CR>
+nnoremap <silent> <leader>qr :<C-u>so %<CR>
+nnoremap <silent> <leader>qq :<C-u>bufdo bd<CR>
+nnoremap <silent> <leader>bd :<C-u>tabc<CR>
 nnoremap <Space>v :vim  *<Left><Left>
 nnoremap cn :cn<CR>
 nnoremap cp :cp<CR>
 nnoremap cN :cN<CR>
 "Denite vim
-nnoremap <silent> <leader>uc   :<C-u>Denite file_mru<CR>
-nnoremap <silent> <leader>ub   :<C-u>Denite buffer<CR>
-nnoremap <silent> <leader>uy   :<C-u>Denite neoyank<CR>
-nnoremap <silent> <leader>ur :<C-u>Denite file_rec<CR>
+nnoremap <silent> <leader>fc   :<C-u>Denite file_mru<CR>
+nnoremap <silent> <leader>fb   :<C-u>Denite buffer<CR>
+nnoremap <silent> <leader>fy   :<C-u>Denite neoyank<CR>
+nnoremap <silent> <leader>ff :<C-u>Denite file_rec<CR>
 
 "Defx
 nnoremap <silent> <leader>d :Defx .<CR>
@@ -199,7 +201,7 @@ function! s:defx_my_settings() abort
 endfunction
 
 "other plugins
-noremap <leader>n :NERDTree .<CR>
+noremap <leader>ft :NERDTree .<CR>
 noremap <leader>e :cd %:h<CR>:e .<CR>
 nmap <leader>m <Plug>(quickhl-manual-this)
 xmap <leader>m <Plug>(quickhl-manual-this)
@@ -211,8 +213,8 @@ nnoremap <Space>gc :Gcommit<CR>
 nnoremap <Space>gb :Gblame<CR>
 
 " カーソル下のURLや単語をブラウザで開く
-nmap <leader>b <Plug>(openbrowser-smart-search)
-vmap <leader>b <Plug>(openbrowser-smart-search)
+"nmap <leader>b <Plug>(openbrowser-smart-search)
+"vmap <leader>b <Plug>(openbrowser-smart-search)
 
 " operator mappings
 map <silent>sa <Plug>(operator-surround-append)
