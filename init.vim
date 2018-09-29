@@ -17,9 +17,8 @@ endif
 if &compatible
   set nocompatible
 endif
-set runtimepath+=~/.config/nvim/colors
 if dein#load_state(s:dein_dir)
-	call dein#begin(s:dein_dir)
+  call dein#begin(s:dein_dir)
 
  " プラグインリストを収めた TOML ファイル
   " 予め TOML ファイル（後述）を用意しておく
@@ -121,10 +120,12 @@ noremap オ o
 
 inoremap <silent> fd <ESC>
 let mapleader = "\<Space>"
+
 "ペーストした後にその文章の後に移動
 vnoremap <silent> y y`]
 vnoremap <silent> p p`]
 nnoremap <silent> p p`]
+
 noremap <leader>h  ^
 noremap <leader>l  $
 noremap <leader>k gg
@@ -143,8 +144,9 @@ nnoremap <space>wt :tabnew<CR>
 nnoremap <leader>wn gt
 nnoremap <leader>wp gT
 nnoremap sz :terminal<CR>
-tnoremap <C-j> <C-\><C-n>
-tnoremap <C-q> <C-\><C-n>:q<CR>
+tnoremap fd <C-\><C-n>
+tnoremap <leader>wd <C-\><C-n>:q<CR>
+tnoremap <leader>bd <C-\><C-n>:q<CR>
 nnoremap <space>wr <C-w>r
 nnoremap <space>w= <C-w>=
 nnoremap <space>ww <C-w>w
@@ -164,15 +166,20 @@ nnoremap + <C-a>
 nnoremap - <C-x>
 nnoremap <silent> <leader>fs :<C-u>update<CR>
 nnoremap <silent> <leader>wd :<C-u>q<CR>
-nnoremap <silent> <leader>qr :<C-u>so %<CR>
-nnoremap <silent> <leader>qq :<C-u>bufdo bd<CR>
+"init.vimを読み込み直す
+nnoremap <silent> <leader>qr :<C-u>so ~/.config/nvim/init.vim<CR>
+"このタブのウィンドウを全て終了する
 nnoremap <silent> <leader>bd :<C-u>tabc<CR>
+"どんな状態にいても終了する
+nnoremap <silent> <leader>qq :<C-u>bufdo bd<CR>:q<CR>
+"init.vimを新しいタブで開く(emacsでいうdotfileに相当)
+nmap <silent> <leader>fed <leader>wt:<C-u>e ~/.config/nvim/init.vim<CR>
 nnoremap <Space>v :vim  *<Left><Left>
 nnoremap cn :cn<CR>
 nnoremap cp :cp<CR>
 nnoremap cN :cN<CR>
 "Denite vim
-nnoremap <silent> <leader>fc   :<C-u>Denite file_mru<CR>
+nnoremap <silent> <leader>fr   :<C-u>Denite file_mru<CR>
 nnoremap <silent> <leader>fb   :<C-u>Denite buffer<CR>
 nnoremap <silent> <leader>fy   :<C-u>Denite neoyank<CR>
 nnoremap <silent> <leader>ff :<C-u>Denite file_rec<CR>
