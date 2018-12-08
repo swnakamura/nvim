@@ -51,6 +51,7 @@ else
   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
+set timeoutlen=400
 
 "general settings
 if &compatible
@@ -118,8 +119,6 @@ set wildmode=list:full
 set wildignore=*.o,*.obj,*.pyc,*.so,*.dll
 let g:python_highlight_all = 1
 
-"let g:hybrid_custom_term_colors = 1
-"let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
 syntax enable
 autocmd ColorScheme * highlight LineNr guifg=#b5bd68
 " colorscheme Dark
@@ -190,43 +189,47 @@ nnoremap   +                      <C-a>
 nnoremap   -                      <C-x>
 nnoremap   <silent>               <leader>fs  :<C-u>update<CR>
 nnoremap   <silent>               <leader>wd  :<C-u>q<CR>
-"init.vimを読み込み直す
+"reload init.vim again
 nnoremap   <silent>               <leader>qr  :<C-u>so                        ~/.config/nvim/init.vim<CR>
-"このタブのウィンドウを全て終了する
+"delete every window in this tab
 nnoremap   <silent>               <leader>bd  :<C-u>tabc<CR>
-"どんな状態にいても終了する
+"quit vim
 nnoremap   <silent>               <leader>qq  :<C-u>bufdo                     bd<CR>:q<CR>
-"init.vimを新しいタブで開く(emacsでいうdotfileに相当)
+"open init.vim in new tab
 nmap       <silent>               <leader>fed <leader>wt:<C-u>e               ~/.config/nvim/init.vim<CR>
 nnoremap   <leader>v              :vim        *<Left><Left>
 nnoremap   cn                     :cn<CR>
 nnoremap   cp                     :cp<CR>
 nnoremap   cN                     :cN<CR>
 "Denite vim
-nnoremap   <silent>               <leader>fr  :<C-u>Denite file_mru<CR>
-nnoremap   <silent>               <leader>fb  :<C-u>Denite buffer<CR>
-nnoremap   <silent>               <leader>fy  :<C-u>Denite neoyank<CR>
-nnoremap   <silent>               <leader>ff  :<C-u>Denite file_rec<CR>
+nnoremap <silent> <leader>fr :<C-u>Denite file_mru<CR>
+nnoremap <silent> <leader>fb :<C-u>Denite buffer<CR>
+nnoremap <silent> <leader>fy :<C-u>Denite neoyank<CR>
+nnoremap <silent> <leader>ff :<C-u>Denite file_rec<CR>
 
 "Defx
-nnoremap   <silent> <leader>D   :Defx -split=vertical -winwidth=35 -direction=topleft .<CR>
-nnoremap   <silent> <leader>d   :Defx `expand('%:p:h')` -search=`expand('%:p')` -split=vertical -winwidth=35 -direction=topleft<CR>
+nnoremap   <silent> <leader>D   :Defx -columns={mark:filename:type:git:time:size} .<CR>
+nnoremap   <silent> <leader>d   :Defx `expand('%:p:h')` -search=`expand('%:p')` -columns={mark:filename:type:git:time:size}<CR>
 autocmd    FileType defx call s:defx_my_settings()
 function!  s:defx_my_settings() abort
   " Define mappings
-  nnoremap <silent><buffer><expr> o           defx#do_action('drop')
-  nnoremap <silent><buffer><expr> <CR>           defx#do_action('drop')
-  nnoremap <silent><buffer><expr> K           defx#do_action('new_directory')
-  nnoremap <silent><buffer><expr> N           defx#do_action('new_file')
-  nnoremap <silent><buffer><expr> h           defx#do_action('cd',['..'])
-  nnoremap <silent><buffer><expr> r          defx#do_action('remove',['..'])
-  nnoremap <silent><buffer><expr> ~           defx#do_action('cd')
-  nnoremap <silent><buffer><expr> <leader>    defx#do_action('toggle_select').'j'
-  nnoremap <silent><buffer><expr> j           line('.') == line('$') ? 'gg' : 'j'
-  nnoremap <silent><buffer><expr> k           line('.') == 1         ? 'G'  : 'k'
-  nnoremap <silent><buffer><expr> s           defx#do_action('toggle_ignored_files')
-  nnoremap <silent><buffer><expr> R           defx#do_action('redraw')
-  nnoremap <silent><buffer><expr> yy           defx#do_action('yank_path')
+  nnoremap <silent><buffer><expr> o        defx#do_action('drop')
+  nnoremap <silent><buffer><expr> <CR>     defx#do_action('drop')
+  nnoremap <silent><buffer><expr> l        defx#do_action('drop')
+  nnoremap <silent><buffer><expr> K        defx#do_action('new_directory')
+  nnoremap <silent><buffer><expr> N        defx#do_action('new_file')
+  nnoremap <silent><buffer><expr> h        defx#do_action('cd',['..'])
+  nnoremap <silent><buffer><expr> d        defx#do_action('remove',['..'])
+  nnoremap <silent><buffer><expr> r        defx#do_action('rename',['..'])
+  nnoremap <silent><buffer><expr> ~        defx#do_action('cd')
+  nnoremap <silent><buffer><expr> <leader> defx#do_action('toggle_select').'j'
+  nnoremap <silent><buffer><expr> j        line('.') == line('$') ? 'gg' : 'j'
+  nnoremap <silent><buffer><expr> k        line('.') == 1         ? 'G'  : 'k'
+  nnoremap <silent><buffer><expr> s        defx#do_action('toggle_ignored_files')
+  nnoremap <silent><buffer><expr> R        defx#do_action('redraw')
+  nnoremap <silent><buffer><expr> yy       defx#do_action('yank_path')
+  nnoremap <silent><buffer><expr> !        defx#do_action('execute_command')
+  nnoremap <silent><buffer><expr> x        defx#do_action('execute_system')
 endfunction
 
 "other plugins
@@ -240,15 +243,19 @@ nnoremap   <leader>gs             :Gstatus<CR>
 nnoremap   <leader>ga             :Gwrite<CR>
 nnoremap   <leader>gc             :Gcommit<CR>
 nnoremap   <leader>gb             :Gblame<CR>
+nnoremap   <leader>gl             :Git lga<CR>
+nnoremap   <leader>gpush          :Gpush<CR>
+nnoremap   <leader>gfetch         :Gfetch<CR>
+nnoremap   <leader>gd             :Gdiff<CR>
 
 " カーソル下のURLや単語をブラウザで開く
 "nmap <leader>b <Plug>(openbrowser-smart-search)
 "vmap <leader>b <Plug>(openbrowser-smart-search)
 
 " operator mappings
-map        <silent>sa             <Plug>(operator-surround-append)
-map        <silent>sd             <Plug>(operator-surround-delete)
-map        <silent>sr             <Plug>(operator-surround-replace)
+nmap        <silent>sa             <Plug>(operator-surround-append)
+nmap        <silent>sd             <Plug>(operator-surround-delete)
+nmap        <silent>sr             <Plug>(operator-surround-replace)
 omap       ab                     <Plug>(textobj-multiblock-a)
 omap       ib                     <Plug>(textobj-multiblock-i)
 vmap       ab                     <Plug>(textobj-multiblock-a)
