@@ -87,6 +87,8 @@ set shiftwidth=2
 set smartindent
 set expandtab
 
+set inccommand=split
+
 augroup fileType
     autocmd!
     autocmd BufNewFile,BufRead *.py  setlocal tabstop=4 softtabstop=4 shiftwidth=4 foldmethod=indent
@@ -120,87 +122,88 @@ set wildignore=*.o,*.obj,*.pyc,*.so,*.dll
 let g:python_highlight_all = 1
 
 syntax enable
-autocmd ColorScheme * highlight LineNr guifg=#b5bd68
-" colorscheme Dark
-" colorscheme Dim2
-colorscheme jellybeans
+"autocmd ColorScheme * highlight LineNr guifg=#b5bd68
+"colorscheme Dark
+"colorscheme Dim2
+"colorscheme jelybeans
 "colorscheme gruvbox
+colorscheme PaperColor
 
 set mouse=a
 
 "key mapping
 
-noremap    あ                     a
-noremap    い                     i
-noremap    う                     u
-noremap    え                     e
-noremap    お                     o
-noremap    ア                     a
-noremap    イ                     i
-noremap    ウ                     u
-noremap    エ                     e
-noremap    オ                     o
+noremap  あ         a
+noremap  い         i
+noremap  う         u
+noremap  え         e
+noremap  お         o
+noremap  ア         a
+noremap  イ         i
+noremap  ウ         u
+noremap  エ         e
+noremap  オ         o
 
-inoremap   <silent>               fd          <ESC>
-let        mapleader              =           "\<Space>"
+inoremap <silent>   fd          <ESC>
+let      mapleader  =           "\<Space>"
 
 "ペーストした後にその文章の後に移動
-vnoremap   <silent>               y           y`]
-vnoremap   <silent>               p           p`]
-nnoremap   <silent>               p           p`]
+vnoremap <silent>   y           y`]
+vnoremap <silent>   p           p`]
+nnoremap <silent>   p           p`]
 
-noremap    <leader>h              ^
-noremap    <leader>l              $
-noremap    <leader>k              gg
-noremap    <leader>j              G
-nnoremap   <leader>ws             :split<CR>
-nnoremap   <leader>wv             :vsplit<CR>
-nnoremap   <leader>wj             <C-w>j
-nnoremap   <leader>wk             <C-w>k
-nnoremap   <leader>wl             <C-w>l
-nnoremap   <leader>wh             <C-w>h
-nnoremap   <leader>wJ             <C-w>J
-nnoremap   <leader>wK             <C-w>K
-nnoremap   <leader>wL             <C-w>L
-nnoremap   <leader>wH             <C-w>H
-nnoremap   <leader>wt             :tabnew<CR>
-nnoremap   <leader>wn             gt
-nnoremap   <leader>wp             gT
-nnoremap   sz                     :terminal<CR>
-tnoremap   fd                     <C-\><C-n>
-tnoremap   <leader>wd             <C-\><C-n>:q<CR>
-tnoremap   <leader>bd             <C-\><C-n>:q<CR>
-nnoremap   <leader>wr             <C-w>r
-nnoremap   <leader>w=             <C-w>=
-nnoremap   <leader>ww             <C-w>w
-nnoremap   <leader>wo             <C-w>_<C-w>|
-nnoremap   <leader>wO             <C-w>=
-nnoremap   x                      "_x
-noremap    j                      gj
-noremap    k                      gk
-noremap    gj                     j
-noremap    gk                     k
-nnoremap   t                      /
-nnoremap   /                      t
-nnoremap   gg                     ggzz
-nnoremap   <Tab>                  %
-vnoremap   <Tab>                  %
-nnoremap   +                      <C-a>
-nnoremap   -                      <C-x>
-nnoremap   <silent>               <leader>fs  :<C-u>update<CR>
-nnoremap   <silent>               <leader>wd  :<C-u>q<CR>
+noremap  <leader>h  ^
+noremap  <leader>l  $
+noremap  <leader>k  gg
+noremap  <leader>j  G
+nnoremap <leader>ws :split<CR>
+nnoremap <leader>wv :vsplit<CR>
+nnoremap <leader>wj <C-w>j
+nnoremap <leader>wk <C-w>k
+nnoremap <leader>wl <C-w>l
+nnoremap <leader>wh <C-w>h
+nnoremap <leader>wJ <C-w>J
+nnoremap <leader>wK <C-w>K
+nnoremap <leader>wL <C-w>L
+nnoremap <leader>wH <C-w>H
+nnoremap <leader>wt :tabnew<CR>
+nnoremap <leader>wn gt
+nnoremap <leader>wp gT
+nnoremap sz         :terminal<CR>
+tnoremap fd         <C-\><C-n>
+tnoremap <leader>wd <C-\><C-n>:q<CR>
+tnoremap <leader>bd <C-\><C-n>:q<CR>
+nnoremap <leader>wr <C-w>r
+nnoremap <leader>w= <C-w>=
+nnoremap <leader>ww <C-w>w
+nnoremap <leader>wo <C-w>_<C-w>|
+nnoremap <leader>wO <C-w>=
+nnoremap x          "_x
+noremap  j          gj
+noremap  k          gk
+noremap  gj         j
+noremap  gk         k
+nnoremap t          /
+nnoremap /          t
+nnoremap gg         ggzz
+nnoremap <Tab>      %
+vnoremap <Tab>      %
+nnoremap +          <C-a>
+nnoremap -          <C-x>
+nnoremap <silent>   <leader>fs  :<C-u>update<CR>
+nnoremap <silent>   <leader>wd  :<C-u>q<CR>
 "reload init.vim again
-nnoremap   <silent>               <leader>qr  :<C-u>so                        ~/.config/nvim/init.vim<CR>
+nnoremap <silent>   <leader>qr  :<C-u>so          ~/.config/nvim/init.vim<CR>
 "delete every window in this tab
-nnoremap   <silent>               <leader>bd  :<C-u>tabc<CR>
+nnoremap <silent>   <leader>bd  :<C-u>tabc<CR>
 "quit vim
-nnoremap   <silent>               <leader>qq  :<C-u>bufdo                     bd<CR>:q<CR>
+nnoremap <silent>   <leader>qq  :<C-u>bufdo       bd<CR>:q<CR>
 "open init.vim in new tab
-nmap       <silent>               <leader>fed <leader>wt:<C-u>e               ~/.config/nvim/init.vim<CR>
-nnoremap   <leader>v              :vim        *<Left><Left>
-nnoremap   cn                     :cn<CR>
-nnoremap   cp                     :cp<CR>
-nnoremap   cN                     :cN<CR>
+nmap     <silent>   <leader>fed <leader>wt:<C-u>e ~/.config/nvim/init.vim<CR>
+nnoremap <leader>v  :vim        *<Left><Left>
+nnoremap cn         :cn<CR>
+nnoremap cp         :cp<CR>
+nnoremap cN         :cN<CR>
 "Denite vim
 nnoremap <silent> <leader>fr :<C-u>Denite file_mru<CR>
 nnoremap <silent> <leader>fb :<C-u>Denite buffer<CR>
@@ -209,7 +212,7 @@ nnoremap <silent> <leader>ff :<C-u>Denite file_rec<CR>
 
 "Defx
 nnoremap   <silent> <leader>D   :Defx -columns={mark:filename:type:git:time:size} .<CR>
-nnoremap   <silent> <leader>d   :Defx `expand('%:p:h')` -search=`expand('%:p')` -columns={mark:filename:type:git:time:size}<CR>
+nnoremap   <silent> <leader>d   :Defx -columns={mark:filename:type:git:time:size} `expand('%:p:h')` -search=`expand('%:p')`<CR>
 autocmd    FileType defx call s:defx_my_settings()
 function!  s:defx_my_settings() abort
   " Define mappings
@@ -217,45 +220,45 @@ function!  s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> <CR>     defx#do_action('drop')
   nnoremap <silent><buffer><expr> l        defx#do_action('drop')
   nnoremap <silent><buffer><expr> K        defx#do_action('new_directory')
-  nnoremap <silent><buffer><expr> N        defx#do_action('new_file')
+  nnoremap <silent><buffer><expr> L        defx#do_action('new_file')
   nnoremap <silent><buffer><expr> h        defx#do_action('cd',['..'])
-  nnoremap <silent><buffer><expr> d        defx#do_action('remove',['..'])
+  nnoremap <silent><buffer><expr> dd       defx#do_action('remove_trash',['..'])
   nnoremap <silent><buffer><expr> r        defx#do_action('rename',['..'])
   nnoremap <silent><buffer><expr> ~        defx#do_action('cd')
   nnoremap <silent><buffer><expr> <leader> defx#do_action('toggle_select').'j'
-  nnoremap <silent><buffer><expr> j        line('.') == line('$') ? 'gg' : 'j'
-  nnoremap <silent><buffer><expr> k        line('.') == 1         ? 'G'  : 'k'
   nnoremap <silent><buffer><expr> s        defx#do_action('toggle_ignored_files')
   nnoremap <silent><buffer><expr> R        defx#do_action('redraw')
   nnoremap <silent><buffer><expr> yy       defx#do_action('yank_path')
   nnoremap <silent><buffer><expr> !        defx#do_action('execute_command')
   nnoremap <silent><buffer><expr> x        defx#do_action('execute_system')
 endfunction
+"open defx if open without any file
+"TODO
 
 "other plugins
-noremap    <leader>ft             :NERDTree   .<CR>
-noremap    <leader>e              :cd         %:h<CR>:e                       .<CR>
-nmap       <leader>m              <Plug>(quickhl-manual-this)
-xmap       <leader>m              <Plug>(quickhl-manual-this)
-nmap       <leader>M              <Plug>(quickhl-manual-reset)
-xmap       <leader>M              <Plug>(quickhl-manual-reset)
-nnoremap   <leader>gs             :Gstatus<CR>
-nnoremap   <leader>ga             :Gwrite<CR>
-nnoremap   <leader>gc             :Gcommit<CR>
-nnoremap   <leader>gb             :Gblame<CR>
-nnoremap   <leader>gl             :Git lga<CR>
-nnoremap   <leader>gpush          :Gpush<CR>
-nnoremap   <leader>gfetch         :Gfetch<CR>
-nnoremap   <leader>gd             :Gdiff<CR>
+noremap  <leader>ft :NERDTree .<CR>
+noremap  <leader>e  :cd       %:h<CR>:e .<CR>
+nmap     <leader>m  <Plug>(quickhl-manual-this)
+xmap     <leader>m  <Plug>(quickhl-manual-this)
+nmap     <leader>M  <Plug>(quickhl-manual-reset)
+xmap     <leader>M  <Plug>(quickhl-manual-reset)
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>ga :Gwrite<CR>
+nnoremap <leader>gc :Gcommit<CR>
+nnoremap <leader>gb :Gblame<CR>
+nnoremap <leader>gl :Git      lga<CR>
+nnoremap <leader>gp :Gpush<CR>
+nnoremap <leader>gf :Gfetch<CR>
+nnoremap <leader>gd :Gdiff<CR>
 
 " カーソル下のURLや単語をブラウザで開く
 "nmap <leader>b <Plug>(openbrowser-smart-search)
 "vmap <leader>b <Plug>(openbrowser-smart-search)
 
 " operator mappings
-nmap        <silent>sa             <Plug>(operator-surround-append)
-nmap        <silent>sd             <Plug>(operator-surround-delete)
-nmap        <silent>sr             <Plug>(operator-surround-replace)
+map        <silent>sa             <Plug>(operator-surround-append)
+map        <silent>sd             <Plug>(operator-surround-delete)
+map        <silent>sr             <Plug>(operator-surround-replace)
 omap       ab                     <Plug>(textobj-multiblock-a)
 omap       ib                     <Plug>(textobj-multiblock-i)
 vmap       ab                     <Plug>(textobj-multiblock-a)
@@ -272,10 +275,3 @@ nmap       <silent>sdb            <Plug>(operator-surround-delete)<Plug>(textobj
 nmap       <silent>srb            <Plug>(operator-surround-replace)<Plug>(textobj-between-a)
 
 filetype   plugin                 indent      on
-
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap       ga                     <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap       ga                     <Plug>(EasyAlign)
-

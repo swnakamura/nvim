@@ -1,0 +1,109 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+hook_post_update = '''
+  let cmd = 'make'
+  let g:dein#plugin.build = cmd
+'''
+
+[[plugins]]
+repo = 'Shougo/defx.nvim'
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'Shougo/vimfiler'
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+[[plugins]]
+repo = 'kana/vim-smartinput'
+
+
+[[plugins]]
+repo = 'plytophogy/vim-virtualenv'
+[[plugins]]
+repo = 'osyo-manga/shabadou.vim'
+
+[[plugins]]
+repo = 'flazz/vim-colorschemes'
+
+[[plugins]]
+repo = 'kana/vim-operator-user'
+[[plugins]]
+repo = 'rhysd/vim-operator-surround'
+
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+[[plugins]]
+repo = 'kana/vim-textobj-syntax'
+[[plugins]]
+repo = 'thinca/vim-textobj-between'
+[[plugins]]
+repo = 'osyo-manga/vim-textobj-multiblock'
+[[plugins]]
+repo = 'kana/vim-textobj-entire'
+
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+hook_add = '''
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_section_z = airline#section#create(['windowswap', '%3p%% ', 'linenr', ':%3v'])
+" Powerline系フォントを利用する
+let g:airline_powerline_fonts = 1
+
+" タブバーのカスタマイズを有効にする
+let g:airline#extensions#tabline#enabled = 1
+
+" タブバーの右領域を非表示にする
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#show_close_button = 0
+'''
+
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes'
+hook_add = '''
+let g:airline_theme='papercolor'
+'''
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+hook_post_source='''
+IndentLinesEnable
+'''
+
+[[plugins]]
+repo = 'scrooloose/nerdcommenter'
+hook_add='''
+let g:NERDSpaceDelims=1
+let g:NERDDefaultAlign='left'
+let g:NERDCustomDelimiters = {'vim': {'left': '" ','right':''}}
+'''
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+hook_add='''
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap       ga                     <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap       ga                     <Plug>(EasyAlign)
+'''
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+hook_add = '''
+" カーソル下のURLをブラウザで開く
+nmap <Space>o <Plug>(openbrowser-open)
+vmap <Space>o <Plug>(openbrowser-open)
+" ググる
+nmap <Space>g :<C-u>OpenBrowserSearch<Space><C-r><C-w><Enter>
+'''
