@@ -200,7 +200,7 @@ nnoremap <silent>   <leader>bd  :<C-u>tabc<CR>
 nnoremap <silent>   <leader>qq  :<C-u>bufdo       bd<CR>:q<CR>
 "open init.vim in new tab
 nmap     <silent>   <leader>fed <leader>wt:<C-u>e ~/.config/nvim/init.vim<CR>
-nnoremap <leader>v  :vim        *<Left><Left>
+nnoremap <leader>v  :vim *<Left><Left>
 nnoremap cn         :cn<CR>
 nnoremap cp         :cp<CR>
 nnoremap cN         :cN<CR>
@@ -211,8 +211,8 @@ nnoremap <silent> <leader>fy :<C-u>Denite neoyank<CR>
 nnoremap <silent> <leader>ff :<C-u>Denite file_rec<CR>
 
 "Defx
-nnoremap   <silent> <leader>D   :Defx -columns={mark:filename:type:git:time:size} .<CR>
-nnoremap   <silent> <leader>d   :Defx -columns={mark:filename:type:git:time:size} `expand('%:p:h')` -search=`expand('%:p')`<CR>
+nnoremap   <silent> <leader>D   :Defx -columns=mark:filename:size:time:type:git -fnamewidth=30 -split=tab `expand('%:p:h')` -search=`expand('%:p')` <CR>
+nnoremap   <silent> <leader>d   :Defx -columns=mark:filename:size:time:type:git -fnamewidth=30            `expand('%:p:h')` -search=`expand('%:p')`<CR>
 autocmd    FileType defx call s:defx_my_settings()
 function!  s:defx_my_settings() abort
   " Define mappings
@@ -236,8 +236,7 @@ endfunction
 "TODO
 
 "other plugins
-noremap  <leader>ft :NERDTree .<CR>
-noremap  <leader>e  :cd       %:h<CR>:e .<CR>
+noremap  <leader>e  :cd %:h<CR>:e .<CR>
 nmap     <leader>m  <Plug>(quickhl-manual-this)
 xmap     <leader>m  <Plug>(quickhl-manual-this)
 nmap     <leader>M  <Plug>(quickhl-manual-reset)
@@ -246,7 +245,7 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>ga :Gwrite<CR>
 nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gb :Gblame<CR>
-nnoremap <leader>gl :Git      lga<CR>
+nnoremap <leader>gl :Git lga<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gf :Gfetch<CR>
 nnoremap <leader>gd :Gdiff<CR>
