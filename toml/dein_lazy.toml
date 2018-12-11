@@ -26,6 +26,18 @@ hook_source = '''
 on_i = 1
 
 [[plugins]]
+repo = 'Shougo/denite.nvim'
+[[plugins]]
+repo = 'Shougo/unite-outline'
+depends=['denite.nvim']
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+depends=['denite.nvim']
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+depends=['denite.nvim']
+
+[[plugins]]
 repo = 'Shougo/neco-syntax'
 on_i = 1
 
@@ -72,22 +84,6 @@ let g:clang_format#code_style='LLVM'
 nnoremap rc :QuickRun<Space>cpp/g++<Space>-outputter/buffer/split<Space>":botright"<Space>-outputter/buffer/close_on_empty<Space>1<Space>-hook/time/enable<Space>1<Space>-cmdopt<Space>'-std=c++11'<CR>
 '''
 on_ft = ['c','cpp']
-
-[[plugins]]
-repo = 'Shougo/neomru.vim'
-
-[[plugins]]
-repo = 'Shougo/denite.nvim'
-on_i = 1
-[[plugins]]
-repo = 'Shougo/unite-outline'
-on_source = ['denite.nvim']
-[[plugins]]
-repo = 'Shougo/neomru.vim'
-on_source = ['denite.nvim']
-[[plugins]]
-repo = 'Shougo/neoyank.vim'
-on_source = ['denite.nvim']
 
 [[plugins]]
 repo = 'tell-k/vim-autopep8'
