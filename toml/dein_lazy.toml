@@ -3,13 +3,15 @@ repo = 'Shougo/deoplete.nvim'
 hook_source = '''
   let g:deoplete#enable_at_startup = 1
 
-  inoremap <expr><tab> pumvisible() ? "\<C-n>" :
-        \ neosnippet#expandable_or_jumpable() ?
-        \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+  inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<tab>"
 
   inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
 
-  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+  " Expand the completed snippet trigger by <CR>.
+  imap <expr><CR>
+  \ (pumvisible() && neosnippet#expandable()) ?
+  \ "\<Plug>(neosnippet_expand)" : "<C-r>=<SID>my_cr_function()<CR>"
+
   function! s:my_cr_function() abort
     return deoplete#close_popup() . "\<CR>"
   endfunction
@@ -26,21 +28,8 @@ hook_source = '''
 on_i = 1
 
 [[plugins]]
-repo = 'Shougo/denite.nvim'
-depends=['unite-outline','neomru.vim','neoyank.vim']
-[[plugins]]
-repo = 'Shougo/unite-outline'
-[[plugins]]
-repo = 'Shougo/neomru.vim'
-[[plugins]]
-repo = 'Shougo/neoyank.vim'
-
-[[plugins]]
 repo = 'Shougo/neco-syntax'
 on_i = 1
-
-[[plugins]]
-repo= 'Shougo/neosnippet-snippets'
 
 [[plugins]]
 repo = 'Shougo/neosnippet'
@@ -54,6 +43,9 @@ hook_source = '''
 '''
 on_i  = 1
 depends = ['neosnippet-snippets']
+
+[[plugins]]
+repo= 'Shougo/neosnippet-snippets'
 
 [[plugins]]
 repo = 'davidhalter/jedi'

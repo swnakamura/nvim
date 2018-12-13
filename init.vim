@@ -6,17 +6,8 @@ if !isdirectory(s:dein_repo_dir)
   call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
 endif
 let &runtimepath = s:dein_repo_dir .",". &runtimepath
-if exists("$VIRTUAL_ENV")
-  if !empty(glob("$VIRTUAL_ENV/bin/python3"))
-    let g:python3_host_prog = substitute(system("which python3"), '\n', '', 'g')
-  else
-    let g:python_host_prog = substitute(system("which python"), '\n', '', 'g')
-  endif
-endif
+let g:python3_host_prog = substitute(system("which python3"), '\n', '', 'g')
 
-if &compatible
-  set nocompatible
-endif
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
   " locate toml directory beforehand
@@ -72,7 +63,6 @@ set incsearch
 set nohlsearch
 set wrapscan
 
-
 set number
 set list
 set listchars=tab:>-,trail:~,extends:»,precedes:«
@@ -89,13 +79,15 @@ set inccommand=split
 
 augroup fileType
   autocmd!
-  autocmd BufNewFile,BufRead *.py  setlocal tabstop=4 softtabstop=4 shiftwidth=4 foldmethod=indent
+  autocmd BufNewFile,BufRead *.py  setlocal tabstop=4 softtabstop=4 shiftwidth=4 foldmethod=syntax
   autocmd BufNewFile,BufRead *.c   setlocal tabstop=2 softtabstop=2 shiftwidth=2 foldmethod=syntax
   autocmd BufNewFile,BufRead *.cpp setlocal tabstop=2 softtabstop=2 shiftwidth=2 foldmethod=syntax
   autocmd BufNewFile,BufRead *.tex setlocal tabstop=4 softtabstop=0 shiftwidth=0 foldmethod=syntax
   autocmd BufNewFile,BufRead *.html setlocal nowrap
   autocmd BufNewFile,BufRead *.grg setlocal nowrap tabstop=4 softtabstop=4 shiftwidth=4
   autocmd BufNewFile,BufRead *.csv setlocal nowrap
+  autocmd FileType defx call s:defx_my_settings()
+  autocmd FileType defx set listchars=
 augroup END
 
 augroup Beautifytype
@@ -132,9 +124,10 @@ set mouse=a
 "key mapping
 
 inoremap <silent>   fd          <ESC>
+inoremap <silent>   <C-j>       <ESC>
 let      mapleader  =           "\<Space>"
 
-"move to the end of a text after pasting it
+"move to the end of a text after copying/pasting it
 vnoremap <silent>   y           y`]
 vnoremap <silent>   p           p`]
 nnoremap <silent>   p           p`]
@@ -187,15 +180,10 @@ nnoremap <silent>   <leader>bd  :<C-u>tabc<CR>
 nnoremap <silent>   <leader>qq  :<C-u>bufdo       bd<CR>:q<CR>
 "open init.vim in new tab
 nmap     <silent>   <leader>fed <leader>wt:<C-u>e ~/.config/nvim/init.vim<CR>
-nnoremap <leader>v  :vim *<Left><Left>
+nnoremap <leader>v  :vim  *<Left><Left>
 nnoremap cn         :cn<CR>
 nnoremap cp         :cp<CR>
 nnoremap cN         :cN<CR>
-"Denite vim
-nnoremap <silent> <leader>fr :<C-u>Denite file_mru<CR>
-nnoremap <silent> <leader>fb :<C-u>Denite buffer<CR>
-nnoremap <silent> <leader>fy :<C-u>Denite neoyank<CR>
-nnoremap <silent> <leader>ff :<C-u>Denite file_rec<CR>
 
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]> 
@@ -203,7 +191,6 @@ nnoremap <C-]> g<C-]>
 "Defx
 nnoremap   <silent> <leader>D   :Defx -columns=mark:time:size:filename:type:git -fnamewidth=30 -split=tab      -auto-cd `expand('%:p:h')` -search=`expand('%:p')` <CR>
 nnoremap   <silent> <leader>d   :Defx -columns=mark:time:size:filename:type:git -fnamewidth=15 -split=vertical -auto-cd -winwidth=50 `expand('%:p:h')` -search=`expand('%:p')`<CR>
-autocmd    FileType defx call s:defx_my_settings()
 function!  s:defx_my_settings() abort
   " Define mappings
   nnoremap <silent><buffer><expr> <CR>     defx#do_action('open')
