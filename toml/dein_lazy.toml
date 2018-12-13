@@ -27,15 +27,13 @@ on_i = 1
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
+depends=['unite-outline','neomru.vim','neoyank.vim']
 [[plugins]]
 repo = 'Shougo/unite-outline'
-depends=['denite.nvim']
 [[plugins]]
 repo = 'Shougo/neomru.vim'
-depends=['denite.nvim']
 [[plugins]]
 repo = 'Shougo/neoyank.vim'
-depends=['denite.nvim']
 
 [[plugins]]
 repo = 'Shougo/neco-syntax'
@@ -131,12 +129,6 @@ nmap <Leader>bo :OperaReloadStart<CR>
 nmap <Leader>bO :OperaReloadStop<CR>
 nmap <Leader>ba :AllBrowserReloadStart<CR>
 nmap <Leader>bA :AllBrowserReloadStop<CR>
-"うまく動かない...
-"augroup htmlreload
-"    autocmd!
-"    autocmd BufNewFile,BufRead *.html ChromeReloadStart
-"    autocmd BufNewFile,BufRead *.htm ChromeReloadStart
-"augroup END
 '''
 
 [[plugins]]

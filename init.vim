@@ -19,18 +19,15 @@ if &compatible
 endif
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
-
- " プラグインリストを収めた TOML ファイル
-  " 予め TOML ファイル（後述）を用意しておく
+  " locate toml directory beforehand
   let g:rc_dir    = s:cache_home . '/toml'
   let s:toml      = g:rc_dir . '/dein.toml'
   let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
 
-  " TOML を読み込み、キャッシュしておく
+  " read toml file and cache them
   call dein#load_toml(s:toml,      {'lazy': 0})
   call dein#load_toml(s:lazy_toml, {'lazy': 1})
 
-  " 設定終了
   call dein#end()
   call dein#save_state()
 endif
@@ -43,6 +40,7 @@ if has('vim_starting') && dein#check_install()
   call dein#install()
 endif
 
+" tmux cursor shape setting
 if exists('$TMUX')
   let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
   let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
@@ -90,27 +88,27 @@ set expandtab
 set inccommand=split
 
 augroup fileType
-    autocmd!
-    autocmd BufNewFile,BufRead *.py  setlocal tabstop=4 softtabstop=4 shiftwidth=4 foldmethod=indent
-    autocmd BufNewFile,BufRead *.c   setlocal tabstop=2 softtabstop=2 shiftwidth=2 foldmethod=syntax
-    autocmd BufNewFile,BufRead *.cpp setlocal tabstop=2 softtabstop=2 shiftwidth=2 foldmethod=syntax
-    autocmd BufNewFile,BufRead *.tex setlocal tabstop=4 softtabstop=0 shiftwidth=0 foldmethod=syntax
-    autocmd BufNewFile,BufRead *.html setlocal nowrap
-    autocmd BufNewFile,BufRead *.grg setlocal nowrap tabstop=4 softtabstop=4 shiftwidth=4
-    autocmd BufNewFile,BufRead *.csv setlocal nowrap
+  autocmd!
+  autocmd BufNewFile,BufRead *.py  setlocal tabstop=4 softtabstop=4 shiftwidth=4 foldmethod=indent
+  autocmd BufNewFile,BufRead *.c   setlocal tabstop=2 softtabstop=2 shiftwidth=2 foldmethod=syntax
+  autocmd BufNewFile,BufRead *.cpp setlocal tabstop=2 softtabstop=2 shiftwidth=2 foldmethod=syntax
+  autocmd BufNewFile,BufRead *.tex setlocal tabstop=4 softtabstop=0 shiftwidth=0 foldmethod=syntax
+  autocmd BufNewFile,BufRead *.html setlocal nowrap
+  autocmd BufNewFile,BufRead *.grg setlocal nowrap tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd BufNewFile,BufRead *.csv setlocal nowrap
 augroup END
 
 augroup Beautifytype
-"for javascript
-autocmd FileType javascript noremap <buffer> <leader>aj :call JsBeautify()<cr>
-" for json
-autocmd FileType json noremap <buffer> <leader>aj :call JsonBeautify()<cr>
-" for jsx
-autocmd FileType jsx noremap <buffer> <leader>aj :call JsxBeautify()<cr>
-" for html
-autocmd FileType html noremap <buffer> <leader>aj :call HtmlBeautify()<cr>
-" for css or scss
-autocmd FileType css noremap <buffer> <leader>aj :call CSSBeautify()<cr>
+  "for javascript
+  autocmd FileType javascript noremap <buffer> <leader>aj :call JsBeautify()<cr>
+  " for json
+  autocmd FileType json noremap <buffer> <leader>aj :call JsonBeautify()<cr>
+  " for jsx
+  autocmd FileType jsx noremap <buffer> <leader>aj :call JsxBeautify()<cr>
+  " for html
+  autocmd FileType html noremap <buffer> <leader>aj :call HtmlBeautify()<cr>
+  " for css or scss
+  autocmd FileType css noremap <buffer> <leader>aj :call CSSBeautify()<cr>
 augroup END
 
 set clipboard=unnamed
@@ -133,21 +131,10 @@ set mouse=a
 
 "key mapping
 
-noremap  あ         a
-noremap  い         i
-noremap  う         u
-noremap  え         e
-noremap  お         o
-noremap  ア         a
-noremap  イ         i
-noremap  ウ         u
-noremap  エ         e
-noremap  オ         o
-
 inoremap <silent>   fd          <ESC>
 let      mapleader  =           "\<Space>"
 
-"ペーストした後にその文章の後に移動
+"move to the end of a text after pasting it
 vnoremap <silent>   y           y`]
 vnoremap <silent>   p           p`]
 nnoremap <silent>   p           p`]
@@ -210,15 +197,18 @@ nnoremap <silent> <leader>fb :<C-u>Denite buffer<CR>
 nnoremap <silent> <leader>fy :<C-u>Denite neoyank<CR>
 nnoremap <silent> <leader>ff :<C-u>Denite file_rec<CR>
 
+" tagsジャンプの時に複数ある時は一覧表示
+nnoremap <C-]> g<C-]> 
+
 "Defx
-nnoremap   <silent> <leader>D   :Defx -columns=mark:filename:size:time:type:git -fnamewidth=30 -split=tab `expand('%:p:h')` -search=`expand('%:p')` <CR>
-nnoremap   <silent> <leader>d   :Defx -columns=mark:filename:size:time:type:git -fnamewidth=30            `expand('%:p:h')` -search=`expand('%:p')`<CR>
+nnoremap   <silent> <leader>D   :Defx -columns=mark:time:size:filename:type:git -fnamewidth=30 -split=tab      -auto-cd `expand('%:p:h')` -search=`expand('%:p')` <CR>
+nnoremap   <silent> <leader>d   :Defx -columns=mark:time:size:filename:type:git -fnamewidth=15 -split=vertical -auto-cd -winwidth=50 `expand('%:p:h')` -search=`expand('%:p')`<CR>
 autocmd    FileType defx call s:defx_my_settings()
 function!  s:defx_my_settings() abort
   " Define mappings
-  nnoremap <silent><buffer><expr> o        defx#do_action('open')
   nnoremap <silent><buffer><expr> <CR>     defx#do_action('open')
-  nnoremap <silent><buffer><expr> l        defx#do_action('open')
+  nnoremap <silent><buffer><expr> o        defx#do_action('drop')
+  nnoremap <silent><buffer><expr> l        defx#do_action('open_directory')
   nnoremap <silent><buffer><expr> K        defx#do_action('new_directory')
   nnoremap <silent><buffer><expr> L        defx#do_action('new_file')
   nnoremap <silent><buffer><expr> h        defx#do_action('cd',['..'])
@@ -250,10 +240,6 @@ nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gf :Gfetch<CR>
 nnoremap <leader>gd :Gdiff<CR>
 
-" カーソル下のURLや単語をブラウザで開く
-"nmap <leader>b <Plug>(openbrowser-smart-search)
-"vmap <leader>b <Plug>(openbrowser-smart-search)
-
 " operator mappings
 map        <silent>sa             <Plug>(operator-surround-append)
 map        <silent>sd             <Plug>(operator-surround-delete)
@@ -263,8 +249,6 @@ omap       ib                     <Plug>(textobj-multiblock-i)
 vmap       ab                     <Plug>(textobj-multiblock-a)
 vmap       ib                     <Plug>(textobj-multiblock-i)
 
-" delete or replace most inner surround
-
 " if you use vim-textobj-multiblock
 nmap       <silent>sdd            <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
 nmap       <silent>srr            <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
@@ -273,4 +257,4 @@ nmap       <silent>srr            <Plug>(operator-surround-replace)<Plug>(textob
 nmap       <silent>sdb            <Plug>(operator-surround-delete)<Plug>(textobj-between-a)
 nmap       <silent>srb            <Plug>(operator-surround-replace)<Plug>(textobj-between-a)
 
-filetype   plugin                 indent      on
+filetype plugin indent on

@@ -83,7 +83,7 @@ repo = 'scrooloose/nerdcommenter'
 hook_add='''
 let g:NERDSpaceDelims=1
 let g:NERDDefaultAlign='left'
-let g:NERDCustomDelimiters = {'vim': {'left': '" ','right':''}}
+let g:NERDCustomDelimiters = {'vim': {'left': '"','right':''}}
 '''
 
 [[plugins]]
@@ -100,10 +100,8 @@ nmap       ga                     <Plug>(EasyAlign)
 
 [[plugins]]
 repo = 'tyru/open-browser.vim'
+
 hook_add = '''
-" カーソル下のURLをブラウザで開く
-nmap <Space>o <Plug>(openbrowser-open)
-vmap <Space>o <Plug>(openbrowser-open)
-" ググる
-nmap <Space>g :<C-u>OpenBrowserSearch<Space><C-r><C-w><Enter>
+nmap <leader>b <Plug>(openbrowser-smart-search)
+vmap <leader>b <Plug>(openbrowser-smart-search)
 '''
