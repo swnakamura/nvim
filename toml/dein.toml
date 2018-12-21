@@ -35,7 +35,6 @@ repo = 'thinca/vim-quickrun'
 [[plugins]]
 repo = 'kana/vim-smartinput'
 
-
 [[plugins]]
 repo = 'osyo-manga/shabadou.vim'
 
@@ -112,8 +111,7 @@ nmap       ga                     <Plug>(EasyAlign)
 
 [[plugins]]
 repo = 'tyru/open-browser.vim'
-
 hook_add = '''
-nmap <leader>b <Plug>(openbrowser-smart-search)
-vmap <leader>b <Plug>(openbrowser-smart-search)
+nmap <space>b <Plug>(openbrowser-smart-search)
+vmap <space>b <Plug>(openbrowser-smart-search)
 '''

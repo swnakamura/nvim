@@ -180,3 +180,7 @@ on_ft = ['html', 'htm', 'js']
 [[plugins]]
 repo = 'pangloss/vim-javascript'
 on_ft = 'js'
+
+[[plugins]]
+repo = 'https://github.com/zeekay/vim-beautify'
+on_ft = ['html', 'htm', 'js']

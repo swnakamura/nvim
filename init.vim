@@ -103,13 +103,14 @@ augroup Beautifytype
   autocmd FileType css noremap <buffer> <leader>aj :call CSSBeautify()<cr>
 augroup END
 
-set clipboard=unnamed
 set backspace=eol,indent,start
 
 set wildmenu
 set wildmode=list:full
 set wildignore=*.o,*.obj,*.pyc,*.so,*.dll
 let g:python_highlight_all = 1
+
+set clipboard=unnamed
 
 syntax enable
 "autocmd ColorScheme * highlight LineNr guifg=#b5bd68
@@ -185,12 +186,16 @@ nnoremap cn         :cn<CR>
 nnoremap cp         :cp<CR>
 nnoremap cN         :cN<CR>
 
+nnoremap > >>
+nnoremap < <<
+
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]> 
 
 "Defx
 nnoremap   <silent> <leader>D   :Defx -columns=mark:time:size:filename:type:git -fnamewidth=30 -split=tab      -auto-cd `expand('%:p:h')` -search=`expand('%:p')` <CR>
 nnoremap   <silent> <leader>d   :Defx -columns=mark:time:size:filename:type:git -fnamewidth=15 -split=vertical -auto-cd -winwidth=50 `expand('%:p:h')` -search=`expand('%:p')`<CR>
+nnoremap   <silent> <leader>ft  :Defx -columns=mark:time:size:filename:type:git -fnamewidth=15 -auto-cd -winwidth=50 `expand('%:p:h')` -search=`expand('%:p')`<CR>
 function!  s:defx_my_settings() abort
   " Define mappings
   nnoremap <silent><buffer><expr> <CR>     defx#do_action('open')
