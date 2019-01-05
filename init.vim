@@ -201,6 +201,14 @@ nnoremap < <<
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]> 
 
+" clang-format
+nnoremap <silent> <leader>ac :call <SID>clang_formatting()<CR>
+
+function! s:clang_formatting() abort
+    execute "!clang-format -i %:t"
+    e!
+endfunction
+
 "Defx
 nnoremap   <silent> <leader>D   :Defx -new -columns=mark:time:size:filename:type:git -split=tab      -auto-cd -show-ignored-files  `expand('%:p:h')` -search=`expand('%:p')` <CR>
 nnoremap   <silent> <leader>d   :Defx -new -columns=mark:time:filename:type:git -split=vertical -auto-cd -winwidth=35 -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')`<CR>
