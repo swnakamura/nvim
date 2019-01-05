@@ -23,9 +23,9 @@ if dein#load_state(s:dein_dir)
   call dein#save_state()
 endif
 
-if dein#check_install(['vimproc.vim'])
-  call dein#install(['vimproc.vim'])
-endif
+" if dein#check_install(['vimproc.vim'])
+"   call dein#install(['vimproc.vim'])
+" endif
 
 if has('vim_starting') && dein#check_install()
   call dein#install()
@@ -70,8 +70,9 @@ set listchars=tab:>-,trail:~,extends:»,precedes:«
 set showtabline=2
 set ambiwidth=double
 set laststatus=2
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
 set smartindent
 set expandtab
 
@@ -79,12 +80,12 @@ set inccommand=split
 
 augroup fileType
   autocmd!
-  autocmd BufNewFile,BufRead *.py  setlocal tabstop=4 softtabstop=4 shiftwidth=4 foldmethod=syntax
-  autocmd BufNewFile,BufRead *.c   setlocal tabstop=2 softtabstop=2 shiftwidth=2 foldmethod=syntax
-  autocmd BufNewFile,BufRead *.cpp setlocal tabstop=2 softtabstop=2 shiftwidth=2 foldmethod=syntax
+  autocmd BufNewFile,BufRead *.py  setlocal foldmethod=syntax
+  autocmd BufNewFile,BufRead *.c   setlocal foldmethod=syntax
+  autocmd BufNewFile,BufRead *.cpp setlocal foldmethod=syntax
   autocmd BufNewFile,BufRead *.tex setlocal tabstop=4 softtabstop=0 shiftwidth=0 foldmethod=syntax
   autocmd BufNewFile,BufRead *.html setlocal nowrap
-  autocmd BufNewFile,BufRead *.grg setlocal nowrap tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd BufNewFile,BufRead *.grg setlocal nowrap
   autocmd BufNewFile,BufRead *.csv setlocal nowrap
   autocmd FileType defx call s:defx_my_settings()
   autocmd FileType defx set listchars=
@@ -137,6 +138,7 @@ noremap  <leader>h  ^
 noremap  <leader>l  $
 noremap  <leader>k  gg
 noremap  <leader>j  G
+nmap     s          <leader>w
 nnoremap <leader>ws :split<CR>
 nnoremap <leader>wv :vsplit<CR>
 nnoremap <leader>wj <C-w>j
@@ -171,20 +173,27 @@ nnoremap <Tab>      %
 vnoremap <Tab>      %
 nnoremap +          <C-a>
 nnoremap -          <C-x>
-nnoremap <silent>   <leader>fs  :<C-u>update<CR>
-nnoremap <silent>   <leader>wd  :<C-u>q<CR>
+vmap     g+          g<C-a>
+vmap     g-          g<C-x>
+nnoremap <silent>  <leader>fs  :<C-u>update<CR>
+nnoremap <silent>  <leader>s  :<C-u>update<CR>
+nnoremap <silent>  <leader>wd  :<C-u>q<CR>
+
 "reload init.vim again
-nnoremap <silent>   <leader>qr  :<C-u>so          ~/.config/nvim/init.vim<CR>
+nnoremap <silent>  <leader>qr  :<C-u>so          ~/.config/nvim/init.vim<CR>
+
 "delete every window in this tab
-nnoremap <silent>   <leader>bd  :<C-u>tabc<CR>
+nnoremap <silent>  <leader>bd  :<C-u>tabc<CR>
+
 "quit vim
-nnoremap <silent>   <leader>qq  :<C-u>bufdo       bd<CR>:q<CR>
+nnoremap <silent>  <leader>qq  :<C-u>bufdo       bd<CR>:q<CR>
+
 "open init.vim in new tab
-nmap     <silent>   <leader>fed <leader>wt:<C-u>e ~/.config/nvim/init.vim<CR>
-nnoremap <leader>v  :vim  *<Left><Left>
-nnoremap cn         :cn<CR>
-nnoremap cp         :cp<CR>
-nnoremap cN         :cN<CR>
+nmap     <silent>  <leader>fed <leader>wt:<C-u>e ~/.config/nvim/init.vim<CR>
+nnoremap <leader>v :vim        *<Left><Left>
+nnoremap cn        :cn<CR>
+nnoremap cp        :cp<CR>
+nnoremap cN        :cN<CR>
 
 nnoremap > >>
 nnoremap < <<
@@ -193,26 +202,28 @@ nnoremap < <<
 nnoremap <C-]> g<C-]> 
 
 "Defx
-nnoremap   <silent> <leader>D   :Defx -columns=mark:time:size:filename:type:git -fnamewidth=30 -split=tab      -auto-cd `expand('%:p:h')` -search=`expand('%:p')` <CR>
-nnoremap   <silent> <leader>d   :Defx -columns=mark:time:size:filename:type:git -fnamewidth=15 -split=vertical -auto-cd -winwidth=50 `expand('%:p:h')` -search=`expand('%:p')`<CR>
-nnoremap   <silent> <leader>ft  :Defx -columns=mark:time:size:filename:type:git -fnamewidth=15 -auto-cd -winwidth=50 `expand('%:p:h')` -search=`expand('%:p')`<CR>
+nnoremap   <silent> <leader>D   :Defx -new -columns=mark:time:size:filename:type:git -split=tab      -auto-cd -show-ignored-files  `expand('%:p:h')` -search=`expand('%:p')` <CR>
+nnoremap   <silent> <leader>d   :Defx -new -columns=mark:time:filename:type:git -split=vertical -auto-cd -winwidth=35 -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')`<CR>
+nnoremap   <silent> <leader>ft  :Defx -columns=mark:time:filename:type:git -auto-cd -winwidth=50 `expand('%:p:h')` -search=`expand('%:p')`<CR>
 function!  s:defx_my_settings() abort
   " Define mappings
-  nnoremap <silent><buffer><expr> <CR>     defx#do_action('open')
-  nnoremap <silent><buffer><expr> o        defx#do_action('drop')
-  nnoremap <silent><buffer><expr> l        defx#do_action('open_directory')
-  nnoremap <silent><buffer><expr> K        defx#do_action('new_directory')
-  nnoremap <silent><buffer><expr> L        defx#do_action('new_file')
-  nnoremap <silent><buffer><expr> h        defx#do_action('cd',['..'])
-  nnoremap <silent><buffer><expr> dd       defx#do_action('remove_trash',['..'])
-  nnoremap <silent><buffer><expr> r        defx#do_action('rename',['..'])
-  nnoremap <silent><buffer><expr> ~        defx#do_action('cd')
-  nnoremap <silent><buffer><expr> <leader> defx#do_action('toggle_select').'j'
-  nnoremap <silent><buffer><expr> s        defx#do_action('toggle_ignored_files')
-  nnoremap <silent><buffer><expr> R        defx#do_action('redraw')
-  nnoremap <silent><buffer><expr> yy       defx#do_action('yank_path')
-  nnoremap <silent><buffer><expr> !        defx#do_action('execute_command')
-  nnoremap <silent><buffer><expr> x        defx#do_action('execute_system')
+  nnoremap <silent><buffer><expr> <CR>          defx#do_action('open')
+  nnoremap <silent><buffer><expr> o             defx#do_action('drop')
+  nnoremap <silent><buffer><expr> <2-LeftMouse> defx#do_action('drop')
+  nnoremap <silent><buffer><expr> l             defx#do_action('open_directory')
+  nnoremap <silent><buffer><expr> K             defx#do_action('new_directory')
+  nnoremap <silent><buffer><expr> L             defx#do_action('new_file')
+  nnoremap <silent><buffer><expr> h             defx#do_action('cd',['..'])
+  nnoremap <silent><buffer><expr> dd            defx#do_action('remove',['..'])
+  nnoremap <silent><buffer><expr> r             defx#do_action('rename',['..'])
+  nnoremap <silent><buffer><expr> ~             defx#do_action('cd')
+  nnoremap <silent><buffer><expr> <leader>      defx#do_action('toggle_select').'j'
+  nnoremap <silent><buffer><expr> s             defx#do_action('toggle_ignored_files')
+  nnoremap <silent><buffer><expr> R             defx#do_action('redraw')
+  nnoremap <silent><buffer><expr> yy            defx#do_action('yank_path')
+  nnoremap <silent><buffer><expr> !             defx#do_action('execute_command')
+  nnoremap <silent><buffer><expr> x             defx#do_action('execute_system')
+  nnoremap <silent><buffer><expr> p             defx#do_action('copy')
 endfunction
 "open defx if open without any file
 "TODO
