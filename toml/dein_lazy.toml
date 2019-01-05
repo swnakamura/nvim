@@ -78,6 +78,14 @@ call deoplete#custom#var('clangx', 'clang_binary', '/usr/bin/clang')
 " Change clang options
 call deoplete#custom#var('clangx', 'default_c_options', '')
 call deoplete#custom#var('clangx', 'default_cpp_options', '')
+
+" settings for clang-format
+nnoremap <silent> <leader>ac :call s:clang_formatting()<CR>
+
+function! s:clang_formatting() abort
+    execute "silent !clang-format -i %<CR><CR>"
+endfunction
+
 '''
 on_ft = ['c','cpp']
 
