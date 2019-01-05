@@ -80,10 +80,11 @@ call deoplete#custom#var('clangx', 'default_c_options', '')
 call deoplete#custom#var('clangx', 'default_cpp_options', '')
 
 " settings for clang-format
-nnoremap <silent> <leader>ac :call s:clang_formatting()<CR>
+nnoremap <silent> <Space>ac :call <SID>clang_formatting()<CR>
 
 function! s:clang_formatting() abort
     execute "silent !clang-format -i %<CR><CR>"
+    edit!
 endfunction
 
 '''
