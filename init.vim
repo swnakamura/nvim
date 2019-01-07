@@ -119,7 +119,8 @@ syntax enable
 "colorscheme Dim2
 "colorscheme jelybeans
 "colorscheme gruvbox
-colorscheme PaperColor
+" colorscheme PaperColor
+colorscheme flatwhite
 
 set mouse=a
 
