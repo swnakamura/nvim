@@ -45,6 +45,9 @@ on_i  = 1
 depends = ['neosnippet-snippets']
 
 [[plugins]]
+repo = 'Shougo/defx.nvim'
+
+[[plugins]]
 repo= 'Shougo/neosnippet-snippets'
 
 [[plugins]]
@@ -100,10 +103,14 @@ nmap rl stszilatexmk<CR>
 
 [[plugins]]
 repo = 'mattn/emmet-vim'
-on_ft = ['html','htm']
+on_ft = ['html','htm','md','markdown']
 hook_source = '''
 let g:user_emmet_leader_key='mm'
 '''
+
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+on_ft = ['c','cpp','python']
 
 [[plugins]]
 repo = 'https://github.com/tell-k/vim-browsereload-mac'
@@ -142,15 +149,14 @@ on_ft = ['html','htm']
 [[plugins]]
 repo = 'https://github.com/AtsushiM/sass-compile.vim'
 on_ft = ['sass','scss','css']
-hook_source = '''
- let g:sass_compile_auto                 = 0
+hook_add = '''
+ let g:sass_compile_auto                 = 1
  let g:sass_compile_cdloop               = 5
  let g:sass_compile_cssdir               = ['css', 'stylesheet']
  let g:sass_compile_file                 = ['scss', 'sass']
  let g:sass_started_dirs                 = []
  let g:sass_compile_beforecmd            = ''
  autocmd FileType less,sass  setlocal sw = 2 sts=2 ts=2 et
- au! BufWritePost * SassCompile
 '''
 
 [[plugins]]

@@ -2,11 +2,10 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
-repo = 'Shougo/vimproc.vim'
-hook_post_update = '''
-  let cmd = 'make'
-  let g:dein#plugin.build = cmd
-'''
+repo = 'Shougo/vimfiler.vim'
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
@@ -23,9 +22,6 @@ repo = 'Shougo/unite-outline'
 repo = 'Shougo/neomru.vim'
 [[plugins]]
 repo = 'Shougo/neoyank.vim'
-
-[[plugins]]
-repo = 'Shougo/defx.nvim'
 
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
@@ -58,36 +54,7 @@ repo = 'osyo-manga/vim-textobj-multiblock'
 repo = 'kana/vim-textobj-entire'
 
 [[plugins]]
-repo = 'vim-airline/vim-airline'
-hook_add = '''
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_section_z = airline#section#create(['windowswap', '%3p%% ', 'linenr', ':%3v'])
-" Powerline系フォントを利用する
-let g:airline_powerline_fonts = 1
-
-" タブバーのカスタマイズを有効にする
-let g:airline#extensions#tabline#enabled = 1
-
-" タブバーの右領域を非表示にする
-let g:airline#extensions#tabline#show_splits = 0
-let g:airline#extensions#tabline#show_tab_type = 0
-let g:airline#extensions#tabline#show_close_button = 0
-'''
-
-[[plugins]]
-repo = 'vim-airline/vim-airline-themes'
-hook_add = '''
-let g:airline_theme='papercolor'
-'''
-
-[[plugins]]
 repo = 'airblade/vim-gitgutter'
-
-[[plugins]]
-repo = 'Yggdroot/indentLine'
-hook_post_source='''
-IndentLinesEnable
-'''
 
 [[plugins]]
 repo = 'scrooloose/nerdcommenter'
