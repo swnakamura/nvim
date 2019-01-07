@@ -85,3 +85,6 @@ hook_add = '''
 nmap <space>b <Plug>(openbrowser-smart-search)
 vmap <space>b <Plug>(openbrowser-smart-search)
 '''
+
+[[plugins]]
+repo = 'soramugi/auto-ctags.vim'
