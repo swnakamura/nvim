@@ -201,9 +201,17 @@ nnoremap < <<
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]> 
 
+" clang-format
+nnoremap <silent> <leader>ac :call <SID>clang_formatting()<CR>
+
+function! s:clang_formatting() abort
+    execute "!clang-format -i %:t"
+    e!
+endfunction
+
 "Defx
 nnoremap   <silent> <leader>D   :Defx -new -columns=mark:time:size:filename:type:git -split=tab      -auto-cd -show-ignored-files  `expand('%:p:h')` -search=`expand('%:p')` <CR>
-nnoremap   <silent> <leader>d   :Defx -new -columns=mark:time:filename:type:git -split=vertical -auto-cd -winwidth=50 -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')`<CR>
+nnoremap   <silent> <leader>d   :Defx -new -columns=mark:time:filename:type:git -split=vertical -auto-cd -winwidth=35 -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')`<CR>
 nnoremap   <silent> <leader>ft  :Defx -columns=mark:time:filename:type:git -auto-cd -winwidth=50 `expand('%:p:h')` -search=`expand('%:p')`<CR>
 function!  s:defx_my_settings() abort
   " Define mappings
@@ -214,7 +222,7 @@ function!  s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> K             defx#do_action('new_directory')
   nnoremap <silent><buffer><expr> L             defx#do_action('new_file')
   nnoremap <silent><buffer><expr> h             defx#do_action('cd',['..'])
-  nnoremap <silent><buffer><expr> dd            defx#do_action('remove_trash',['..'])
+  nnoremap <silent><buffer><expr> dd            defx#do_action('remove',['..'])
   nnoremap <silent><buffer><expr> r             defx#do_action('rename',['..'])
   nnoremap <silent><buffer><expr> ~             defx#do_action('cd')
   nnoremap <silent><buffer><expr> <leader>      defx#do_action('toggle_select').'j'
