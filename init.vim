@@ -65,7 +65,7 @@ set wrapscan
 
 set number
 set list
-set listchars=tab:>-,trail:~,extends:»,precedes:«
+set listchars=tab:»-,trail:~,extends:»,precedes:«,nbsp:%
 
 set showtabline=2
 set ambiwidth=double
@@ -88,7 +88,6 @@ augroup fileType
   autocmd BufNewFile,BufRead *.grg setlocal nowrap
   autocmd BufNewFile,BufRead *.csv setlocal nowrap
   autocmd FileType defx call s:defx_my_settings()
-  autocmd FileType defx set listchars=
 augroup END
 
 augroup Beautifytype

@@ -41,7 +41,7 @@ repo = 'kana/vim-smartinput'
 repo = 'osyo-manga/shabadou.vim'
 
 [[plugins]]
-repo = 'kamwitsta/flatwhite-vim'
+repo = 'woodyZootopia/flatwhite-vim'
 
 [[plugins]]
 repo = 'kana/vim-operator-user'
