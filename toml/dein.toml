@@ -80,6 +80,15 @@ xmap <Space>ga :Tabular
 '''
 
 [[plugins]]
+repo = 'junegunn/vim-easy-align'
+hook_add='''
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap       ga                     <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap       ga                     <Plug>(EasyAlign)
+'''
+
+[[plugins]]
 repo = 'tyru/open-browser.vim'
 hook_add = '''
 nmap <space>b <Plug>(openbrowser-smart-search)
@@ -88,3 +97,6 @@ vmap <space>b <Plug>(openbrowser-smart-search)
 
 [[plugins]]
 repo = 'soramugi/auto-ctags.vim'
+
+[[plugins]]
+repo = 'majutsushi/tagbar.git'

@@ -250,6 +250,7 @@ nnoremap <leader>gl :Git lga<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gf :Gfetch<CR>
 nnoremap <leader>gd :Gdiff<CR>
+nmap     <leader>t  :TagbarToggle<CR>
 
 " operator mappings
 map        <silent>sa             <Plug>(operator-surround-append)
