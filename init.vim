@@ -46,7 +46,6 @@ set timeoutlen=400
 if &compatible
   set nocompatible
 endif
-syntax enable
 set t_Co=256
 
 set encoding=utf-8
@@ -250,6 +249,7 @@ nnoremap <leader>gl :Git lga<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gf :Gfetch<CR>
 nnoremap <leader>gd :Gdiff<CR>
+nmap     <leader>t  :TagbarToggle<CR>
 
 " operator mappings
 map        <silent>sa             <Plug>(operator-surround-append)
