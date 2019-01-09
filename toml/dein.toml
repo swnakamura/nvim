@@ -8,6 +8,14 @@ repo = 'Shougo/vimfiler.vim'
 repo = 'Shougo/unite.vim'
 
 [[plugins]]
+repo = 'cohama/lexima.vim'
+hook_post_source = '''
+call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'latex'})
+call lexima#add_rule({'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': 'latex'})
+call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
+'''
+
+[[plugins]]
 repo = 'Shougo/denite.nvim'
 hook_add='''
 nnoremap <silent> <space>fr :<C-u>Denite file_mru<CR>
