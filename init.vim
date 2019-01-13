@@ -167,6 +167,8 @@ noremap  gj         j
 noremap  gk         k
 nnoremap t          /
 nnoremap /          t
+xnoremap t          /
+xnoremap /          t
 nnoremap gg         ggzz
 nnoremap <Tab>      %
 vnoremap <Tab>      %
