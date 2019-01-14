@@ -211,8 +211,8 @@ function! s:clang_formatting() abort
 endfunction
 
 "Defx
-nnoremap   <silent> <leader>D   :Defx -new -columns=mark:time:size:filename:type:git -split=tab      -auto-cd -show-ignored-files  `expand('%:p:h')` -search=`expand('%:p')` <CR>
-nnoremap   <silent> <leader>d   :Defx -new -columns=mark:time:filename:type:git -split=vertical -auto-cd -winwidth=35 -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')`<CR>
+nnoremap <silent> st        :Defx -new -columns=mark:time:size:filename:type:git -split=tab -sort=extension -auto-cd        -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` <CR>
+nnoremap <silent> <leader>d :Defx -new -columns=mark:time:filename:type:git      -auto-cd   -winwidth=35    -sort=extension -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')`<CR>
 nnoremap   <silent> <leader>ft  :Defx -columns=mark:time:filename:type:git -auto-cd -winwidth=50 `expand('%:p:h')` -search=`expand('%:p')`<CR>
 function!  s:defx_my_settings() abort
   " Define mappings
@@ -227,7 +227,7 @@ function!  s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> r             defx#do_action('rename',['..'])
   nnoremap <silent><buffer><expr> ~             defx#do_action('cd')
   nnoremap <silent><buffer><expr> <leader>      defx#do_action('toggle_select').'j'
-  nnoremap <silent><buffer><expr> s             defx#do_action('toggle_ignored_files')
+  nnoremap <silent><buffer><expr> S             defx#do_action('toggle_ignored_files')
   nnoremap <silent><buffer><expr> R             defx#do_action('redraw')
   nnoremap <silent><buffer><expr> yy            defx#do_action('yank_path')
   nnoremap <silent><buffer><expr> !             defx#do_action('execute_command')
