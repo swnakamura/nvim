@@ -16,6 +16,12 @@ call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 
 '''
 
 [[plugins]]
+repo = 'Shougo/defx.nvim'
+
+[[plugins]]
+repo = 'kristijanhusak/defx-git'
+
+[[plugins]]
 repo = 'Shougo/denite.nvim'
 hook_add='''
 nnoremap <silent> <space>fr :<C-u>Denite file_mru<CR>

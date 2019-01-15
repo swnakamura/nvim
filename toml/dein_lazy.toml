@@ -45,9 +45,6 @@ on_i  = 1
 depends = ['neosnippet-snippets']
 
 [[plugins]]
-repo = 'Shougo/defx.nvim'
-
-[[plugins]]
 repo= 'Shougo/neosnippet-snippets'
 
 [[plugins]]

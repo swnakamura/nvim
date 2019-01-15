@@ -211,8 +211,8 @@ function! s:clang_formatting() abort
 endfunction
 
 "Defx
-nnoremap <silent> st        :Defx -new -columns=mark:time:size:filename:type:git -split=tab -sort=extension -auto-cd        -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` <CR>
-nnoremap <silent> <leader>d :Defx -new -columns=mark:time:size:filename:type:git      -auto-cd   -sort=extension -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')`<CR>
+nnoremap <silent> st        :Defx -new -columns=git:time:size:filename -split=tab -sort=extension -auto-cd            -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` <CR>
+nnoremap <silent> <leader>d :Defx -new -columns=git:time:size:filename -auto-cd   -sort=extension -show-ignored-files `expand('%:p:h')`   -search=`expand('%:p')`<CR>
 nnoremap   <silent> <leader>ft  :Defx -columns=mark:time:filename:type:git -auto-cd -winwidth=50 `expand('%:p:h')` -search=`expand('%:p')`<CR>
 function!  s:defx_my_settings() abort
   " Define mappings
