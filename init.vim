@@ -211,14 +211,14 @@ function! s:clang_formatting() abort
 endfunction
 
 "Defx
-nnoremap <silent> st        :Defx -new -columns=git:time:size:filename -split=tab -sort=extension -auto-cd            -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` <CR>
-nnoremap <silent> <leader>d :Defx -new -columns=git:time:size:filename -auto-cd   -sort=extension -show-ignored-files `expand('%:p:h')`   -search=`expand('%:p')`<CR>
+nnoremap <silent> st        :Defx -new -columns=git:time:size:filename -auto-cd -sort=extension -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=tab <CR>
+nnoremap <silent> <leader>d :Defx -new -columns=git:time:size:filename -auto-cd -sort=extension -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')`<CR>
 nnoremap   <silent> <leader>ft  :Defx -columns=mark:time:filename:type:git -auto-cd -winwidth=50 `expand('%:p:h')` -search=`expand('%:p')`<CR>
 function!  s:defx_my_settings() abort
   " Define mappings
   nnoremap <silent><buffer><expr> <CR>          defx#do_action('open')
-  nnoremap <silent><buffer><expr> o             defx#do_action('drop')
-  nnoremap <silent><buffer><expr> <2-LeftMouse> defx#do_action('drop')
+  nnoremap <silent><buffer><expr> o             defx#do_action('open')
+  nnoremap <silent><buffer><expr> <2-LeftMouse> defx#do_action('open')
   nnoremap <silent><buffer><expr> l             defx#do_action('open_directory')
   nnoremap <silent><buffer><expr> K             defx#do_action('new_directory')
   nnoremap <silent><buffer><expr> L             defx#do_action('new_file')
