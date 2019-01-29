@@ -117,3 +117,7 @@ repo = 'majutsushi/tagbar.git'
 
 [[plugins]]
 repo = 'wakatime/vim-wakatime'
+
+
+[[plugins]]
+repo = 'JuliaEditorSupport/julia-vim.git'

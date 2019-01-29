@@ -113,6 +113,10 @@ repo = 'Yggdroot/indentLine'
 on_ft = ['c','cpp','python']
 
 [[plugins]]
+repo = 'fs111/pydoc.vim'
+on_ft = 'python'
+
+[[plugins]]
 repo = 'https://github.com/tell-k/vim-browsereload-mac'
 on_ft = ['html','htm', 'md']
 hook_post_source = '''

@@ -52,6 +52,10 @@ set encoding=utf-8
 set fileencodings=utf-8,ios-2022-jp,euc-jp,sjis,cp932
 set termguicolors
 
+set backupdir=~/.config/nvim/tmp//
+set directory=~/.config/nvim/tmp//
+set undodir=~/.config/nvim/tmp//
+
 set smarttab
 set virtualedit=block
 set nf=alpha
@@ -232,7 +236,8 @@ function!  s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> yy            defx#do_action('yank_path')
   nnoremap <silent><buffer><expr> !             defx#do_action('execute_command')
   nnoremap <silent><buffer><expr> x             defx#do_action('execute_system')
-  nnoremap <silent><buffer><expr> p             defx#do_action('copy')
+  nnoremap <silent><buffer><expr> c             defx#do_action('copy')
+  nnoremap <silent><buffer><expr> p             defx#do_action('paste')
   nnoremap <silent><buffer><expr> Se            defx#do_action('toggle_sort', 'extension')
   nnoremap <silent><buffer><expr> Sf            defx#do_action('toggle_sort', 'filename')
   nnoremap <silent><buffer><expr> Ss            defx#do_action('toggle_sort', 'size')
