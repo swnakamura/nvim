@@ -41,6 +41,7 @@ else
 endif
 
 set timeoutlen=400
+set updatetime=100
 
 "general settings
 if &compatible
