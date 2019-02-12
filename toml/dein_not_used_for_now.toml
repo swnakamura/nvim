@@ -1,39 +1,8 @@
 [[plugins]]
-repo = 'vim-airline/vim-airline'
-hook_add = '''
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_section_z = airline#section#create(['windowswap', '%3p%% ', 'linenr', ':%3v'])
-" Powerline系フォントを利用する
-let g:airline_powerline_fonts = 1
-
-" タブバーのカスタマイズを有効にする
-let g:airline#extensions#tabline#enabled = 1
-
-" タブバーの右領域を非表示にする
-let g:airline#extensions#tabline#show_splits = 0
-let g:airline#extensions#tabline#show_tab_type = 0
-let g:airline#extensions#tabline#show_close_button = 0
-'''
-
-[[plugins]]
-repo = 'vim-airline/vim-airline-themes'
-hook_add = '''
-let g:airline_theme='papercolor'
-'''
-
-[[plugins]]
-repo = 'Shougo/vimproc.vim'
-hook_post_update = '''
-  let cmd = 'make'
-  let g:dein#plugin.build = cmd
-'''
-
-[[plugins]]
 repo = 'Yggdroot/indentLine'
 hook_post_source='''
 IndentLinesEnable
 '''
-
 [[plugins]]
 repo = 'Shougo/deoplete-clangx'
 hook_source = '''
