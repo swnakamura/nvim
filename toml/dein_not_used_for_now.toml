@@ -35,5 +35,14 @@ IndentLinesEnable
 '''
 
 [[plugins]]
-repo = 'flazz/vim-colorschemes'
+repo = 'Shougo/deoplete-clangx'
+hook_source = '''
+" Change clang binary path
+call deoplete#custom#var('clangx', 'clang_binary', '/usr/bin/clang')
+
+" Change clang options
+call deoplete#custom#var('clangx', 'default_c_options', '')
+call deoplete#custom#var('clangx', 'default_cpp_options', '')
+'''
+on_ft = ['c','cpp']
 

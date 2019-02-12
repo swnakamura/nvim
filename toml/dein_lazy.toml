@@ -67,18 +67,6 @@ repo = 'bps/vim-textobj-python'
 on_ft = 'python'
 
 [[plugins]]
-repo = 'Shougo/deoplete-clangx'
-hook_source = '''
-" Change clang binary path
-call deoplete#custom#var('clangx', 'clang_binary', '/usr/bin/clang')
-
-" Change clang options
-call deoplete#custom#var('clangx', 'default_c_options', '')
-call deoplete#custom#var('clangx', 'default_cpp_options', '')
-'''
-on_ft = ['c','cpp']
-
-[[plugins]]
 repo = 'tell-k/vim-autopep8'
 hook_source = '''
 nnoremap <leader>ap :Autopep8<CR>
@@ -87,8 +75,44 @@ nnoremap rp :QuickRun<Space>python<Space>-outputter/buffer/split<Space>":botrigh
 on_ft = 'python'
 
 [[plugins]]
-repo = 'vim-jp/vim-cpp'
-on_ft = ['cpp']
+repo='prabirshrestha/async.vim'
+
+[[plugins]]
+repo='prabirshrestha/vim-lsp'
+hook_add='''
+if executable('clangd')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'clangd',
+        \ 'cmd': {server_info->['clangd']},
+        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+        \ })
+endif
+
+let g:lsp_signs_enabled = 1         " enable signs
+let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
+
+let g:lsp_signs_error = {'text': '✗'}
+let g:lsp_signs_warning = {'text': '‼'}
+'''
+
+[[plugins]]
+repo='prabirshrestha/asyncomplete.vim'
+
+[[plugins]]
+repo='prabirshrestha/asyncomplete-lsp.vim'
+
+[[plugins]]
+repo='prabirshrestha/asyncomplete-neosnippet.vim'
+hook_source='''
+call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
+    \ 'name': 'neosnippet',
+    \ 'whitelist': ['*'],
+    \ 'completor': function('asyncomplete#sources#neosnippet#completor'),
+    \ })
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+'''
 
 [[plugins]]
 repo = 'lervag/vimtex'
