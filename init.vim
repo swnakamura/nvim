@@ -23,10 +23,6 @@ if dein#load_state(s:dein_dir)
   call dein#save_state()
 endif
 
-" if dein#check_install(['vimproc.vim'])
-"   call dein#install(['vimproc.vim'])
-" endif
-
 if has('vim_starting') && dein#check_install()
   call dein#install()
 endif
@@ -91,7 +87,6 @@ augroup fileType
   autocmd BufNewFile,BufRead *.html setlocal nowrap
   autocmd BufNewFile,BufRead *.grg setlocal nowrap
   autocmd BufNewFile,BufRead *.csv setlocal nowrap
-  autocmd FileType defx call s:defx_my_settings()
 augroup END
 
 augroup Beautifytype
@@ -174,6 +169,10 @@ nnoremap t          /
 nnoremap /          t
 xnoremap t          /
 xnoremap /          t
+nnoremap T          ?
+nnoremap ?          T
+xnoremap T          ?
+xnoremap ?          T
 nnoremap gg         ggzz
 nnoremap <Tab>      %
 vnoremap <Tab>      %
@@ -215,80 +214,6 @@ function! s:clang_formatting() abort
     e!
 endfunction
 
-"Defx
-nnoremap <silent> st        :Defx -new -columns=git:time:size:filename -auto-cd -sort=extension -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=tab <CR>
-nnoremap <silent> <leader>d :Defx -new -columns=git:time:size:filename -auto-cd -sort=extension -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')`<CR>
-nnoremap   <silent> <leader>ft  :Defx -columns=mark:time:filename:type:git -auto-cd -winwidth=50 `expand('%:p:h')` -search=`expand('%:p')`<CR>
-function!  s:defx_my_settings() abort
-  " Define mappings
-  nnoremap <silent><buffer><expr> <CR>          defx#do_action('open')
-  nnoremap <silent><buffer><expr> o             defx#do_action('open')
-  nnoremap <silent><buffer><expr> <2-LeftMouse> defx#do_action('open')
-  nnoremap <silent><buffer><expr> l             defx#do_action('open_directory')
-  nnoremap <silent><buffer><expr> K             defx#do_action('new_directory')
-  nnoremap <silent><buffer><expr> L             defx#do_action('new_file')
-  nnoremap <silent><buffer><expr> h             defx#do_action('cd',['..'])
-  nnoremap <silent><buffer><expr> dd            defx#do_action('remove',['..'])
-  nnoremap <silent><buffer><expr> r             defx#do_action('rename',['..'])
-  nnoremap <silent><buffer><expr> ~             defx#do_action('cd')
-  nnoremap <silent><buffer><expr> <leader>      defx#do_action('toggle_select').'j'
-  nnoremap <silent><buffer><expr> S             defx#do_action('toggle_ignored_files')
-  nnoremap <silent><buffer><expr> R             defx#do_action('redraw')
-  nnoremap <silent><buffer><expr> yy            defx#do_action('yank_path')
-  nnoremap <silent><buffer><expr> !             defx#do_action('execute_command')
-  nnoremap <silent><buffer><expr> x             defx#do_action('execute_system')
-  nnoremap <silent><buffer><expr> c             defx#do_action('copy')
-  nnoremap <silent><buffer><expr> p             defx#do_action('paste')
-  nnoremap <silent><buffer><expr> Se            defx#do_action('toggle_sort', 'extension')
-  nnoremap <silent><buffer><expr> Sf            defx#do_action('toggle_sort', 'filename')
-  nnoremap <silent><buffer><expr> Ss            defx#do_action('toggle_sort', 'size')
-  nnoremap <silent><buffer><expr> St            defx#do_action('toggle_sort', 'time')
-endfunction
-"open defx if open without any file
-"TODO
-
-"gitgutter
-nmap ]h <Plug>GitGutterNextHunk
-nmap [h <Plug>GitGutterPrevHunk
-nmap <Leader>ha <Plug>GitGutterStageHunk
-nmap <Leader>hr <Plug>GitGutterUndoHunk
-nmap <Leader>hv <Plug>GitGutterPreviewHunk
-omap ih <Plug>GitGutterTextObjectInnerPending
-omap ah <Plug>GitGutterTextObjectOuterPending
-xmap ih <Plug>GitGutterTextObjectInnerVisual
-xmap ah <Plug>GitGutterTextObjectOuterVisual
-
-"other plugins
 noremap  <leader>e  :cd %:h<CR>:e .<CR>
-nmap     <leader>m  <Plug>(quickhl-manual-this)
-xmap     <leader>m  <Plug>(quickhl-manual-this)
-nmap     <leader>M  <Plug>(quickhl-manual-reset)
-xmap     <leader>M  <Plug>(quickhl-manual-reset)
-nnoremap <leader>gs :Gstatus<CR>
-nnoremap <leader>ga :Gwrite<CR>
-nnoremap <leader>gc :Gcommit<CR>
-nnoremap <leader>gb :Gblame<CR>
-nnoremap <leader>gl :Git lga<CR>
-nnoremap <leader>gp :Gpush<CR>
-nnoremap <leader>gf :Gfetch<CR>
-nnoremap <leader>gd :Gdiff<CR>
-nmap     <leader>t  :TagbarToggle<CR>
-
-" operator mappings
-map        <silent>sa             <Plug>(operator-surround-append)
-map        <silent>sd             <Plug>(operator-surround-delete)
-map        <silent>sr             <Plug>(operator-surround-replace)
-omap       ab                     <Plug>(textobj-multiblock-a)
-omap       ib                     <Plug>(textobj-multiblock-i)
-vmap       ab                     <Plug>(textobj-multiblock-a)
-vmap       ib                     <Plug>(textobj-multiblock-i)
-
-" if you use vim-textobj-multiblock
-nmap       <silent>sdd            <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
-nmap       <silent>srr            <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
-
-" if you use vim-textobj-between
-nmap       <silent>sdb            <Plug>(operator-surround-delete)<Plug>(textobj-between-a)
-nmap       <silent>srb            <Plug>(operator-surround-replace)<Plug>(textobj-between-a)
 
 filetype plugin indent on
