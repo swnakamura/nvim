@@ -1,3 +1,4 @@
+let      mapleader  =           "\<Space>"
 "plugin settings
 let s:cache_home = expand('~/.config/nvim')
 let s:dein_dir = s:cache_home . '/dein'
@@ -126,7 +127,6 @@ set mouse=a
 
 inoremap <silent>   fd          <ESC>
 inoremap <silent>   <C-j>       <ESC>
-let      mapleader  =           "\<Space>"
 
 "move to the end of a text after copying/pasting it
 vnoremap <silent>   y           y`]
@@ -174,6 +174,8 @@ nnoremap ?          T
 xnoremap T          ?
 xnoremap ?          T
 nnoremap gg         ggzz
+nnoremap n          nzz
+nnoremap N          Nzz
 nnoremap <Tab>      %
 vnoremap <Tab>      %
 nnoremap +          <C-a>

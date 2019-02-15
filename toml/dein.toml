@@ -17,12 +17,18 @@ call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 
 
 [[plugins]]
 repo = 'Shougo/defx.nvim'
+hook_add = '''
+source ~/.config/nvim/plugins/defx.vim
+'''
 
 [[plugins]]
 repo = 'kristijanhusak/defx-git'
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
+hook_add = '''
+source ~/.config/nvim/plugins/denite.vim
+'''
 
 [[plugins]]
 repo = 'Shougo/unite-outline'
@@ -58,6 +64,10 @@ repo = 'rhysd/vim-operator-surround'
 
 [[plugins]]
 repo = 'kana/vim-textobj-user'
+hook_add = '''
+source ~/.config/nvim/plugins/textobj.vim
+'''
+
 [[plugins]]
 repo = 'kana/vim-textobj-syntax'
 [[plugins]]
@@ -69,15 +79,24 @@ repo = 'kana/vim-textobj-entire'
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
+hook_add = '''
+source ~/.config/nvim/plugins/gitgutter.vim
+'''
 
 [[plugins]]
 repo = 'scrooloose/nerdcommenter'
+hook_add = '''
+source ~/.config/nvim/plugins/nerdcommenter.vim
+'''
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
 
 [[plugins]]
 repo = 'godlygeek/tabular'
+hook_add = '''
+source ~/.config/nvim/plugins/tabular_easyalign.vim
+'''
 
 [[plugins]]
 repo = 'junegunn/vim-easy-align'
@@ -94,6 +113,9 @@ repo = 'soramugi/auto-ctags.vim'
 
 [[plugins]]
 repo = 'majutsushi/tagbar.git'
+hook_add = '''
+source ~/.config/nvim/plugins/tagbar.vim
+'''
 
 [[plugins]]
 repo = 'wakatime/vim-wakatime'
@@ -104,3 +126,14 @@ repo = 'JuliaEditorSupport/julia-vim.git'
 
 [[plugins]]
 repo='t9md/vim-quickhl.git'
+hook_add = '''
+source ~/.config/nvim/plugins/quickhl.vim
+'''
+
+[[plugins]]
+repo = 'autozimu/LanguageClient-neovim'
+rev = 'next'
+build = 'bash install.sh'
+hook_add = '''
+source ~/.config/nvim/plugins/languageclient.vim
+'''
