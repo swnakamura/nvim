@@ -219,3 +219,4 @@ endfunction
 noremap  <leader>e  :cd %:h<CR>:e .<CR>
 
 filetype plugin indent on
+autocmd CursorHold,CursorHoldI *.py,*.c* call LanguageClient#textDocument_documentHighlight()
