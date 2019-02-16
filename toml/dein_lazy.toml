@@ -18,12 +18,7 @@ source ~/.config/nvim/plugins/deoplete-lsp.vim
 [[plugins]]
 repo = 'Shougo/neosnippet'
 hook_source = '''
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k> <Plug>(neosnippet_expand_target)
-  if has('conceal')
-    set conceallevel=0 concealcursor=niv
-  endif
+source ~/.config/nvim/plugins/neosnip.vim
 '''
 on_event = 'InsertEnter'
 depends = ['neosnippet-snippets']
@@ -50,25 +45,6 @@ nnoremap <leader>ap :Autopep8<CR>
 nnoremap rp :QuickRun<Space>python<Space>-outputter/buffer/split<Space>":botright"<Space>-outputter/buffer/close_on_empty<Space>1<Space>-hook/time/enable<Space>1<CR>
 '''
 on_ft = 'python'
-
-[[plugins]]
-repo='prabirshrestha/asyncomplete.vim'
-
-[[plugins]]
-repo='prabirshrestha/asyncomplete-lsp.vim'
-
-[[plugins]]
-repo='prabirshrestha/asyncomplete-neosnippet.vim'
-hook_source='''
-call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
-    \ 'name': 'neosnippet',
-    \ 'whitelist': ['*'],
-    \ 'completor': function('asyncomplete#sources#neosnippet#completor'),
-    \ })
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-'''
 
 [[plugins]]
 repo = 'lervag/vimtex'
