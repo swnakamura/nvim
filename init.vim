@@ -38,7 +38,7 @@ else
 endif
 
 set timeoutlen=400
-set updatetime=100
+set updatetime=50
 
 "general settings
 if &compatible
@@ -110,7 +110,7 @@ set wildmode=list:full
 set wildignore=*.o,*.obj,*.pyc,*.so,*.dll
 let g:python_highlight_all = 1
 
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 syntax enable
 "autocmd ColorScheme * highlight LineNr guifg=#b5bd68
@@ -126,7 +126,6 @@ set mouse=a
 "key mapping
 
 inoremap <silent>   fd          <ESC>
-inoremap <silent>   <C-j>       <ESC>
 
 "move to the end of a text after copying/pasting it
 vnoremap <silent>   y           y`]
@@ -165,6 +164,14 @@ noremap  j          gj
 noremap  k          gk
 noremap  gj         j
 noremap  gk         k
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-h> <Left>
+inoremap <C-l> <Right>
+inoremap <C-w> w
+inoremap <C-e> e
+inoremap <C-b> b
+inoremap <C-x> x
 nnoremap t          /
 nnoremap /          t
 xnoremap t          /
@@ -208,9 +215,6 @@ nnoremap < <<
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]> 
 
-" clang-format
-nnoremap <silent> <leader>ac :call <SID>clang_formatting()<CR>
-
 function! s:clang_formatting() abort
     execute "!clang-format -i %:t"
     e!
@@ -219,4 +223,3 @@ endfunction
 noremap  <leader>e  :cd %:h<CR>:e .<CR>
 
 filetype plugin indent on
-autocmd CursorHold,CursorHoldI *.py,*.c* call LanguageClient#textDocument_documentHighlight()

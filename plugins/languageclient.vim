@@ -1,13 +1,13 @@
-set hidden
-
 let g:LanguageClient_serverCommands = {}
 
 " 言語ごとに設定する
 if executable('clangd')
-    let g:LanguageClient_serverCommands = {
-        \ 'cpp': ['clangd'],
-        \ 'python': ['pyls']
-        \ }
+    let g:LanguageClient_serverCommands['c'] = ['clangd']
+    let g:LanguageClient_serverCommands['cpp'] = ['clangd']
+endif
+
+if executable('pyls')
+    let g:LanguageClient_serverCommands['python'] = ['pyls']
 endif
 
 augroup LanguageClient_config
@@ -17,8 +17,36 @@ augroup LanguageClient_config
 augroup END
 
 let g:LanguageClient_autoStart = 1
-nnoremap <Leader>lh :call LanguageClient_textDocument_hover()<CR>
-nnoremap <Leader>ld :call LanguageClient_textDocument_definition()<CR>
-nnoremap <Leader>lr :call LanguageClient_textDocument_rename()<CR>
-nnoremap <Leader>lf :call LanguageClient_textDocument_formatting()<CR>
 
+let g:LanguageClient_documentHighlightDisplay =
+            \ {
+            \     1: {
+            \         "name": "Text",
+            \         "texthl": "SpellRare",
+            \     },
+            \     2: {
+            \         "name": "Read",
+            \         "texthl": "MatchParen",
+            \     },
+            \     3: {
+            \         "name": "Write",
+            \         "texthl": "MatchParen",
+            \     },
+            \ }
+
+function LC_maps()
+    if has_key(g:LanguageClient_serverCommands, &filetype)
+        nnoremap <buffer> <silent> K    :call LanguageClient#textDocument_hover()<CR>
+        nnoremap <silent> <Leader>lh :call LanguageClient_textDocument_hover()<CR>
+        nnoremap <silent> <Leader>ld :call LanguageClient_textDocument_definition()<CR>
+        nnoremap <silent> <Leader>lr :call LanguageClient_textDocument_rename()<CR>
+        nnoremap <silent> <Leader>lf :call LanguageClient_textDocument_formatting()<CR>
+    endif
+endfunction
+
+autocmd FileType * call LC_maps()
+
+augroup lcHighlight
+    autocmd!
+    autocmd CursorHold,CursorHoldI *.py,*.c,*.cpp call LanguageClient#textDocument_documentHighlight()
+augroup END

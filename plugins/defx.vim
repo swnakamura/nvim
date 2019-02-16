@@ -1,6 +1,5 @@
-nnoremap <silent> st         :Defx -new                                 -columns=git:time:size:filename -auto-cd     -sort=extension   -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=tab <CR>
-nnoremap <silent> <leader>d  :Defx -new                                 -columns=git:time:size:filename -auto-cd     -sort=extension   -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')`<CR>
-nnoremap <silent> <leader>ft :Defx -columns=mark:time:filename:type:git -auto-cd                        -winwidth=50 `expand('%:p:h')` -search=`expand('%:p')`<CR>
+nnoremap <silent> st        :Defx -new -auto-cd -columns=time:size:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=tab <CR>
+nnoremap <silent> <leader>d :Defx -new -auto-cd -columns=time:size:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` <CR>
 
 autocmd FileType defx call s:defx_my_settings()
 function!  s:defx_my_settings() abort

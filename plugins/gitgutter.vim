@@ -17,3 +17,4 @@ nnoremap <leader>gl :Git lga<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gf :Gfetch<CR>
 nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gr :Grebase

@@ -94,12 +94,12 @@ repo = 'tpope/vim-fugitive'
 
 [[plugins]]
 repo = 'godlygeek/tabular'
-hook_add = '''
-source ~/.config/nvim/plugins/tabular_easyalign.vim
-'''
 
 [[plugins]]
 repo = 'junegunn/vim-easy-align'
+hook_add = '''
+source ~/.config/nvim/plugins/tabular_easyalign.vim
+'''
 
 [[plugins]]
 repo = 'tyru/open-browser.vim'
@@ -120,10 +120,6 @@ source ~/.config/nvim/plugins/tagbar.vim
 [[plugins]]
 repo = 'wakatime/vim-wakatime'
 
-
-[[plugins]]
-repo = 'JuliaEditorSupport/julia-vim.git'
-
 [[plugins]]
 repo='t9md/vim-quickhl.git'
 hook_add = '''
@@ -137,3 +133,10 @@ build = 'bash install.sh'
 hook_add = '''
 source ~/.config/nvim/plugins/languageclient.vim
 '''
+
+[[plugins]]
+repo = 'Shougo/echodoc.vim'
+hook_add = '''
+source ~/.config/nvim/plugins/echodoc.vim
+'''
+
