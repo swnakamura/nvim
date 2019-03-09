@@ -16,6 +16,10 @@ source ~/.config/nvim/plugins/deoplete-lsp.vim
 '''
 
 [[plugins]]
+repo='deoplete-plugins/deoplete-zsh'
+on_ft = 'zsh'
+
+[[plugins]]
 repo = 'Shougo/neosnippet'
 hook_source = '''
 source ~/.config/nvim/plugins/neosnip.vim
@@ -40,10 +44,6 @@ on_ft = 'python'
 
 [[plugins]]
 repo = 'tell-k/vim-autopep8'
-hook_source = '''
-nnoremap <leader>ap :Autopep8<CR>
-nnoremap rp :QuickRun<Space>python<Space>-outputter/buffer/split<Space>":botright"<Space>-outputter/buffer/close_on_empty<Space>1<Space>-hook/time/enable<Space>1<CR>
-'''
 on_ft = 'python'
 
 [[plugins]]
@@ -103,10 +103,6 @@ repo = 'https://github.com/kchmck/vim-coffee-script'
 on_ft = ['html','htm']
 
 [[plugins]]
-repo = 'AtsushiM/search-parent.vim'
-on_ft = ['html','htm']
-
-[[plugins]]
 repo = 'https://github.com/AtsushiM/sass-compile.vim'
 on_ft = ['sass','scss','css']
 hook_add = '''
@@ -118,6 +114,10 @@ hook_add = '''
  let g:sass_compile_beforecmd            = ''
  autocmd FileType less,sass  setlocal sw = 2 sts=2 ts=2 et
 '''
+depends = ['search-parent']
+
+[[plugins]]
+repo = 'AtsushiM/search-parent.vim'
 
 [[plugins]]
 repo = 'https://github.com/akiyan/vim-textobj-php'
@@ -150,3 +150,10 @@ on_ft = 'js'
 [[plugins]]
 repo = 'https://github.com/zeekay/vim-beautify'
 on_ft = ['html', 'htm', 'js']
+
+[[plugins]]
+repo = 'https://github.com/AtsushiM/sass-compile.vim'
+on_ft = ['sass','scss']
+hook_source = '''
+source ~/.config/nvim/plugins/sass-compile.vim
+'''

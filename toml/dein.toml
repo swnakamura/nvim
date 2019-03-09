@@ -2,12 +2,6 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
-repo = 'Shougo/vimfiler.vim'
-
-[[plugins]]
-repo = 'Shougo/unite.vim'
-
-[[plugins]]
 repo = 'cohama/lexima.vim'
 hook_post_source = '''
 call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'latex'})
@@ -19,6 +13,12 @@ call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 
 repo = 'Shougo/defx.nvim'
 hook_add = '''
 source ~/.config/nvim/plugins/defx.vim
+'''
+
+[[plugins]]
+repo = 'Shougo/deol.nvim'
+hook_add = '''
+source ~/.config/nvim/plugins/deol.vim
 '''
 
 [[plugins]]
@@ -36,6 +36,8 @@ repo = 'Shougo/unite-outline'
 repo = 'Shougo/neomru.vim'
 [[plugins]]
 repo = 'Shougo/neoyank.vim'
+[[plugins]]
+repo = 'neoclide/denite-git'
 
 [[plugins]]
 repo = 'Yggdroot/indentLine'
@@ -48,6 +50,9 @@ repo = 'Shougo/neosnippet-snippets'
 
 [[plugins]]
 repo = 'thinca/vim-quickrun'
+hook_add='''
+source ~/.config/nvim/plugins/quickrun.vim
+'''
 [[plugins]]
 repo = 'kana/vim-smartinput'
 
@@ -139,4 +144,3 @@ repo = 'Shougo/echodoc.vim'
 hook_add = '''
 source ~/.config/nvim/plugins/echodoc.vim
 '''
-

@@ -1,6 +1,5 @@
-let g:LanguageClient_serverCommands = {}
-
 " 言語ごとに設定する
+let g:LanguageClient_serverCommands = {}
 if executable('clangd')
     let g:LanguageClient_serverCommands['c'] = ['clangd']
     let g:LanguageClient_serverCommands['cpp'] = ['clangd']
@@ -8,15 +7,19 @@ endif
 
 if executable('pyls')
     let g:LanguageClient_serverCommands['python'] = ['pyls']
+    let g:LanguageClient_changeThrottle=0.1
 endif
 
-augroup LanguageClient_config
-    autocmd!
-    autocmd User LanguageClientStarted setlocal signcolumn=yes
-    autocmd User LanguageClientStopped setlocal signcolumn=auto
-augroup END
+if executable('css-languageserver')
+    let g:LanguageClient_serverCommands['css'] = ['css-languageserver', '--stdio']
+    let g:LanguageClient_serverCommands['scss'] = ['css-languageserver', '--stdio']
+    let g:LanguageClient_serverCommands['sass'] = ['css-languageserver', '--stdio']
+endif
 
+" other settings
 let g:LanguageClient_autoStart = 1
+
+let g:LanguageClient_diagnosticsList = "Location"
 
 let g:LanguageClient_documentHighlightDisplay =
             \ {
@@ -34,7 +37,7 @@ let g:LanguageClient_documentHighlightDisplay =
             \     },
             \ }
 
-function LC_maps()
+function! LC_maps()
     if has_key(g:LanguageClient_serverCommands, &filetype)
         nnoremap <buffer> <silent> K    :call LanguageClient#textDocument_hover()<CR>
         nnoremap <silent> <Leader>lh :call LanguageClient_textDocument_hover()<CR>

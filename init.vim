@@ -40,6 +40,8 @@ endif
 set timeoutlen=400
 set updatetime=50
 
+set cursorline
+
 "general settings
 if &compatible
   set nocompatible
@@ -150,7 +152,6 @@ nnoremap <leader>wH <C-w>H
 nnoremap <leader>wt :tabnew<CR>
 nnoremap <leader>wn gt
 nnoremap <leader>wp gT
-nnoremap sz         :terminal<CR>
 tnoremap fd         <C-\><C-n>
 tnoremap <leader>wd <C-\><C-n>:q<CR>
 tnoremap <leader>bd <C-\><C-n>:q<CR>
@@ -204,7 +205,7 @@ nnoremap <silent>  <leader>qq  :<C-u>bufdo       bd<CR>:q<CR>
 
 "open init.vim in new tab
 nmap     <silent>  <leader>fed <leader>wt:<C-u>e ~/.config/nvim/init.vim<CR>
-nnoremap <leader>v :vim        *<Left><Left>
+nnoremap <leader>v :vim  %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left>
 nnoremap cn        :cn<CR>
 nnoremap cp        :cp<CR>
 nnoremap cN        :cN<CR>
