@@ -9,6 +9,7 @@ omap     ah         <Plug>GitGutterTextObjectOuterPending
 xmap     ih         <Plug>GitGutterTextObjectInnerVisual
 xmap     ah         <Plug>GitGutterTextObjectOuterVisual
 
+" vim-fugitive
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>ga :Gwrite<CR>
 nnoremap <leader>gc :Gcommit<CR>
@@ -16,5 +17,5 @@ nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gl :Git lga<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gf :Gfetch<CR>
-nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gd :Gvdiff<CR>
 nnoremap <leader>gr :Grebase

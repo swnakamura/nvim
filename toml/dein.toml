@@ -42,7 +42,7 @@ repo = 'neoclide/denite-git'
 [[plugins]]
 repo = 'Yggdroot/indentLine'
 hook_post_source='''
-IndentLinesEnable
+source ~/.config/nvim/plugins/indentiline.vim
 '''
 
 [[plugins]]
