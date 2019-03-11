@@ -7,7 +7,6 @@ endif
 
 if executable('pyls')
     let g:LanguageClient_serverCommands['python'] = ['pyls']
-    let g:LanguageClient_changeThrottle=0.1
 endif
 
 if executable('css-languageserver')
@@ -19,7 +18,7 @@ endif
 " other settings
 let g:LanguageClient_autoStart = 1
 
-let g:LanguageClient_diagnosticsList = "Location"
+let g:LanguageClient_diagnosticsList = "Disabled"
 
 let g:LanguageClient_documentHighlightDisplay =
             \ {

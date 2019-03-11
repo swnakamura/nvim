@@ -112,7 +112,7 @@ set wildmode=list:full
 set wildignore=*.o,*.obj,*.pyc,*.so,*.dll
 let g:python_highlight_all = 1
 
-set clipboard=unnamedplus
+set clipboard+=unnamedplus
 
 syntax enable
 "autocmd ColorScheme * highlight LineNr guifg=#b5bd68

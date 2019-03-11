@@ -7,8 +7,8 @@ call defx#custom#column('mark', {
             \ 'selected_icon': '✓',
             \ })
 nnoremap <silent> st        :Defx -new -auto-cd -columns=time:size:mark:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=tab <CR>:IndentLinesDisable<CR>
-nnoremap <silent> <leader>d :Defx -new -auto-cd -columns=size:mark:filename:time -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=vertical -winwidth=50<CR>:IndentLinesDisable<CR>
-nnoremap <silent> <leader>D :Defx -new -auto-cd -columns=size:mark:filename:time -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -winwidth=50<CR>:IndentLinesDisable<CR>
+nnoremap <silent> <leader>d v:Defx -new -auto-cd -columns=size:mark:filename:time -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=vertical -winwidth=50<CR>:IndentLinesDisable<CR>
+nnoremap <silent> <leader>dd :Defx -new -auto-cd -columns=size:mark:filename:time -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -winwidth=50<CR>:IndentLinesDisable<CR>
 
 autocmd FileType defx call s:defx_my_settings()
 function!  s:defx_my_settings() abort
