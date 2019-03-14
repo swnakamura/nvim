@@ -18,8 +18,6 @@ endif
 " other settings
 let g:LanguageClient_autoStart = 1
 
-let g:LanguageClient_diagnosticsList = "Disabled"
-
 let g:LanguageClient_documentHighlightDisplay =
             \ {
             \     1: {
@@ -35,6 +33,12 @@ let g:LanguageClient_documentHighlightDisplay =
             \         "texthl": "MatchParen",
             \     },
             \ }
+
+augroup LanguageClient_config
+    autocmd!
+    autocmd User LanguageClientStarted setlocal signcolumn=yes
+    autocmd User LanguageClientStopped setlocal signcolumn=auto
+augroup END
 
 function! LC_maps()
     if has_key(g:LanguageClient_serverCommands, &filetype)
