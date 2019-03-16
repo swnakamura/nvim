@@ -118,6 +118,7 @@ depends = ['search-parent']
 
 [[plugins]]
 repo = 'AtsushiM/search-parent.vim'
+on_ft = ['sass','scss','css']
 
 [[plugins]]
 repo = 'https://github.com/akiyan/vim-textobj-php'
