@@ -16,7 +16,7 @@ if executable('css-languageserver')
 endif
 
 " other settings
-let g:LanguageClient_autoStart = 1
+let g:LanguageClient_useVirtualText = 0
 
 let g:LanguageClient_documentHighlightDisplay =
             \ {

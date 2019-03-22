@@ -12,7 +12,8 @@ autocmd FileType defx call s:defx_my_settings()
 function!  s:defx_my_settings() abort
     " Define mappings
     nnoremap <silent><buffer><expr> <CR>          defx#do_action('open')
-    nnoremap <silent><buffer><expr> o             defx#is_directory()?defx#do_action('open_or_close_tree'):defx#do_action('drop',':tabnew')
+    nnoremap <silent><buffer><expr> o             defx#is_directory()?defx#do_action('open_or_close_tree'):defx#do_action('drop')
+    nnoremap <silent><buffer><expr> O             defx#is_directory()?defx#do_action('open_or_close_tree'):defx#do_action('drop',':tabnew')
     nnoremap <silent><buffer><expr> <2-LeftMouse> defx#do_action('open')
     nnoremap <silent><buffer><expr> l             defx#do_action('open_directory')
     nnoremap <silent><buffer><expr> K             defx#do_action('new_directory')

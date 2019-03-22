@@ -77,8 +77,6 @@ repo = 'kana/vim-textobj-syntax'
 repo = 'thinca/vim-textobj-between'
 [[plugins]]
 repo = 'osyo-manga/vim-textobj-multiblock'
-[[plugins]]
-repo = 'kana/vim-textobj-entire'
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
@@ -142,3 +140,6 @@ repo = 'Shougo/echodoc.vim'
 hook_add = '''
 source ~/.config/nvim/plugins/echodoc.vim
 '''
+
+[[plugins]]
+repo = 'https://github.com/qnighy/satysfi.vim'

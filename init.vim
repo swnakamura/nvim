@@ -166,7 +166,6 @@ noremap  k          gk
 noremap  gj         j
 noremap  gk         k
 inoremap <C-j> <Down>
-inoremap <C-k> <Up>
 inoremap <C-h> <Left>
 inoremap <C-l> <Right>
 inoremap <C-w> w
@@ -206,9 +205,10 @@ nnoremap <silent>  <leader>qq  :<C-u>bufdo       bd<CR>:q<CR>
 "open init.vim in new tab
 nmap     <silent>  <leader>fed <leader>wt:<C-u>e ~/.config/nvim/init.vim<CR>
 nnoremap <leader>v :vim  %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left>
-nnoremap cn        :cn<CR>
-nnoremap cp        :cp<CR>
-nnoremap cN        :cN<CR>
+nnoremap [q :cprevious<CR>   " 前へ
+nnoremap ]q :cnext<CR>       " 次へ
+nnoremap [Q :<C-u>cfirst<CR> " 最初へ
+nnoremap ]Q :<C-u>clast<CR>  " 最後へ
 
 nnoremap > >>
 nnoremap < <<
