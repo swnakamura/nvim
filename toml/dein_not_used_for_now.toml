@@ -38,3 +38,8 @@ hook_source = '''
 source ~/.config/nvim/plugins/deoplete-lsp.vim
 '''
 on_event = 'InsertEnter'
+
+[[plugins]]
+repo = 'fs111/pydoc.vim'
+on_ft = 'python'
+
