@@ -39,8 +39,8 @@ repo = 'neoclide/denite-git'
 
 [[plugins]]
 repo = 'Yggdroot/indentLine'
-hook_post_source='''
-source ~/.config/nvim/plugins/indentiline.vim
+hook_add = '''
+source ~/.config/nvim/plugins/indentline.vim
 '''
 
 [[plugins]]
@@ -143,3 +143,18 @@ source ~/.config/nvim/plugins/echodoc.vim
 
 [[plugins]]
 repo = 'https://github.com/qnighy/satysfi.vim'
+
+[[plugins]]
+repo = 'easymotion/vim-easymotion'
+hook_add = '''
+source ~/.config/nvim/plugins/easymotion.vim
+'''
+
+[[plugins]]
+repo = 'ncm2/float-preview.nvim.git'
+hook_add = '''
+source ~/.config/nvim/plugins/float-preview.vim
+'''
+
+[[plugins]]
+repo = 'https://github.com/flazz/vim-colorschemes'

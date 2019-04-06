@@ -8,6 +8,7 @@ if !isdirectory(s:dein_repo_dir)
 endif
 let &runtimepath = s:dein_repo_dir .",". &runtimepath
 let g:python3_host_prog = substitute(system("which python3"), '\n', '', 'g')
+" let g:python3_host_prog = '/miniconda3/bin/python3'
 
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
@@ -55,6 +56,8 @@ set termguicolors
 set backupdir=~/.config/nvim/tmp//
 set directory=~/.config/nvim/tmp//
 set undodir=~/.config/nvim/tmp//
+
+set completeopt=menu
 
 set smarttab
 set virtualedit=block
@@ -115,13 +118,12 @@ let g:python_highlight_all = 1
 set clipboard+=unnamedplus
 
 syntax enable
-"autocmd ColorScheme * highlight LineNr guifg=#b5bd68
-"colorscheme Dark
-"colorscheme Dim2
-"colorscheme jelybeans
-"colorscheme gruvbox
+autocmd ColorScheme * highlight LineNr guifg=#b5bd68
+" colorscheme jellybeans
+colorscheme gruvbox
+" colorscheme wombat
 " colorscheme PaperColor
-colorscheme flatwhite
+" colorscheme flatwhite
 
 set mouse=a
 
@@ -220,7 +222,5 @@ function! s:clang_formatting() abort
     execute "!clang-format -i %:t"
     e!
 endfunction
-
-noremap  <leader>e  :cd %:h<CR>:e .<CR>
 
 filetype plugin indent on

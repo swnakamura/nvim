@@ -7,7 +7,6 @@ endif
 
 if executable('pyls')
     let g:LanguageClient_serverCommands['python'] = ['pyls']
-    let g:LanguageClient_windowLogMessageLevel = "Error"
 endif
 
 if executable('css-languageserver')
