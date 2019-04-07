@@ -5,8 +5,8 @@ call defx#custom#column('mark', {
             \ 'selected_icon': '✓',
             \ })
 nnoremap <silent> st         :Defx -new -auto-cd -columns=time:size:mark:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=tab      <CR>:IndentLinesDisable<CR>
-nnoremap <silent> <leader>df :Defx -new -auto-cd -columns=size:mark:filename:time -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=no       <CR>:IndentLinesDisable<CR>
-nnoremap <silent> <leader>dv :Defx -new -auto-cd -columns=size:mark:filename:time -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=vertical -winwidth=50<CR>:IndentLinesDisable<CR>
+nnoremap <silent> <leader>d  :Defx -new -auto-cd -columns=size:mark:filename:time -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=no       <CR>:IndentLinesDisable<CR>
+" nnoremap <silent> <leader>dv :Defx -new -auto-cd -columns=size:mark:filename:time -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=vertical -winwidth=50<CR>:IndentLinesDisable<CR>
 
 autocmd FileType defx call s:defx_my_settings()
 function!  s:defx_my_settings() abort
@@ -34,5 +34,4 @@ function!  s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> Sn            defx#do_action('toggle_sort', 'filename')
     nnoremap <silent><buffer><expr> Ss            defx#do_action('toggle_sort', 'size')
     nnoremap <silent><buffer><expr> St            defx#do_action('toggle_sort', 'time')
-    colorscheme flatwhite
 endfunction

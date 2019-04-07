@@ -1,4 +1,4 @@
-let      mapleader  =           "\<Space>"
+let mapleader = "\<Space>"
 "plugin settings
 let s:cache_home = expand('~/.config/nvim')
 let s:dein_dir = s:cache_home . '/dein'
@@ -49,14 +49,19 @@ if &compatible
 endif
 set t_Co=256
 
+" file encoding
 set encoding=utf-8
 set fileencodings=utf-8,ios-2022-jp,euc-jp,sjis,cp932
+
+" use gui colors
 set termguicolors
 
+" temporary fileの場所の指定
 set backupdir=~/.config/nvim/tmp//
 set directory=~/.config/nvim/tmp//
 set undodir=~/.config/nvim/tmp//
 
+" floating windowを使うので
 set completeopt=menu
 
 set smarttab
@@ -129,51 +134,48 @@ set mouse=a
 
 "key mapping
 
-inoremap <silent>   fd          <ESC>
+inoremap <silent>   <C-j>       <ESC>
 
 "move to the end of a text after copying/pasting it
 vnoremap <silent>   y           y`]
 vnoremap <silent>   p           p`]
 nnoremap <silent>   p           p`]
 
+" Space+something to move to an end
 noremap  <leader>h  ^
 noremap  <leader>l  $
 noremap  <leader>k  gg
 noremap  <leader>j  G
-nmap     s          <leader>w
-nnoremap <leader>ws :split<CR>
-nnoremap <leader>wv :vsplit<CR>
-nnoremap <leader>wj <C-w>j
-nnoremap <leader>wk <C-w>k
-nnoremap <leader>wl <C-w>l
-nnoremap <leader>wh <C-w>h
-nnoremap <leader>wJ <C-w>J
-nnoremap <leader>wK <C-w>K
-nnoremap <leader>wL <C-w>L
-nnoremap <leader>wH <C-w>H
-nnoremap <leader>wt :tabnew<CR>
-nnoremap <leader>wn gt
-nnoremap <leader>wp gT
-tnoremap fd         <C-\><C-n>
-tnoremap <leader>wd <C-\><C-n>:q<CR>
-tnoremap <leader>bd <C-\><C-n>:q<CR>
-nnoremap <leader>wr <C-w>r
-nnoremap <leader>w= <C-w>=
-nnoremap <leader>ww <C-w>w
-nnoremap <leader>wo <C-w>_<C-w>|
-nnoremap <leader>wO <C-w>=
-nnoremap x          "_x
+
+" window control
+nnoremap ss :split<CR>
+nnoremap sv :vsplit<CR>
+nnoremap sj <C-w>j
+nnoremap sk <C-w>k
+nnoremap sl <C-w>l
+nnoremap sh <C-w>h
+nnoremap sJ <C-w>J
+nnoremap sK <C-w>K
+nnoremap sL <C-w>L
+nnoremap sH <C-w>H
+nnoremap st :tabnew<CR>
+nnoremap sn gt
+nnoremap sp gT
+nnoremap sr <C-w>r
+nnoremap s= <C-w>=
+nnoremap sO <C-w>=
+nnoremap so <C-w>_<C-w>\|
+
+" move by display line
 noremap  j          gj
 noremap  k          gk
 noremap  gj         j
 noremap  gk         k
-inoremap <C-j> <Down>
-inoremap <C-h> <Left>
-inoremap <C-l> <Right>
-inoremap <C-w> w
-inoremap <C-e> e
-inoremap <C-b> b
-inoremap <C-x> x
+
+" do not copy when delete by x
+nnoremap x          "_x
+
+" swap t and /
 nnoremap t          /
 nnoremap /          t
 xnoremap t          /
@@ -182,45 +184,90 @@ nnoremap T          ?
 nnoremap ?          T
 xnoremap T          ?
 xnoremap ?          T
-nnoremap gg         ggzz
+
+" quit by q
+tnoremap <silent>  <leader>q <C-\><C-n>:q<CR>
+nnoremap <silent>  <leader>q  :<C-u>q<CR>
+nnoremap <silent>  <leader>wq  :<C-u>bufdo bd<CR>:q<CR>
+nnoremap <silent>  <leader>Q  :<C-u>bufdo bd<CR>:q<CR>
+
+" center cursor when jumped
 nnoremap n          nzz
 nnoremap N          Nzz
+
+" go to the other bracket by <Tab>
 nnoremap <Tab>      %
 vnoremap <Tab>      %
+
+" increase and decrease by plus/minus
 nnoremap +          <C-a>
 nnoremap -          <C-x>
 vmap     g+          g<C-a>
 vmap     g-          g<C-x>
-nnoremap <silent>  <leader>fs  :<C-u>update<CR>
+
+"save by <leader>s
 nnoremap <silent>  <leader>s  :<C-u>update<CR>
-nnoremap <silent>  <leader>wd  :<C-u>q<CR>
 
 "reload init.vim again
-nnoremap <silent>  <leader>qr  :<C-u>so          ~/.config/nvim/init.vim<CR>
+nnoremap <silent>  <leader>r  :<C-u>so          ~/.config/nvim/init.vim<CR>
 
 "delete every window in this tab
 nnoremap <silent>  <leader>bd  :<C-u>tabc<CR>
 
-"quit vim
-nnoremap <silent>  <leader>qq  :<C-u>bufdo       bd<CR>:q<CR>
-
 "open init.vim in new tab
 nmap     <silent>  <leader>fed <leader>wt:<C-u>e ~/.config/nvim/init.vim<CR>
-nnoremap <leader>v :vim  %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left>
+
+" vimgrep
+nnoremap <leader>v :vim // %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left>
+
+" quickfix jump
 nnoremap [q :cprevious<CR>   " 前へ
 nnoremap ]q :cnext<CR>       " 次へ
 nnoremap [Q :<C-u>cfirst<CR> " 最初へ
 nnoremap ]Q :<C-u>clast<CR>  " 最後へ
 
+" one push to cause change
 nnoremap > >>
 nnoremap < <<
 
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]> 
 
-function! s:clang_formatting() abort
-    execute "!clang-format -i %:t"
-    e!
+filetype plugin indent on
+
+" insert mode keymappings for japanese input
+" 一文字移動
+inoremap <silent> <C-s> <Left>
+inoremap <silent> <C-d> <Right>
+inoremap <silent> <C-h> <Left>
+inoremap <silent> <C-l> <Right>
+"単語移動
+inoremap <silent> <C-b> <S-Left>
+inoremap <silent> <C-f> <S-Right>
+" 行移動
+inoremap <silent> <expr> <C-p>  pumvisible() ? "\<C-p>" : "<C-r>=MyExecExCommand('normal k')<CR>"
+inoremap <silent> <expr> <C-n>  pumvisible() ? "\<C-n>" : "<C-r>=MyExecExCommand('normal j')<CR>"
+
+function! MyExecExCommand(cmd, ...)
+  let saved_ve = &virtualedit
+  let index = 1
+  while index <= a:0
+    if a:{index} == 'onemore'
+      silent setlocal virtualedit+=onemore
+    endif
+    let index = index + 1
+  endwhile
+
+  silent exec a:cmd
+  if a:0 > 0
+    silent exec 'setlocal virtualedit='.saved_ve
+  endif
+  return ''
 endfunction
 
-filetype plugin indent on
+function! Shosetsu()
+    "日本語(マルチバイト文字)行の連結時には空白を入力しない。
+    setlocal formatoptions+=mM
+    " 常にカーソルを中心に持ってくる
+    setlocal scrolloff=9999
+endfunction

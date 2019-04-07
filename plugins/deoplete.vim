@@ -2,8 +2,6 @@
 
   inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<tab>"
 
-  inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
-
   " Expand the completed snippet trigger by <CR>.
   imap <expr><CR>
   \ (pumvisible() && neosnippet#expandable()) ?
