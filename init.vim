@@ -81,6 +81,7 @@ set listchars=tab:»-,trail:~,extends:»,precedes:«,nbsp:%
 set showtabline=2
 set ambiwidth=double
 set laststatus=2
+set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=\ (col\ %3v,\ line\ %3l)/%L%8P\ 
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -122,7 +123,6 @@ let g:python_highlight_all = 1
 
 set clipboard+=unnamedplus
 
-syntax enable
 autocmd ColorScheme * highlight LineNr guifg=#b5bd68
 " colorscheme jellybeans
 colorscheme gruvbox
@@ -150,6 +150,8 @@ noremap  <leader>j  G
 " window control
 nnoremap ss :split<CR>
 nnoremap sv :vsplit<CR>
+" st is used by defx
+nnoremap sc :tab sp<CR>
 nnoremap sj <C-w>j
 nnoremap sk <C-w>k
 nnoremap sl <C-w>l
@@ -158,7 +160,6 @@ nnoremap sJ <C-w>J
 nnoremap sK <C-w>K
 nnoremap sL <C-w>L
 nnoremap sH <C-w>H
-nnoremap st :tabnew<CR>
 nnoremap sn gt
 nnoremap sp gT
 nnoremap sr <C-w>r
@@ -265,9 +266,22 @@ function! MyExecExCommand(cmd, ...)
   return ''
 endfunction
 
+set matchpairs+=「:」,（:）
+
 function! Shosetsu()
     "日本語(マルチバイト文字)行の連結時には空白を入力しない。
     setlocal formatoptions+=mM
     " 常にカーソルを中心に持ってくる
     setlocal scrolloff=9999
+    " set to Hankaku after going to normal mode
+    if has('mac')
+      let g:imeoff = 'osascript -e "tell application \"System Events\" to key code 102"'
+      augroup MyIMEGroup
+        autocmd!
+        autocmd InsertLeave * :call system(g:imeoff)
+      augroup END
+    endif
+    set ttimeoutlen=1
 endfunction
+
+syntax enable
