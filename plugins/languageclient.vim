@@ -15,6 +15,14 @@ if executable('css-languageserver')
     let g:LanguageClient_serverCommands['sass'] = ['css-languageserver', '--stdio']
 endif
 
+" if executable(expand('~/go/bin/go-langserver'))
+"     let g:LanguageClient_serverCommands['go'] = [expand('~/go/bin/go-langserver')]
+" endif
+
+if executable(expand('~/go/bin/gopls'))
+    let g:LanguageClient_serverCommands['go'] = [expand('~/go/bin/go-langserver')]
+endif
+
 " other settings
 let g:LanguageClient_useVirtualText = 0
 

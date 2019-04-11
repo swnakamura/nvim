@@ -8,7 +8,7 @@ if !isdirectory(s:dein_repo_dir)
 endif
 let &runtimepath = s:dein_repo_dir .",". &runtimepath
 let g:python3_host_prog = substitute(system("which python3"), '\n', '', 'g')
-" let g:python3_host_prog = '/miniconda3/bin/python3'
+let g:python3_host_prog = '/miniconda3/bin/python3'
 
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
@@ -81,7 +81,7 @@ set listchars=tab:»-,trail:~,extends:»,precedes:«,nbsp:%
 set showtabline=2
 set ambiwidth=double
 set laststatus=2
-set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=\ (col\ %3v,\ line\ %3l)/%L%8P\ 
+set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=\ col\ %3v,\ line\ %3l/%L%8P\ 
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -95,6 +95,7 @@ augroup fileType
   autocmd BufNewFile,BufRead *.py  setlocal foldmethod=syntax
   autocmd BufNewFile,BufRead *.c   setlocal foldmethod=syntax
   autocmd BufNewFile,BufRead *.cpp setlocal foldmethod=syntax
+  autocmd BufNewFile,BufRead *.go  setlocal tabstop=4 noexpandtab
   autocmd BufNewFile,BufRead *.tex setlocal tabstop=4 softtabstop=0 shiftwidth=0 foldmethod=syntax
   autocmd BufNewFile,BufRead *.html setlocal nowrap
   autocmd BufNewFile,BufRead *.grg setlocal nowrap
@@ -135,6 +136,7 @@ set mouse=a
 "key mapping
 
 inoremap <silent>   <C-j>       <ESC>
+tnoremap <silent>   <C-j>       <C-\><C-n>
 
 "move to the end of a text after copying/pasting it
 vnoremap <silent>   y           y`]
@@ -147,6 +149,8 @@ noremap  <leader>l  $
 noremap  <leader>k  gg
 noremap  <leader>j  G
 
+" unmap s
+nnoremap s <Nop>
 " window control
 nnoremap ss :split<CR>
 nnoremap sv :vsplit<CR>
@@ -193,8 +197,8 @@ nnoremap <silent>  <leader>wq  :<C-u>bufdo bd<CR>:q<CR>
 nnoremap <silent>  <leader>Q  :<C-u>bufdo bd<CR>:q<CR>
 
 " center cursor when jumped
-nnoremap n          nzz
-nnoremap N          Nzz
+" nnoremap n          nzz
+" nnoremap N          Nzz
 
 " go to the other bracket by <Tab>
 nnoremap <Tab>      %
@@ -238,8 +242,8 @@ filetype plugin indent on
 
 " insert mode keymappings for japanese input
 " 一文字移動
-inoremap <silent> <C-s> <Left>
-inoremap <silent> <C-d> <Right>
+inoremap <silent> <C-u> <Up>
+inoremap <silent> <C-d> <Down>
 inoremap <silent> <C-h> <Left>
 inoremap <silent> <C-l> <Right>
 "単語移動
@@ -274,12 +278,14 @@ function! Shosetsu()
     " 常にカーソルを中心に持ってくる
     setlocal scrolloff=9999
     " set to Hankaku after going to normal mode
-    if has('mac')
-      let g:imeoff = 'osascript -e "tell application \"System Events\" to key code 102"'
-      augroup MyIMEGroup
-        autocmd!
-        autocmd InsertLeave * :call system(g:imeoff)
-      augroup END
+    if 0
+        if has('mac')
+          let g:imeoff = 'osascript -e "tell application \"System Events\" to key code 102"'
+          augroup MyIMEGroup
+            autocmd!
+            autocmd InsertLeave * :call system(g:imeoff)
+          augroup END
+        endif
     endif
     set ttimeoutlen=1
 endfunction

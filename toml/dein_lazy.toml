@@ -3,13 +3,6 @@ repo = 'Shougo/neco-syntax'
 on_event = 'InsertEnter'
 
 [[plugins]]
-repo = 'Shougo/deoplete.nvim'
-hook_source = '''
-source ~/.config/nvim/plugins/deoplete.vim
-'''
-on_event = 'InsertEnter'
-
-[[plugins]]
 repo='deoplete-plugins/deoplete-zsh'
 on_ft = 'zsh'
 
@@ -23,10 +16,6 @@ depends = ['neosnippet-snippets']
 
 [[plugins]]
 repo= 'Shougo/neosnippet-snippets'
-
-[[plugins]]
-repo = 'davidhalter/jedi'
-on_ft = 'python'
 
 [[plugins]]
 repo = 'hynek/vim-python-pep8-indent'
@@ -150,3 +139,12 @@ source ~/.config/nvim/plugins/sass-compile.vim
 [[plugins]]
 repo = 'https://github.com/qnighy/satysfi.vim'
 on_ft = ['satysfi','saty']
+
+[[plugins]]
+repo = 'fatih/vim-go'
+hook_add = '''
+let g:go_fmt_command = "goimports"
+let g:go_def_mapping_enabled = 0
+let g:go_doc_keywordprg_enabled = 0
+'''
+on_ft = ['go']

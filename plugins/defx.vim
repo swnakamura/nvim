@@ -6,6 +6,7 @@ call defx#custom#column('mark', {
             \ })
 nnoremap <silent> st         :Defx -new -auto-cd -columns=time:size:mark:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=tab      <CR>:IndentLinesDisable<CR>
 nnoremap <silent> <leader>d  :Defx -new -auto-cd -columns=size:mark:filename:time -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=no       <CR>:IndentLinesDisable<CR>
+" seldom used
 " nnoremap <silent> <leader>dv :Defx -new -auto-cd -columns=size:mark:filename:time -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=vertical -winwidth=50<CR>:IndentLinesDisable<CR>
 
 autocmd FileType defx call s:defx_my_settings()

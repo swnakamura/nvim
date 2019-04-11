@@ -40,6 +40,6 @@ source ~/.config/nvim/plugins/deoplete-lsp.vim
 on_event = 'InsertEnter'
 
 [[plugins]]
-repo = 'fs111/pydoc.vim'
+repo = 'davidhalter/jedi'
 on_ft = 'python'
 
