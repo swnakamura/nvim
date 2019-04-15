@@ -81,12 +81,15 @@ set listchars=tab:»-,trail:~,extends:»,precedes:«,nbsp:%
 set showtabline=2
 set ambiwidth=double
 set laststatus=2
-set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=\ col\ %3v,\ line\ %3l/%L%8P\ 
+set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=\ col:\ %3v,\ line:\ %3l/%L%8P\ 
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set smartindent
 set expandtab
+
+"日本語(マルチバイト文字)行の連結時には空白を入力しない。
+setlocal formatoptions+=mM
 
 set inccommand=split
 
@@ -273,8 +276,6 @@ endfunction
 set matchpairs+=「:」,（:）
 
 function! Shosetsu()
-    "日本語(マルチバイト文字)行の連結時には空白を入力しない。
-    setlocal formatoptions+=mM
     " 常にカーソルを中心に持ってくる
     setlocal scrolloff=9999
     " set to Hankaku after going to normal mode

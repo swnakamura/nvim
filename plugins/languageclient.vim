@@ -1,3 +1,8 @@
+let g:LanguageClient_settingsPath = expand('~/.config/nvim/lc_settings.json')
+" let g:LanguageClient_loggingLevel = 'INFO'
+" let g:LanguageClient_loggingFile = expand('~/.vim/LC.log')
+" let g:LanguageClient_selectionUI = "location-list"
+
 " 言語ごとに設定する
 let g:LanguageClient_serverCommands = {}
 if executable('clangd')
@@ -15,9 +20,9 @@ if executable('css-languageserver')
     let g:LanguageClient_serverCommands['sass'] = ['css-languageserver', '--stdio']
 endif
 
-" if executable(expand('~/go/bin/go-langserver'))
-"     let g:LanguageClient_serverCommands['go'] = [expand('~/go/bin/go-langserver')]
-" endif
+if executable(expand('~/go/bin/go-langserver'))
+    let g:LanguageClient_serverCommands['go'] = [expand('~/go/bin/go-langserver')]
+endif
 
 if executable(expand('~/go/bin/gopls'))
     let g:LanguageClient_serverCommands['go'] = [expand('~/go/bin/go-langserver')]
@@ -50,11 +55,12 @@ augroup END
 
 function! LC_maps()
     if has_key(g:LanguageClient_serverCommands, &filetype)
-        nnoremap <buffer> <silent> K    :call LanguageClient#textDocument_hover()<CR>
-        nnoremap <silent> <Leader>lh :call LanguageClient_textDocument_hover()<CR>
-        nnoremap <silent> <Leader>ld :call LanguageClient_textDocument_definition()<CR>
-        nnoremap <silent> <Leader>lr :call LanguageClient_textDocument_rename()<CR>
-        nnoremap <silent> <Leader>lf :call LanguageClient_textDocument_formatting()<CR>
+        nnoremap <buffer> <silent> K          :call LanguageClient#textDocument_hover()<CR>
+        nnoremap <buffer> <silent> <Leader>lh :call LanguageClient_textDocument_hover()<CR>
+        nnoremap <buffer> <silent> <Leader>ld :call LanguageClient_textDocument_definition()<CR>
+        nnoremap <buffer> <silent> <Leader>lr :call LanguageClient_textDocument_rename()<CR>
+        nnoremap <buffer> <silent> <Leader>lf :call LanguageClient_textDocument_formatting()<CR>
+        nnoremap <buffer> <silent> gf         :call LanguageClient_textDocument_formatting()<CR>
     endif
 endfunction
 
@@ -64,3 +70,4 @@ augroup lcHighlight
     autocmd!
     autocmd CursorHold,CursorHoldI *.py,*.c,*.cpp call LanguageClient#textDocument_documentHighlight()
 augroup END
+
