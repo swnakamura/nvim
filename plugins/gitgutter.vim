@@ -1,16 +1,16 @@
 "gitgutter
-nmap ]h         <Plug>GitGutterNextHunk
-nmap [h         <Plug>GitGutterPrevHunk
-nmap <Leader>ha <Plug>GitGutterStageHunk
-nmap <Leader>hr <Plug>GitGutterUndoHunk
-nmap <Leader>hv <Plug>GitGutterPreviewHunk
-omap ih         <Plug>GitGutterTextObjectInnerPending
-omap ah         <Plug>GitGutterTextObjectOuterPending
-xmap ih         <Plug>GitGutterTextObjectInnerVisual
-xmap ah         <Plug>GitGutterTextObjectOuterVisual
+nmap <Leader>hs <Plug>GitGutterStageHunk
+nmap <Leader>hu <Plug>GitGutterUndoHunk
+nmap <Leader>hp <Plug>GitGutterPreviewHunk
+nmap ]c         <Plug>GitGutterNextHunk
+nmap [c         <Plug>GitGutterPrevHunk
+omap ic         <Plug>GitGutterTextObjectInnerPending
+omap ac         <Plug>GitGutterTextObjectOuterPending
+xmap ic         <Plug>GitGutterTextObjectInnerVisual
+xmap ac         <Plug>GitGutterTextObjectOuterVisual
 
 " vim-fugitive
-nnoremap <leader>gs :tab sp<CR>:Gstatus<CR>:unmap<buffer> s<CR><C-w>_<C-w>\|
+nnoremap <leader>gs :tab sp<CR>:Gstatus<CR>:unmap<buffer> s<CR><C-w>j:q<CR>
 nnoremap <leader>ga :Gwrite<CR>
 nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gb :Gblame<CR>

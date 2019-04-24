@@ -39,7 +39,7 @@ else
 endif
 
 set timeoutlen=400
-set updatetime=50
+set updatetime=100
 
 set cursorline
 
@@ -152,8 +152,9 @@ noremap  <leader>l  $
 noremap  <leader>k  gg
 noremap  <leader>j  G
 
-" unmap s
+" unmap s,space
 nnoremap s <Nop>
+nnoremap <Space> <Nop>
 " window control
 nnoremap ss :split<CR>
 nnoremap sv :vsplit<CR>
@@ -202,10 +203,6 @@ nnoremap <silent>  <leader>Q  :<C-u>bufdo bd<CR>:q<CR>
 " center cursor when jumped
 " nnoremap n          nzz
 " nnoremap N          Nzz
-
-" go to the other bracket by <Tab>
-nnoremap <Tab>      %
-vnoremap <Tab>      %
 
 " increase and decrease by plus/minus
 nnoremap +          <C-a>

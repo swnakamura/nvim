@@ -4,8 +4,10 @@ call defx#custom#column('mark', {
             \ 'root_icon': ' ',
             \ 'selected_icon': '✓',
             \ })
-nnoremap <silent> st         :Defx -new -auto-cd -columns=time:size:mark:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=tab      <CR>:IndentLinesDisable<CR>
-nnoremap <silent> <leader>d  :Defx -new -auto-cd -columns=size:mark:filename:time -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=no       <CR>:IndentLinesDisable<CR>
+nnoremap <silent> st        :Defx -new -auto-cd -columns=time:size:mark:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=tab        <CR>:IndentLinesDisable<CR>
+nnoremap <silent> <leader>d :Defx -new -auto-cd -columns=size:mark:filename:time -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=no         <CR>:IndentLinesDisable<CR>
+nnoremap <silent> <leader>n :Defx -new -auto-cd -columns=size:filename           -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split="vertical" -winwidth=40 <CR>:IndentLinesDisable<CR>
+nnoremap <silent> <leader>z :Defx -new -auto-cd -columns=size:filename:time      -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split="floating" <CR>:IndentLinesDisable<CR>
 " seldom used
 " nnoremap <silent> <leader>dv :Defx -new -auto-cd -columns=size:mark:filename:time -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=vertical -winwidth=50<CR>:IndentLinesDisable<CR>
 

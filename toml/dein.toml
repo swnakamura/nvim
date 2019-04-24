@@ -167,3 +167,6 @@ repo = 'https://github.com/flazz/vim-colorschemes'
 
 [[plugins]]
 repo = 'https://github.com/fuenor/jpmoveword.vim'
+
+[[plugins]]
+repo = 'https://github.com/mattn/sonictemplate-vim'
