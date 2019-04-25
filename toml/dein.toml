@@ -170,3 +170,6 @@ repo = 'https://github.com/fuenor/jpmoveword.vim'
 
 [[plugins]]
 repo = 'https://github.com/mattn/sonictemplate-vim'
+
+[[plugins]]
+repo = 'https://github.com/tpope/vim-rhubarb'

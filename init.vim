@@ -1,4 +1,5 @@
 let mapleader = "\<Space>"
+
 "plugin settings
 let s:cache_home = expand('~/.config/nvim')
 let s:dein_dir = s:cache_home . '/dein'
@@ -138,8 +139,7 @@ set mouse=a
 
 "key mapping
 
-inoremap <silent>   <C-j>       <ESC>
-tnoremap <silent>   <C-j>       <C-\><C-n>
+tnoremap <silent>   <C-c>       <C-\><C-n>
 
 "move to the end of a text after copying/pasting it
 vnoremap <silent>   y           y`]
@@ -222,14 +222,35 @@ nnoremap <silent>  <leader>bd  :<C-u>tabc<CR>
 "open init.vim in new tab
 nmap     <silent>  <leader>fed <leader>wt:<C-u>e ~/.config/nvim/init.vim<CR>
 
-" vimgrep
-nnoremap <leader>v :vim // %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left>
+" grep
+nnoremap <leader>vv :lvimgrep! //j %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+
+" recursive search
+let s:use_vim_grep = 0
+if s:use_vim_grep
+    nnoremap <leader>vr :lvimgrep //j %:p:h/**<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+else
+    set grepprg=rg\ --vimgrep\ --no-heading
+    nnoremap <leader>vr :lgrep! 
+endif
 
 " quickfix jump
 nnoremap [q :cprevious<CR>   " 前へ
 nnoremap ]q :cnext<CR>       " 次へ
 nnoremap [Q :<C-u>cfirst<CR> " 最初へ
 nnoremap ]Q :<C-u>clast<CR>  " 最後へ
+
+"window-local quickfix jump
+nnoremap [w :lprevious<CR>   " 前へ
+nnoremap ]w :lnext<CR>       " 次へ
+nnoremap [W :<C-u>lfirst<CR> " 最初へ
+nnoremap ]W :<C-u>llast<CR>  " 最後へ
+
+" In quickfix window...
+augroup QuickfixWindow
+    autocmd!
+    autocmd filetype qf nnoremap p <CR>zz<C-w><C-p>
+augroup END
 
 " one push to cause change
 nnoremap > >>
@@ -242,8 +263,6 @@ filetype plugin indent on
 
 " insert mode keymappings for japanese input
 " 一文字移動
-inoremap <silent> <C-u> <Up>
-inoremap <silent> <C-d> <Down>
 inoremap <silent> <C-h> <Left>
 inoremap <silent> <C-l> <Right>
 "単語移動

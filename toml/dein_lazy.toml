@@ -139,3 +139,10 @@ source ~/.config/nvim/plugins/sass-compile.vim
 [[plugins]]
 repo = 'https://github.com/qnighy/satysfi.vim'
 on_ft = ['satysfi','saty']
+
+[[plugins]]
+repo = 'https://github.com/fatih/vim-go'
+on_ft = ['go']
+hook_add = '''
+source ~/.config/nvim/plugins/vim-go.vim
+'''
