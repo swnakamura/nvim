@@ -71,3 +71,11 @@ augroup LspGo
 augroup END
 '''
 
+[[plugins]]
+repo = 'https://github.com/wting/gitsessions.vim'
+hook_add = '''
+source ~/.config/nvim/plugins/gitsessions.vim
+'''
+
+[[plugins]]
+repo = 'https://github.com/rnaveiras/vim-git-session'

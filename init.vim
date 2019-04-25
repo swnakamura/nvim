@@ -1,3 +1,4 @@
+" map space to leader
 let mapleader = "\<Space>"
 
 "plugin settings
@@ -9,8 +10,8 @@ if !isdirectory(s:dein_repo_dir)
 endif
 let &runtimepath = s:dein_repo_dir .",". &runtimepath
 let g:python3_host_prog = substitute(system("which python3"), '\n', '', 'g')
-let g:python3_host_prog = '/miniconda3/bin/python3'
 
+let g:dein#types#git#clone_depth = 1
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
   " locate toml directory beforehand
@@ -39,9 +40,13 @@ else
   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
+" if you can't type quickly, change this.
 set timeoutlen=400
+
+" update quickly
 set updatetime=100
 
+" show cursor line
 set cursorline
 
 "general settings
@@ -50,6 +55,9 @@ if &compatible
 endif
 set t_Co=256
 
+" shada=viminfo
+set shada=!,'100,<1000,s10,h,%
+
 " file encoding
 set encoding=utf-8
 set fileencodings=utf-8,ios-2022-jp,euc-jp,sjis,cp932
@@ -57,17 +65,17 @@ set fileencodings=utf-8,ios-2022-jp,euc-jp,sjis,cp932
 " use gui colors
 set termguicolors
 
-" temporary fileの場所の指定
+" assign temporary file
 set backupdir=~/.config/nvim/tmp//
 set directory=~/.config/nvim/tmp//
 set undodir=~/.config/nvim/tmp//
 
-" floating windowを使うので
+" to use floating window
 set completeopt=menu
 
+
 set smarttab
-set virtualedit=block
-set nf=alpha
+set nf=alpha,octal,hex,bin
 
 set ignorecase
 set smartcase
@@ -212,6 +220,7 @@ vmap     g-          g<C-x>
 
 "save by <leader>s
 nnoremap <silent>  <leader>s  :<C-u>update<CR>
+nnoremap <silent>  <leader>ws  :<C-u>wall<CR>
 
 "reload init.vim again
 nnoremap <silent>  <leader>r  :<C-u>so          ~/.config/nvim/init.vim<CR>
@@ -249,7 +258,7 @@ nnoremap ]W :<C-u>llast<CR>  " 最後へ
 " In quickfix window...
 augroup QuickfixWindow
     autocmd!
-    autocmd filetype qf nnoremap p <CR>zz<C-w><C-p>
+    autocmd filetype qf nnoremap <buffer>p <CR>zz<C-w><C-p>
 augroup END
 
 " one push to cause change
@@ -308,3 +317,4 @@ function! Shosetsu()
 endfunction
 
 syntax enable
+source ~/cs/gitsession.nvim/autoload/gitsession.vim
