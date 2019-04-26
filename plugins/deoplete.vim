@@ -1,6 +1,6 @@
   let g:deoplete#enable_at_startup = 1
 
-  inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<tab>"
+  " inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<tab>"
 
   " Expand the completed snippet trigger by <CR>.
   " trial 1
