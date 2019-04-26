@@ -22,7 +22,6 @@ repo = 'JuliaEditorSupport/julia-vim'
 
 [[plugins]]
 repo = 'vim-airline/vim-airline.git'
-
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
 hook_add = '''
@@ -33,49 +32,8 @@ source ~/.config/nvim/plugins/airline.vim
 repo = 'kana/vim-textobj-entire'
 
 [[plugins]]
-repo='Shougo/deoplete-lsp'
-hook_source = '''
-source ~/.config/nvim/plugins/deoplete-lsp.vim
-'''
-on_event = 'InsertEnter'
-
-[[plugins]]
 repo = 'davidhalter/jedi'
 on_ft = 'python'
 
 [[plugins]]
-repo = 'fatih/vim-go'
-hook_add = '''
-let g:go_fmt_command = "goimports"
-let g:go_def_mapping_enabled = 0
-let g:go_doc_keywordprg_enabled = 0
-'''
-on_ft = ['go']
-
-[[plugins]]
-repo = 'prabirshrestha/async.vim'
-[[plugins]]
-repo = 'prabirshrestha/vim-lsp'
-hook_add = '''
-augroup LspGo
-  au!
-  autocmd User lsp_setup call lsp#register_server({
-      \ 'name': 'go-lang',
-      \ 'cmd': {server_info->['gopls']},
-      \ 'whitelist': ['go'],
-      \ })
-  autocmd FileType go setlocal omnifunc=lsp#complete
-  "autocmd FileType go nmap <buffer> gd <plug>(lsp-definition)
-  "autocmd FileType go nmap <buffer> ,n <plug>(lsp-next-error)
-  "autocmd FileType go nmap <buffer> ,p <plug>(lsp-previous-error)
-augroup END
-'''
-
-[[plugins]]
-repo = 'https://github.com/wting/gitsessions.vim'
-hook_add = '''
-source ~/.config/nvim/plugins/gitsessions.vim
-'''
-
-[[plugins]]
-repo = 'https://github.com/rnaveiras/vim-git-session'
+repo = 'https://github.com/woodyZootopia/gitsession.nvim'
