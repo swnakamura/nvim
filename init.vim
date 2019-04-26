@@ -56,7 +56,10 @@ endif
 set t_Co=256
 
 " shada=viminfo
-set shada=!,'100,<1000,s10,h,%
+set shada=!,'100,<0,s10,h,%0
+
+" do not include buffer info in session
+set sessionoptions-=buffers
 
 " file encoding
 set encoding=utf-8
@@ -111,7 +114,7 @@ augroup fileType
   autocmd filetype           html   setlocal nowrap
   autocmd filetype           csv    setlocal nowrap
   autocmd filetype           text   setlocal noet
-  autocmd filetype           help   setlocal listchars=tab:\ \
+  autocmd filetype           help   setlocal listchars=tab:\ \  noet
   autocmd BufNewFile,BufRead *.grg  setlocal nowrap
 augroup END
 
@@ -318,4 +321,7 @@ function! Shosetsu()
 endfunction
 
 syntax enable
-source ~/cs/gitsession.nvim/autoload/gitsession.vim
+
+
+" set runtimepath+=~/.local/share/nvim/site/gitsession.nvim
+set runtimepath+=~/cs/gitsession.nvim
