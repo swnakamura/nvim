@@ -97,21 +97,22 @@ set shiftwidth=4
 set smartindent
 set expandtab
 
-"日本語(マルチバイト文字)行の連結時には空白を入力しない。
+"日本語(マルチバイト文字)行の連結時には空白を入力しない
 setlocal formatoptions+=mM
 
 set inccommand=split
 
 augroup fileType
   autocmd!
-  autocmd BufNewFile,BufRead *.py  setlocal foldmethod=syntax
-  autocmd BufNewFile,BufRead *.c   setlocal foldmethod=syntax
-  autocmd BufNewFile,BufRead *.cpp setlocal foldmethod=syntax
-  autocmd BufNewFile,BufRead *.go  setlocal tabstop=4 noexpandtab
-  autocmd BufNewFile,BufRead *.tex setlocal tabstop=4 softtabstop=0 shiftwidth=0 foldmethod=syntax
-  autocmd BufNewFile,BufRead *.html setlocal nowrap
-  autocmd BufNewFile,BufRead *.grg setlocal nowrap
-  autocmd BufNewFile,BufRead *.csv setlocal nowrap
+  autocmd filetype           python setlocal foldmethod=syntax
+  autocmd filetype           c,cpp  setlocal foldmethod=syntax
+  autocmd filetype           go     setlocal tabstop=4 noexpandtab
+  autocmd filetype           tex    setlocal tabstop=4 softtabstop=0 shiftwidth=0 foldmethod=syntax
+  autocmd filetype           html   setlocal nowrap
+  autocmd filetype           csv    setlocal nowrap
+  autocmd filetype           text   setlocal noet
+  autocmd filetype           help   setlocal listchars=tab:\ \
+  autocmd BufNewFile,BufRead *.grg  setlocal nowrap
 augroup END
 
 augroup Beautifytype
