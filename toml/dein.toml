@@ -87,7 +87,7 @@ repo = 'osyo-manga/vim-textobj-multiblock'
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
 hook_add = '''
-source ~/.config/nvim/plugins/gitgutter.vim
+source ~/.config/nvim/plugins/gitgutter-fugitive.vim
 '''
 
 [[plugins]]

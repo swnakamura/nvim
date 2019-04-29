@@ -72,6 +72,7 @@ set termguicolors
 set backupdir=~/.config/nvim/tmp//
 set directory=~/.config/nvim/tmp//
 set undodir=~/.config/nvim/tmp//
+set viewdir=~/.config/nvim/tmp//
 
 " to use floating window
 set completeopt=menu
@@ -107,15 +108,16 @@ set inccommand=split
 
 augroup fileType
   autocmd!
-  autocmd filetype           python setlocal foldmethod=syntax
-  autocmd filetype           c,cpp  setlocal foldmethod=syntax
-  autocmd filetype           go     setlocal tabstop=4 noexpandtab
-  autocmd filetype           tex    setlocal tabstop=4 softtabstop=0 shiftwidth=0 foldmethod=syntax
-  autocmd filetype           html   setlocal nowrap
-  autocmd filetype           csv    setlocal nowrap
-  autocmd filetype           text   setlocal noet
-  autocmd filetype           help   setlocal listchars=tab:\ \  noet
-  autocmd BufNewFile,BufRead *.grg  setlocal nowrap
+  autocmd filetype           python   setlocal foldmethod=syntax
+  autocmd filetype           c,cpp    setlocal foldmethod=syntax
+  autocmd filetype           go       setlocal tabstop=4       noexpandtab | set formatoptions+=r
+  autocmd filetype           tex      setlocal tabstop=4       softtabstop=0 shiftwidth=0 foldmethod=syntax
+  autocmd filetype           html     setlocal nowrap
+  autocmd filetype           csv      setlocal nowrap
+  autocmd filetype           text     setlocal noet
+  autocmd filetype           help     setlocal listchars=tab:\ \             noet
+  autocmd filetype           markdown setlocal noet
+  autocmd BufNewFile,BufRead *.grg    setlocal nowrap
 augroup END
 
 augroup Beautifytype
@@ -130,6 +132,21 @@ augroup Beautifytype
   " for css or scss
   autocmd FileType css noremap <buffer> <leader>aj :call CSSBeautify()<cr>
 augroup END
+
+augroup Binary
+    au!
+    au BufReadPre  *.bin let &bin=1
+
+    au BufReadPost *.bin if &bin | %!xxd
+    au BufReadPost *.bin set ft=xxd | endif
+
+    au BufWritePre *.bin if &bin | %!xxd -r
+    au BufWritePre *.bin endif
+
+    au BufWritePost *.bin if &bin | %!xxd
+    au BufWritePost *.bin set nomod | endif
+augroup END
+
 
 set backspace=eol,indent,start
 
@@ -215,6 +232,8 @@ nnoremap <silent>  <leader>Q  :<C-u>bufdo bd<CR>:q<CR>
 " center cursor when jumped
 " nnoremap n          nzz
 " nnoremap N          Nzz
+" instead, cursor should be somewhat inside window
+setlocal scrolloff=10
 
 " increase and decrease by plus/minus
 nnoremap +          <C-a>
@@ -236,7 +255,7 @@ nnoremap <silent>  <leader>bd  :<C-u>tabc<CR>
 nmap     <silent>  <leader>fed <leader>wt:<C-u>e ~/.config/nvim/init.vim<CR>
 
 " grep
-nnoremap <leader>vv :lvimgrep! //j %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+nnoremap <leader>vv :lvimgrep //j %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
 " recursive search
 let s:use_vim_grep = 0
@@ -244,7 +263,7 @@ if s:use_vim_grep
     nnoremap <leader>vr :lvimgrep //j %:p:h/**<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 else
     set grepprg=rg\ --vimgrep\ --no-heading
-    nnoremap <leader>vr :lgrep! 
+    nnoremap <leader>vr :lgrep 
 endif
 
 " quickfix jump
@@ -272,8 +291,6 @@ nnoremap < <<
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]> 
 
-filetype plugin indent on
-
 " insert mode keymappings for japanese input
 " 一文字移動
 inoremap <silent> <C-h> <Left>
@@ -284,6 +301,12 @@ inoremap <silent> <C-f> <S-Right>
 " 行移動
 inoremap <silent> <expr> <C-p>  pumvisible() ? "\<C-p>" : "<C-r>=MyExecExCommand('normal k')<CR>"
 inoremap <silent> <expr> <C-n>  pumvisible() ? "\<C-n>" : "<C-r>=MyExecExCommand('normal j')<CR>"
+
+"コマンドラインでのキーバインドをEmacsふうに
+" 行頭へ移動
+:cnoremap <C-A>         <Home>
+" 行末へ移動
+:cnoremap <C-E>         <End>
 
 function! MyExecExCommand(cmd, ...)
   let saved_ve = &virtualedit
@@ -320,8 +343,15 @@ function! Shosetsu()
     set ttimeoutlen=1
 endfunction
 
+" 最後に設定
+filetype plugin indent on
 syntax enable
 
 
 " set runtimepath+=~/.local/share/nvim/site/gitsession.nvim
 set runtimepath+=~/cs/gitsession.nvim
+" key mapping
+nmap gss :SaveSession<CR>
+nmap gsl :LoadSession<CR>
+nmap gsc :CleanUpSession<CR>
+let g:gitsession_tmp_dir = expand("~/.config/nvim/tmp/gitsession")

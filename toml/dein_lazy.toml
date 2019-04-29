@@ -42,7 +42,7 @@ source ~/.config/nvim/plugins/vimtex.vim
 repo = 'mattn/emmet-vim'
 on_ft = ['html','htm','md','markdown']
 hook_source = '''
-let g:user_emmet_leader_key='mm'
+source ~/.config/nvim/plugins/emmet.vim
 '''
 
 [[plugins]]

@@ -10,7 +10,7 @@ xmap ic         <Plug>GitGutterTextObjectInnerVisual
 xmap ac         <Plug>GitGutterTextObjectOuterVisual
 
 " vim-fugitive
-nnoremap <leader>gs :tab sp<CR>:Gstatus<CR>:unmap<buffer> s<CR>:only<CR>
+nnoremap <leader>gs :tab sp<CR>:Gstatus<CR>:only<CR>
 nnoremap <leader>ga :Gwrite<CR>
 nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gb :Gblame<CR>
