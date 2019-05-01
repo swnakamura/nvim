@@ -91,10 +91,16 @@ set number
 set list
 set listchars=tab:»-,trail:~,extends:»,precedes:«,nbsp:%
 
-set showtabline=2
+" for double width characters
 set ambiwidth=double
+
+" always show finetabline,statusline
+set showtabline=2
 set laststatus=2
-set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=\ col:\ %3v,\ line:\ %3l/%L%8P\ 
+
+set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=\ col:%3v,\ line:%l/%L%8P\ 
+source <sfile>:p:h/tablinegen.vim
+
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -160,6 +166,7 @@ set clipboard+=unnamedplus
 autocmd ColorScheme * highlight LineNr guifg=#b5bd68
 " colorscheme jellybeans
 colorscheme gruvbox
+" colorscheme hybrid
 " colorscheme wombat
 " colorscheme PaperColor
 " colorscheme flatwhite
@@ -189,6 +196,7 @@ nnoremap ss :split<CR>
 nnoremap sv :vsplit<CR>
 " st is used by defx
 nnoremap sc :tab sp<CR>
+nnoremap sC :-tab sp<CR>
 nnoremap sj <C-w>j
 nnoremap sk <C-w>k
 nnoremap sl <C-w>l
@@ -326,22 +334,6 @@ function! MyExecExCommand(cmd, ...)
 endfunction
 
 set matchpairs+=「:」,（:）
-
-function! Shosetsu()
-    " 常にカーソルを中心に持ってくる
-    setlocal scrolloff=9999
-    " set to Hankaku after going to normal mode
-    if 0
-        if has('mac')
-          let g:imeoff = 'osascript -e "tell application \"System Events\" to key code 102"'
-          augroup MyIMEGroup
-            autocmd!
-            autocmd InsertLeave * :call system(g:imeoff)
-          augroup END
-        endif
-    endif
-    set ttimeoutlen=1
-endfunction
 
 " 最後に設定
 filetype plugin indent on

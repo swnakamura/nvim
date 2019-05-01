@@ -125,9 +125,6 @@ source ~/.config/nvim/plugins/tagbar.vim
 '''
 
 [[plugins]]
-repo = 'wakatime/vim-wakatime'
-
-[[plugins]]
 repo='t9md/vim-quickhl.git'
 hook_add = '''
 source ~/.config/nvim/plugins/quickhl.vim
