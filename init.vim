@@ -254,7 +254,7 @@ nnoremap <silent>  <leader>r  :<C-u>so          ~/.config/nvim/init.vim<CR>
 nnoremap <silent>  <leader>bd  :<C-u>tabc<CR>
 
 "open init.vim in new tab
-nmap     <silent>  <leader>fed <leader>wt:<C-u>e ~/.config/nvim/init.vim<CR>
+nnoremap <silent>  <leader>fed :tabnew<CR>:<C-u>e ~/.config/nvim/init.vim<CR>
 
 " grep
 nnoremap <leader>vv :lvimgrep //j %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
