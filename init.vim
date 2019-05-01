@@ -332,12 +332,3 @@ set matchpairs+=「:」,（:）
 " 最後に設定
 filetype plugin indent on
 syntax enable
-
-
-" set runtimepath+=~/.local/share/nvim/site/gitsession.nvim
-set runtimepath+=~/cs/gitsession.nvim
-" key mapping
-nmap gss :SaveSession<CR>
-nmap gsl :LoadSession<CR>
-nmap gsc :CleanUpSession<CR>
-let g:gitsession_tmp_dir = expand("~/.config/nvim/tmp/gitsession")
