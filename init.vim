@@ -49,12 +49,6 @@ set updatetime=100
 " show cursor line
 set cursorline
 
-"general settings
-if &compatible
-  set nocompatible
-endif
-set t_Co=256
-
 " shada=viminfo
 set shada=!,'100,<0,s10,h,%0
 
