@@ -95,9 +95,7 @@ set laststatus=2
 set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=\ col:%3v,\ line:%l/%L%8P\ 
 source <sfile>:p:h/tablinegen.vim
 
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=8
 set smartindent
 set expandtab
 
@@ -110,12 +108,12 @@ augroup fileType
   autocmd!
   autocmd filetype           python   setlocal foldmethod=syntax
   autocmd filetype           c,cpp    setlocal foldmethod=syntax
-  autocmd filetype           go       setlocal tabstop=4       noexpandtab | set formatoptions+=r
-  autocmd filetype           tex      setlocal tabstop=4       softtabstop=0 shiftwidth=0 foldmethod=syntax
+  autocmd filetype           go       setlocal tabstop=4 shiftwidth=4 noexpandtab | set formatoptions+=r
+  autocmd filetype           tex      setlocal tabstop=4 shiftwidth=4 foldmethod=syntax
   autocmd filetype           html     setlocal nowrap
   autocmd filetype           csv      setlocal nowrap
   autocmd filetype           text     setlocal noet
-  autocmd filetype           help     setlocal listchars=tab:\ \             noet
+  autocmd filetype           help     setlocal listchars=tab:\ \  noet
   autocmd filetype           markdown setlocal noet
   autocmd BufNewFile,BufRead *.grg    setlocal nowrap
 augroup END
@@ -332,3 +330,12 @@ set matchpairs+=「:」,（:）
 " 最後に設定
 filetype plugin indent on
 syntax enable
+
+
+" set runtimepath+=~/.local/share/nvim/site/gitsession.nvim
+set runtimepath+=~/cs/gitsession.nvim
+" key mapping
+nmap gss :SaveSession<CR>
+nmap gsl :LoadSession<CR>
+nmap gsc :CleanUpSession<CR>
+let g:gitsession_tmp_dir = expand("~/.config/nvim/tmp/gitsession")
