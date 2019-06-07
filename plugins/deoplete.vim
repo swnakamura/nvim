@@ -1,6 +1,6 @@
   let g:deoplete#enable_at_startup = 1
 
-  inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<tab>"
+  imap <expr><tab> pumvisible() ? "\<C-n>" : "\<tab>"
 
   " Expand the completed snippet trigger by <CR>.
   " trial 1
@@ -9,7 +9,7 @@
   " \ "\<Plug>(neosnippet_expand)" : "<C-r>=<SID>my_cr_function()<CR>"
   "
   " trial 2
-  " imap <expr> <CR> "<C-r>=<SID>my_cr_function()<CR>"
+  imap <expr> <CR> "<C-r>=<SID>my_cr_function()<CR>"
   "
   " my function
   function! s:my_cr_function() abort

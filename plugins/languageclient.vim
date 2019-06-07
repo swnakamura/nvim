@@ -24,6 +24,10 @@ if executable(expand('~/go/bin/go-langserver'))
     let g:LanguageClient_serverCommands['go'] = [expand('~/go/bin/go-langserver'), '-gocodecompletion']
 endif
 
+let g:default_julia_version='1.0'
+let g:LanguageClient_serverCommands['julia'] =  ['julia', '--startup-file=no', '--history-file=no', '-e', ' using LanguageServer; using Pkg; import StaticLint; import SymbolServer; env_path = dirname(Pkg.Types.Context().env.project_file); debug = false; server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "", Dict()); server.runlinter = true; run(server);']
+
+
 " if executable(expand('~/go/bin/gopls'))
 "     let g:LanguageClient_serverCommands['go'] = [expand('~/go/bin/gopls')]
 " endif
@@ -47,11 +51,11 @@ let g:LanguageClient_documentHighlightDisplay =
             \     },
             \ }
 
-augroup LanguageClient_config
-    autocmd!
-    autocmd User LanguageClientStarted setlocal signcolumn=yes
-    autocmd User LanguageClientStopped setlocal signcolumn=auto
-augroup END
+" augroup LanguageClient_config
+"     autocmd!
+"     autocmd User LanguageClientStarted setlocal signcolumn=yes
+"     autocmd User LanguageClientStopped setlocal signcolumn=auto
+" augroup END
 
 function! LC_maps()
     if has_key(g:LanguageClient_serverCommands, &filetype)

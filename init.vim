@@ -68,9 +68,7 @@ set directory=~/.config/nvim/tmp//
 set undodir=~/.config/nvim/tmp//
 set viewdir=~/.config/nvim/tmp//
 
-" to use floating window
-set completeopt=menu
-
+set completeopt-=preview
 
 set smarttab
 set nf=alpha,octal,hex,bin
@@ -95,7 +93,8 @@ set laststatus=2
 set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=\ col:%3v,\ line:%l/%L%8P\ 
 source <sfile>:p:h/tablinegen.vim
 
-set tabstop=8
+set tabstop=4
+set shiftwidth=4
 set smartindent
 set expandtab
 
@@ -103,6 +102,10 @@ set expandtab
 setlocal formatoptions+=mM
 
 set inccommand=split
+set foldcolumn=2
+
+" don't fold by default
+set foldlevel=99
 
 augroup fileType
   autocmd!
@@ -116,6 +119,7 @@ augroup fileType
   autocmd filetype           help     setlocal listchars=tab:\ \  noet
   autocmd filetype           markdown setlocal noet
   autocmd BufNewFile,BufRead *.grg    setlocal nowrap
+  autocmd BufNewFile,BufRead *.jl     setf julia
 augroup END
 
 augroup Beautifytype
@@ -197,6 +201,7 @@ nnoremap sJ <C-w>J
 nnoremap sK <C-w>K
 nnoremap sL <C-w>L
 nnoremap sH <C-w>H
+nnoremap sZ :terminal<CR>
 nnoremap sn gt
 nnoremap sp gT
 nnoremap sr <C-w>r
@@ -233,13 +238,17 @@ nnoremap <silent>  <leader>Q  :<C-u>bufdo bd<CR>:q<CR>
 " nnoremap n          nzz
 " nnoremap N          Nzz
 " instead, cursor should be somewhat inside window
-setlocal scrolloff=10
+setlocal scrolloff=5
 
 " increase and decrease by plus/minus
 nnoremap +          <C-a>
 nnoremap -          <C-x>
 vmap     g+          g<C-a>
 vmap     g-          g<C-x>
+
+" switch quote and backquote
+nnoremap ' `
+nnoremap ` '
 
 "save by <leader>s
 nnoremap <silent>  <leader>s  :<C-u>update<CR>
@@ -262,7 +271,7 @@ let s:use_vim_grep = 0
 if s:use_vim_grep
     nnoremap <leader>vr :lvimgrep //j %:p:h/**<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 else
-    set grepprg=rg\ --vimgrep\ --no-heading
+    set grepprg=rg\ --vimgrep\ --no-heading\ -uuu
     nnoremap <leader>vr :lgrep 
 endif
 
@@ -281,7 +290,9 @@ nnoremap ]W :<C-u>llast<CR>  " 最後へ
 " In quickfix window...
 augroup QuickfixWindow
     autocmd!
-    autocmd filetype qf nnoremap <buffer>p <CR>zz<C-w><C-p>
+    autocmd filetype qf nnoremap <buffer>p <CR>zz<C-w>j
+    autocmd filetype qf unmap j
+    autocmd filetype qf unmap k
 augroup END
 
 " one push to cause change
@@ -289,48 +300,55 @@ nnoremap > >>
 nnoremap < <<
 
 " tagsジャンプの時に複数ある時は一覧表示
-nnoremap <C-]> g<C-]> 
-
+nn"oremap <C-]> g<C-]> 
+""
 " insert mode keymappings for japanese input
-" 一文字移動
-inoremap <silent> <C-h> <Left>
-inoremap <silent> <C-l> <Right>
 "単語移動
 inoremap <silent> <C-b> <S-Left>
-inoremap <silent> <C-f> <S-Right>
+inoremap <silent> <C-f> <C-r>=MoveWithinLine('w')<CR>
 " 行移動
-inoremap <silent> <expr> <C-p>  pumvisible() ? "\<C-p>" : "<C-r>=MyExecExCommand('normal k')<CR>"
-inoremap <silent> <expr> <C-n>  pumvisible() ? "\<C-n>" : "<C-r>=MyExecExCommand('normal j')<CR>"
+inoremap <silent> <expr> <C-p>  pumvisible() ? "\<C-p>" : "<C-r>=ExecExCommand('normal k')<CR>"
+inoremap <silent> <expr> <C-n>  pumvisible() ? "\<C-n>" : "<C-r>=ExecExCommand('normal j')<CR>"
 
+function! ExecExCommand(cmd)
+  silent exec a:cmd
+  return ''
+endfunction
+
+function! MoveWithinLine(cmd)
+    let save_ve = &ve
+    exec "set ve=all"
+    let current_col = col(".")
+    echo current_col
+    if a:cmd == 'w'
+        if current_col == col('$') - 1
+            silent exec "normal l"
+        elseif current_col != col('$')
+            silent exec "normal w"
+        endif
+    elseif a:cmd == 'b'
+    endif         
+    let &ve = save_ve
+    return ''
+endfunction
+
+:imap kkkb <C-O>:let save_ve = &ve<CR>
+    \<C-O>:set ve=all<CR>
+    \<C-O>:echo col(".") . "\n" <Bar>
+    \let &ve = save_ve<CR>
 "コマンドラインでのキーバインドをEmacsふうに
 " 行頭へ移動
 :cnoremap <C-A>         <Home>
 " 行末へ移動
 :cnoremap <C-E>         <End>
 
-function! MyExecExCommand(cmd, ...)
-  let saved_ve = &virtualedit
-  let index = 1
-  while index <= a:0
-    if a:{index} == 'onemore'
-      silent setlocal virtualedit+=onemore
-    endif
-    let index = index + 1
-  endwhile
-
-  silent exec a:cmd
-  if a:0 > 0
-    silent exec 'setlocal virtualedit='.saved_ve
-  endif
-  return ''
-endfunction
+set signcolumn=yes
 
 set matchpairs+=「:」,（:）
 
 " 最後に設定
 filetype plugin indent on
 syntax enable
-
 
 " set runtimepath+=~/.local/share/nvim/site/gitsession.nvim
 set runtimepath+=~/cs/gitsession.nvim

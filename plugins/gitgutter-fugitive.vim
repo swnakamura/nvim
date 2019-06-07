@@ -10,9 +10,9 @@ xmap ic         <Plug>GitGutterTextObjectInnerVisual
 xmap ac         <Plug>GitGutterTextObjectOuterVisual
 
 " vim-fugitive
-nnoremap <leader>gs :tab sp<CR>:Gstatus<CR>:only<CR>
+nnoremap <leader>gs :Gstatus<CR><C-w>T
 nnoremap <leader>ga :Gwrite<CR>
-nnoremap <leader>gc :Gcommit<CR>
+nnoremap <leader>gc :Gcommit-v<CR>
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gl :Git lga<CR>
 nnoremap <leader>gh :tab sp<CR>:0Gllog<CR> " abbrev for git history: create new quickfix tab for history
