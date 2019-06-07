@@ -304,7 +304,7 @@ nn"oremap <C-]> g<C-]>
 ""
 " insert mode keymappings for japanese input
 "単語移動
-inoremap <silent> <C-b> <S-Left>
+inoremap <silent> <C-b> <C-r>=MoveWithinLine('b')<CR>
 inoremap <silent> <C-f> <C-r>=MoveWithinLine('w')<CR>
 " 行移動
 inoremap <silent> <expr> <C-p>  pumvisible() ? "\<C-p>" : "<C-r>=ExecExCommand('normal k')<CR>"
@@ -316,27 +316,23 @@ function! ExecExCommand(cmd)
 endfunction
 
 function! MoveWithinLine(cmd)
-    let save_ve = &ve
-    exec "set ve=all"
-    let current_col = col(".")
-    echo current_col
+    let l:current_line = line('.')
     if a:cmd == 'w'
-        if current_col == col('$') - 1
-            silent exec "normal l"
-        elseif current_col != col('$')
-            silent exec "normal w"
+        silent exec 'normal! w'
+        if line('.') != l:current_line
+            call cursor(l:current_line, 1)
+            call cursor(l:current_line, col('$'))
         endif
     elseif a:cmd == 'b'
-    endif         
-    let &ve = save_ve
+        silent exec 'normal! b'
+        if line('.') != l:current_line
+            call cursor(l:current_line, 1)
+        endif
+    endif
     return ''
 endfunction
 
-:imap kkkb <C-O>:let save_ve = &ve<CR>
-    \<C-O>:set ve=all<CR>
-    \<C-O>:echo col(".") . "\n" <Bar>
-    \let &ve = save_ve<CR>
-"コマンドラインでのキーバインドをEmacsふうに
+"コマンドラインでのキーバインドをEmacs風に
 " 行頭へ移動
 :cnoremap <C-A>         <Home>
 " 行末へ移動
