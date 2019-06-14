@@ -1,7 +1,8 @@
 let g:LanguageClient_settingsPath = expand('~/.config/nvim/lc_settings.json')
 " let g:LanguageClient_loggingLevel = 'INFO'
 " let g:LanguageClient_loggingFile = expand('~/.vim/LC.log')
-" let g:LanguageClient_selectionUI = "location-list"
+let g:LanguageClient_selectionUI = "location-list"
+let g:LanguageClient_diagnosticsList = "Location"
 
 " 言語ごとに設定する
 let g:LanguageClient_serverCommands = {}

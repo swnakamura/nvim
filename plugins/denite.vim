@@ -1,8 +1,8 @@
-nnoremap <silent> <space>fr :<C-u>Denite file_mru -split="floating"<CR>
-nnoremap <silent> <space>fb :<C-u>Denite buffer -split="floating"<CR>
-nnoremap <silent> <space>fy :<C-u>Denite neoyank -split="floating"<CR>
-nnoremap <silent> <space>ff :<C-u>Denite file/rec -split="floating"<CR>
-nnoremap <silent> <space>fd :<C-u>Denite defx/history -split="floating"<CR>
+nnoremap <silent> <space>fr :<C-u>Denite -split=floating -start-filter file_mru<CR>
+nnoremap <silent> <space>fb :<C-u>Denite -split=floating -start-filter buffer<CR>
+nnoremap <silent> <space>fy :<C-u>Denite -split=floating -start-filter neoyank<CR>
+nnoremap <silent> <space>ff :<C-u>Denite -split=floating -start-filter file/rec<CR>
+nnoremap <silent> <space>fd :<C-u>Denite -split=floating -start-filter defx/history<CR>
 nnoremap <silent> <space>fu :<C-u>Denite outline<CR>
 nnoremap <silent> <space>fo :<C-u>Denite output:
 nnoremap <silent> <space>fgl :<C-u>Denite gitlog<CR>
