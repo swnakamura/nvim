@@ -8,12 +8,6 @@ source ~/.config/nvim/plugins/deoplete.vim
 '''
 
 [[plugins]]
-repo = 'cohama/lexima.vim'
-hook_add = '''
-source ~/.config/nvim/plugins/lexima.vim
-'''
-
-[[plugins]]
 repo = 'Shougo/defx.nvim'
 hook_add = '''
 source ~/.config/nvim/plugins/defx.vim
@@ -57,8 +51,12 @@ repo = 'thinca/vim-quickrun'
 hook_add='''
 source ~/.config/nvim/plugins/quickrun.vim
 '''
+
 [[plugins]]
 repo = 'kana/vim-smartinput'
+hook_add='''
+source ~/.config/nvim/plugins/smartinput.vim
+'''
 
 [[plugins]]
 repo = 'osyo-manga/shabadou.vim'
@@ -83,6 +81,11 @@ repo = 'kana/vim-textobj-syntax'
 repo = 'thinca/vim-textobj-between'
 [[plugins]]
 repo = 'osyo-manga/vim-textobj-multiblock'
+[[plugins]]
+repo = 'kana/vim-textobj-entire'
+hook_add = '''
+source ~/.config/nvim/plugins/textobj_entire.vim
+'''
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'

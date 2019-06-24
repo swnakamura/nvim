@@ -1,3 +1,4 @@
+filetype plugin indent off
 " map space to leader
 let mapleader = "\<Space>"
 
@@ -215,6 +216,10 @@ noremap  k          gk
 noremap  gj         j
 noremap  gk         k
 
+" add space
+inoremap , ,<Space>
+inoremap = <Space>=<Space>
+
 " do not copy when delete by x
 nnoremap x          "_x
 
@@ -264,15 +269,15 @@ nnoremap <silent>  <leader>bd  :<C-u>tabc<CR>
 nnoremap <silent>  <leader>fed :tabnew<CR>:<C-u>e ~/.config/nvim/init.vim<CR>
 
 " grep
-nnoremap <leader>vv :lvimgrep //j %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+nnoremap <leader>vv :lvimgrep // %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
 " recursive search
 let s:use_vim_grep = 0
 if s:use_vim_grep
-    nnoremap <leader>vr :lvimgrep //j %:p:h/**<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+    nnoremap <leader>vr :lvimgrep // %:p:h/**<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 else
     set grepprg=rg\ --vimgrep\ --no-heading\ -uuu
-    nnoremap <leader>vr :lgrep 
+    nnoremap <leader>vr :lgrep -e ""<Left>
 endif
 
 " quickfix jump
@@ -295,12 +300,12 @@ augroup QuickfixWindow
     autocmd filetype qf unmap k
 augroup END
 
-" one push to cause change
+" one push to add/remove tabs
 nnoremap > >>
 nnoremap < <<
 
 " tagsジャンプの時に複数ある時は一覧表示
-nn"oremap <C-]> g<C-]> 
+nnoremap <C-]> g<C-]> 
 ""
 " insert mode keymappings for japanese input
 "単語移動
@@ -347,9 +352,9 @@ filetype plugin indent on
 syntax enable
 
 " set runtimepath+=~/.local/share/nvim/site/gitsession.nvim
-set runtimepath+=~/cs/gitsession.nvim
+set runtimepath+=~/cs/vim/gitsession.nvim
 " key mapping
-nmap gss :SaveSession<CR>
-nmap gsl :LoadSession<CR>
-nmap gsc :CleanUpSession<CR>
+nnoremap<silent> gss :SaveSession<CR>
+nnoremap<silent> gsl :LoadSession<CR>
+nnoremap<silent> gsc :CleanUpSession<CR>
 let g:gitsession_tmp_dir = expand("~/.config/nvim/tmp/gitsession")

@@ -29,11 +29,15 @@ source ~/.config/nvim/plugins/airline.vim
 '''
 
 [[plugins]]
-repo = 'kana/vim-textobj-entire'
-
-[[plugins]]
 repo = 'davidhalter/jedi'
 on_ft = 'python'
 
 [[plugins]]
 repo = 'https://github.com/woodyZootopia/gitsession.nvim'
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+hook_add = '''
+source ~/.config/nvim/plugins/lexima.vim
+'''
+
