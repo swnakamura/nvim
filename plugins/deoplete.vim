@@ -9,12 +9,8 @@
   " \ "\<Plug>(neosnippet_expand)" : "<C-r>=<SID>my_cr_function()<CR>"
   "
   " trial 2
-  imap <expr> <CR> "<C-r>=<SID>my_cr_function()<CR>"
+  imap <expr> <CR> "<C-r>=<SID>deoplete#close_popup()<CR>"<CR>
   "
-  " my function
-  function! s:my_cr_function() abort
-    return deoplete#close_popup() . lexima#expand('<CR>','i')
-  endfunction
 
 let g:deoplete#auto_complete_delay = 0
 let g:deoplete#enable_camel_case = 0
