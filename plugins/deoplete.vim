@@ -9,8 +9,7 @@
   " \ "\<Plug>(neosnippet_expand)" : "<C-r>=<SID>my_cr_function()<CR>"
   "
   " trial 2
-  imap <expr> <CR> "<C-r>=<SID>deoplete#close_popup()<CR>"<CR>
-  "
+  inoremap <expr> <CR> "<C-r>=deoplete#close_popup()<CR><CR>"
 
 let g:deoplete#auto_complete_delay = 0
 let g:deoplete#enable_camel_case = 0
