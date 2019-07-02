@@ -218,7 +218,6 @@ noremap  gk         k
 
 " add space
 inoremap , ,<Space>
-inoremap = <Space>=<Space>
 
 " do not copy when delete by x
 nnoremap x          "_x
