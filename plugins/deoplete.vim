@@ -9,7 +9,7 @@
   " \ "\<Plug>(neosnippet_expand)" : "<C-r>=<SID>my_cr_function()<CR>"
   "
   " trial 2
-  inoremap <expr> <CR> "<C-r>=deoplete#close_popup()<CR><CR>"
+  inoremap <silent> <expr> <CR> "<C-r>=deoplete#close_popup()<CR><CR>"
 
 let g:deoplete#auto_complete_delay = 0
 let g:deoplete#enable_camel_case = 0
