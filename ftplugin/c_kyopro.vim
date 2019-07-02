@@ -1,5 +1,5 @@
 " long long
-imap ll long long
+iab ll long long
 
 iab li long int
 iab lli long long
