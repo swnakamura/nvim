@@ -268,15 +268,15 @@ nnoremap <silent>  <leader>bd  :<C-u>tabc<CR>
 nnoremap <silent>  <leader>fed :tabnew<CR>:<C-u>e ~/.config/nvim/init.vim<CR>
 
 " grep
-nnoremap <leader>vv :lvimgrep // %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left>
+nnoremap <leader>vv :vimgrep // %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
 " recursive search
 let s:use_vim_grep = 0
 if s:use_vim_grep
-    nnoremap <leader>vr :lvimgrep // %:p:h/**<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+    nnoremap <leader>vr :vimgrep // %:p:h/**<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 else
     set grepprg=rg\ --vimgrep\ --no-heading\ -uuu
-    nnoremap <leader>vr :lgrep -e ""<Left>
+    nnoremap <leader>vr :grep -e ""<Left>
 endif
 
 " quickfix jump
