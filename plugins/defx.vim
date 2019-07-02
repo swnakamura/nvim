@@ -37,4 +37,14 @@ function!  s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> Sn            defx#do_action('toggle_sort', 'filename')
     nnoremap <silent><buffer><expr> Ss            defx#do_action('toggle_sort', 'size')
     nnoremap <silent><buffer><expr> St            defx#do_action('toggle_sort', 'time')
+    nnoremap <buffer>               <leader>gd    :call <SID>git_diff_of_directory()<CR>
+endfunction
+
+function! s:git_diff_of_directory()
+    exe "tabnew"
+    exe "read !git diff"
+    exe "setf diff"
+    exe "setlocal buftype=nofile"
+    exe "setlocal bufhidden=hide"
+    exe "setlocal noswapfile"
 endfunction
