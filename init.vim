@@ -91,7 +91,7 @@ set ambiwidth=double
 set showtabline=2
 set laststatus=2
 
-set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=\ col:%3v,\ line:%l/%L%8P\ 
+set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']\ '}%{FugitiveStatusline()}%=\ col:%3v,\ line:%l/%L%8P\ 
 source <sfile>:p:h/tablinegen.vim
 
 set tabstop=4
