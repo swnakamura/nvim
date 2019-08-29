@@ -347,8 +347,10 @@ endfunction
 "コマンドラインでのキーバインドをEmacs風に
 " 行頭へ移動
 :cnoremap <C-A>         <Home>
+:inoremap <C-A>         <Home>
 " 行末へ移動
 :cnoremap <C-E>         <End>
+:inoremap <C-E>         <End>
 
 set signcolumn=yes
 
