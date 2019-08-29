@@ -170,3 +170,6 @@ repo = 'https://github.com/tpope/vim-rhubarb'
 
 [[plugins]]
 repo = 'JuliaEditorSupport/julia-vim'
+
+[[plugins]]
+repo = 'https://github.com/woodyZootopia/gitsession.nvim'
