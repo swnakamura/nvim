@@ -259,6 +259,9 @@ vmap     g-          g<C-x>
 nnoremap ' `
 nnoremap ` '
 
+" save with <C-g> in insert mode
+inoremap <C-g> <ESC>:update<CR>a
+
 "save by <leader>s
 nnoremap <silent>  <leader>s  :<C-u>update<CR>
 nnoremap <silent>  <leader>ws  :<C-u>wall<CR>
