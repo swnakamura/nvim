@@ -160,13 +160,18 @@ let g:python_highlight_all = 1
 
 set clipboard+=unnamedplus
 
+" Always set LineNr light-green and background transparent
 autocmd ColorScheme * highlight LineNr guifg=#b5bd68
+autocmd ColorScheme * highlight Normal guibg=NONE ctermbg=NONE
 " colorscheme jellybeans
 colorscheme gruvbox
 " colorscheme hybrid
 " colorscheme wombat
 " colorscheme PaperColor
 " colorscheme flatwhite
+
+" use termdebug
+packadd termdebug
 
 set mouse=a
 
@@ -233,10 +238,10 @@ xnoremap T          ?
 xnoremap ?          T
 
 " quit by q
-tnoremap <silent>  <leader>q <C-\><C-n>:q<CR>
-nnoremap <silent>  <leader>q  :<C-u>q<CR>
-nnoremap <silent>  <leader>wq  :<C-u>bufdo bd<CR>:q<CR>
-nnoremap <silent>  <leader>Q  :<C-u>bufdo bd<CR>:q<CR>
+tnoremap <silent> <leader>q  <C-\><C-n>:q<CR>
+nnoremap <silent> <leader>q  :<C-u>q<CR>
+nnoremap <silent> <leader>wq :qa<CR>
+nnoremap <silent> <leader>Q  :qa<CR>
 
 " center cursor when jumped
 " nnoremap n          nzz
