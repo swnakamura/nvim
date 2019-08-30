@@ -310,6 +310,9 @@ augroup END
 " one push to add/remove tabs
 nnoremap > >>
 nnoremap < <<
+" select again after tab action
+vnoremap > >gv
+vnoremap < <gv
 
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]> 
