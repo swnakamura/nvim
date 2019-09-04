@@ -163,6 +163,8 @@ set clipboard+=unnamedplus
 " Always set LineNr light-green and background transparent
 autocmd ColorScheme * highlight LineNr guifg=#b5bd68
 autocmd ColorScheme * highlight Normal guibg=NONE ctermbg=NONE
+autocmd ColorScheme * highlight NonText guibg=NONE ctermbg=NONE
+
 " colorscheme jellybeans
 colorscheme gruvbox
 " colorscheme hybrid
@@ -363,8 +365,6 @@ set matchpairs+=「:」,（:）
 filetype plugin indent on
 syntax enable
 
-" set runtimepath+=~/.local/share/nvim/site/gitsession.nvim
-set runtimepath+=~/cs/vim/gitsession.nvim
 " key mapping
 nnoremap<silent> gss :SaveSession<CR>
 nnoremap<silent> gsl :LoadSession<CR>
