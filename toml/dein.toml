@@ -166,4 +166,16 @@ repo = 'https://github.com/tpope/vim-rhubarb'
 repo = 'JuliaEditorSupport/julia-vim'
 
 [[plugins]]
-repo = 'https://github.com/woodyZootopia/gitsession.nvim'
+repo = 'https://github.com/woodyZootopia/gitsession.vim'
+
+[[plugins]]
+repo = 'https://github.com/dense-analysis/ale'
+hook_add = '''
+source ~/.config/nvim/plugins/ale.vim
+'''
+
+[[plugins]]
+repo = 'https://github.com/itchyny/lightline.vim'
+hook_add = '''
+source ~/.config/nvim/plugins/lightline.vim
+'''
