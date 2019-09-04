@@ -1,4 +1,5 @@
 let g:ale_fixers = {
+            \'*': ['trim_whitespace'],
             \'python': ['autopep8'],
             \}
 

@@ -80,7 +80,7 @@ set incsearch
 set nohlsearch
 set wrapscan
 
-set number
+set number relativenumber
 set list
 set listchars=tab:»-,trail:~,extends:»,precedes:«,nbsp:%
 
