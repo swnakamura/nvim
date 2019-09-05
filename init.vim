@@ -57,8 +57,7 @@ set shada=!,'100,<0,s10,h,%0
 set sessionoptions-=buffers
 
 " file encoding
-set encoding=utf-8
-set fileencodings=utf-8,ios-2022-jp,euc-jp,sjis,cp932
+set encoding=utf-8 fileencodings=utf-8,ios-2022-jp,euc-jp,sjis,cp932
 
 " use gui colors
 set termguicolors
@@ -69,44 +68,47 @@ set directory=~/.config/nvim/tmp//
 set undodir=~/.config/nvim/tmp//
 set viewdir=~/.config/nvim/tmp//
 
+" don't use preview window; I prefer popup/floating window
 set completeopt-=preview
 
-set smarttab
 set nf=alpha,octal,hex,bin
 
-set ignorecase
-set smartcase
-set incsearch
-set nohlsearch
-set wrapscan
+" search settings
+set ignorecase smartcase incsearch nohlsearch nowrapscan
 
+" line number settings
 set number relativenumber
-set list
-set listchars=tab:»-,trail:~,extends:»,precedes:«,nbsp:%
 
-" for double width characters
+" listchar settings
+set list listchars=tab:»-,trail:~,extends:»,precedes:«,nbsp:%
+
+" show double width characters properly
 set ambiwidth=double
 
 " always show finetabline,statusline
-set showtabline=2
-set laststatus=2
+set showtabline=2 laststatus=2
 
+" transparent popup window
+set winblend=8 pumblend=4
+
+" statusline settting
 set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']\ '}%{FugitiveStatusline()}%=\ col:%3v,\ line:%l/%L%8P\ 
 source <sfile>:p:h/tablinegen.vim
 
-set tabstop=4
-set shiftwidth=4
-set smartindent
-set expandtab
+" tab settings
+set tabstop=4 shiftwidth=4
+set smarttab smartindent expandtab
 
 "日本語(マルチバイト文字)行の連結時には空白を入力しない
 setlocal formatoptions+=mM
 
+" show the result of command with split window
 set inccommand=split
-set foldcolumn=2
 
 " don't fold by default
 set foldlevel=99
+" reserve two columns for fold
+set foldcolumn=2
 
 augroup fileType
   autocmd!
@@ -156,6 +158,7 @@ set backspace=eol,indent,start
 set wildmenu
 set wildmode=list:full
 set wildignore=*.o,*.obj,*.pyc,*.so,*.dll
+
 let g:python_highlight_all = 1
 
 set clipboard+=unnamedplus
@@ -226,7 +229,7 @@ noremap  gk         k
 " add space
 inoremap , ,<Space>
 
-" do not copy when delete by x
+" do not copy when deleting by x
 nnoremap x          "_x
 
 " swap t and /
@@ -248,7 +251,7 @@ nnoremap <silent> <leader>Q  :qa<CR>
 " center cursor when jumped
 " nnoremap n          nzz
 " nnoremap N          Nzz
-" instead, cursor should be somewhat inside window
+" This option is deprecated. Instead, cursor should be somewhat inside window
 setlocal scrolloff=5
 
 " increase and decrease by plus/minus
@@ -268,7 +271,7 @@ inoremap <C-g> <ESC>:update<CR>a
 nnoremap <silent>  <leader>s  :<C-u>update<CR>
 nnoremap <silent>  <leader>ws  :<C-u>wall<CR>
 
-"reload init.vim again
+"reload init.vim
 nnoremap <silent>  <leader>r  :<C-u>so          ~/.config/nvim/init.vim<CR>
 
 "delete every window in this tab
