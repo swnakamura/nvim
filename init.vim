@@ -319,34 +319,17 @@ vnoremap < <gv
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]> 
 ""
-" insert mode keymappings for japanese input
-"単語移動
-inoremap <silent> <C-b> <C-r>=MoveWithinLine('b')<CR>
-inoremap <silent> <C-f> <C-r>=MoveWithinLine('w')<CR>
+" insert mode keymappings for japanese input convenience
+" 単語移動：ctrl-f/bのとき補完ウィンドウを閉じる
+inoremap <silent> <expr> <C-b> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal b')<CR>" : "<C-r>=ExecExCommand('normal b')<CR>"
+inoremap <silent> <expr> <C-f> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal w')<CR>" : "<C-r>=ExecExCommand('normal w')<CR>"
 " 行移動
-inoremap <silent> <expr> <C-p>  pumvisible() ? "\<C-p>" : "<C-r>=ExecExCommand('normal k')<CR>"
-inoremap <silent> <expr> <C-n>  pumvisible() ? "\<C-n>" : "<C-r>=ExecExCommand('normal j')<CR>"
+inoremap <silent> <expr> <C-p> "<C-r>=ExecExCommand('normal k')<CR>"
+inoremap <silent> <expr> <C-n> "<C-r>=ExecExCommand('normal j')<CR>"
 
 function! ExecExCommand(cmd)
   silent exec a:cmd
   return ''
-endfunction
-
-function! MoveWithinLine(cmd)
-    let l:current_line = line('.')
-    if a:cmd == 'w'
-        silent exec 'normal! w'
-        if line('.') != l:current_line
-            call cursor(l:current_line, 1)
-            call cursor(l:current_line, col('$'))
-        endif
-    elseif a:cmd == 'b'
-        silent exec 'normal! b'
-        if line('.') != l:current_line
-            call cursor(l:current_line, 1)
-        endif
-    endif
-    return ''
 endfunction
 
 "コマンドラインでのキーバインドをEmacs風に
