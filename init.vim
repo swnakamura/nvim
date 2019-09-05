@@ -89,7 +89,7 @@ set ambiwidth=double
 set showtabline=2 laststatus=2
 
 " transparent popup window
-set winblend=8 pumblend=4
+set winblend=8 pumblend=12
 
 " statusline settting
 set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']\ '}%{FugitiveStatusline()}%=\ col:%3v,\ line:%l/%L%8P\ 
@@ -182,18 +182,18 @@ set mouse=a
 
 "key mapping
 
-tnoremap <silent>   <C-c>       <C-\><C-n>
+tnoremap <silent> <C-c> <C-\><C-n>
 
 "move to the end of a text after copying/pasting it
-vnoremap <silent>   y           y`]
-vnoremap <silent>   p           p`]
-nnoremap <silent>   p           p`]
+vnoremap <silent> y y`]
+vnoremap <silent> p p`]
+nnoremap <silent> p p`]
 
 " Space+something to move to an end
-noremap  <leader>h  ^
-noremap  <leader>l  $
-noremap  <leader>k  gg
-noremap  <leader>j  G
+noremap <leader>h ^
+noremap <leader>l $
+noremap <leader>k gg
+noremap <leader>j G
 
 " unmap s,space
 nnoremap s <Nop>
@@ -221,26 +221,26 @@ nnoremap sO <C-w>=
 nnoremap so <C-w>_<C-w>\|
 
 " move by display line
-noremap  j          gj
-noremap  k          gk
-noremap  gj         j
-noremap  gk         k
+noremap j  gj
+noremap k  gk
+noremap gj j
+noremap gk k
 
 " add space
 inoremap , ,<Space>
 
 " do not copy when deleting by x
-nnoremap x          "_x
+nnoremap x "_x
 
 " swap t and /
-nnoremap t          /
-nnoremap /          t
-xnoremap t          /
-xnoremap /          t
-nnoremap T          ?
-nnoremap ?          T
-xnoremap T          ?
-xnoremap ?          T
+nnoremap t /
+nnoremap / t
+xnoremap t /
+xnoremap / t
+nnoremap T ?
+nnoremap ? T
+xnoremap T ?
+xnoremap ? T
 
 " quit by q
 tnoremap <silent> <leader>q  <C-\><C-n>:q<CR>
@@ -255,10 +255,10 @@ nnoremap <silent> <leader>Q  :qa<CR>
 setlocal scrolloff=5
 
 " increase and decrease by plus/minus
-nnoremap +          <C-a>
-nnoremap -          <C-x>
-vmap     g+          g<C-a>
-vmap     g-          g<C-x>
+nnoremap +  <C-a>
+nnoremap -  <C-x>
+vmap     g+ g<C-a>
+vmap     g- g<C-x>
 
 " switch quote and backquote
 nnoremap ' `
@@ -268,17 +268,17 @@ nnoremap ` '
 inoremap <C-g> <ESC>:update<CR>a
 
 "save by <leader>s
-nnoremap <silent>  <leader>s  :<C-u>update<CR>
-nnoremap <silent>  <leader>ws  :<C-u>wall<CR>
+nnoremap <silent> <leader>s :<C-u>update<CR>
+nnoremap <silent> <leader>ws :<C-u>wall<CR>
 
 "reload init.vim
-nnoremap <silent>  <leader>r  :<C-u>so          ~/.config/nvim/init.vim<CR>
+nnoremap <silent> <leader>r :<C-u>so ~/.config/nvim/init.vim<CR>
 
 "delete every window in this tab
-nnoremap <silent>  <leader>bd  :<C-u>tabc<CR>
+nnoremap <silent> <leader>bd :<C-u>tabc<CR>
 
 "open init.vim in new tab
-nnoremap <silent>  <leader>fed :tabnew<CR>:<C-u>e ~/.config/nvim/init.vim<CR>
+nnoremap <silent> <leader>fed :tabnew<CR>:<C-u>e ~/.config/nvim/init.vim<CR>
 
 " grep
 nnoremap <leader>vv :vimgrep // %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left>
@@ -337,11 +337,11 @@ endfunction
 
 "コマンドラインでのキーバインドをEmacs風に
 " 行頭へ移動
-:cnoremap <C-A>         <Home>
-:inoremap <C-A>         <Home>
+cnoremap <C-A> <Home>
+inoremap <C-A> <Home>
 " 行末へ移動
-:cnoremap <C-E>         <End>
-:inoremap <C-E>         <End>
+cnoremap <C-E> <End>
+inoremap <C-E> <End>
 
 set signcolumn=yes
 
