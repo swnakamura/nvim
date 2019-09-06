@@ -11,9 +11,9 @@ if executable('clangd')
     let g:LanguageClient_serverCommands['cpp'] = ['clangd']
 endif
 
-if executable('pyls')
-    let g:LanguageClient_serverCommands['python'] = ['pyls']
-endif
+" if executable('pyls')
+"     let g:LanguageClient_serverCommands['python'] = ['pyls']
+" endif
 
 if executable('css-languageserver')
     let g:LanguageClient_serverCommands['css'] = ['css-languageserver', '--stdio']
@@ -73,6 +73,6 @@ autocmd FileType * call LC_maps()
 
 augroup lcHighlight
     autocmd!
-    autocmd CursorHold,CursorHoldI *.py,*.c,*.cpp call LanguageClient#textDocument_documentHighlight()
+    autocmd CursorHold,CursorHoldI *.c,*.cpp call LanguageClient#textDocument_documentHighlight()
 augroup END
 
