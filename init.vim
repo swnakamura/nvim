@@ -219,6 +219,7 @@ nnoremap sr <C-w>r
 nnoremap s= <C-w>=
 nnoremap sO <C-w>=
 nnoremap so <C-w>_<C-w>\|
+nnoremap sq :<C-u>tabc<CR>
 
 " move by display line
 noremap j  gj
@@ -273,9 +274,6 @@ nnoremap <silent> <leader>ws :<C-u>wall<CR>
 
 "reload init.vim
 nnoremap <silent> <leader>r :<C-u>so ~/.config/nvim/init.vim<CR>
-
-"delete every window in this tab
-nnoremap <silent> <leader>bd :<C-u>tabc<CR>
 
 "open init.vim in new tab
 nnoremap <silent> <leader>fed :tabnew<CR>:<C-u>e ~/.config/nvim/init.vim<CR>
