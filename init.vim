@@ -321,8 +321,8 @@ nnoremap <C-]> g<C-]>
 ""
 " insert mode keymappings for japanese input convenience
 " 単語移動：ctrl-f/bのとき補完ウィンドウを閉じる
-inoremap <silent> <expr> <C-b> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal b')<CR>" : "<C-r>=ExecExCommand('normal b')<CR>"
-inoremap <silent> <expr> <C-f> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal w')<CR>" : "<C-r>=ExecExCommand('normal w')<CR>"
+inoremap <silent> <expr> <C-b> pumvisible() ? "<C-r>=deoplete#close_popup()<CR><C-r>=ExecExCommand('normal b')<CR>" : "<C-r>=ExecExCommand('normal b')<CR>"
+inoremap <silent> <expr> <C-f> pumvisible() ? "<C-r>=deoplete#close_popup()<CR><C-r>=ExecExCommand('normal w')<CR>" : "<C-r>=ExecExCommand('normal w')<CR>"
 " 行移動
 inoremap <silent> <expr> <C-p> "<C-r>=ExecExCommand('normal k')<CR>"
 inoremap <silent> <expr> <C-n> "<C-r>=ExecExCommand('normal j')<CR>"
