@@ -93,7 +93,6 @@ set winblend=8 pumblend=12
 
 " statusline settting
 set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']\ '}%{FugitiveStatusline()}%=\ col:%3v,\ line:%l/%L%8P\ 
-source <sfile>:p:h/tablinegen.vim
 
 " tab settings
 set tabstop=4 shiftwidth=4
