@@ -1,36 +1,87 @@
 filetype plugin indent off
 " map space to leader
 let mapleader = "\<Space>"
+let maplocalleader = "\<C-space>"
 
 "plugin settings
-let s:cache_home = expand('~/.config/nvim')
-let s:dein_dir = s:cache_home . '/dein'
-let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
-if !isdirectory(s:dein_repo_dir)
-  call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
-endif
-let &runtimepath = s:dein_repo_dir .",". &runtimepath
-let g:python3_host_prog = substitute(system("which python3"), '\n', '', 'g')
+"call system('curl -fLo /home/woody/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
 
-let g:dein#types#git#clone_depth = 1
-if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir)
-  " locate toml directory beforehand
-  let g:rc_dir    = s:cache_home . '/toml'
-  let s:toml      = g:rc_dir . '/dein.toml'
-  let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
+let g:python3_host_prog='/home/woody/anaconda3/bin/python3'
+set pyxversion=3
 
-  " read toml file and cache them
-  call dein#load_toml(s:toml,      {'lazy': 0})
-  call dein#load_toml(s:lazy_toml, {'lazy': 1})
+call plug#begin('/home/woody/.config/nvim/plugged')
 
-  call dein#end()
-  call dein#save_state()
-endif
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'Shougo/defx.nvim'
+Plug 'Shougo/deol.nvim'
+Plug 'kristijanhusak/defx-git'
+Plug 'Shougo/denite.nvim'
+Plug 'Shougo/unite-outline'
+Plug 'Shougo/neomru.vim'
+Plug 'Shougo/neoyank.vim'
+Plug 'neoclide/denite-git'
+Plug 'Yggdroot/indentLine'
+Plug 'SirVer/ultisnips'
+Plug 'kana/vim-smartinput'
+Plug 'osyo-manga/shabadou.vim'
+Plug 'kana/vim-operator-user'
+Plug 'rhysd/vim-operator-surround'
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-syntax'
+Plug 'thinca/vim-textobj-between'
+Plug 'osyo-manga/vim-textobj-multiblock'
+Plug 'kana/vim-textobj-entire'
+Plug 'airblade/vim-gitgutter'
+Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-fugitive'
+Plug 'godlygeek/tabular'
+Plug 'junegunn/vim-easy-align'
+Plug 'soramugi/auto-ctags.vim'
+Plug 'majutsushi/tagbar'
+Plug 'Shougo/echodoc.vim'
+Plug 'https://github.com/qnighy/satysfi.vim'
+Plug 'ncm2/float-preview.nvim'
+Plug 'https://github.com/flazz/vim-colorschemes'
+Plug 'https://github.com/fuenor/jpmoveword.vim'
+Plug 'https://github.com/mattn/sonictemplate-vim'
+Plug 'https://github.com/tpope/vim-rhubarb'
+Plug 'JuliaEditorSupport/julia-vim'
+Plug 'https://github.com/dense-analysis/ale'
+Plug 'https://github.com/itchyny/lightline.vim'
+Plug 'https://github.com/jpalardy/vim-slime'
+Plug 'tikhomirov/vim-glsl'
+Plug 'Shougo/neco-syntax'
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
+" lazy install
+Plug 'hynek/vim-python-pep8-indent', {'for' : 'python'}
+Plug 'bps/vim-textobj-python', {'for' : 'python'}
+Plug 'lervag/vimtex', {'for' : ['tex','cls']}
+Plug 'mattn/emmet-vim', {'for' : ['html','htm','md','markdown']}
+Plug 'Yggdroot/indentLine', {'for' : ['c','cpp','python','tex','latex']}
+Plug 'https://github.com/tell-k/vim-browsereload-mac', {'for' : ['html','htm', 'md']}
+Plug 'https://github.com/hail2u/vim-css3-syntax', {'for' : ['html','htm']}
+Plug 'https://github.com/pangloss/vim-javascript', {'for' : ['html','htm']}
+Plug 'https://github.com/kchmck/vim-coffee-script', {'for' : ['html','htm']}
+Plug 'AtsushiM/search-parent.vim', {'for' : ['sass','scss','css']}
+Plug 'https://github.com/akiyan/vim-textobj-php', {'for' : ['html','htm']}
+Plug 'https://github.com/tpope/vim-surround', {'for' : ['html','htm']}
+Plug 'https://github.com/ap/vim-css-color', {'for' : ['html','htm', 'vim']}
+Plug 'https://github.com/cakebaker/scss-syntax.vim', {'for' : ['html','htm']}
+Plug 'godlygeek/tabular', {'for' : ['md']}
+Plug 'wokalski/autocomplete-flow', {'for' : ['html', 'htm', 'js']}
+Plug 'pangloss/vim-javascript', {'for' : 'js'}
+Plug 'https://github.com/zeekay/vim-beautify', {'for' : ['html', 'htm', 'js']}
+Plug 'https://github.com/AtsushiM/sass-compile.vim', {'for' : ['sass','scss']}
+Plug 'https://github.com/qnighy/satysfi.vim', {'for' : ['satysfi','saty']}
+Plug 'https://github.com/plasticboy/vim-markdown.git', {'for' : ['markdown']}
 
-if has('vim_starting') && dein#check_install()
-  call dein#install()
-endif
+call plug#end()
+
+" execute plugin specific settings
+for f in split(glob('/home/woody/.config/nvim/plugins/*.vim'), '\n')
+    exe 'source' f
+endfor
 
 " tmux cursor shape setting
 if exists('$TMUX')
@@ -92,7 +143,7 @@ set showtabline=2 laststatus=2
 set winblend=8 pumblend=12
 
 " statusline settting
-set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']\ '}%{FugitiveStatusline()}%=\ col:%3v,\ line:%l/%L%8P\ 
+set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']\ '}%{FugitiveStatusline()}%=\ col:%3v,\ line:%l/%L%8P\
 
 " tab settings
 set tabstop=4 shiftwidth=4
@@ -110,18 +161,19 @@ set foldlevel=99
 set foldcolumn=2
 
 augroup fileType
-  autocmd!
-  autocmd filetype           python   setlocal foldmethod=syntax
-  autocmd filetype           c,cpp    setlocal foldmethod=syntax
-  autocmd filetype           go       setlocal tabstop=4 shiftwidth=4 noexpandtab | set formatoptions+=r
-  autocmd filetype           tex      setlocal tabstop=4 shiftwidth=4 foldmethod=syntax
-  autocmd filetype           html     setlocal nowrap
-  autocmd filetype           csv      setlocal nowrap
-  autocmd filetype           text     setlocal noet
-  autocmd filetype           help     setlocal listchars=tab:\ \  noet
-  autocmd filetype           markdown setlocal noet
-  autocmd BufNewFile,BufRead *.grg    setlocal nowrap
-  autocmd BufNewFile,BufRead *.jl     setf julia
+  au!
+  au BufRead            *.cls    set      ft=tex
+  au filetype           python   setlocal foldmethod=syntax
+  au filetype           c,cpp    setlocal foldmethod=syntax
+  au filetype           go       setlocal tabstop=4 shiftwidth=4 noexpandtab | set formatoptions+=r
+  au filetype           tex      setlocal tabstop=4 shiftwidth=4 foldmethod=syntax
+  au filetype           html     setlocal nowrap
+  au filetype           csv      setlocal nowrap
+  au filetype           text     setlocal noet
+  au filetype           markdown setlocal noet
+  au BufNewFile,BufRead *.grg    setlocal nowrap
+  au BufNewFile,BufRead *.jl     setf     julia
+  au filetype           help     setlocal listchars=tab:\ \  noet
 augroup END
 
 augroup Beautifytype
@@ -162,10 +214,13 @@ let g:python_highlight_all = 1
 
 set clipboard+=unnamedplus
 
-" Always set LineNr light-green and background transparent
+" Always set ...
+" LineNr light-green
 autocmd ColorScheme * highlight LineNr guifg=#b5bd68
+" background transparent
 autocmd ColorScheme * highlight Normal guibg=NONE ctermbg=NONE
-autocmd ColorScheme * highlight NonText guibg=NONE ctermbg=NONE
+" NonText gray
+autocmd ColorScheme * highlight NonText guibg=NONE ctermbg=NONE guifg=Gray
 
 " colorscheme jellybeans
 colorscheme gruvbox
@@ -226,8 +281,12 @@ noremap k  gk
 noremap gj j
 noremap gk k
 
-" add space
-inoremap , ,<Space>
+" always replace considering zenkaku
+noremap r  gr
+noremap R  gR
+noremap gr r
+noremap gR R
+
 
 " do not copy when deleting by x
 nnoremap x "_x
@@ -242,11 +301,14 @@ nnoremap ? T
 xnoremap T ?
 xnoremap ? T
 
-" quit by q
+" quit this window by q
 tnoremap <silent> <leader>q  <C-\><C-n>:q<CR>
 nnoremap <silent> <leader>q  :<C-u>q<CR>
 nnoremap <silent> <leader>wq :qa<CR>
 nnoremap <silent> <leader>Q  :qa<CR>
+
+" delete this buffer by bd
+nnoremap <silent> <leader>bd  :<C-u>bd<CR>
 
 " center cursor when jumped
 " nnoremap n          nzz
@@ -312,17 +374,18 @@ augroup END
 " one push to add/remove tabs
 nnoremap > >>
 nnoremap < <<
-" select again after tab action
-vnoremap > >gv
-vnoremap < <gv
 
 " tagsジャンプの時に複数ある時は一覧表示
-nnoremap <C-]> g<C-]> 
+nnoremap <C-]> g<C-]>
 ""
 " insert mode keymappings for japanese input convenience
 " 単語移動：ctrl-f/bのとき補完ウィンドウを閉じる
-inoremap <silent> <expr> <C-b> pumvisible() ? "<C-r>=deoplete#close_popup()<CR><C-r>=ExecExCommand('normal b')<CR>" : "<C-r>=ExecExCommand('normal b')<CR>"
-inoremap <silent> <expr> <C-f> pumvisible() ? "<C-r>=deoplete#close_popup()<CR><C-r>=ExecExCommand('normal w')<CR>" : "<C-r>=ExecExCommand('normal w')<CR>"
+inoremap <silent> <expr> <C-b> pumvisible() ? "<C-y><C-r>=ExecExCommand('normal b')<CR>" : "<C-r>=ExecExCommand('normal b')<CR>"
+inoremap <silent> <expr> <C-f> pumvisible() ? "<C-y><C-r>=ExecExCommand('normal w')<CR>" : "<C-r>=ExecExCommand('normal w')<CR>"
+
+
+inoremap <silent> <expr> <C-b> "<C-r>=ExecExCommand('normal b')<CR>"
+inoremap <silent> <expr> <C-f> "<C-r>=ExecExCommand('normal w')<CR>"
 " 行移動
 inoremap <silent> <expr> <C-p> "<C-r>=ExecExCommand('normal k')<CR>"
 inoremap <silent> <expr> <C-n> "<C-r>=ExecExCommand('normal j')<CR>"
@@ -340,7 +403,10 @@ inoremap <C-A> <Home>
 cnoremap <C-E> <End>
 inoremap <C-E> <End>
 
-set signcolumn=yes
+iab ar ->
+iab pr \|>
+
+set signcolumn=auto
 
 set matchpairs+=「:」,（:）
 
@@ -353,3 +419,6 @@ nnoremap<silent> gss :SaveSession<CR>
 nnoremap<silent> gsl :LoadSession<CR>
 nnoremap<silent> gsc :CleanUpSession<CR>
 let g:gitsession_tmp_dir = expand("~/.config/nvim/tmp/gitsession")
+" let g:gitsession_autoload = 1
+set runtimepath+=~/programing/gitsession.nvim
+set runtimepath+=~/programing/pygeon.nvim
