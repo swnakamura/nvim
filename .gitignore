@@ -1,4 +1,7 @@
 dein/
+plugged/
 haven/
 .DS_Store
 tmp/
+.netrwhist
+templates/

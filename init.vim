@@ -2,15 +2,32 @@ filetype plugin indent off
 " map space to leader
 let mapleader = "\<Space>"
 let maplocalleader = "\<C-space>"
+let g:vimtex_compiler_progname = 'nvr'
+let g:dark_transparent=1
 
-"plugin settings
-"call system('curl -fLo /home/woody/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+let s:plug_script = expand("~/.config/nvim/autoload/plug.vim")
+let s:plug_repo_dir = expand("~/.config/nvim/plugged")
 
+if !filereadable(s:plug_script)
+    call system('curl -fLo /home/woody/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+    source s:plug_script
+endif
+
+let g:loaded_python_provier=1
 let g:python3_host_prog='/home/woody/anaconda3/bin/python3'
+let g:python3_host_skip_check=1
+let g:python_host_prog='/usr/bin/python2'
+let g:python_host_skip_check=1
 set pyxversion=3
 
 call plug#begin('/home/woody/.config/nvim/plugged')
 
+Plug 'SirVer/ultisnips'
+" Plug 'Shougo/neosnippet'
+" Plug 'Shougo/neosnippet-snippets'
+Plug 'jceb/vim-orgmode'
+Plug 'honza/vim-snippets'
+Plug 'woodyZootopia/flatwhite-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Shougo/defx.nvim'
 Plug 'Shougo/deol.nvim'
@@ -21,7 +38,6 @@ Plug 'Shougo/neomru.vim'
 Plug 'Shougo/neoyank.vim'
 Plug 'neoclide/denite-git'
 Plug 'Yggdroot/indentLine'
-Plug 'SirVer/ultisnips'
 Plug 'kana/vim-smartinput'
 Plug 'osyo-manga/shabadou.vim'
 Plug 'kana/vim-operator-user'
@@ -39,44 +55,46 @@ Plug 'junegunn/vim-easy-align'
 Plug 'soramugi/auto-ctags.vim'
 Plug 'majutsushi/tagbar'
 Plug 'Shougo/echodoc.vim'
-Plug 'https://github.com/qnighy/satysfi.vim'
+Plug 'qnighy/satysfi.vim'
 Plug 'ncm2/float-preview.nvim'
-Plug 'https://github.com/flazz/vim-colorschemes'
-Plug 'https://github.com/fuenor/jpmoveword.vim'
-Plug 'https://github.com/mattn/sonictemplate-vim'
-Plug 'https://github.com/tpope/vim-rhubarb'
+Plug 'micke/vim-hybrid'
+Plug 'mbbill/undotree'
+Plug 'fuenor/jpmoveword.vim'
+" Plug 'mattn/sonictemplate-vim'
+Plug 'tpope/vim-rhubarb'
 Plug 'JuliaEditorSupport/julia-vim'
-Plug 'https://github.com/dense-analysis/ale'
-Plug 'https://github.com/itchyny/lightline.vim'
-Plug 'https://github.com/jpalardy/vim-slime'
+Plug 'dense-analysis/ale'
+Plug 'itchyny/lightline.vim'
+Plug 'jpalardy/vim-slime'
 Plug 'tikhomirov/vim-glsl'
 Plug 'Shougo/neco-syntax'
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
+Plug 'skywind3000/asyncrun.vim'
 " lazy install
+Plug 'mattn/emmet-vim', {'for': ['html','vue']}
 Plug 'hynek/vim-python-pep8-indent', {'for' : 'python'}
 Plug 'bps/vim-textobj-python', {'for' : 'python'}
-Plug 'lervag/vimtex', {'for' : ['tex','cls']}
-Plug 'mattn/emmet-vim', {'for' : ['html','htm','md','markdown']}
-Plug 'Yggdroot/indentLine', {'for' : ['c','cpp','python','tex','latex']}
-Plug 'https://github.com/tell-k/vim-browsereload-mac', {'for' : ['html','htm', 'md']}
-Plug 'https://github.com/hail2u/vim-css3-syntax', {'for' : ['html','htm']}
-Plug 'https://github.com/pangloss/vim-javascript', {'for' : ['html','htm']}
-Plug 'https://github.com/kchmck/vim-coffee-script', {'for' : ['html','htm']}
+Plug 'lervag/vimtex', {'for' : ['tex']}
+Plug 'hail2u/vim-css3-syntax', {'for' : ['html','htm']}
+Plug 'pangloss/vim-javascript', {'for' : ['html','htm']}
+Plug 'kchmck/vim-coffee-script', {'for' : ['html','htm']}
 Plug 'AtsushiM/search-parent.vim', {'for' : ['sass','scss','css']}
-Plug 'https://github.com/akiyan/vim-textobj-php', {'for' : ['html','htm']}
-Plug 'https://github.com/tpope/vim-surround', {'for' : ['html','htm']}
-Plug 'https://github.com/ap/vim-css-color', {'for' : ['html','htm', 'vim']}
-Plug 'https://github.com/cakebaker/scss-syntax.vim', {'for' : ['html','htm']}
+Plug 'akiyan/vim-textobj-php', {'for' : ['html','htm']}
+Plug 'tpope/vim-surround', {'for' : ['html','htm']}
+Plug 'ap/vim-css-color', {'for' : ['html','htm', 'vim']}
+Plug 'cakebaker/scss-syntax.vim', {'for' : ['html','htm']}
 Plug 'godlygeek/tabular', {'for' : ['md']}
 Plug 'wokalski/autocomplete-flow', {'for' : ['html', 'htm', 'js']}
 Plug 'pangloss/vim-javascript', {'for' : 'js'}
-Plug 'https://github.com/zeekay/vim-beautify', {'for' : ['html', 'htm', 'js']}
-Plug 'https://github.com/AtsushiM/sass-compile.vim', {'for' : ['sass','scss']}
-Plug 'https://github.com/qnighy/satysfi.vim', {'for' : ['satysfi','saty']}
-Plug 'https://github.com/plasticboy/vim-markdown.git', {'for' : ['markdown']}
+Plug 'zeekay/vim-beautify', {'for' : ['html', 'htm', 'js']}
+Plug 'AtsushiM/sass-compile.vim', {'for' : ['sass','scss']}
+Plug 'qnighy/satysfi.vim', {'for' : ['satysfi','saty']}
+Plug 'plasticboy/vim-markdown', {'for' : ['markdown']}
 
 call plug#end()
+
+if !isdirectory(s:plug_repo_dir)
+    exe 'PlugInstall'
+endif
 
 " execute plugin specific settings
 for f in split(glob('/home/woody/.config/nvim/plugins/*.vim'), '\n')
@@ -163,17 +181,35 @@ set foldcolumn=2
 augroup fileType
   au!
   au BufRead            *.cls    set      ft=tex
-  au filetype           python   setlocal foldmethod=syntax
+  au filetype           python   setlocal foldmethod=syntax 
   au filetype           c,cpp    setlocal foldmethod=syntax
   au filetype           go       setlocal tabstop=4 shiftwidth=4 noexpandtab | set formatoptions+=r
-  au filetype           tex      setlocal tabstop=4 shiftwidth=4 foldmethod=syntax
+  au filetype           tex      setlocal tabstop=4 shiftwidth=4 foldmethod=syntax spell
+  au filetype           tex      imap <buffer> ( (
+  au filetype           tex      imap <buffer> { {
+  au filetype           tex      imap <buffer> [ [
   au filetype           html     setlocal nowrap
   au filetype           csv      setlocal nowrap
-  au filetype           text     setlocal noet
+  au filetype           text     setlocal noet spell
   au filetype           markdown setlocal noet
   au BufNewFile,BufRead *.grg    setlocal nowrap
   au BufNewFile,BufRead *.jl     setf     julia
   au filetype           help     setlocal listchars=tab:\ \  noet
+augroup END
+
+nmap <F5> <localleader>r
+
+augroup localleader
+    autocmd!
+    autocmd FileType tex    map <buffer> <localleader>s <plug>(vimtex-env-toggle-star)
+    autocmd FileType tex    map <buffer> <localleader>t <plug>(vimtex-toc-toggle)
+    autocmd FileType tex    map <buffer> <localleader>e <plug>(vimtex-env-change)
+    autocmd FileType tex    map <buffer> <localleader>d <plug>(vimtex-delim-toggle-modifier)
+    autocmd FileType tex    map <buffer> <localleader>r :VimtexCompile<CR>
+    autocmd FileType tex    map <buffer> <F6> :VimtexClean<CR>
+    autocmd FileType tex    map <buffer> <F7> :VimtexCompileOutput<CR>
+    autocmd FileType python map <buffer> <localleader>r :%AsyncRun python<CR>
+    autocmd FileType ruby map <buffer> <localleader>r :%AsyncRun ruby<CR>
 augroup END
 
 augroup Beautifytype
@@ -192,17 +228,23 @@ augroup END
 augroup Binary
     au!
     au BufReadPre  *.bin let &bin=1
+    au BufReadPre  *.torrent let &bin=1
+    au BufReadPre  *.out let &bin=1
 
-    au BufReadPost *.bin if &bin | %!xxd
-    au BufReadPost *.bin set ft=xxd | endif
+    au BufReadPost * if &bin | %!xxd
+    au BufReadPost * set ft=xxd | endif
 
-    au BufWritePre *.bin if &bin | %!xxd -r
-    au BufWritePre *.bin endif
+    au BufWritePre * if &bin | %!xxd -r
+    au BufWritePre * endif
 
-    au BufWritePost *.bin if &bin | %!xxd
-    au BufWritePost *.bin set nomod | endif
+    au BufWritePost * if &bin | %!xxd
+    au BufWritePost * set nomod | endif
 augroup END
 
+" inoremap { {}<Left>
+" inoremap {<Enter> {}<Left><CR><ESC><S-o>
+" inoremap ( ()<ESC>i
+" inoremap (<Enter> ()<Left><CR><ESC><S-o>
 
 set backspace=eol,indent,start
 
@@ -216,18 +258,26 @@ set clipboard+=unnamedplus
 
 " Always set ...
 " LineNr light-green
-autocmd ColorScheme * highlight LineNr guifg=#b5bd68
-" background transparent
-autocmd ColorScheme * highlight Normal guibg=NONE ctermbg=NONE
-" NonText gray
-autocmd ColorScheme * highlight NonText guibg=NONE ctermbg=NONE guifg=Gray
+if g:dark_transparent
+    autocmd ColorScheme * highlight LineNr guifg=#b5bd68
+    " background transparent
+    autocmd ColorScheme * highlight Normal guibg=NONE ctermbg=NONE
+    " NonText gray
+    autocmd ColorScheme * highlight NonText guibg=NONE ctermbg=NONE guifg=Gray
+    colorscheme hybrid
+else
+    autocmd ColorScheme * highlight LineNr guifg=#b5bd68
+    " background transparent
+    autocmd ColorScheme * highlight Normal guibg=NONE ctermbg=NONE
+    " NonText gray
+    autocmd ColorScheme * highlight NonText guibg=NONE ctermbg=NONE guifg=Gray
+    colorscheme flatwhite
+endif
 
 " colorscheme jellybeans
-colorscheme gruvbox
-" colorscheme hybrid
+" colorscheme gruvbox
 " colorscheme wombat
 " colorscheme PaperColor
-" colorscheme flatwhite
 
 " use termdebug
 packadd termdebug
@@ -236,8 +286,8 @@ set mouse=a
 
 "key mapping
 
-tnoremap <silent> <C-c> <C-\><C-n>
-
+tnoremap <silent> <C-[> <C-\><C-n>
+tnoremap <silent> <C-l> <C-\><C-n>
 "move to the end of a text after copying/pasting it
 vnoremap <silent> y y`]
 vnoremap <silent> p p`]
@@ -251,7 +301,9 @@ noremap <leader>j G
 
 " unmap s,space
 nnoremap s <Nop>
+vnoremap s <Nop>
 nnoremap <Space> <Nop>
+nnoremap <C-space> <Nop>
 " window control
 nnoremap ss :split<CR>
 nnoremap sv :vsplit<CR>
@@ -266,7 +318,8 @@ nnoremap sJ <C-w>J
 nnoremap sK <C-w>K
 nnoremap sL <C-w>L
 nnoremap sH <C-w>H
-nnoremap sZ :terminal<CR>
+nnoremap sz :terminal<CR>
+nnoremap sz :terminal<CR>
 nnoremap sn gt
 nnoremap sp gT
 nnoremap sr <C-w>r
@@ -292,28 +345,21 @@ noremap gR R
 nnoremap x "_x
 
 " swap t and /
-nnoremap t /
-nnoremap / t
-xnoremap t /
-xnoremap / t
-nnoremap T ?
-nnoremap ? T
-xnoremap T ?
-xnoremap ? T
+noremap t /
+noremap / t
+noremap T ?
+noremap ? T
 
 " quit this window by q
-tnoremap <silent> <leader>q  <C-\><C-n>:q<CR>
-nnoremap <silent> <leader>q  :<C-u>q<CR>
+nnoremap <silent> <leader>q :<C-u>q<CR>
+" nnoremap <silent> <leader>q :<C-u>bd<CR>
 nnoremap <silent> <leader>wq :qa<CR>
-nnoremap <silent> <leader>Q  :qa<CR>
+nnoremap <silent> <leader>Q :qa<CR>
 
 " delete this buffer by bd
-nnoremap <silent> <leader>bd  :<C-u>bd<CR>
+nnoremap <silent> <leader>bd :<C-u>bd<CR>
 
 " center cursor when jumped
-" nnoremap n          nzz
-" nnoremap N          Nzz
-" This option is deprecated. Instead, cursor should be somewhat inside window
 setlocal scrolloff=5
 
 " increase and decrease by plus/minus
@@ -326,8 +372,8 @@ vmap     g- g<C-x>
 nnoremap ' `
 nnoremap ` '
 
-" save with <C-g> in insert mode
-inoremap <C-g> <ESC>:update<CR>a
+" save with <C-l> in insert mode
+inoremap <C-l> <ESC>:update<CR>a
 
 "save by <leader>s
 nnoremap <silent> <leader>s :<C-u>update<CR>
@@ -377,15 +423,15 @@ nnoremap < <<
 
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]>
-""
-" insert mode keymappings for japanese input convenience
-" 単語移動：ctrl-f/bのとき補完ウィンドウを閉じる
-inoremap <silent> <expr> <C-b> pumvisible() ? "<C-y><C-r>=ExecExCommand('normal b')<CR>" : "<C-r>=ExecExCommand('normal b')<CR>"
-inoremap <silent> <expr> <C-f> pumvisible() ? "<C-y><C-r>=ExecExCommand('normal w')<CR>" : "<C-r>=ExecExCommand('normal w')<CR>"
 
+" 補完せず補完ウィンドウを閉じてから移動
+inoremap <silent> <expr> <C-b> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal b')<CR>" : "<C-r>=ExecExCommand('normal b')<CR>"
+inoremap <silent> <expr> <C-f> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal w')<CR>" : "<C-r>=ExecExCommand('normal w')<CR>"
+inoremap <silent> <expr> <A-b> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal h')<CR>" : "<C-r>=ExecExCommand('normal h')<CR>"
+inoremap <silent> <expr> <A-f> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal l')<CR>" : "<C-r>=ExecExCommand('normal l')<CR>"
 
-inoremap <silent> <expr> <C-b> "<C-r>=ExecExCommand('normal b')<CR>"
-inoremap <silent> <expr> <C-f> "<C-r>=ExecExCommand('normal w')<CR>"
+" inoremap <silent> <expr> <C-b> "<C-r>=ExecExCommand('normal b')<CR>"
+" inoremap <silent> <expr> <C-f> "<C-r>=ExecExCommand('normal w')<CR>"
 " 行移動
 inoremap <silent> <expr> <C-p> "<C-r>=ExecExCommand('normal k')<CR>"
 inoremap <silent> <expr> <C-n> "<C-r>=ExecExCommand('normal j')<CR>"
@@ -395,7 +441,6 @@ function! ExecExCommand(cmd)
   return ''
 endfunction
 
-"コマンドラインでのキーバインドをEmacs風に
 " 行頭へ移動
 cnoremap <C-A> <Home>
 inoremap <C-A> <Home>
@@ -409,6 +454,8 @@ iab pr \|>
 set signcolumn=auto
 
 set matchpairs+=「:」,（:）
+
+set spelllang=en,cjk
 
 " 最後に設定
 filetype plugin indent on

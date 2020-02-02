@@ -1,4 +1,4 @@
-call defx#custom#column('indent',{'indent': "- "})
+" call defx#custom#column('indent',{'indent': "- "})
 call defx#custom#column('mark', {
             \ 'readonly_icon': '✗',
             \ 'root_icon': ' ',
@@ -16,13 +16,14 @@ function!  s:defx_my_settings() abort
     " Define mappings
     nnoremap <silent><buffer><expr> <CR>          defx#do_action('open')
     nnoremap <silent><buffer><expr> o             defx#is_directory()?defx#do_action('open_or_close_tree'):defx#do_action('drop')
+    nnoremap <silent><buffer><expr> P             defx#is_directory()?defx#do_action('open_or_close_tree'):defx#do_action('preview')
     nnoremap <silent><buffer><expr> O             defx#is_directory()?defx#do_action('open_tree_recursive'):defx#do_action('drop','tabnew')
     nnoremap <silent><buffer><expr> <2-LeftMouse> defx#do_action('open')
     nnoremap <silent><buffer><expr> l             defx#do_action('open_directory')
     nnoremap <silent><buffer><expr> K             defx#do_action('new_directory')
     nnoremap <silent><buffer><expr> L             defx#do_action('new_file')
     nnoremap <silent><buffer><expr> h             defx#do_action('cd',['..'])
-    nnoremap <silent><buffer><expr> dd            defx#do_action('remove',['..'])
+    nnoremap <silent><buffer><expr> d             defx#do_action('remove',['..'])
     nnoremap <silent><buffer><expr> r             defx#do_action('rename',['..'])
     nnoremap <silent><buffer><expr> ~             defx#do_action('cd')
     nnoremap <silent><buffer><expr> v             defx#do_action('toggle_select').'j'
@@ -38,6 +39,11 @@ function!  s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> Ss            defx#do_action('toggle_sort', 'size')
     nnoremap <silent><buffer><expr> St            defx#do_action('toggle_sort', 'time')
     nnoremap <buffer>               <leader>gd    :call <SID>git_diff_of_directory()<CR>
+endfunction
+
+function! s:drop_and_back()
+    call defx#do_action('open')
+    " exe "normal \<C-w>h"
 endfunction
 
 function! s:git_diff_of_directory()

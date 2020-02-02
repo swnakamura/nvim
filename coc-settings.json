@@ -12,5 +12,6 @@
       }
     }
   },
-  "coc.source.vimtex.enable": true
+  "coc.source.vimtex.enable": true,
+  "suggest.noselect": false
 }
