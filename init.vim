@@ -22,15 +22,18 @@ set pyxversion=3
 
 call plug#begin('/home/woody/.config/nvim/plugged')
 
-Plug 'SirVer/ultisnips'
-" Plug 'Shougo/neosnippet'
-" Plug 'Shougo/neosnippet-snippets'
+" Plug 'SirVer/ultisnips'
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
 Plug 'jceb/vim-orgmode'
 Plug 'honza/vim-snippets'
 Plug 'woodyZootopia/flatwhite-vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'cohama/lexima.vim'
+Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/defx.nvim'
 Plug 'Shougo/deol.nvim'
+Plug 'autozimu/LanguageClient-neovim'
 Plug 'kristijanhusak/defx-git'
 Plug 'Shougo/denite.nvim'
 Plug 'Shougo/unite-outline'
@@ -180,21 +183,23 @@ set foldcolumn=2
 
 augroup fileType
   au!
-  au BufRead            *.cls    set      ft=tex
-  au filetype           python   setlocal foldmethod=syntax 
-  au filetype           c,cpp    setlocal foldmethod=syntax
-  au filetype           go       setlocal tabstop=4 shiftwidth=4 noexpandtab | set formatoptions+=r
-  au filetype           tex      setlocal tabstop=4 shiftwidth=4 foldmethod=syntax spell
-  au filetype           tex      imap <buffer> ( (
-  au filetype           tex      imap <buffer> { {
-  au filetype           tex      imap <buffer> [ [
-  au filetype           html     setlocal nowrap
-  au filetype           csv      setlocal nowrap
-  au filetype           text     setlocal noet spell
-  au filetype           markdown setlocal noet
-  au BufNewFile,BufRead *.grg    setlocal nowrap
-  au BufNewFile,BufRead *.jl     setf     julia
-  au filetype           help     setlocal listchars=tab:\ \  noet
+  au BufRead            *.cls     set      ft=tex
+  au filetype           python    setlocal foldmethod=syntax
+  au filetype           c,cpp     setlocal foldmethod=syntax
+  au filetype           go        setlocal tabstop=4 shiftwidth=4 noexpandtab | set formatoptions+=r
+  au filetype           tex       setlocal tabstop=4 shiftwidth=4 foldmethod=syntax spell
+  au filetype           tex       imap     <buffer> ( (
+  au filetype           tex       imap     <buffer> { {
+  au filetype           tex       imap     <buffer> [ [
+  au filetype           html      setlocal nowrap
+  au filetype           csv       setlocal nowrap
+  au filetype           text      setlocal noet spell
+  au filetype           mail      setlocal noet spell
+  au filetype           gitcommit setlocal spell
+  au filetype           markdown  setlocal noet
+  au BufNewFile,BufRead *.grg     setlocal nowrap
+  au BufNewFile,BufRead *.jl      setf     julia
+  au filetype           help      setlocal listchars=tab:\ \  noet
 augroup END
 
 nmap <F5> <localleader>r
