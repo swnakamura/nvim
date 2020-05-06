@@ -14,26 +14,30 @@ if !filereadable(s:plug_script)
 endif
 
 let g:loaded_python_provier=1
-let g:python3_host_prog='/home/woody/anaconda3/bin/python3'
+let g:python3_host_prog='/usr/bin/python3'
 let g:python3_host_skip_check=1
-let g:python_host_prog='/usr/bin/python2'
+let g:python_host_prog='/usr/bin/python'
 let g:python_host_skip_check=1
 set pyxversion=3
 
 call plug#begin('/home/woody/.config/nvim/plugged')
 
-" Plug 'SirVer/ultisnips'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'jceb/vim-orgmode'
 Plug 'honza/vim-snippets'
-Plug 'woodyZootopia/flatwhite-vim'
+"Plug 'woodyZootopia/flatwhite-vim'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'rafi/awesome-vim-colorschemes'
+Plug 'sheerun/vim-wombat-scheme'
 Plug 'cohama/lexima.vim'
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/defx.nvim'
 Plug 'Shougo/deol.nvim'
-Plug 'autozimu/LanguageClient-neovim'
+Plug 'autozimu/LanguageClient-neovim', {
+            \'branch': 'next',
+            \'do':     'bash install.sh',
+            \}
 Plug 'kristijanhusak/defx-git'
 Plug 'Shougo/denite.nvim'
 Plug 'Shougo/unite-outline'
@@ -66,7 +70,7 @@ Plug 'fuenor/jpmoveword.vim'
 " Plug 'mattn/sonictemplate-vim'
 Plug 'tpope/vim-rhubarb'
 Plug 'JuliaEditorSupport/julia-vim'
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 Plug 'itchyny/lightline.vim'
 Plug 'jpalardy/vim-slime'
 Plug 'tikhomirov/vim-glsl'
@@ -92,6 +96,7 @@ Plug 'zeekay/vim-beautify', {'for' : ['html', 'htm', 'js']}
 Plug 'AtsushiM/sass-compile.vim', {'for' : ['sass','scss']}
 Plug 'qnighy/satysfi.vim', {'for' : ['satysfi','saty']}
 Plug 'plasticboy/vim-markdown', {'for' : ['markdown']}
+Plug 'rust-lang/rust.vim', {'for': ['rust']}
 
 call plug#end()
 
@@ -100,7 +105,7 @@ if !isdirectory(s:plug_repo_dir)
 endif
 
 " execute plugin specific settings
-for f in split(glob('/home/woody/.config/nvim/plugins/*.vim'), '\n')
+for f in split(glob('/home/woody/.config/nvim/plugin_settings/*.vim'), '\n')
     exe 'source' f
 endfor
 
@@ -184,8 +189,8 @@ set foldcolumn=2
 augroup fileType
   au!
   au BufRead            *.cls     set      ft=tex
-  au filetype           python    setlocal foldmethod=syntax
-  au filetype           c,cpp     setlocal foldmethod=syntax
+  au filetype           python    setlocal foldmethod=indent
+  au filetype           c,cpp     setlocal foldmethod=indent
   au filetype           go        setlocal tabstop=4 shiftwidth=4 noexpandtab | set formatoptions+=r
   au filetype           tex       setlocal tabstop=4 shiftwidth=4 foldmethod=syntax spell
   au filetype           tex       imap     <buffer> ( (
@@ -259,7 +264,7 @@ set wildignore=*.o,*.obj,*.pyc,*.so,*.dll
 
 let g:python_highlight_all = 1
 
-set clipboard+=unnamedplus
+"set clipboard+=unnamedplus
 
 " Always set ...
 " LineNr light-green
@@ -269,7 +274,7 @@ if g:dark_transparent
     autocmd ColorScheme * highlight Normal guibg=NONE ctermbg=NONE
     " NonText gray
     autocmd ColorScheme * highlight NonText guibg=NONE ctermbg=NONE guifg=Gray
-    colorscheme hybrid
+    colorscheme wombat
 else
     autocmd ColorScheme * highlight LineNr guifg=#b5bd68
     " background transparent

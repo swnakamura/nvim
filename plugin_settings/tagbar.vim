@@ -34,3 +34,5 @@ let g:tagbar_type_markdown = {
         \ 'k:Heading_L3'
     \ ]
 \ }
+
+let g:tagbar_iconchars = ['+', '-']

@@ -16,7 +16,7 @@ function!  s:defx_my_settings() abort
     " Define mappings
     nnoremap <silent><buffer><expr> <CR>          defx#do_action('open')
     nnoremap <silent><buffer><expr> o             defx#is_directory()?defx#do_action('open_or_close_tree'):defx#do_action('drop')
-    nnoremap <silent><buffer><expr> P             defx#is_directory()?defx#do_action('open_or_close_tree'):defx#do_action('preview')
+    nmap     <silent><buffer>       p             osh
     nnoremap <silent><buffer><expr> O             defx#is_directory()?defx#do_action('open_tree_recursive'):defx#do_action('drop','tabnew')
     nnoremap <silent><buffer><expr> <2-LeftMouse> defx#do_action('open')
     nnoremap <silent><buffer><expr> l             defx#do_action('open_directory')
@@ -31,14 +31,15 @@ function!  s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> R             defx#do_action('redraw')
     nnoremap <silent><buffer><expr> yy            defx#do_action('yank_path')
     nnoremap <silent><buffer><expr> !             defx#do_action('execute_command')
+    nnoremap <silent><buffer><expr> i             defx#do_action('execute_command')
     nnoremap <silent><buffer><expr> x             defx#do_action('execute_system')
     nnoremap <silent><buffer><expr> c             defx#do_action('copy')
-    nnoremap <silent><buffer><expr> p             defx#do_action('paste')
+    nnoremap <silent><buffer><expr> P             defx#do_action('paste')
     nnoremap <silent><buffer><expr> Se            defx#do_action('toggle_sort', 'extension')
     nnoremap <silent><buffer><expr> Sn            defx#do_action('toggle_sort', 'filename')
     nnoremap <silent><buffer><expr> Ss            defx#do_action('toggle_sort', 'size')
     nnoremap <silent><buffer><expr> St            defx#do_action('toggle_sort', 'time')
-    nnoremap <buffer>               <leader>gd    :call <SID>git_diff_of_directory()<CR>
+    nnoremap <buffer>               <leader>gd    :call                         <SID>git_diff_of_directory()<CR>
 endfunction
 
 function! s:drop_and_back()

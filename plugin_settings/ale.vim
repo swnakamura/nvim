@@ -9,7 +9,7 @@ let g:ale_linters = {
             \'python':['pyls']
             \}
 
-nnoremap <leader>ap :ALEFix<CR>
+" nnoremap <leader>ap :ALEFix<CR>
 
 nnoremap ]a :ALENext<CR>
 nnoremap [a :ALEPrevious<CR>

@@ -23,7 +23,7 @@ nnoremap <leader>gs :Gstatus<CR><C-w>T
 nnoremap <leader>ga :Gwrite<CR>
 nnoremap <leader>gc :Gcommit-v<CR>
 nnoremap <leader>gb :Gblame<CR>
-nnoremap <leader>gl :Glog<CR>
+nnoremap <leader>gl :tab sp<CR>:Glog<CR><C-w>j
 nnoremap <leader>gh :0Glog<CR> " abbrev for git history: create new quickfix tab for history
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gf :Gfetch<CR>

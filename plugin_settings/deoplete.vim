@@ -11,14 +11,15 @@ imap <expr><tab> pumvisible() ? "\<C-n>" : "\<tab>"
 " trial 2
 inoremap <silent> <expr> <CR> "<C-r>=deoplete#close_popup()<CR><CR>"
 
-let g:deoplete#auto_complete_delay = 0
-let g:deoplete#enable_camel_case = 0
-let g:deoplete#enable_ignore_case = 0
-let g:deoplete#enable_refresh_always = 0
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#file#enable_buffer_path = 1
-let g:deoplete#auto_complete_start_length = 1
-let g:deoplete#max_list = 100
+call deoplete#custom#option({
+            \'camel_case': v:true,
+            \'auto_complete_delay': 0,
+            \'smart_case': v:true,
+            \'refresh_always': v:false,
+            \'buffer_path': v:true,
+            \'min_pattern_length': 1,
+            \'max_list': 100,
+            \})
 
 " limit only to deoplete-zsh when in deol buffer
 call deoplete#custom#option('sources', {  'zsh': ['zsh'], })
