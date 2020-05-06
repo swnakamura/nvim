@@ -26,9 +26,10 @@ Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'jceb/vim-orgmode'
 Plug 'honza/vim-snippets'
+Plug 'Sirver/ultisnips'
 "Plug 'woodyZootopia/flatwhite-vim'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'rafi/awesome-vim-colorschemes'
+Plug 'rafi/awesome-vim-colorschemes'
 Plug 'sheerun/vim-wombat-scheme'
 Plug 'cohama/lexima.vim'
 Plug 'Shougo/deoplete.nvim'
@@ -154,7 +155,7 @@ set nf=alpha,octal,hex,bin
 set ignorecase smartcase incsearch nohlsearch nowrapscan
 
 " line number settings
-set number relativenumber
+set number
 
 " listchar settings
 set list listchars=tab:»-,trail:~,extends:»,precedes:«,nbsp:%
@@ -274,7 +275,7 @@ if g:dark_transparent
     autocmd ColorScheme * highlight Normal guibg=NONE ctermbg=NONE
     " NonText gray
     autocmd ColorScheme * highlight NonText guibg=NONE ctermbg=NONE guifg=Gray
-    colorscheme wombat
+    colorscheme gruvbox
 else
     autocmd ColorScheme * highlight LineNr guifg=#b5bd68
     " background transparent
