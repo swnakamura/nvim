@@ -58,38 +58,44 @@ Hello, world!
 \end{document}
 endsnippet
 
-snippet 2figures "2 figures in one line" b
+snippet 2fig "2 figures in one line" b
 \begin{figure}[btp]
     \begin{minipage}{0.5\hsize}
         \centering
         \includegraphics[width=40mm]{$1}
-        \label{fig:$2}
+        \label{fig:${2:${1/\W+/_/g}}}
     \end{minipage}
     \begin{minipage}{0.5\hsize}
         \centering
         \includegraphics[width=40mm]{$3}
-        \label{fig:$4}
+        \label{fig:${4:${3/\W+/_/g}}}
     \end{minipage}
+    \caption{${5:caption}}
 \end{figure}$0
 endsnippet
 
-snippet 3figures "3 figures in one line"
+snippet barcover "barcover" b
+\includepdf[fitpaper=true]{/home/woody/Documents/barcover.pdf}
+endsnippet
+
+snippet 3fig "3 figures in one line"
 \begin{figure}[btp]
     \begin{minipage}{0.33\hsize}
         \centering
         \includegraphics[width=40mm]{$1}
-        \label{fig:$2}
+        \label{fig:${2:${1/\W+/_/g}}}
     \end{minipage}
     \begin{minipage}{0.33\hsize}
         \centering
         \includegraphics[width=40mm]{$3}
-        \label{fig:$4}
+        \label{fig:${4:${3/\W+/_/g}}}
     \end{minipage}
     \begin{minipage}{0.33\hsize}
         \centering
         \includegraphics[width=40mm]{$5}
-        \label{fig:$6}
+        \label{fig:${6:${5/\W+/_/g}}}
     \end{minipage}
+    \caption{${7:caption}}
 \end{figure}$0
 endsnippet
 
@@ -271,6 +277,11 @@ snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
 endsnippet
 
 context "math()"
+snippet == "equiv" iA
+\equiv
+endsnippet
+
+context "math()"
 snippet scr "mathscr" iA
 \mathscr{$1}$0
 endsnippet
@@ -443,6 +454,12 @@ priority 11
 context "math()"
 snippet pdif "d/dx" iA
 \fracpd[$3]{$1}{${2:x}} $0
+endsnippet
+
+priority 12
+context "math()"
+snippet fpdif "d/dx" iA
+\ffracpd[$3]{$1}{${2:x}} $0
 endsnippet
 
 priority 10

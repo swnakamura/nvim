@@ -77,6 +77,7 @@ Plug 'jpalardy/vim-slime'
 Plug 'tikhomirov/vim-glsl'
 Plug 'Shougo/neco-syntax'
 Plug 'skywind3000/asyncrun.vim'
+Plug 'cpiger/NeoDebug'
 " lazy install
 Plug 'mattn/emmet-vim', {'for': ['html','vue']}
 Plug 'hynek/vim-python-pep8-indent', {'for' : 'python'}
@@ -223,6 +224,13 @@ augroup localleader
     autocmd FileType ruby map <buffer> <localleader>r :%AsyncRun ruby<CR>
 augroup END
 
+augroup limitlento80
+    autocmd!
+    autocmd Filetype gitcommit execute "set colorcolumn=" . join(range(81,335), ',')
+    autocmd Filetype tex execute "set colorcolumn=" . join(range(120,335), ',')
+    autocmd Filetype tex,gitcommit hi ColorColumn guibg=#262626 ctermbg=235
+augroup end
+
 augroup Beautifytype
   "for javascript
   autocmd FileType javascript noremap <buffer> <leader>aj :call JsBeautify()<cr>
@@ -292,6 +300,7 @@ endif
 
 " use termdebug
 packadd termdebug
+let g:termdebug_wide=163
 
 set mouse=a
 

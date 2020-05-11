@@ -13,9 +13,9 @@ if executable('clangd')
     let g:LanguageClient_serverCommands['cpp'] = ['clangd']
 endif
 
-" if executable('pyls')
-"     let g:LanguageClient_serverCommands['python'] = ['pyls']
-" endif
+if executable('pyls')
+    let g:LanguageClient_serverCommands['python'] = ['pyls']
+endif
 
 if executable('css-languageserver')
     let g:LanguageClient_serverCommands['css'] = ['css-languageserver', '--stdio']
