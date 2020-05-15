@@ -9,7 +9,7 @@ let g:LanguageClient_autoStart=1
 " 言語ごとに設定する
 let g:LanguageClient_serverCommands = {}
 if executable('clangd')
-    let g:LanguageClient_serverCommands['c'] = ['clangd', '--all-scopes-completion']
+    let g:LanguageClient_serverCommands['c'] = ['clangd']
     let g:LanguageClient_serverCommands['cpp'] = ['clangd']
 endif
 

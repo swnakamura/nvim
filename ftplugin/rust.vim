@@ -44,3 +44,5 @@ if expand('%:p') =~ 'kyopro'
     nnoremap <buffer> <F6>           :cd %:p:h<CR>:make! build --bin %:t:r<CR>
     nnoremap <buffer> <F9>           :cd %:p:h<CR>:make! atcoder submit %:t:r<CR>
 endif
+
+iab ar =>
