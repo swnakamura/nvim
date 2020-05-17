@@ -28,6 +28,9 @@ Plug 'autozimu/LanguageClient-neovim', {
             \'do':     'bash install.sh',
             \}
 Plug 'kristijanhusak/defx-git'
+Plug 'lambdalisue/gina.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'Shougo/denite.nvim'
 Plug 'Shougo/unite-outline'
 Plug 'Shougo/neomru.vim'
@@ -41,7 +44,7 @@ Plug 'kana/vim-operator-user'
 Plug 'rhysd/vim-operator-surround'
 Plug 'kana/vim-textobj-user'
 Plug 'haya14busa/vim-operator-flashy'
-Plug 'woodyZootopia/vim-ripgrep'
+" Plug 'woodyZootopia/vim-ripgrep'
 Plug 'easymotion/vim-easymotion'
 Plug 'kana/vim-textobj-syntax'
 Plug 'thinca/vim-textobj-between'

@@ -1,15 +1,15 @@
-nnoremap <silent> <space>fr  :<C-u>Denite -split=floating -start-filter file_mru<CR>
-nnoremap <silent> <space>fb  :<C-u>Denite -split=floating -start-filter buffer<CR>
-nnoremap <silent> <space>fy  :<C-u>Denite -split=floating -start-filter neoyank<CR>
-nnoremap <silent> <space>ff  :<C-u>Denite -split=floating -start-filter file/rec<CR>
-nnoremap <silent> <space>fd  :<C-u>Denite -split=floating -start-filter defx/history<CR>
-nnoremap <silent> <space>fu  :<C-u>Denite -split=floating -start-filter outline<CR>
-nnoremap <silent> <space>fc  :<C-u>Denite -split=floating -start-filter command_history<CR>
-nnoremap <silent> <space>fo  :<C-u>Denite -split=floating -start-filter output:
-nnoremap <silent> <space>fgl :<C-u>Denite -split=floating -start-filter gitlog<CR>
-nnoremap <silent> <space>fgs :<C-u>Denite -split=floating -start-filter gitstatus<CR>
-nnoremap <silent> <space>fgc :<C-u>Denite -split=floating -start-filter gitchanged<CR>
-nnoremap <silent> <space>fgb :<C-u>Denite -split=floating -start-filter gitbranch<CR>
+" nnoremap <silent> <space>fr  <Cmd>Denite -split=floating -start-filter file_mru<CR>
+" nnoremap <silent> <space>fb  <Cmd>Denite -split=floating -start-filter buffer<CR>
+" nnoremap <silent> <space>fy  <Cmd>Denite -split=floating -start-filter neoyank<CR>
+" nnoremap <silent> <space>ff  <Cmd>Denite -split=floating -start-filter file/rec<CR>
+" nnoremap <silent> <space>fd  <Cmd>Denite -split=floating -start-filter defx/history<CR>
+" nnoremap <silent> <space>fu  <Cmd>Denite -split=floating -start-filter outline<CR>
+" nnoremap <silent> <space>fc  <Cmd>Denite -split=floating -start-filter command_history<CR>
+" nnoremap <silent> <space>fo  <Cmd>Denite -split=floating -start-filter output:
+" nnoremap <silent> <space>fgl <Cmd>Denite -split=floating -start-filter gitlog<CR>
+" nnoremap <silent> <space>fgs <Cmd>Denite -split=floating -start-filter gitstatus<CR>
+" nnoremap <silent> <space>fgc <Cmd>Denite -split=floating -start-filter gitchanged<CR>
+" nnoremap <silent> <space>fgb <Cmd>Denite -split=floating -start-filter gitbranch<CR>
 
 " Define mappings
 autocmd FileType denite call s:denite_my_settings()

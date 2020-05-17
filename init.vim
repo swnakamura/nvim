@@ -41,7 +41,7 @@ augroup fileType
   au filetype           markdown  setlocal noet spell
   au BufNewFile,BufRead *.grg     setlocal nowrap
   au BufNewFile,BufRead *.jl      setf     julia
-  au filetype           help      setlocal listchars=tab:\ \  noet
+  au filetype           help      setlocal spell noet
 augroup END
 
 augroup localleader
@@ -59,12 +59,12 @@ augroup END
 
 augroup Binary
     au!
-    au BufReadPre  *.bin let &bin=1
-    au BufReadPre  *.torrent let &bin=1
-    au BufReadPre  *.out let &bin=1
+    au BufReadPre  *.bin setlocal bin
+    au BufReadPre  *.torrent setlocal bin
+    au BufReadPre  *.out setlocal bin
 
     au BufReadPost * if &bin | %!xxd
-    au BufReadPost * set ft=xxd | endif
+    au BufReadPost * setlocal ft=xxd | endif
 
     au BufWritePre * if &bin | %!xxd -r
     au BufWritePre * endif

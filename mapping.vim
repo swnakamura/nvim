@@ -105,11 +105,9 @@ nnoremap <leader>vv :vimgrep // %:p:h/*<Left><Left><Left><Left><Left><Left><Left
 " recursive search
 let s:use_vim_grep = 0
 if s:use_vim_grep
-    nnoremap <leader>vr :vimgrep // %:p:h/**<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+"     nnoremap <leader>vr :vimgrep // %:p:h/**<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 else
-    set grepprg=rg\ --vimgrep\ --no-heading\ -uuu
-    " nnoremap <leader>vr :grep -e ""<Left>
-    nnoremap <leader>vr :Rg ""<Left>
+    nnoremap <silent> <space>vr  <Cmd>Rg<CR>
 endif
 
 " quickfix jump
@@ -127,7 +125,7 @@ nmap ]W <Cmd>llast<CR>  " 最後へ
 " In quickfix window...
 augroup QuickfixWindow
     autocmd!
-    autocmd filetype qf nnoremap <buffer>p <CR>zz<C-w>j
+    autocmd filetype qf nnoremap <buffer> p <CR>zz<C-w>j
     autocmd filetype qf unmap j
     autocmd filetype qf unmap k
 augroup END
