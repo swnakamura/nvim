@@ -29,11 +29,18 @@ endif
 
 if executable('rustup')
     let g:LanguageClient_serverCommands['rust'] = ['rustup', 'run', 'stable', 'rls']
-    " let g:LanguageClient_serverCommands['rust'] = ['~/appimages/rust-analyzer-linux']
+endif
+
+if executable('rust-analizer')
+    let g:LanguageClient_serverCommands['rust'] = ['~/appimages/rust-analyzer-linux']
 endif
 
 if executable(expand('~/appimages/texlab/target/release/texlab'))
     let g:LanguageClient_serverCommands['tex'] = ['~/appimages/texlab/target/release/texlab']
+endif
+
+if executable(expand('~/node_modules/.bin/vim-language-server'))
+    let g:LanguageClient_serverCommands['vim'] = ['~/node_modules/.bin/vim-language-server']
 endif
 
 let g:default_julia_version='1.0'

@@ -12,6 +12,7 @@ let g:python_host_prog='/usr/bin/python'
 let g:python_host_skip_check=1
 set pyxversion=3
 
+" source plugins
 exe 'source' expand('~/.config/nvim/Plug.vim')
 
 " execute plugin specific settings
@@ -73,6 +74,12 @@ augroup Binary
     au BufWritePost * set nomod | endif
 augroup END
 
+augroup CSV
+    au!
+    au BufReadPost,BufWritePost *.csv %!column -s, -o, -t
+    au BufWritePre *.csv %s/\s\+,/,/g
+augroup END
+
 " inoremap { {}<Left>
 " inoremap {<Enter> {}<Left><CR><ESC><S-o>
 " inoremap ( ()<ESC>i
@@ -80,18 +87,14 @@ augroup END
 
 let g:python_highlight_all = 1
 
-"set clipboard+=unnamedplus
+set clipboard+=unnamedplus
 
 " Always set ...
 " LineNr light-green
 if g:dark_transparent
-    autocmd ColorScheme * highlight LineNr guifg=#b5bd68
-    " background transparent
-    autocmd ColorScheme * highlight Normal guibg=NONE ctermbg=NONE
-    autocmd ColorScheme * highlight EndOfBuffer guibg=NONE ctermbg=NONE
-    " NonText gray
-    autocmd ColorScheme * highlight NonText guibg=NONE ctermbg=NONE guifg=Gray
-    " autocmd ColorScheme * highlight Search  guifg=NONE gui=NONE
+    " autocmd ColorScheme * highlight Normal guibg=NONE ctermbg=NONE
+    " autocmd ColorScheme * highlight EndOfBuffer guifg=#000000
+    " autocmd ColorScheme * highlight Comment guifg=#333333
     colorscheme iceberg
 else
     autocmd ColorScheme * highlight LineNr guifg=#b5bd68
@@ -124,6 +127,8 @@ let g:termdebug_wide=163
 filetype plugin indent on
 syntax enable
 
+set conceallevel=0
+
 " key mapping
 nnoremap<silent> gss :SaveSession<CR>
 nnoremap<silent> gsl :LoadSession<CR>
@@ -131,4 +136,5 @@ nnoremap<silent> gsc :CleanUpSession<CR>
 let g:gitsession_tmp_dir = expand("~/.config/nvim/tmp/gitsession")
 " let g:gitsession_autoload = 1
 set runtimepath+=~/programing/gitsession.nvim
-set runtimepath+=~/programing/pygeon.nvim
+set runtimepath+=~/programing/rust-pg/mail.nvim
+set runtimepath+=~/programing/rust-pg/calc.nvim

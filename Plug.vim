@@ -13,12 +13,12 @@ Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'jceb/vim-orgmode'
 Plug 'honza/vim-snippets'
-Plug 'Sirver/ultisnips'
-"Plug 'woodyZootopia/flatwhite-vim'
+Plug 'woodyZootopia/flatwhite-vim'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'rafi/awesome-vim-colorschemes'
-Plug 'sheerun/vim-wombat-scheme'
+Plug 'rafi/awesome-vim-colorschemes'
+" Plug 'sheerun/vim-wombat-scheme'
 Plug 'cocopon/iceberg.vim'
+Plug 'zefei/simple-dark'
 Plug 'cohama/lexima.vim'
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/defx.nvim'
@@ -72,12 +72,14 @@ Plug 'jpalardy/vim-slime'
 Plug 'tikhomirov/vim-glsl'
 Plug 'Shougo/neco-syntax'
 Plug 'skywind3000/asyncrun.vim'
-Plug 'cpiger/NeoDebug'
+Plug 'woodyZootopia/NeoDebug'
+Plug 'yuratomo/gmail.vim'
 " lazy install
 Plug 'mattn/emmet-vim', {'for': ['html','vue']}
 Plug 'hynek/vim-python-pep8-indent', {'for' : 'python'}
 Plug 'bps/vim-textobj-python', {'for' : 'python'}
 Plug 'lervag/vimtex', {'for' : ['tex']}
+Plug 'Sirver/ultisnips', {'for' : ['tex']}
 Plug 'hail2u/vim-css3-syntax', {'for' : ['html','htm']}
 Plug 'pangloss/vim-javascript', {'for' : ['html','htm']}
 Plug 'kchmck/vim-coffee-script', {'for' : ['html','htm']}

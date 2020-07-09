@@ -8,13 +8,13 @@ set updatetime=100
 set cursorline
 
 " shada=viminfo
-set shada=!,'100,<0,s10,h,%0
+set shada=!,'3000,<0,s10,h,%0
 
 " do not include buffer info in session
 set sessionoptions-=buffers
 
 " file encoding
-set encoding=utf-8 fileencodings=utf-8,ios-2022-jp,euc-jp,sjis,cp932
+" set encoding=utf-8 fileencodings=utf-8,ios-2022-jp,euc-jp,sjis,cp932
 
 " use gui colors
 set termguicolors
@@ -40,7 +40,7 @@ set number
 set list listchars=tab:»-,trail:~,extends:»,precedes:«,nbsp:%
 
 " show double width characters properly
-set ambiwidth=double
+set ambiwidth=single
 
 " always show finetabline,statusline
 set showtabline=2 laststatus=2

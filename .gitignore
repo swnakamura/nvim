@@ -5,3 +5,4 @@ haven/
 tmp/
 .netrwhist
 templates/
+*.spl

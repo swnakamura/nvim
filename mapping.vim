@@ -43,10 +43,10 @@ nnoremap so <C-w>_<C-w>\|
 nnoremap sq <Cmd>tabc<CR>
 
 " move by display line
-noremap j  gj
-noremap k  gk
-noremap gj j
-noremap gk k
+" noremap j  gj
+" noremap k  gk
+" noremap gj j
+" noremap gk k
 
 " always replace considering zenkaku
 nnoremap r  gr
@@ -73,8 +73,8 @@ nnoremap <silent> <leader>Q :qa<CR>
 " delete this buffer by bd
 nnoremap <silent> <leader>bd <Cmd>bd<CR>
 
-" center cursor when jumped
-setlocal scrolloff=5
+
+set scrolloff=5
 
 " increase and decrease by plus/minus
 nnoremap +  <C-a>
@@ -107,7 +107,9 @@ let s:use_vim_grep = 0
 if s:use_vim_grep
 "     nnoremap <leader>vr :vimgrep // %:p:h/**<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 else
-    nnoremap <silent> <space>vr  <Cmd>Rg<CR>
+    " nnoremap <silent> <space>vr  <Cmd>Rg<CR>
+    set grepprg=rg\ --vimgrep\ --no-heading\ -uuu
+    nnoremap <leader>vr :grep -e ""<Left>
 endif
 
 " quickfix jump
@@ -146,8 +148,8 @@ inoremap <silent> <expr> <A-f> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal 
 " inoremap <silent> <expr> <C-b> "<C-r>=ExecExCommand('normal b')<CR>"
 " inoremap <silent> <expr> <C-f> "<C-r>=ExecExCommand('normal w')<CR>"
 " 行移動
-inoremap <silent> <expr> <C-p> "<C-r>=ExecExCommand('normal k')<CR>"
-inoremap <silent> <expr> <C-n> "<C-r>=ExecExCommand('normal j')<CR>"
+inoremap <silent> <expr> <C-p> "<C-r>=ExecExCommand('normal gk')<CR>"
+inoremap <silent> <expr> <C-n> "<C-r>=ExecExCommand('normal gj')<CR>"
 
 function! ExecExCommand(cmd)
   silent exec a:cmd
