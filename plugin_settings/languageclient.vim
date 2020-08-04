@@ -39,6 +39,10 @@ if executable(expand('~/appimages/texlab/target/release/texlab'))
     let g:LanguageClient_serverCommands['tex'] = ['~/appimages/texlab/target/release/texlab']
 endif
 
+if executable(expand('texlab'))
+    let g:LanguageClient_serverCommands['tex'] = ['texlab']
+endif
+
 if executable(expand('~/node_modules/.bin/vim-language-server'))
     let g:LanguageClient_serverCommands['vim'] = ['~/node_modules/.bin/vim-language-server']
 endif
@@ -117,7 +121,7 @@ function! LC_maps()
         nnoremap <buffer> <silent> <Leader>ar :call LanguageClient_textDocument_rename()<CR>
         nnoremap <buffer> <silent> <Leader>aR :LanguageClientStop<CR>:call wait(500,0)<CR>:LanguageClientStart<CR>
         nnoremap <buffer> <silent> <Leader>af :call LanguageClient_textDocument_formatting()<CR>
-        nnoremap <buffer> <silent> gf         :call LanguageClient_textDocument_formatting()<CR>
+        " nnoremap <buffer> <silent> gf         :call LanguageClient_textDocument_formatting()<CR>
     endif
 endfunction
 

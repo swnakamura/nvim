@@ -77,7 +77,7 @@ augroup END
 augroup CSV
     au!
     au BufReadPost,BufWritePost *.csv %!column -s, -o, -t
-    au BufWritePre *.csv %s/\s\+,/,/g
+    au BufWritePre *.csv %s/\s\+,/,/ge
 augroup END
 
 " inoremap { {}<Left>
@@ -110,11 +110,6 @@ augroup limitlento80
     " autocmd Filetype tex,gitcommit execute "set colorcolumn=" . join(range(81,335), ',')
     " autocmd Filetype tex,gitcommit hi ColorColumn guibg=#262626 ctermbg=235
 augroup end
-
-" colorscheme jellybeans
-" colorscheme gruvbox
-" colorscheme wombat
-" colorscheme PaperColor
 
 " use termdebug
 packadd termdebug
