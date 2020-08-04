@@ -23,20 +23,23 @@ if executable('css-languageserver')
     let g:LanguageClient_serverCommands['sass'] = ['css-languageserver', '--stdio']
 endif
 
-if executable(expand('~/go/bin/go-langserver'))
-    let g:LanguageClient_serverCommands['go'] = [expand('~/go/bin/go-langserver'), '-gocodecompletion']
+let s:go_langserver_path=expand('~/go/bin/go-langserver')
+" let s:go_langserver_path=expand('~/go/bin/gopls')
+if executable(s:go_langserver_path)
+    let g:LanguageClient_serverCommands['go'] = [s:go_langserver_path, '-gocodecompletion']
 endif
 
-if executable('rustup')
-    let g:LanguageClient_serverCommands['rust'] = ['rustup', 'run', 'stable', 'rls']
+" if executable('rustup')
+"     let g:LanguageClient_serverCommands['rust'] = ['rustup', 'run', 'stable', 'rls']
+" endif
+
+if executable('rust-analyzer')
+    let g:LanguageClient_serverCommands['rust'] = ['rust-analyzer']
 endif
 
-if executable('rust-analizer')
-    let g:LanguageClient_serverCommands['rust'] = ['~/appimages/rust-analyzer-linux']
-endif
-
-if executable(expand('~/appimages/texlab/target/release/texlab'))
-    let g:LanguageClient_serverCommands['tex'] = ['~/appimages/texlab/target/release/texlab']
+let s:latex_langserver_path=expand('~/appimages/texlab/target/release/texlab')
+if executable(s:latex_langserver_path)
+    let g:LanguageClient_serverCommands['tex'] = [s:latex_langserver_path]
 endif
 
 if executable(expand('texlab'))
@@ -49,11 +52,6 @@ endif
 
 let g:default_julia_version='1.0'
 let g:LanguageClient_serverCommands['julia'] =  ['julia', '--startup-file=no', '--history-file=no', '-e', ' using LanguageServer; using Pkg; import StaticLint; import SymbolServer; env_path = dirname(Pkg.Types.Context().env.project_file); debug = false; server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "", Dict()); server.runlinter = true; run(server);']
-
-
-if executable(expand('~/go/bin/gopls'))
-    let g:LanguageClient_serverCommands['go'] = [expand('~/go/bin/gopls')]
-endif
 
 " other settings
 let g:LanguageClient_useVirtualText = "CodeLens"
@@ -129,5 +127,10 @@ autocmd FileType * call LC_maps()
 
 augroup languageClientHighlight
     autocmd!
-    " autocmd CursorHold,CursorHoldI *.c,*.cpp,*.rs call LanguageClient#textDocument_documentHighlight()
+    autocmd CursorHold,CursorHoldI *.c,*.cpp,*.rs call LanguageClient#textDocument_documentHighlight()
+augroup END
+
+augroup languageClientAutoFormat
+    autocmd!
+    autocmd BufWritePre *.rs :call LanguageClient#textDocument_formatting_sync()
 augroup END
