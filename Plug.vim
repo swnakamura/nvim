@@ -12,6 +12,7 @@ call plug#begin('/home/woody/.config/nvim/plugged')
 " Plug 'Shougo/neosnippet'
 " Plug 'Shougo/neosnippet-snippets'
 Plug 'jceb/vim-orgmode'
+Plug 'Sirver/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'woodyZootopia/flatwhite-vim'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -79,7 +80,6 @@ Plug 'mattn/emmet-vim', {'for': ['html','vue']}
 Plug 'hynek/vim-python-pep8-indent', {'for' : 'python'}
 Plug 'bps/vim-textobj-python', {'for' : 'python'}
 Plug 'lervag/vimtex', {'for' : ['tex']}
-Plug 'Sirver/ultisnips', {'for' : ['tex']}
 Plug 'hail2u/vim-css3-syntax', {'for' : ['html','htm']}
 Plug 'pangloss/vim-javascript', {'for' : ['html','htm']}
 Plug 'kchmck/vim-coffee-script', {'for' : ['html','htm']}
