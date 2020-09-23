@@ -79,6 +79,14 @@ Hello, world!
 \end{document}
 endsnippet
 
+snippet authorShuWithNum "author with num" b
+\author{中村 周\\\\\\#1026298925}
+endsnippet
+
+snippet authorShu "author" b
+\author{中村 周}
+endsnippet
+
 snippet 2fig "2 figures in one line" b
 \begin{figure}[btp]
     \begin{minipage}{0.5\hsize}
@@ -129,7 +137,7 @@ snippet fig "Figure environment" b
 \end{figure}$0
 endsnippet
 
-snippet table "Table environment" b 
+snippet tab "Table environment" b 
 \begin{table}[btp]
 \centering
 \caption{${1:caption}}
@@ -143,6 +151,29 @@ $f/\iU{Hz}$ & $|E_{i}|/\iU{V}$ & $|E_{o}|/\iU{V}$ & $\theta/\iU{deg}$ \\\\ \hlin
 \end{tabular}
 \label{tab:${3:${1/\W+/_/g}}}
 \end{table}
+endsnippet
+
+snippet lst "lstlisting" b
+\begin{lstlisting}[caption={empty},title={プログラム\thelstlisting: $2},label={lst:$2},language=$3,captionpos=b]
+$1
+\end{lstlisting}
+$0
+endsnippet
+
+snippet figref "図のreference" i
+\figref{fig:$1}$0
+endsnippet
+
+snippet tabref "表のreference" i
+\tabref{tab:$1}$0
+endsnippet
+
+snippet lstref "listingのreference" i
+\lstref{lst:$1}$0
+endsnippet
+
+snippet eqnref "equationのreference" i
+\eqnref{eqn:$1}$0
 endsnippet
 
 snippet emph "emphasize" i
@@ -162,7 +193,7 @@ snippet Item "Itemize" bA
 endsnippet
 
 snippet item "item" bA
-	\item $0
+\item $0
 endsnippet
 
 snippet desc "Description" b

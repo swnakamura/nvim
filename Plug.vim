@@ -9,8 +9,8 @@ endif
 
 call plug#begin('/home/woody/.config/nvim/plugged')
 
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
+" Plug 'Shougo/neosnippet'
+" Plug 'Shougo/neosnippet-snippets'
 Plug 'jceb/vim-orgmode'
 Plug 'honza/vim-snippets'
 Plug 'woodyZootopia/flatwhite-vim'
@@ -43,9 +43,8 @@ Plug 'osyo-manga/shabadou.vim'
 Plug 'kana/vim-operator-user'
 Plug 'rhysd/vim-operator-surround'
 Plug 'kana/vim-textobj-user'
-Plug 'haya14busa/vim-operator-flashy'
 " Plug 'woodyZootopia/vim-ripgrep'
-Plug 'easymotion/vim-easymotion'
+" Plug 'easymotion/vim-easymotion'
 Plug 'kana/vim-textobj-syntax'
 Plug 'thinca/vim-textobj-between'
 Plug 'osyo-manga/vim-textobj-multiblock'
@@ -74,6 +73,7 @@ Plug 'Shougo/neco-syntax'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'woodyZootopia/NeoDebug'
 Plug 'yuratomo/gmail.vim'
+
 " lazy install
 Plug 'mattn/emmet-vim', {'for': ['html','vue']}
 Plug 'hynek/vim-python-pep8-indent', {'for' : 'python'}
@@ -96,6 +96,9 @@ Plug 'AtsushiM/sass-compile.vim', {'for' : ['sass','scss']}
 Plug 'qnighy/satysfi.vim', {'for' : ['satysfi','saty']}
 Plug 'plasticboy/vim-markdown', {'for' : ['markdown']}
 Plug 'rust-lang/rust.vim', {'for': ['rust']}
+Plug 'rust-lang/rust.vim', {'for': ['rust']}
+Plug 'luochen1990/rainbow', {'for': ['lisp']}
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
 call plug#end()
 

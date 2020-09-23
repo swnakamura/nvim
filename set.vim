@@ -14,7 +14,7 @@ set shada=!,'3000,<0,s10,h,%0
 set sessionoptions-=buffers
 
 " file encoding
-" set encoding=utf-8 fileencodings=utf-8,ios-2022-jp,euc-jp,sjis,cp932
+set encoding=utf-8 fileencodings=utf-8,ios-2022-jp,euc-jp,sjis,cp932
 
 " use gui colors
 set termguicolors

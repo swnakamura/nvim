@@ -1,4 +1,4 @@
-nmap <F5> <localleader>r
+" nmap <F5> <localleader>r
 
 tnoremap <silent> <C-[> <C-\><C-n>
 tnoremap <silent> <C-l> <C-\><C-n>
@@ -163,5 +163,5 @@ inoremap <C-A> <Home>
 cnoremap <C-E> <End>
 inoremap <C-E> <End>
 
-map y <Plug>(operator-flashy)
+" map y <Plug>(operator-flashy)
 

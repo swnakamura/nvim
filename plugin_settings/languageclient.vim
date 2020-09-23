@@ -3,7 +3,7 @@ let g:LanguageClient_loggingLevel = 'INFO'
 let g:LanguageClient_loggingFile = expand('~/.vim/LC.log')
 let g:LanguageClient_selectionUI = "location-list"
 let g:LanguageClient_diagnosticsList = "Location"
-let g:LanguageClient_hasSnippetSupport=0
+let g:LanguageClient_hasSnippetSupport=1
 let g:LanguageClient_autoStart=1
 
 " 言語ごとに設定する
@@ -37,7 +37,7 @@ if executable('rust-analyzer')
     let g:LanguageClient_serverCommands['rust'] = ['rust-analyzer']
 endif
 
-let s:latex_langserver_path=expand('~/appimages/texlab/target/release/texlab')
+let s:latex_langserver_path=expand('texlab')
 if executable(s:latex_langserver_path)
     let g:LanguageClient_serverCommands['tex'] = [s:latex_langserver_path]
 endif

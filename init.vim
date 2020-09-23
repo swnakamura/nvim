@@ -61,8 +61,11 @@ augroup END
 augroup Binary
     au!
     au BufReadPre  *.bin setlocal bin
+    au BufReadPre  *.img setlocal bin
+    au BufReadPre  *.sys setlocal bin
     au BufReadPre  *.torrent setlocal bin
     au BufReadPre  *.out setlocal bin
+    au BufReadPre  *.a setlocal bin
 
     au BufReadPost * if &bin | %!xxd
     au BufReadPost * setlocal ft=xxd | endif
@@ -78,6 +81,11 @@ augroup CSV
     au!
     au BufReadPost,BufWritePost *.csv %!column -s, -o, -t
     au BufWritePre *.csv %s/\s\+,/,/ge
+augroup END
+
+augroup LuaHighlight
+  autocmd!
+  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
 augroup END
 
 " inoremap { {}<Left>
