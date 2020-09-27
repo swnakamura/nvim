@@ -140,13 +140,13 @@ nnoremap < <<
 nnoremap <C-]> g<C-]>
 
 " 補完せず補完ウィンドウを閉じてから移動
-inoremap <silent> <expr> <C-b> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal b')<CR>" : "<C-r>=ExecExCommand('normal b')<CR>"
-inoremap <silent> <expr> <C-f> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal w')<CR>" : "<C-r>=ExecExCommand('normal w')<CR>"
-inoremap <silent> <expr> <A-b> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal h')<CR>" : "<C-r>=ExecExCommand('normal h')<CR>"
-inoremap <silent> <expr> <A-f> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal l')<CR>" : "<C-r>=ExecExCommand('normal l')<CR>"
+" inoremap <silent> <expr> <C-b> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal b')<CR>" : "<C-r>=ExecExCommand('normal b')<CR>"
+" inoremap <silent> <expr> <C-f> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal w')<CR>" : "<C-r>=ExecExCommand('normal w')<CR>"
+" inoremap <silent> <expr> <A-b> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal h')<CR>" : "<C-r>=ExecExCommand('normal h')<CR>"
+" inoremap <silent> <expr> <A-f> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal l')<CR>" : "<C-r>=ExecExCommand('normal l')<CR>"
 
-" inoremap <silent> <expr> <C-b> "<C-r>=ExecExCommand('normal b')<CR>"
-" inoremap <silent> <expr> <C-f> "<C-r>=ExecExCommand('normal w')<CR>"
+inoremap <silent> <expr> <C-b> "<C-r>=ExecExCommand('normal b')<CR>"
+inoremap <silent> <expr> <C-f> "<C-r>=ExecExCommand('normal w')<CR>"
 " 行移動
 inoremap <silent> <expr> <C-p> "<C-r>=ExecExCommand('normal gk')<CR>"
 inoremap <silent> <expr> <C-n> "<C-r>=ExecExCommand('normal gj')<CR>"

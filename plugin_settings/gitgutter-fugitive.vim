@@ -1,7 +1,7 @@
 "gitgutter
 let g:gitgutter_preview_win_floating = 0
 nmap <Leader>hs <Plug>(GitGutterStageHunk)
-nmap <Leader>ha <Plug>(GitGutterStageHunk)
+" nmap <Leader>ha <Plug>(GitGutterStageHunk)
 nmap <Leader>hu <Plug>(GitGutterUndoHunk)
 nmap <Leader>hp <Plug>(GitGutterPreviewHunk)
 nmap <Leader>hv <Plug>(GitGutterPreviewHunk)

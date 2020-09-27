@@ -23,6 +23,7 @@ endfor
 " source settings
 exe 'source' expand('~/.config/nvim/set.vim')
 exe 'source' expand('~/.config/nvim/mapping.vim')
+exe 'source' expand('~/.config/nvim/lsp.vim')
 
 augroup fileType
   au!

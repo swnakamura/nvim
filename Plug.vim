@@ -11,23 +11,26 @@ call plug#begin('/home/woody/.config/nvim/plugged')
 
 " Plug 'Shougo/neosnippet'
 " Plug 'Shougo/neosnippet-snippets'
+Plug 'neovim/nvim-lsp'
 Plug 'jceb/vim-orgmode'
 Plug 'Sirver/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'woodyZootopia/flatwhite-vim'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'rafi/awesome-vim-colorschemes'
+" Plug 'rafi/awesome-vim-colorschemes'
 " Plug 'sheerun/vim-wombat-scheme'
 Plug 'cocopon/iceberg.vim'
+Plug 'cocopon/pgmnt.vim'
 Plug 'zefei/simple-dark'
 Plug 'cohama/lexima.vim'
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/defx.nvim'
 Plug 'Shougo/deol.nvim'
-Plug 'autozimu/LanguageClient-neovim', {
-            \'branch': 'next',
-            \'do':     'bash install.sh',
-            \}
+Plug 'Shougo/deoplete-lsp'
+" Plug 'autozimu/LanguageClient-neovim', {
+"             \'branch': 'next',
+"             \'do':     'bash install.sh',
+"             \}
 Plug 'kristijanhusak/defx-git'
 Plug 'lambdalisue/gina.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
