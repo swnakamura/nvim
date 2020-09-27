@@ -108,3 +108,12 @@ call plug#end()
 if !isdirectory(s:plug_repo_dir)
     exe 'PlugInstall'
 endif
+
+" use termdebug
+packadd termdebug
+let g:termdebug_wide=163
+
+" use my own plugin
+" let g:gitsession_autoload = 1
+set runtimepath+=~/programing/gitsession.nvim
+let g:gitsession_tmp_dir = expand("~/.config/nvim/tmp/gitsession")

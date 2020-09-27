@@ -1,4 +1,4 @@
-if g:dark_transparent
+if g:dark_colorscheme
     let g:lightline = {
                 \ 'colorscheme': 'wombat',
                 \}

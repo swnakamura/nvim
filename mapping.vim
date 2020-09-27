@@ -105,7 +105,7 @@ nnoremap <leader>vv :vimgrep // %:p:h/*<Left><Left><Left><Left><Left><Left><Left
 " recursive search
 let s:use_vim_grep = 0
 if s:use_vim_grep
-"     nnoremap <leader>vr :vimgrep // %:p:h/**<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+    nnoremap <leader>vr :vimgrep // %:p:h/**<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 else
     " nnoremap <silent> <space>vr  <Cmd>Rg<CR>
     set grepprg=rg\ --vimgrep\ --no-heading\ -uuu
@@ -163,5 +163,6 @@ inoremap <C-A> <Home>
 cnoremap <C-E> <End>
 inoremap <C-E> <End>
 
-" map y <Plug>(operator-flashy)
-
+nnoremap<silent> gss :SaveSession<CR>
+nnoremap<silent> gsl :LoadSession<CR>
+nnoremap<silent> gsc :CleanUpSession<CR>
