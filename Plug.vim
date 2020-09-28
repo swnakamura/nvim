@@ -9,28 +9,31 @@ endif
 
 call plug#begin('/home/woody/.config/nvim/plugged')
 
-" Plug 'Shougo/neosnippet'
-" Plug 'Shougo/neosnippet-snippets'
+let g:vim_markdown_no_default_key_mappings = 1
+
+" completion
 Plug 'neovim/nvim-lsp'
-Plug 'jceb/vim-orgmode'
 Plug 'Sirver/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'woodyZootopia/flatwhite-vim'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'rafi/awesome-vim-colorschemes'
-" Plug 'sheerun/vim-wombat-scheme'
-Plug 'cocopon/iceberg.vim'
-Plug 'cocopon/pgmnt.vim'
-Plug 'zefei/simple-dark'
-Plug 'cohama/lexima.vim'
 Plug 'Shougo/deoplete.nvim'
-Plug 'Shougo/defx.nvim'
-Plug 'Shougo/deol.nvim'
 Plug 'Shougo/deoplete-lsp'
 " Plug 'autozimu/LanguageClient-neovim', {
 "             \'branch': 'next',
 "             \'do':     'bash install.sh',
 "             \}
+
+" colorschemes
+" Plug 'rafi/awesome-vim-colorschemes'
+" Plug 'sheerun/vim-wombat-scheme'
+Plug 'cocopon/iceberg.vim'
+Plug 'cocopon/pgmnt.vim'
+Plug 'zefei/simple-dark'
+
+Plug 'cohama/lexima.vim'
+Plug 'Shougo/defx.nvim'
+Plug 'Shougo/deol.nvim'
 Plug 'kristijanhusak/defx-git'
 Plug 'lambdalisue/gina.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -79,6 +82,7 @@ Plug 'woodyZootopia/NeoDebug'
 Plug 'yuratomo/gmail.vim'
 
 " lazy install
+Plug 'jceb/vim-orgmode', {'for': ['org']}
 Plug 'mattn/emmet-vim', {'for': ['html','vue']}
 Plug 'hynek/vim-python-pep8-indent', {'for' : 'python'}
 Plug 'bps/vim-textobj-python', {'for' : 'python'}
@@ -115,5 +119,6 @@ let g:termdebug_wide=163
 
 " use my own plugin
 " let g:gitsession_autoload = 1
+let g:gitsession_autosave = 1
 set runtimepath+=~/programing/gitsession.nvim
 let g:gitsession_tmp_dir = expand("~/.config/nvim/tmp/gitsession")
