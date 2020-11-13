@@ -34,7 +34,7 @@ set nf=alpha,octal,hex,bin
 set ignorecase smartcase incsearch nohlsearch nowrapscan
 
 " line number settings
-set number
+set relativenumber
 
 " listchar settings
 set list listchars=tab:»-,trail:~,extends:»,precedes:«,nbsp:%

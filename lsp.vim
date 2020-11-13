@@ -46,7 +46,5 @@ autocmd BufRead * call LC_maps()
 " 特定のファイルの時、保存時に整形する
 augroup lspAutoFormat
     autocmd!
-    autocmd BufWritePre *.rs,*.c,*.cpp lua vim.lsp.buf.formatting_sync(nil, 1000)
+    autocmd BufWritePre *.rs,*.c,*.cpp,*.py lua vim.lsp.buf.formatting_sync(nil, 1000)
 augroup END
-
-

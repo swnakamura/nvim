@@ -8,6 +8,7 @@ from scipy.constants import *
 plt.rcParams['text.usetex'] = True
 plt.rcParams['axes.axisbelow'] = True
 plt.rcParams['font.family'] = 'Times New Roman'
+plt.rcParams['figure.figsize'] = [6.4, 4.8]
 
 MARKER_LIST = ['o', 'v', '^', '<', '>', 's', 'p']
 # see https://matplotlib.org/examples/color/colormaps_reference.html for colormap
@@ -34,12 +35,16 @@ if __name__ == '__main__':
     DO_FITTING = $1
 
     for ite, DATA in enumerate(DATA_LIST):
-        data = pd.read_csv(DATA['path'])
+        if DATA['path'][-3:] == 'tsv':
+            data = pd.read_csv(DATA['path'], delimiter='\t')
+        else:
+            data = pd.read_csv(DATA['path'])
         datax = data["$3"]
         datay = data["$4"]
 
         ax.scatter(datax, datay, s=10,
                    facecolor='none', edgecolor=cmap(ite), linewidths=0.1, label=DATA['name'], marker=MARKER_LIST[ite])
+        ax.plot(datax, datay, linewidth=0.1, color=cmap(ite))
 
         # fitting
         if DO_FITTING:

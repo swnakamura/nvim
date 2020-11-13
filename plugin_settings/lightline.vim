@@ -1,10 +1,10 @@
 if g:dark_colorscheme
     let g:lightline = {
-                \ 'colorscheme': 'wombat',
+                \ 'colorscheme': 'iceberg',
                 \}
 else
     let g:lightline = {
-                \ 'colorscheme': 'solarized',
+                \ 'colorscheme': 'iceberg',
                 \}
 endif
 let g:lightline.subseparator = { 'left': '', 'right': '' }

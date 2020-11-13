@@ -16,20 +16,13 @@ Plug 'neovim/nvim-lsp'
 Plug 'Sirver/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'woodyZootopia/flatwhite-vim'
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/deoplete-lsp'
-" Plug 'autozimu/LanguageClient-neovim', {
-"             \'branch': 'next',
-"             \'do':     'bash install.sh',
-"             \}
 
 " colorschemes
-" Plug 'rafi/awesome-vim-colorschemes'
-" Plug 'sheerun/vim-wombat-scheme'
-Plug 'cocopon/iceberg.vim'
+Plug 'woodyZootopia/iceberg.vim', {'branch': 'support_LSP'}
 Plug 'cocopon/pgmnt.vim'
-Plug 'zefei/simple-dark'
+Plug 'altercation/vim-colors-solarized'
 
 Plug 'cohama/lexima.vim'
 Plug 'Shougo/defx.nvim'
@@ -38,8 +31,8 @@ Plug 'kristijanhusak/defx-git'
 Plug 'lambdalisue/gina.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'Shougo/denite.nvim'
-Plug 'Shougo/unite-outline'
+" Plug 'Shougo/denite.nvim'
+" Plug 'Shougo/unite-outline'
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/neoyank.vim'
 Plug 'haya14busa/vim-asterisk'
@@ -50,8 +43,6 @@ Plug 'osyo-manga/shabadou.vim'
 Plug 'kana/vim-operator-user'
 Plug 'rhysd/vim-operator-surround'
 Plug 'kana/vim-textobj-user'
-" Plug 'woodyZootopia/vim-ripgrep'
-" Plug 'easymotion/vim-easymotion'
 Plug 'kana/vim-textobj-syntax'
 Plug 'thinca/vim-textobj-between'
 Plug 'osyo-manga/vim-textobj-multiblock'
@@ -65,14 +56,12 @@ Plug 'soramugi/auto-ctags.vim'
 Plug 'majutsushi/tagbar'
 Plug 'Shougo/echodoc.vim'
 Plug 'qnighy/satysfi.vim'
-Plug 'ncm2/float-preview.nvim'
+" Plug 'ncm2/float-preview.nvim'
 Plug 'micke/vim-hybrid'
 Plug 'mbbill/undotree'
 Plug 'fuenor/jpmoveword.vim'
-" Plug 'mattn/sonictemplate-vim'
 Plug 'tpope/vim-rhubarb'
 Plug 'JuliaEditorSupport/julia-vim'
-" Plug 'dense-analysis/ale'
 Plug 'itchyny/lightline.vim'
 Plug 'jpalardy/vim-slime'
 Plug 'tikhomirov/vim-glsl'
@@ -118,7 +107,6 @@ packadd termdebug
 let g:termdebug_wide=163
 
 " use my own plugin
-" let g:gitsession_autoload = 1
 let g:gitsession_autosave = 1
 set runtimepath+=~/programing/gitsession.nvim
 let g:gitsession_tmp_dir = expand("~/.config/nvim/tmp/gitsession")

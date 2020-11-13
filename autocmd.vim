@@ -25,9 +25,6 @@ augroup localleader
     autocmd FileType tex    map <buffer> <localleader>t <plug>(vimtex-toc-toggle)
     autocmd FileType tex    map <buffer> <localleader>e <plug>(vimtex-env-change)
     autocmd FileType tex    map <buffer> <localleader>d <plug>(vimtex-delim-toggle-modifier)
-    autocmd FileType tex    map <buffer> <localleader>r :VimtexCompile<CR>
-    autocmd FileType tex    map <buffer> <F6> :VimtexClean<CR>
-    autocmd FileType tex    map <buffer> <F7> :VimtexCompileOutput<CR>
     autocmd FileType python map <buffer> <localleader>r :%AsyncRun python<CR>
     autocmd FileType ruby map <buffer> <localleader>r :%AsyncRun ruby<CR>
 augroup END
@@ -64,6 +61,6 @@ augroup END
 
 augroup limitlento80
     autocmd!
-    autocmd Filetype tex,gitcommit execute "set colorcolumn=" . join(range(81,335), ',')
-    autocmd Filetype tex,gitcommit hi ColorColumn guibg=#262626 ctermbg=235
+    " autocmd Filetype tex,gitcommit execute "set colorcolumn=" . join(range(81,335), ',')
+    " autocmd Filetype tex,gitcommit hi ColorColumn cterm=NONE ctermbg=251 ctermfg=237 guibg=#cad0de guifg=#576a9e
 augroup end

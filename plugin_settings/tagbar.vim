@@ -27,4 +27,4 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
-let g:tagbar_iconchars = ['+', '-']
+let g:tagbar_sort = 0

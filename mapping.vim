@@ -42,6 +42,8 @@ nnoremap sO <C-w>=
 nnoremap so <C-w>_<C-w>\|
 nnoremap sq <Cmd>tabc<CR>
 
+nnoremap Q :copen<CR>
+
 " move by display line
 " noremap j  gj
 " noremap k  gk

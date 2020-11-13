@@ -3,7 +3,7 @@ filetype plugin indent off
 let mapleader = "\<Space>"
 let maplocalleader = "\<C-space>"
 let g:vimtex_compiler_progname = 'nvr'
-let g:dark_colorscheme=1
+let g:dark_colorscheme=0
 
 let g:loaded_python_provier=1
 let g:python3_host_prog='/usr/bin/python3'
@@ -32,13 +32,8 @@ let g:python_highlight_all = 1
 if g:dark_colorscheme
     colorscheme iceberg
 else
-    " LineNr light-green
-    autocmd ColorScheme * highlight LineNr guifg=#b5bd68
-    " background transparent
-    autocmd ColorScheme * highlight Normal guibg=NONE ctermbg=NONE
-    " NonText gray
-    autocmd ColorScheme * highlight NonText guibg=NONE ctermbg=NONE guifg=Gray
-    colorscheme flatwhite
+    set background=light
+    colorscheme iceberg
 endif
 
 " 最後に設定
