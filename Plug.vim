@@ -12,7 +12,7 @@ call plug#begin('/home/woody/.config/nvim/plugged')
 let g:vim_markdown_no_default_key_mappings = 1
 
 " completion
-Plug 'neovim/nvim-lsp'
+Plug 'neovim/nvim-lspconfig'
 Plug 'Sirver/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'woodyZootopia/flatwhite-vim'
@@ -25,7 +25,10 @@ Plug 'cocopon/pgmnt.vim'
 Plug 'altercation/vim-colors-solarized'
 
 Plug 'cohama/lexima.vim'
+
 Plug 'Shougo/defx.nvim'
+Plug 'kristijanhusak/defx-icons'
+
 Plug 'Shougo/deol.nvim'
 Plug 'kristijanhusak/defx-git'
 Plug 'lambdalisue/gina.vim'

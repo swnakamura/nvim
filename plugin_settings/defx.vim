@@ -1,12 +1,16 @@
-" call defx#custom#column('indent',{'indent': "- "})
-call defx#custom#column('mark', {
-            \ 'readonly_icon': '✗',
-            \ 'root_icon': ' ',
-            \ 'selected_icon': '✓',
-            \ })
-nnoremap <silent> st        :Defx -new -auto-cd -columns=time:size:mark:indent:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=tab        <CR>
-nnoremap <silent> <leader>d :Defx -new -auto-cd -columns=time:size:mark:indent:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=no         <CR>
-nnoremap <silent> <leader>n :Defx -new -auto-cd -columns=time:size:mark:indent:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=vertical -winwidth=40 <CR>
+call defx#custom#column('indent',{'indent': "-"})
+" call defx#custom#column('mark', {
+"             \ 'readonly_icon': '✗',
+"             \ 'selected_icon': '✓',
+"             \ })
+" call defx#custom#column('icon', {
+"             \ 'directory_icon': '',
+"             \ 'opened_icon': '',
+"             \ 'root_icon': '',
+"             \ })
+nnoremap <silent> st        :Defx -new -auto-cd -columns=time:size:indent:icons:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=tab        <CR>
+nnoremap <silent> <leader>d :Defx -new -auto-cd -columns=time:size:indent:icons:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=no         <CR>
+nnoremap <silent> <leader>n :Defx -new -auto-cd -columns=time:size:indent:icons:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=vertical -winwidth=40 <CR>
 nnoremap <silent> <leader>z :Defx -new -auto-cd -columns=size:indent:filename:time      -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=floating <CR>
 " seldom used
 " nnoremap <silent> <leader>dv :Defx -new -auto-cd -columns=size:mark:filename:time -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=vertical -winwidth=50<CR>:IndentLinesDisable<CR>
@@ -33,6 +37,7 @@ function!  s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> !             defx#do_action('execute_command')
     nnoremap <silent><buffer><expr> i             defx#do_action('execute_command')
     nnoremap <silent><buffer><expr> x             defx#do_action('execute_system')
+    nnoremap <silent><buffer><expr> .             defx#do_action('toggle_ignored_files')
     nnoremap <silent><buffer><expr> c             defx#do_action('copy')
     nnoremap <silent><buffer><expr> P             defx#do_action('paste')
     nnoremap <silent><buffer><expr> Se            defx#do_action('toggle_sort', 'extension')
