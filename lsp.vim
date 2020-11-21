@@ -20,7 +20,7 @@ endif
 
 " 追加したそれぞれの言語についてLSPコマンドを起動
 for [key,val] in items(g:LSP_commands)
-    exe 'lua require''nvim_lsp''.' . val . '.setup{}'
+    exe 'lua require''lspconfig''.' . val . '.setup{}'
 endfor
 
 
