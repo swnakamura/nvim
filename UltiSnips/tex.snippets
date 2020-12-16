@@ -87,8 +87,21 @@ snippet authorShu "author" b
 \author{中村 周}
 endsnippet
 
+snippet barcover "barcover" b
+\includepdf[fitpaper=true]{/home/woody/Documents/barcover.pdf}
+endsnippet
+
+snippet fig "Figure environment" b
+\begin{figure}[b]
+    \centering
+    \includegraphics[width=80mm]{${1:path}}
+    \caption{${2:caption}}
+	\label{fig:${5:${1/\W+/_/g}}}
+\end{figure}$0
+endsnippet
+
 snippet 2fig "2 figures in one line" b
-\begin{figure}[btp]
+\begin{figure}[b]
     \begin{minipage}{0.5\hsize}
         \centering
         \includegraphics[width=40mm]{$1}
@@ -101,10 +114,6 @@ snippet 2fig "2 figures in one line" b
     \end{minipage}
     \caption{${5:caption}}
 \end{figure}$0
-endsnippet
-
-snippet barcover "barcover" b
-\includepdf[fitpaper=true]{/home/woody/Documents/barcover.pdf}
 endsnippet
 
 snippet 3fig "3 figures in one line"
@@ -128,17 +137,17 @@ snippet 3fig "3 figures in one line"
 \end{figure}$0
 endsnippet
 
-snippet fig "Figure environment" b
+snippet ffig "Figure environment full width" b
 \begin{figure}[btp]
     \centering
-    \includegraphics[width=80mm]{${1:path}}
+    \includegraphics[width=\linewidth]{${1:path}}
     \caption{${2:caption}}
 	\label{fig:${5:${1/\W+/_/g}}}
 \end{figure}$0
 endsnippet
 
 snippet tab "Table environment" b 
-\begin{table}[btp]
+\begin{table}[t]
 \centering
 \caption{${1:caption}}
 \begin{tabular}{|r|r|r|r|}
