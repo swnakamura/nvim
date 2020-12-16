@@ -12,19 +12,21 @@ let g:python_host_prog='/usr/bin/python'
 let g:python_host_skip_check=1
 set pyxversion=3
 
+let g:home_directory = '/home/woody'
+
 " source plugins
-exe 'source' expand('~/.config/nvim/Plug.vim')
+exe 'source' expand(g:home_directory . '/.config/nvim/Plug.vim')
 
 " execute plugin specific settings
-for f in split(glob('/home/woody/.config/nvim/plugin_settings/*.vim'), '\n')
+for f in split(glob(g:home_directory . '/.config/nvim/plugin_settings/*.vim'), '\n')
     exe 'source' f
 endfor
 
 " source other settings
-exe 'source' expand('~/.config/nvim/set.vim')
-exe 'source' expand('~/.config/nvim/mapping.vim')
-exe 'source' expand('~/.config/nvim/lsp.vim')
-exe 'source' expand('~/.config/nvim/autocmd.vim')
+exe 'source' expand(g:home_directory . '/.config/nvim/set.vim')
+exe 'source' expand(g:home_directory . '/.config/nvim/mapping.vim')
+exe 'source' expand(g:home_directory . '/.config/nvim/lsp.vim')
+exe 'source' expand(g:home_directory . '/.config/nvim/autocmd.vim')
 
 let g:python_highlight_all = 1
 

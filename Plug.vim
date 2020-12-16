@@ -2,7 +2,7 @@ let s:plug_script = expand("~/.config/nvim/autoload/plug.vim")
 let s:plug_repo_dir = expand("~/.config/nvim/plugged")
 
 if !filereadable(s:plug_script)
-    call system('curl -fLo /home/woody/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+    call system('curl -fLo ' . g:home_directory . '/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
     source s:plug_script
 endif
 
@@ -111,5 +111,5 @@ let g:termdebug_wide=163
 
 " use my own plugin
 let g:gitsession_autosave = 1
-set runtimepath+=~/programing/gitsession.nvim
+set runtimepath+=~/programming/gitsession.nvim
 let g:gitsession_tmp_dir = expand("~/.config/nvim/tmp/gitsession")
