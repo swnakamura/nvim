@@ -1,5 +1,5 @@
-let s:plug_script = expand("~/.config/nvim/autoload/plug.vim")
-let s:plug_repo_dir = expand("~/.config/nvim/plugged")
+let s:plug_script = expand(g:home_directory . "/.config/nvim/autoload/plug.vim")
+let s:plug_repo_dir = expand(g:home_directory . "/.config/nvim/plugged")
 
 if !filereadable(s:plug_script)
     call system('curl -fLo ' . g:home_directory . '/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
@@ -7,7 +7,7 @@ if !filereadable(s:plug_script)
 endif
 
 
-call plug#begin('/home/woody/.config/nvim/plugged')
+call plug#begin(g:home_directory . '/.config/nvim/plugged')
 
 let g:vim_markdown_no_default_key_mappings = 1
 
