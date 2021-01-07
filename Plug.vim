@@ -31,7 +31,7 @@ Plug 'kristijanhusak/defx-icons'
 
 Plug 'Shougo/deol.nvim'
 Plug 'kristijanhusak/defx-git'
-Plug 'lambdalisue/gina.vim'
+" Plug 'lambdalisue/gina.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 " Plug 'Shougo/denite.nvim'

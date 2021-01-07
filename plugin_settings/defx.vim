@@ -20,7 +20,6 @@ function!  s:defx_my_settings() abort
     " Define mappings
     nnoremap <silent><buffer><expr> <CR>          defx#do_action('open')
     nnoremap <silent><buffer><expr> o             defx#is_directory()?defx#do_action('open_or_close_tree'):defx#do_action('drop')
-    nmap     <silent><buffer>       p             osh
     nnoremap <silent><buffer><expr> O             defx#is_directory()?defx#do_action('open_tree_recursive'):defx#do_action('drop','tabnew')
     nnoremap <silent><buffer><expr> <2-LeftMouse> defx#do_action('open')
     nnoremap <silent><buffer><expr> l             defx#do_action('open_directory')
@@ -31,7 +30,6 @@ function!  s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> r             defx#do_action('rename',['..'])
     nnoremap <silent><buffer><expr> ~             defx#do_action('cd')
     nnoremap <silent><buffer><expr> v             defx#do_action('toggle_select').'j'
-    nnoremap <silent><buffer><expr> S             defx#do_action('toggle_ignored_files')
     nnoremap <silent><buffer><expr> R             defx#do_action('redraw')
     nnoremap <silent><buffer><expr> yy            defx#do_action('yank_path')
     nnoremap <silent><buffer><expr> !             defx#do_action('execute_command')

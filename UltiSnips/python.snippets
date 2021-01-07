@@ -18,49 +18,48 @@ DATA_LIST = [
     {"name": r"", "path": "$2"},
 ]
 
-if __name__ == '__main__':
+fig, ax = plt.subplots()
+ax.xaxis.set_minor_locator(AutoMinorLocator(10))
+ax.yaxis.set_minor_locator(AutoMinorLocator(10))
+ax.tick_params(which='major', direction='in', length=10)
+ax.tick_params(which='minor', direction='in', length=5)
+plt.grid(which='major', color='skyblue', linestyle='-', lw=0.2)
+plt.grid(which='minor', color='skyblue', linestyle='-', lw=0.2)
+ax.set_xlabel(r'$3')
+ax.set_ylabel(r'$4')
+# plt.yscale("log")
+# plt.ylim((0.0001, 100))
 
-    fig, ax = plt.subplots()
-    ax.xaxis.set_minor_locator(AutoMinorLocator(10))
-    ax.yaxis.set_minor_locator(AutoMinorLocator(10))
-    ax.tick_params(which='major', direction='in', length=10)
-    ax.tick_params(which='minor', direction='in', length=5)
-    plt.grid(which='major', color='skyblue', linestyle='-', lw=0.5)
-    plt.grid(which='minor', color='skyblue', linestyle='-', lw=0.5)
-    ax.set_xlabel(r'$3')
-    ax.set_ylabel(r'$4')
-    # plt.yscale("log")
-    # plt.ylim((0.0001, 100))
+DO_FITTING = $1
 
-    DO_FITTING = $1
+for ite, DATA in enumerate(DATA_LIST):
+	if DATA['path'][-3:] == 'tsv':
+		data = pd.read_csv(DATA['path'], delimiter='\t')
+	else:
+		data = pd.read_csv(DATA['path'])
+	datax = data["$3"]
+	datay = data["$4"]
 
-    for ite, DATA in enumerate(DATA_LIST):
-        if DATA['path'][-3:] == 'tsv':
-            data = pd.read_csv(DATA['path'], delimiter='\t')
-        else:
-            data = pd.read_csv(DATA['path'])
-        datax = data["$3"]
-        datay = data["$4"]
+	ax.scatter(datax, datay, s=10,
+			   facecolor='none', edgecolor=cmap(ite), linewidths=0.1, label=DATA['name'], marker=MARKER_LIST[ite])
+	ax.plot(datax, datay, linewidth=0.1, color=cmap(ite))
 
-        ax.scatter(datax, datay, s=10,
-                   facecolor='none', edgecolor=cmap(ite), linewidths=0.1, label=DATA['name'], marker=MARKER_LIST[ite])
-        ax.plot(datax, datay, linewidth=0.1, color=cmap(ite))
+	# fitting
+	if DO_FITTING:
+		def function(x, a, b):
+			return a*x+b
+		param, cov = curve_fit(function, datax, datay)
+		print(f"{param=}")
+		print(f"{cov=}")
 
-        # fitting
-        if DO_FITTING:
-            def function(x, a, b):
-                return a*x+b
-            param, cov = curve_fit(function, datax, datay)
-            print(f"{param=}")
-            print(f"{cov=}")
+		# plot line
+		graph_range = np.linspace(datax.min(), datax.max())
+		ax.plot(graph_range, function(graph_range, *param), linewidth=0.5)
+		# print rsq
+		rsq = 1- np.sum((datay-function(datax, *param))**2)/np.sum(((datay-np.mean(datay)))**2)
+		ax.text(-1,6e27,f"$R^2$={rsq:.5f}")
+		ax.text(-2,5e27,f"$y=$({param[0]:.4E})$x+$({param[1]:.4E})")
 
-            # plot line
-            ax.plot(datax, function(datax, *param), linewidth=0.5)
-            # print rsq
-            rsq = 1- np.sum((datay-function(datax, *param))**2)/np.sum(((datay-np.mean(datay)))**2)
-            ax.text(-1,6e27,f"$R^2$={rsq:.5f}")
-            ax.text(-2,5e27,f"$y=$({param[0]:.4E})$x+$({param[1]:.4E})")
-
-    ax.legend()
-    plt.savefig("$2.pdf", bbox_inches='tight')
+ax.legend()
+plt.savefig("$2.pdf", bbox_inches='tight')
 endsnippet

@@ -68,6 +68,8 @@ set foldcolumn=2
 
 set backspace=eol,indent,start
 
+set diffopt+=vertical
+
 set wildmenu
 set wildmode=list:full
 set wildignore=*.o,*.obj,*.pyc,*.so,*.dll

@@ -38,6 +38,7 @@ function! LC_maps()
         nnoremap <buffer> <silent> gR    <cmd>lua vim.lsp.buf.references()<CR>
         nnoremap <buffer> <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
         nnoremap <buffer> <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+        nnoremap <buffer>  gF    <cmd>lua vim.lsp.buf.formatting_sync(nil, 10000)<CR>
     endif
 endfunction
 
