@@ -14,8 +14,10 @@ MARKER_LIST = ['o', 'v', '^', '<', '>', 's', 'p']
 # see https://matplotlib.org/examples/color/colormaps_reference.html for colormap
 cmap = plt.get_cmap("tab10")
 
+data_path= "$2"
+
 DATA_LIST = [
-    {"name": r"", "path": "$2"},
+    {"name": r"", "path": data_path, "column": "$3"},
 ]
 
 fig, ax = plt.subplots()
@@ -25,8 +27,8 @@ ax.tick_params(which='major', direction='in', length=10)
 ax.tick_params(which='minor', direction='in', length=5)
 plt.grid(which='major', color='skyblue', linestyle='-', lw=0.2)
 plt.grid(which='minor', color='skyblue', linestyle='-', lw=0.2)
-ax.set_xlabel(r'$3')
-ax.set_ylabel(r'$4')
+ax.set_xlabel(r'$4')
+ax.set_ylabel(r'$5')
 # plt.yscale("log")
 # plt.ylim((0.0001, 100))
 
@@ -37,8 +39,8 @@ for ite, DATA in enumerate(DATA_LIST):
 		data = pd.read_csv(DATA['path'], delimiter='\t')
 	else:
 		data = pd.read_csv(DATA['path'])
-	datax = data["$3"]
-	datay = data["$4"]
+	datax = data["$6"]
+	datay = data[DATA['column']]
 
 	ax.scatter(datax, datay, s=10,
 			   facecolor='none', edgecolor=cmap(ite), linewidths=0.1, label=DATA['name'], marker=MARKER_LIST[ite])
@@ -56,10 +58,10 @@ for ite, DATA in enumerate(DATA_LIST):
 		graph_range = np.linspace(datax.min(), datax.max())
 		ax.plot(graph_range, function(graph_range, *param), linewidth=0.5)
 		# print rsq
-		rsq = 1- np.sum((datay-function(datax, *param))**2)/np.sum(((datay-np.mean(datay)))**2)
-		ax.text(-1,6e27,f"$R^2$={rsq:.5f}")
-		ax.text(-2,5e27,f"$y=$({param[0]:.4E})$x+$({param[1]:.4E})")
+		# rsq = 1- np.sum((datay-function(datax, *param))**2)/np.sum(((datay-np.mean(datay)))**2)
+		# ax.text(-1,6e27,f"$R^2$={rsq:.5f}")
+		# ax.text(-2,5e27,f"$y=$({param[0]:.4E})$x+$({param[1]:.4E})")
 
 ax.legend()
-plt.savefig("$2.pdf", bbox_inches='tight')
+plt.savefig(f"{data_path}.pdf", bbox_inches='tight')
 endsnippet
