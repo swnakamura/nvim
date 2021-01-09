@@ -37,6 +37,7 @@ function!  s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> x             defx#do_action('execute_system')
     nnoremap <silent><buffer><expr> .             defx#do_action('toggle_ignored_files')
     nnoremap <silent><buffer><expr> c             defx#do_action('copy')
+    nnoremap <silent><buffer><expr> p             defx#do_action('paste')
     nnoremap <silent><buffer><expr> P             defx#do_action('paste')
     nnoremap <silent><buffer><expr> Se            defx#do_action('toggle_sort', 'extension')
     nnoremap <silent><buffer><expr> Sn            defx#do_action('toggle_sort', 'filename')
