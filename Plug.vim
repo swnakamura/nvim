@@ -78,7 +78,10 @@ Plug 'jceb/vim-orgmode', {'for': ['org']}
 Plug 'mattn/emmet-vim', {'for': ['html','vue']}
 Plug 'hynek/vim-python-pep8-indent', {'for' : 'python'}
 Plug 'bps/vim-textobj-python', {'for' : 'python'}
+
+let g:vimtex_syntax_enabled = 0
 Plug 'lervag/vimtex', {'for' : ['tex']}
+
 Plug 'hail2u/vim-css3-syntax', {'for' : ['html','htm']}
 Plug 'pangloss/vim-javascript', {'for' : ['html','htm']}
 Plug 'kchmck/vim-coffee-script', {'for' : ['html','htm']}

@@ -1,11 +1,18 @@
 global !p
-texMathZones = ['texMathZone'+ams+x for ams in ['', 'AMS'] for x in ['A', 'AS', 'B', 'BS', 'C',
+texMathZones = \
+['texMathZone'+ams+x for ams in ['', 'AMS'] for x in ['A', 'AS', 'B', 'BS', 'C',
 'CS', 'D', 'DS', 'E', 'ES', 'F', 'FS', 'G', 'GS', 'H', 'HS', 'I', 'IS',
-'J', 'JS', 'K', 'KS', 'L', 'LS', 'V', 'W', 'X', 'Y', 'Z']]
+'J', 'JS', 'K', 'KS', 'L', 'LS', 'V', 'W', 'X', 'Y', 'Z',
+'M', 'MS', 'N', 'NS', 'O', 'OS', # original for `align`, `multline`, `gather`
+]]
 
-texDisplayMathZones = ['texMathZone'+ams+x for ams in ['', 'AMS'] for x in ['A', 'AS', 'B', 'BS', 'C',
+
+texDisplayMathZones = \
+['texMathZone'+ams+x for ams in ['', 'AMS'] for x in ['A', 'AS', 'B', 'BS', 'C',
 'CS', 'D', 'DS', 'E', 'ES', 'F', 'FS', 'G', 'GS', 'H', 'HS', 'I', 'IS',
-'J', 'JS', 'K', 'KS', 'L', 'LS']]
+'J', 'JS', 'K', 'KS', 'L', 'LS',
+'M', 'MS', 'N', 'NS', 'O', 'OS', # original for `align`, `multline`, `gather`
+]]
 
 texIgnoreMathZones = ['texMathText']
 
@@ -47,7 +54,7 @@ snippet ebase "English Base" b
 \usepackage[English]{/home/woody/Documents/macros/macros}
 %
 \title{レポート}
-\author{Woody}
+${1:\author{Shu Nakamura\\\\\\#1026298925}}
 %
 \begin{document}
 \maketitle
@@ -65,7 +72,7 @@ snippet jbase "Japanese Base" b
 \usepackage[Japanese]{/home/woody/Documents/macros/macros}
 %
 \title{レポート}
-\author{Woody}
+${1:\author{中村 周\\\\\\#1026298925}}
 %
 \begin{document}
 \maketitle
@@ -105,14 +112,13 @@ snippet 2fig "2 figures in one line" b
     \begin{minipage}{0.5\hsize}
         \centering
         \includegraphics[width=40mm]{$1}
-        \label{fig:${2:${1/\W+/_/g}}}
     \end{minipage}
     \begin{minipage}{0.5\hsize}
         \centering
         \includegraphics[width=40mm]{$3}
-        \label{fig:${4:${3/\W+/_/g}}}
     \end{minipage}
     \caption{${5:caption}}
+    \label{fig:${4:${3/\W+/_/g}}}
 \end{figure}$0
 endsnippet
 
@@ -169,29 +175,40 @@ $1
 $0
 endsnippet
 
-snippet figref "図のreference" i
+snippet fr "図のreference" w
 \figref{fig:$1}$0
 endsnippet
 
-snippet tabref "表のreference" i
+snippet tr "表のreference" w
 \tabref{tab:$1}$0
 endsnippet
 
-snippet lstref "listingのreference" i
+snippet mr "listingのreference" w
 \lstref{lst:$1}$0
 endsnippet
 
-snippet eqnref "equationのreference" i
+snippet er "equationのreference" w
 \eqnref{eqn:$1}$0
 endsnippet
 
-snippet emph "emphasize" i
+snippet em "emphasize" w
 \emph{$1}$0
 endsnippet
 
 snippet bibtex "load my bibtex"
 \bibliographystyle{jplain}
 \bibliography{/home/woody/Documents/macros/database.bib}
+endsnippet
+
+snippet tikz "tikz" b
+\begin{figure}[btp]
+    \centering
+    \begin{tikzpicture}[scale=1, transform shape]
+        $3
+    \end{tikzpicture}
+    \caption{$1}
+    \label{fig:${2:${1/\W+/_/g}}}
+\end{figure}$0
 endsnippet
 
 snippet circuitikz "circuitikz" b
@@ -230,6 +247,11 @@ snippet d, "Math" wA
 \[
 $1
 \] $0
+endsnippet
+
+context "math()"
+snippet prime "prime(dash)" wA
+'
 endsnippet
 
 priority 10
@@ -715,19 +737,27 @@ snippet <-> "leftrightarrow" iA
 \leftrightarrow
 endsnippet
 
+context "math()"
 snippet >> ">>" iA
 \gg 
 endsnippet
 
+context "math()"
 snippet << "<<" iA
 \ll 
 endsnippet
 
+context "math()"
+snippet +- "plusminus" iA
+\pm 
+endsnippet
 
+context "math()"
 snippet ~~ "~" iA
 \sim 
 endsnippet
 
+context "math()"
 snippet notin "not in " iA
 \notin 
 endsnippet
@@ -1281,4 +1311,8 @@ priority 10
 context "math()"
 snippet pp "point-to-point-vector" iA
 \ppvec{$1}$0
+endsnippet
+
+snippet np "numprint" i
+\numprint{$1}$0
 endsnippet

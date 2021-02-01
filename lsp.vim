@@ -3,18 +3,18 @@ let g:LSP_commands = {}
 
 " それぞれの言語を追加
 " 例えば、C/C++:
-if executable(expand('clangd'))
+if executable('clangd')
     let g:LSP_commands['c'] = 'clangd'
     let g:LSP_commands['cpp'] = 'clangd'
 endif
 
 " Rust
-if executable(expand('rust-analyzer'))
+if executable('rust-analyzer')
     let g:LSP_commands['rust'] = 'rust_analyzer'
 endif
 
 " Python
-if executable(expand('pyls'))
+if executable('pyls')
     let g:LSP_commands['python'] = 'pyls'
 endif
 
@@ -24,7 +24,7 @@ for [key,val] in items(g:LSP_commands)
 endfor
 
 
-"lsp.txtそのまま
+" https://github.com/neovim/nvim-lspconfig そのまま
 function! LC_maps()
     if has_key(g:LSP_commands, &filetype)
         nnoremap <buffer> <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>

@@ -10,7 +10,7 @@ function! Synctex()
 endfunction
 map <buffer> <C-enter> :call Synctex()<CR>
 
-
+setlocal foldmethod=indent
 
 noremap <buffer> <localleader>s <plug>(vimtex-env-toggle-star)
 noremap <buffer> <localleader>t <plug>(vimtex-toc-toggle)
