@@ -1,1 +1,0 @@
-nnoremap U :UndotreeToggle<CR>

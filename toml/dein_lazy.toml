@@ -1,0 +1,102 @@
+[[plugins]]
+repo = 'jceb/vim-orgmode'
+on_ft = 'org'
+[[plugins]]
+repo = 'mattn/emmet-vim'
+hook_add = '''
+let g:user_emmet_leader_key=',,'
+'''
+on_ft = ['html','vue']
+[[plugins]]
+repo = 'hynek/vim-python-pep8-indent'
+on_ft = ['python']
+[[plugins]]
+repo = 'bps/vim-textobj-python'
+on_ft = 'python'
+[[plugins]]
+repo = 'lervag/vimtex'
+on_ft = ['tex']
+hook_add = '''
+let g:tex_flavor = 'latex'
+let g:tex_conceal = 'abdmg'
+" set conceallevel=1
+let g:vimtex_fold_enabled = 1
+" let g:vimtex_quickfix_enabled=0
+let g:vimtex_quickfix_mode = 0
+let g:vimtex_fold_manual = 1
+" let g:vimtex_view_method='zathura'
+" set fillchars=fold:\ 
+let g:vimtex_mappings_disable = {
+    \ 'n': ['tsc', 'tse', 'tsd', 'tsD', 'tsf'],
+    \ 'x': ['tsd', 'tsD', 'tsf'],
+    \ 'i': [']]'],
+    \}
+let g:vimtex_compiler_latexmk = {
+        \ 'build_dir' : 'livepreview',
+        \ 'callback' : 1,
+        \ 'continuous' : 1,
+        \ 'executable' : 'latexmk',
+        \ 'hooks' : [],
+        \ 'options' : [
+        \   '-verbose',
+        \   '-file-line-error',
+        \   '-synctex=1',
+        \   '-interaction=nonstopmode',
+        \   '-shell-escape',
+        \ ],
+      \}
+'''
+[[plugins]]
+repo = 'hail2u/vim-css3-syntax'
+on_ft = ['html','htm']
+[[plugins]]
+repo = 'pangloss/vim-javascript'
+on_ft = ['html','htm', 'js']
+[[plugins]]
+repo = 'kchmck/vim-coffee-script'
+on_ft = ['html','htm']
+[[plugins]]
+repo = 'AtsushiM/search-parent.vim'
+on_ft = ['sass','scss','css']
+[[plugins]]
+repo = 'akiyan/vim-textobj-php'
+on_ft = ['html','htm']
+[[plugins]]
+repo = 'tpope/vim-surround'
+on_ft = ['html','htm']
+[[plugins]]
+repo = 'ap/vim-css-color'
+on_ft = ['html','htm', 'vim']
+[[plugins]]
+repo = 'cakebaker/scss-syntax.vim'
+on_ft = ['html','htm']
+[[plugins]]
+repo = 'godlygeek/tabular'
+on_ft = ['md']
+hook_add = '''
+xmap gga :Tabular
+'''
+[[plugins]]
+repo = 'wokalski/autocomplete-flow'
+on_ft = ['html', 'htm', 'js']
+[[plugins]]
+repo = 'zeekay/vim-beautify'
+on_ft = ['html', 'htm', 'js']
+[[plugins]]
+repo = 'AtsushiM/sass-compile.vim'
+on_ft = ['sass','scss']
+[[plugins]]
+repo = 'qnighy/satysfi.vim'
+on_ft = ['satysfi','saty']
+[[plugins]]
+repo = 'plasticboy/vim-markdown'
+on_ft = ['markdown']
+hook_add = '''
+let g:vim_markdown_folding_disabled = 1
+'''
+[[plugins]]
+repo = 'rust-lang/rust.vim'
+on_ft = ['rust']
+[[plugins]]
+repo = 'luochen1990/rainbow'
+on_ft = ['lisp']

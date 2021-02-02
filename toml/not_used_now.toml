@@ -1,3 +1,6 @@
+[[plugins]]
+(ale)
+hook_add = '''
 let g:ale_fixers = {
             \'*': ['trim_whitespace','remove_trailing_lines'],
             \'python': ['autopep8', 'trim_whitespace', 'isort'],
@@ -13,3 +16,4 @@ let g:ale_linters = {
 
 nnoremap ]a :ALENext<CR>
 nnoremap [a :ALEPrevious<CR>
+'''

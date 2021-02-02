@@ -15,12 +15,7 @@ set pyxversion=3
 let g:home_directory = '/home/woody'
 
 " source plugins
-exe 'source' expand(g:home_directory . '/.config/nvim/Plug.vim')
-
-" execute plugin specific settings
-for f in split(glob(g:home_directory . '/.config/nvim/plugin_settings/*.vim'), '\n')
-    exe 'source' f
-endfor
+exe 'source' expand(g:home_directory . '/.config/nvim/dein.vim')
 
 " source other settings
 exe 'source' expand(g:home_directory . '/.config/nvim/set.vim')

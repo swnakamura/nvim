@@ -1,0 +1,336 @@
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+[[plugins]]
+repo = 'Sirver/ultisnips'
+hook_add = '''
+" Trigger configuration. You need to change this to something else than <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+'''
+[[plugins]]
+repo = 'honza/vim-snippets'
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+hook_add = '''
+let g:deoplete#enable_at_startup = 1
+
+" imap <expr><tab> pumvisible() ? "\<C-n>" : "\<tab>"
+
+" Expand the completed snippet trigger by <CR>.
+" trial 1
+" imap <expr> <CR>
+" \ (pumvisible() && neosnippet#expandable()) ?
+" \ "\<Plug>(neosnippet_expand)" : "<C-r>=<SID>my_cr_function()<CR>"
+"
+" trial 2
+inoremap <silent> <expr> <CR> "<C-r>=deoplete#close_popup()<CR><CR>"
+
+call deoplete#custom#option({
+            \'camel_case': v:true,
+            \'auto_complete_delay': 0,
+            \'smart_case': v:true,
+            \'refresh_always': v:false,
+            \'buffer_path': v:true,
+            \'min_pattern_length': 1,
+            \'max_list': 100,
+            \})
+
+" limit only to deoplete-zsh when in deol buffer
+call deoplete#custom#option('sources', {  'zsh': ['zsh'], })
+'''
+[[plugins]]
+repo = 'Shougo/deoplete-lsp'
+
+[[plugins]]
+repo = 'woodyZootopia/iceberg.vim'
+[[plugins]]
+repo = 'cocopon/pgmnt.vim'
+[[plugins]]
+repo = 'altercation/vim-colors-solarized'
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+
+[[plugins]]
+repo = 'Shougo/defx.nvim'
+hook_add = '''
+call defx#custom#column('indent',{'indent': "-"})
+nnoremap <silent> st        :Defx -new -auto-cd -columns=time:size:indent:icons:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=tab        <CR>
+nnoremap <silent> <leader>d :Defx -new -auto-cd -columns=time:size:indent:icons:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=no         <CR>
+nnoremap <silent> <leader>n :Defx -new -auto-cd -columns=time:size:indent:icons:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=vertical -winwidth=40 <CR>
+nnoremap <silent> <leader>z :Defx -new -auto-cd -columns=size:indent:filename:time      -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=floating <CR>
+
+autocmd FileType defx call s:defx_my_settings()
+function!  s:defx_my_settings() abort
+    " Define mappings
+    nnoremap <silent><buffer><expr> <CR>          defx#do_action('open')
+    nnoremap <silent><buffer><expr> o             defx#is_directory()?defx#do_action('open_or_close_tree'):defx#do_action('drop')
+    nnoremap <silent><buffer><expr> O             defx#is_directory()?defx#do_action('open_tree_recursive'):defx#do_action('drop','tabnew')
+    nnoremap <silent><buffer><expr> <2-LeftMouse> defx#do_action('open')
+    nnoremap <silent><buffer><expr> l             defx#do_action('open_directory')
+    nnoremap <silent><buffer><expr> K             defx#do_action('new_directory')
+    nnoremap <silent><buffer><expr> L             defx#do_action('new_file')
+    nnoremap <silent><buffer><expr> h             defx#do_action('cd',['..'])
+    nnoremap <silent><buffer><expr> d             defx#do_action('remove',['..'])
+    nnoremap <silent><buffer><expr> r             defx#do_action('rename',['..'])
+    nnoremap <silent><buffer><expr> ~             defx#do_action('cd')
+    nnoremap <silent><buffer><expr> v             defx#do_action('toggle_select').'j'
+    nnoremap <silent><buffer><expr> R             defx#do_action('redraw')
+    nnoremap <silent><buffer><expr> yy            defx#do_action('yank_path')
+    nnoremap <silent><buffer><expr> !             defx#do_action('execute_command')
+    nnoremap <silent><buffer><expr> i             defx#do_action('execute_command')
+    nnoremap <silent><buffer><expr> x             defx#do_action('execute_system')
+    nnoremap <silent><buffer><expr> .             defx#do_action('toggle_ignored_files')
+    nnoremap <silent><buffer><expr> c             defx#do_action('copy')
+    nnoremap <silent><buffer><expr> p             defx#do_action('paste')
+    nnoremap <silent><buffer><expr> P             defx#do_action('paste')
+    nnoremap <silent><buffer><expr> Se            defx#do_action('toggle_sort', 'extension')
+    nnoremap <silent><buffer><expr> Sn            defx#do_action('toggle_sort', 'filename')
+    nnoremap <silent><buffer><expr> Ss            defx#do_action('toggle_sort', 'size')
+    nnoremap <silent><buffer><expr> St            defx#do_action('toggle_sort', 'time')
+    nnoremap <buffer>               <leader>gd    :call                         <SID>git_diff_of_directory()<CR>
+endfunction
+
+function! s:drop_and_back()
+    call defx#do_action('open')
+    " exe "normal \<C-w>h"
+endfunction
+
+function! s:git_diff_of_directory()
+    exe "tabnew"
+    exe "read !git diff"
+    exe "setf diff"
+    exe "setlocal buftype=nofile"
+    exe "setlocal bufhidden=hide"
+    exe "setlocal noswapfile"
+endfunction
+'''
+[[plugins]]
+repo = 'kristijanhusak/defx-icons'
+
+[[plugins]]
+repo = 'Shougo/deol.nvim'
+[[plugins]]
+repo = 'kristijanhusak/defx-git'
+[[plugins]]
+repo = 'junegunn/fzf'
+hook_install = '''
+fzf#install()
+'''
+hook_add = '''
+nnoremap <silent> <space>fr  <Cmd>History<CR>
+nnoremap <silent> <space>ff  <Cmd>Files<CR>
+nnoremap <silent> <space>fb  <Cmd>Buffers<CR>
+nnoremap <silent> <space>fc  <Cmd>History:<CR>
+" nnoremap <silent> <space>fgc  <Cmd>Commits<CR>
+nnoremap <silent> <space>fm  <Cmd>Maps<CR>
+nnoremap <silent> <space>fh  <Cmd>Helptags<CR>
+nnoremap <silent> <space>ft  <Cmd>Tags<CR>
+nnoremap <silent> <space>fg  <Cmd>Rg<CR>
+'''
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+[[plugins]]
+repo = 'haya14busa/vim-asterisk'
+hook_add = '''
+map *   <Plug>(asterisk-*)
+map #   <Plug>(asterisk-#)
+map g*  <Plug>(asterisk-g*)
+map g#  <Plug>(asterisk-g#)
+map z*  <Plug>(asterisk-z*)
+map gz* <Plug>(asterisk-gz*)
+map z#  <Plug>(asterisk-z#)
+map gz# <Plug>(asterisk-gz#)
+let g:asterisk#keeppos = 1
+'''
+[[plugins]]
+repo = 'neoclide/denite-git'
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+hook_add = '''
+let g:indentLine_fileTypeExclude = ['defx', 'text']
+let g:indentLine_fileType = ['cpp', 'c', 'python', 'rust']
+let g:indentLine_bufTypeExclude = ['help', 'terminal']
+let g:indentLine_char = "|"
+'''
+[[plugins]]
+repo = 'kana/vim-smartinput'
+[[plugins]]
+repo = 'osyo-manga/shabadou.vim'
+[[plugins]]
+repo = 'kana/vim-operator-user'
+[[plugins]]
+repo = 'rhysd/vim-operator-surround'
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+hook_add = '''
+" operator mappings
+map        <silent>sa             <Plug>(operator-surround-append)
+map        <silent>sd             <Plug>(operator-surround-delete)
+map        <silent>sr             <Plug>(operator-surround-replace)
+omap       ab                     <Plug>(textobj-multiblock-a)
+omap       ib                     <Plug>(textobj-multiblock-i)
+vmap       ab                     <Plug>(textobj-multiblock-a)
+vmap       ib                     <Plug>(textobj-multiblock-i)
+
+" if you use vim-textobj-multiblock
+nmap <silent>sdd <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
+nmap <silent>srr <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
+
+" if you use vim-textobj-between
+nmap <silent>sdb <Plug>(operator-surround-delete)<Plug>(textobj-between-a)
+nmap <silent>srb <Plug>(operator-surround-replace)<Plug>(textobj-between-a)
+'''
+[[plugins]]
+repo = 'kana/vim-textobj-syntax'
+[[plugins]]
+repo = 'thinca/vim-textobj-between'
+[[plugins]]
+repo = 'osyo-manga/vim-textobj-multiblock'
+[[plugins]]
+repo = 'kana/vim-textobj-entire'
+hook_add = '''
+let g:textobj_entire_no_default_key_mappings = 1
+omap av <Plug>(textobj-entire-a)
+omap iv <Plug>(textobj-entire-i)
+xmap av <Plug>(textobj-entire-a)
+xmap iv <Plug>(textobj-entire-i)
+'''
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+hook_add = '''
+let g:gitgutter_preview_win_floating = 0
+nmap <Leader>hs <Plug>(GitGutterStageHunk)
+" nmap <Leader>ha <Plug>(GitGutterStageHunk)
+nmap <Leader>hu <Plug>(GitGutterUndoHunk)
+nmap <Leader>hp <Plug>(GitGutterPreviewHunk)
+nmap <Leader>hv <Plug>(GitGutterPreviewHunk)
+nmap ]c         <Plug>(GitGutterNextHunk)
+nmap [c         <Plug>(GitGutterPrevHunk)
+omap ic         <Plug>(GitGutterTextObjectInnerPending)
+omap ac         <Plug>(GitGutterTextObjectOuterPending)
+xmap ic         <Plug>(GitGutterTextObjectInnerVisual)
+xmap ac         <Plug>(GitGutterTextObjectOuterVisual)
+nmap ]h         <Plug>(GitGutterNextHunk)
+nmap [h         <Plug>(GitGutterPrevHunk)
+omap ih         <Plug>(GitGutterTextObjectInnerPending)
+omap ah         <Plug>(GitGutterTextObjectOuterPending)
+xmap ih         <Plug>(GitGutterTextObjectInnerVisual)
+xmap ah         <Plug>(GitGutterTextObjectOuterVisual)
+'''
+[[plugins]]
+repo = 'scrooloose/nerdcommenter'
+hook_add = '''
+let g:NERDSpaceDelims=1
+let g:NERDDefaultAlign='left'
+let g:NERDCustomDelimiters = {'vim': {'left': '"','right':''}}
+'''
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+hook_add = '''
+nnoremap <leader>gs :Gstatus<CR><C-w>T
+nnoremap <leader>ga :Gwrite<CR>
+nnoremap <leader>gc :Gcommit-v<CR>
+nnoremap <leader>gb :Gblame<CR>
+nnoremap <leader>gl :tab sp<CR>:Glog<CR><C-w>j
+nnoremap <leader>gh :tab sp<CR>:0Glog<CR>
+" abbrev for git history: create new quickfix tab for history
+nnoremap <leader>gp :Gpush<CR>
+nnoremap <leader>gf :Gfetch<CR>
+nnoremap <leader>gd :Gvdiff!<CR>
+nnoremap <leader>gr :Grebase -i<CR>
+nnoremap <leader>gg :Glgrep ""<Left>
+nnoremap <leader>gm :Gmerge 
+'''
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+hook_add = '''
+xmap ga  <Plug>(EasyAlign)
+'''
+[[plugins]]
+repo = 'majutsushi/tagbar'
+hook_add = '''
+nmap <leader>t :TagbarToggle<CR>
+let g:tagbar_type_go = {
+        \ 'ctagstype' : 'go',
+        \ 'kinds'     : [
+            \ 'p:package',
+            \ 'i:imports:1',
+            \ 'c:constants',
+            \ 'v:variables',
+            \ 't:types',
+            \ 'n:interfaces',
+            \ 'w:fields',
+            \ 'e:embedded',
+            \ 'm:methods',
+            \ 'r:constructor',
+            \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
+
+let g:tagbar_sort = 0
+'''
+[[plugins]]
+repo = 'Shougo/echodoc.vim'
+[[plugins]]
+repo = 'micke/vim-hybrid'
+[[plugins]]
+repo = 'mbbill/undotree'
+hook_add = '''
+nnoremap U :UndotreeToggle<CR>
+'''
+[[plugins]]
+repo = 'fuenor/jpmoveword.vim'
+[[plugins]]
+repo = 'tpope/vim-rhubarb'
+[[plugins]]
+repo = 'JuliaEditorSupport/julia-vim'
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+if g:dark_colorscheme
+    let g:lightline = {
+                \ 'colorscheme': 'iceberg',
+                \}
+else
+    let g:lightline = {
+                \ 'colorscheme': 'iceberg',
+                \}
+endif
+let g:lightline.subseparator = { 'left': '', 'right': '' }
+'''
+[[plugins]]
+repo = 'jpalardy/vim-slime'
+[[plugins]]
+repo = 'tikhomirov/vim-glsl'
+[[plugins]]
+repo = 'Shougo/neco-syntax'
+[[plugins]]
+repo = 'skywind3000/asyncrun.vim'
+hook_add = '''
+let g:asyncrun_bell=1
+let g:asyncrun_open = 8
+'''
+[[plugins]]
+repo = 'woodyZootopia/NeoDebug'
+[[plugins]]
+repo = 'yuratomo/gmail.vim'
