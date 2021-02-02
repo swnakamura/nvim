@@ -118,9 +118,13 @@ repo = 'Shougo/deol.nvim'
 repo = 'kristijanhusak/defx-git'
 [[plugins]]
 repo = 'junegunn/fzf'
+build = './install --bin'
 hook_install = '''
 fzf#install()
 '''
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+depends = 'fzf'
 hook_add = '''
 nnoremap <silent> <space>fr  <Cmd>History<CR>
 nnoremap <silent> <space>ff  <Cmd>Files<CR>
@@ -132,8 +136,6 @@ nnoremap <silent> <space>fh  <Cmd>Helptags<CR>
 nnoremap <silent> <space>ft  <Cmd>Tags<CR>
 nnoremap <silent> <space>fg  <Cmd>Rg<CR>
 '''
-[[plugins]]
-repo = 'junegunn/fzf.vim'
 [[plugins]]
 repo = 'Shougo/neomru.vim'
 [[plugins]]
