@@ -47,6 +47,7 @@ repo = 'Shougo/deoplete-lsp'
 
 [[plugins]]
 repo = 'woodyZootopia/iceberg.vim'
+rev = 'support_LSP'
 [[plugins]]
 repo = 'cocopon/pgmnt.vim'
 [[plugins]]
