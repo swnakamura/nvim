@@ -42,7 +42,7 @@ function! LC_maps()
     endif
 endfunction
 
-autocmd BufRead * call LC_maps()
+autocmd BufEnter * call LC_maps()
 
 " 特定のファイルの時、保存時に整形する
 augroup lspAutoFormat
