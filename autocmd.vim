@@ -10,12 +10,14 @@ augroup fileType
   au filetype           tex       imap     <buffer> [ [
   au filetype           html      setlocal nowrap
   au filetype           csv       setlocal nowrap
+  au filetype           tsv       setlocal nowrap
   au filetype           text      setlocal noet spell
   au filetype           mail      setlocal noet spell
   au filetype           gitcommit setlocal spell
   au filetype           markdown  setlocal noet spell
   au BufNewFile,BufRead *.grg     setlocal nowrap
   au BufNewFile,BufRead *.jl      setf     julia
+  au BufNewFile,BufRead *.pxv     setf     pixiv
   au filetype           help      setlocal spell noet
 augroup END
 
@@ -48,10 +50,12 @@ augroup Binary
     au BufWritePost * set nomod | endif
 augroup END
 
-augroup CSV
+augroup CSV_TSV
     au!
     au BufReadPost,BufWritePost *.csv %!column -s, -o, -t
-    au BufWritePre *.csv %s/\s\+,/,/ge
+    au BufWritePre              *.csv %s/\s\+,/,/ge
+    au BufReadPost,BufWritePost *.tsv %!column -s "$(printf '\t')" -o "$(printf '\t')" -t
+    au BufWritePre              *.tsv %s/ \+	/	/ge
 augroup END
 
 augroup LuaHighlight
