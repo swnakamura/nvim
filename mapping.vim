@@ -8,10 +8,12 @@ vnoremap <silent> p p`]
 nnoremap <silent> p p`]
 
 " Space+something to move to an end
-noremap <leader>h ^
-noremap <leader>l $
-noremap <leader>k gg
-noremap <leader>j G
+" noremap <leader>h ^
+" noremap <leader>l $
+" noremap <leader>k gg
+" noremap <leader>j G
+noremap H ^
+noremap L $
 
 " unmap s,space
 nnoremap s <Nop>
@@ -61,10 +63,10 @@ nnoremap gR R
 nnoremap x "_x
 
 " swap t and /
-noremap t /
-noremap / t
-noremap T ?
-noremap ? T
+" noremap t /
+" noremap / t
+" noremap T ?
+" noremap ? T
 
 " quit this window by q
 nnoremap <silent> <leader>q <Cmd>q<CR>
