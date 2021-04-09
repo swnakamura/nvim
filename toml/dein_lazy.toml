@@ -100,3 +100,6 @@ on_ft = ['rust']
 [[plugins]]
 repo = 'luochen1990/rainbow'
 on_ft = ['lisp']
+[[plugins]]
+repo = 'jeetsukumaran/vim-pythonsense'
+on_ft = ['python']
