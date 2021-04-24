@@ -78,7 +78,7 @@ lsp
 vscode
 autocompletion
 inline
-macro/!
+macro
 GDT
 GDTR
 IDTR
