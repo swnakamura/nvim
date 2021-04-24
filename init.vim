@@ -12,7 +12,7 @@ let g:python_host_prog='/usr/bin/python'
 let g:python_host_skip_check=1
 set pyxversion=3
 
-let g:nvim_home_directory = '/home/woody/.config/nvim'
+let g:nvim_home_directory = expand('~/.config/nvim')
 
 " source plugins
 exe 'source' expand(g:nvim_home_directory . '/dein.vim')
