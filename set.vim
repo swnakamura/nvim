@@ -78,7 +78,7 @@ set mouse=a
 
 set signcolumn=auto
 
-set matchpairs+=「:」,（:）
+set matchpairs+=「:」,（:）,『:』,【:】,〈:〉,《:》,〔:〕,｛:｝
 
 set spelllang=en,cjk
 
