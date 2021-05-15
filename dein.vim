@@ -36,8 +36,3 @@ let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowTo
 " use termdebug
 packadd termdebug
 let g:termdebug_wide=163
-
-" use my own plugin
-let g:gitsession_autosave = 1
-set runtimepath+=~/programming/gitsession.nvim
-let g:gitsession_tmp_dir = expand("~/.config/nvim/tmp/gitsession")

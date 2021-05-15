@@ -338,3 +338,9 @@ let g:asyncrun_open = 8
 repo = 'woodyZootopia/NeoDebug'
 [[plugins]]
 repo = 'yuratomo/gmail.vim'
+
+[[plugins]]
+repo = 'woodyZootopia/gitsession.vim'
+hook_add = '''
+let g:gitsession_autosave = 1
+'''
