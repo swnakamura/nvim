@@ -12,16 +12,16 @@ let g:python_host_prog='/usr/bin/python'
 let g:python_host_skip_check=1
 set pyxversion=3
 
-let g:nvim_home_directory = expand('~/.config/nvim')
+let g:nvim_home_directory = expand('~/.config/nvim') . '/'
 
 " source plugins
-exe 'source' expand(g:nvim_home_directory . '/dein.vim')
+exe 'source' expand(g:nvim_home_directory . 'dein.vim')
 
 " source other settings
-exe 'source' expand(g:nvim_home_directory . '/set.vim')
-exe 'source' expand(g:nvim_home_directory . '/mapping.vim')
-exe 'source' expand(g:nvim_home_directory . '/lsp.vim')
-exe 'source' expand(g:nvim_home_directory . '/autocmd.vim')
+exe 'source' expand(g:nvim_home_directory . 'set.vim')
+exe 'source' expand(g:nvim_home_directory . 'mapping.vim')
+exe 'source' expand(g:nvim_home_directory . 'lsp.vim')
+exe 'source' expand(g:nvim_home_directory . 'autocmd.vim')
 
 let g:python_highlight_all = 1
 
