@@ -239,19 +239,19 @@ let g:NERDCustomDelimiters = {'vim': {'left': '"','right':''}}
 [[plugins]]
 repo = 'tpope/vim-fugitive'
 hook_add = '''
-nnoremap <leader>gs :Gstatus<CR><C-w>T
+nnoremap <leader>gs :Git <CR><C-w>T
 nnoremap <leader>ga :Gwrite<CR>
-nnoremap <leader>gc :Gcommit-v<CR>
-nnoremap <leader>gb :Gblame<CR>
-nnoremap <leader>gl :tab sp<CR>:Glog<CR><C-w>j
-nnoremap <leader>gh :tab sp<CR>:0Glog<CR>
+nnoremap <leader>gc :Git commit -v<CR>
+nnoremap <leader>gb :Git blame<CR>
+nnoremap <leader>gl :tab sp<CR>:Gclog<CR><C-w>j
+nnoremap <leader>gh :tab sp<CR>:0Gclog<CR>
 " abbrev for git history: create new quickfix tab for history
-nnoremap <leader>gp :Gpush<CR>
-nnoremap <leader>gf :Gfetch<CR>
+nnoremap <leader>gp :Git push<CR>
+nnoremap <leader>gf :Git fetch<CR>
 nnoremap <leader>gd :Gvdiff!<CR>
-nnoremap <leader>gr :Grebase -i<CR>
+nnoremap <leader>gr :Git rebase -i<CR>
 nnoremap <leader>gg :Glgrep ""<Left>
-nnoremap <leader>gm :Gmerge 
+nnoremap <leader>gm :Git merge 
 '''
 [[plugins]]
 repo = 'junegunn/vim-easy-align'
@@ -343,4 +343,8 @@ repo = 'yuratomo/gmail.vim'
 repo = 'woodyZootopia/gitsession.vim'
 hook_add = '''
 let g:gitsession_autosave = 1
+let g:gitsession_tmp_dir = expand("~/.config/nvim/tmp/gitsession")
 '''
+
+[[plugins]]
+repo = 'LeafCage/vimhelpgenerator.git'
