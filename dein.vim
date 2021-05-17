@@ -33,6 +33,8 @@ let g:vimtex_syntax_enabled = 0
 " completion
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
+command DeinUpdate call dein#check_update(v:true)
+
 " use termdebug
 packadd termdebug
 let g:termdebug_wide=163

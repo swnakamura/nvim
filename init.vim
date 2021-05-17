@@ -15,7 +15,8 @@ set pyxversion=3
 let g:nvim_home_directory = expand('~/.config/nvim') . '/'
 
 " source plugins
-exe 'source' expand(g:nvim_home_directory . 'dein.vim')
+exe 'source' expand(g:nvim_home_directory . '/api_key.vim')
+exe 'source' expand(g:nvim_home_directory . '/dein.vim')
 
 " source other settings
 exe 'source' expand(g:nvim_home_directory . 'set.vim')
