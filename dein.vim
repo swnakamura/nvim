@@ -12,9 +12,8 @@ let g:dein#types#git#clone_depth = 1
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
   " locate toml directory beforehand
-  let g:rc_dir    = s:cache_home . '/toml'
-  let s:toml      = g:rc_dir . '/dein.toml'
-  let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
+  let s:toml      = s:cache_home . '/toml/dein.toml'
+  let s:lazy_toml = s:cache_home . '/toml/dein_lazy.toml'
 
   " read toml file and cache them
   call dein#load_toml(s:toml,      {'lazy': 0})

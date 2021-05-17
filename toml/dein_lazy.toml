@@ -101,5 +101,22 @@ on_ft = ['rust']
 repo = 'luochen1990/rainbow'
 on_ft = ['lisp']
 [[plugins]]
-repo = 'jeetsukumaran/vim-pythonsense'
+repo = 'bps/vim-textobj-python'
 on_ft = ['python']
+hook_add = '''
+let g:textobj_python_no_default_key_mappings = 1
+call textobj#user#map('python', {
+      \   'class': {
+      \     'select-a': '<buffer>ac',
+      \     'select-i': '<buffer>ic',
+      \     'move-n': '<buffer>]c',
+      \     'move-p': '<buffer>[c',
+      \   },
+      \   'function': {
+      \     'select-a': '<buffer>af',
+      \     'select-i': '<buffer>if',
+      \     'move-n': '<buffer>]f',
+      \     'move-p': '<buffer>[f',
+      \   }
+      \ })
+'''

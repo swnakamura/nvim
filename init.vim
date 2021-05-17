@@ -23,6 +23,7 @@ exe 'source' expand(g:nvim_home_directory . 'set.vim')
 exe 'source' expand(g:nvim_home_directory . 'mapping.vim')
 exe 'source' expand(g:nvim_home_directory . 'lsp.vim')
 exe 'source' expand(g:nvim_home_directory . 'autocmd.vim')
+exe 'source' expand(g:nvim_home_directory . 'mark.vim')
 
 let g:python_highlight_all = 1
 
