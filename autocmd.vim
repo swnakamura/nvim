@@ -1,20 +1,20 @@
 augroup fileType
   au!
   au BufRead            *.cls     set      ft=tex
-  au filetype           python    setlocal foldmethod=indent
-  au filetype           c,cpp     setlocal foldmethod=indent
-  au filetype           go        setlocal tabstop=4 shiftwidth=4 noexpandtab | set formatoptions+=r
-  au filetype           tex       setlocal tabstop=4 shiftwidth=4 foldmethod=syntax spell
-  au filetype           tex       imap     <buffer> ( (
-  au filetype           tex       imap     <buffer> { {
-  au filetype           tex       imap     <buffer> [ [
-  au filetype           html      setlocal nowrap
-  au filetype           csv       setlocal nowrap
-  au filetype           tsv       setlocal nowrap
-  au filetype           text      setlocal noet spell
-  au filetype           mail      setlocal noet spell
-  au filetype           gitcommit setlocal spell
-  au filetype           markdown  setlocal noet spell
+  au FileType           python    setlocal foldmethod=indent
+  au FileType           c,cpp     setlocal foldmethod=indent
+  au FileType           go        setlocal tabstop=4 shiftwidth=4 noexpandtab | set formatoptions+=r
+  au FileType           tex       setlocal tabstop=4 shiftwidth=4 foldmethod=syntax spell
+  au FileType           tex       imap     <buffer> ( (
+  au FileType           tex       imap     <buffer> { {
+  au FileType           tex       imap     <buffer> [ [
+  au FileType           html      setlocal nowrap
+  au FileType           csv       setlocal nowrap
+  au FileType           tsv       setlocal nowrap
+  au FileType           text      setlocal noet spell
+  au FileType           mail      setlocal noet spell
+  au FileType           gitcommit setlocal spell
+  au FileType           markdown  setlocal noet spell
   au BufNewFile,BufRead *.grg     setlocal nowrap
   au BufNewFile,BufRead *.jl      setf     julia
   au BufNewFile,BufRead *.pxv     setf     pixiv
