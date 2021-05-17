@@ -1,3 +1,5 @@
+" https://github.com/neovim/nvim-lspconfig を参考にした
+
 " dictionaryを宣言
 let g:LSP_commands = {}
 
@@ -17,12 +19,14 @@ endif
 if executable('pyls')
     let g:LSP_commands['python'] = 'pyls'
 endif
+if executable('pyright')
+    let g:LSP_commands['python'] = 'pyright'
+endif
 
-" 追加したそれぞれの言語についてLSPコマンドを起動
-for [key,val] in items(g:LSP_commands)
+" 追加したそれぞれの言語についてLSP設定を起動
+for [key, val] in items(g:LSP_commands)
     exe 'lua require''lspconfig''.' . val . '.setup{}'
 endfor
-
 
 " https://github.com/neovim/nvim-lspconfig そのまま
 function! LC_maps()
