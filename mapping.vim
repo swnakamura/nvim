@@ -16,33 +16,35 @@ noremap H ^
 noremap L $
 
 " unmap s,space
-nnoremap s <Nop>
-vnoremap s <Nop>
+nnoremap [Win] <Nop>
+vnoremap [Win] <Nop>
+nmap s [Win]
+vmap s [Win]
 nnoremap <Space> <Nop>
 nnoremap <C-space> <Nop>
 " window control
-nnoremap ss :split<CR>
-nnoremap sv :vsplit<CR>
+nnoremap [Win]s :split<CR>
+nnoremap [Win]v :vsplit<CR>
 " st is used by defx
-nnoremap sc :tab sp<CR>
-nnoremap sC :-tab sp<CR>
-nnoremap sj <C-w>j
-nnoremap sk <C-w>k
-nnoremap sl <C-w>l
-nnoremap sh <C-w>h
-nnoremap sJ <C-w>J
-nnoremap sK <C-w>K
-nnoremap sL <C-w>L
-nnoremap sH <C-w>H
-nnoremap sz :terminal<CR>
-nnoremap sz :terminal<CR>
-nnoremap sn gt
-nnoremap sp gT
-nnoremap sr <C-w>r
-nnoremap s= <C-w>=
-nnoremap sO <C-w>=
-nnoremap so <C-w>_<C-w>\|
-nnoremap sq <Cmd>tabc<CR>
+nnoremap [Win]c :tab sp<CR>
+nnoremap [Win]C :-tab sp<CR>
+nnoremap [Win]j <C-w>j
+nnoremap [Win]k <C-w>k
+nnoremap [Win]l <C-w>l
+nnoremap [Win]h <C-w>h
+nnoremap [Win]J <C-w>J
+nnoremap [Win]K <C-w>K
+nnoremap [Win]L <C-w>L
+nnoremap [Win]H <C-w>H
+nnoremap [Win]z :terminal<CR>
+nnoremap [Win]z :terminal<CR>
+nnoremap [Win]n gt
+nnoremap [Win]p gT
+nnoremap [Win]r <C-w>r
+nnoremap [Win]= <C-w>=
+nnoremap [Win]O <C-w>=
+nnoremap [Win]o <C-w>_<C-w>\|
+nnoremap [Win]q <Cmd>tabc<CR>
 
 nnoremap Q :copen<CR>
 
@@ -132,8 +134,6 @@ nmap ]W <Cmd>llast<CR>  " 最後へ
 augroup QuickfixWindow
     autocmd!
     autocmd filetype qf nnoremap <buffer> p <CR>zz<C-w>j
-    autocmd filetype qf unmap j
-    autocmd filetype qf unmap k
 augroup END
 
 " one push to add/remove tabs
