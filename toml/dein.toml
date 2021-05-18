@@ -324,6 +324,11 @@ let g:lightline.subseparator = { 'left': '', 'right': '' }
 '''
 [[plugins]]
 repo = 'jpalardy/vim-slime'
+hook_add = '''
+nmap <c-c><c-c> <Plug>SlimeParagraphSend
+nmap <c-c><c-n> <Plug>SlimeParagraphSend}/[^\n]<CR>
+nmap <c-c><c-p> <Plug>SlimeParagraphSend{?[^\n]<CR>
+'''
 [[plugins]]
 repo = 'tikhomirov/vim-glsl'
 [[plugins]]

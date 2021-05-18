@@ -60,9 +60,11 @@ augroup END
 
 augroup JupyterNotebook
     au!
-    au BufReadPost *.ipynb                                          %!jupytext --from ipynb --to py:percent
-    au BufWritePost *.ipynb let s:previous_location = getpos('.') | %!jupytext --from ipynb --to py:percent
-    au BufWritePre *.ipynb  if get(s:, 'previous_location') | call setpos('.', s:previous_location) | endif | %!jupytext --from py:percent --to ipynb
+    au BufReadPost *.ipynb %!jupytext --from ipynb --to py:percent
+    au BufWritePre *.ipynb let g:jupyter_previous_location = getpos('.')
+    au BufWritePre *.ipynb %!jupytext --from py:percent --to ipynb
+    au BufWritePost *.ipynb %!jupytext --from ipynb --to py:percent 
+    au BufWritePost *.ipynb if exists('g:jupyter_previous_location') | call setpos('.', g:jupyter_previous_location) | endif
 augroup END
 
 augroup LuaHighlight
