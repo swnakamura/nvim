@@ -23,6 +23,11 @@ if executable('pyright')
     let g:LSP_commands['python'] = 'pyright'
 endif
 
+" Vim Script
+if executable('vim-language-server')
+    let g:LSP_commands['vim'] = 'vimls'
+endif
+
 " 追加したそれぞれの言語についてLSP設定を起動
 for [key, val] in items(g:LSP_commands)
     exe 'lua require''lspconfig''.' . val . '.setup{}'
