@@ -58,6 +58,13 @@ augroup CSV_TSV
     au BufWritePre              *.tsv %s/ \+	/	/ge
 augroup END
 
+augroup JupyterNotebook
+    au!
+    au BufReadPost *.ipynb                                          %!jupytext --from ipynb --to py:percent
+    au BufWritePost *.ipynb let s:previous_location = getpos('.') | %!jupytext --from ipynb --to py:percent
+    au BufWritePre *.ipynb  if get(s:, 'previous_location') | call setpos('.', s:previous_location) | endif | %!jupytext --from py:percent --to ipynb
+augroup END
+
 augroup LuaHighlight
   autocmd!
   autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
