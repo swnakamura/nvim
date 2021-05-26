@@ -12,6 +12,10 @@ let g:python_host_prog='/usr/bin/python'
 let g:python_host_skip_check=1
 set pyxversion=3
 
+let g:slime_target = "tmux"
+let g:slime_dont_ask_default = 1
+let g:slime_default_config = {"socket_name": "default", "target_pane": ":.1"}
+
 let g:nvim_home_directory = expand('~/.config/nvim') . '/'
 
 " source plugins
@@ -24,8 +28,6 @@ exe 'source' expand(g:nvim_home_directory . 'mapping.vim')
 exe 'source' expand(g:nvim_home_directory . 'lsp.vim')
 exe 'source' expand(g:nvim_home_directory . 'autocmd.vim')
 exe 'source' expand(g:nvim_home_directory . 'mark.vim')
-
-let g:python_highlight_all = 1
 
 " Always set ...
 if g:dark_colorscheme

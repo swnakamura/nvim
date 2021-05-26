@@ -5,9 +5,7 @@ augroup fileType
   au FileType           c,cpp     setlocal foldmethod=indent
   au FileType           go        setlocal tabstop=4 shiftwidth=4 noexpandtab | set formatoptions+=r
   au FileType           tex       setlocal tabstop=4 shiftwidth=4 foldmethod=syntax spell
-  au FileType           tex       imap     <buffer> ( (
-  au FileType           tex       imap     <buffer> { {
-  au FileType           tex       imap     <buffer> [ [
+  au FileType           tex       let b:lexima_disabled = 1
   au FileType           html      setlocal nowrap
   au FileType           csv       setlocal nowrap
   au FileType           tsv       setlocal nowrap
@@ -29,6 +27,12 @@ augroup localleader
     autocmd FileType tex    map <buffer> <localleader>d <plug>(vimtex-delim-toggle-modifier)
     autocmd FileType python map <buffer> <localleader>r :%AsyncRun python<CR>
     autocmd FileType ruby map <buffer> <localleader>r :%AsyncRun ruby<CR>
+augroup END
+
+augroup vimrc-incsearch-highlight
+  au!
+  au CmdlineEnter /,\? :set hlsearch
+  au CmdlineLeave /,\? :set nohlsearch
 augroup END
 
 augroup Binary
