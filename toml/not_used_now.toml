@@ -1,19 +1,15 @@
 [[plugins]]
-(ale)
+repo = 'itchyny/lightline.vim'
 hook_add = '''
-let g:ale_fixers = {
-            \'*': ['trim_whitespace','remove_trailing_lines'],
-            \'python': ['autopep8', 'trim_whitespace', 'isort'],
-            \'go': ['gofmt'],
-            \}
-
-let g:ale_linters = {
-            \'go':['gopls'],
-            \'python':['pyls']
-            \}
-
-" nnoremap <leader>ap :ALEFix<CR>
-
-nnoremap ]a :ALENext<CR>
-nnoremap [a :ALEPrevious<CR>
+if g:dark_colorscheme
+    let g:lightline = {
+                \ 'colorscheme': 'iceberg',
+                \}
+else
+    let g:lightline = {
+                \ 'colorscheme': 'iceberg',
+                \}
+endif
+let g:lightline.subseparator = { 'left': '', 'right': '' }
 '''
+

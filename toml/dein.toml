@@ -309,19 +309,18 @@ repo = 'tpope/vim-rhubarb'
 [[plugins]]
 repo = 'JuliaEditorSupport/julia-vim'
 [[plugins]]
-repo = 'itchyny/lightline.vim'
+repo = 'hoob3rt/lualine.nvim'
 hook_add = '''
-if g:dark_colorscheme
-    let g:lightline = {
-                \ 'colorscheme': 'iceberg',
-                \}
-else
-    let g:lightline = {
-                \ 'colorscheme': 'iceberg',
-                \}
-endif
-let g:lightline.subseparator = { 'left': '', 'right': '' }
+lua << EOF
+require'lualine'.setup{
+   options={
+        theme='iceberg_light',
+    },
+}
+EOF
 '''
+[[plugins]]
+repo = 'kyazdani42/nvim-web-devicons'
 [[plugins]]
 repo = 'jpalardy/vim-slime'
 hook_add = '''
