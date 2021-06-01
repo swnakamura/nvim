@@ -116,3 +116,4 @@ BRDF
 includegraphics
 linewidth
 png
+denoising
