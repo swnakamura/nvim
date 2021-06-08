@@ -352,3 +352,23 @@ let g:gitsession_tmp_dir = expand("~/.config/nvim/tmp/gitsession")
 
 [[plugins]]
 repo = 'LeafCage/vimhelpgenerator.git'
+
+[[plugins]]
+repo = 'tyru/eskk.vim'
+hook_add = '''
+
+let g:eskk#directory = '~/.config/eskk'
+let g:eskk#dictionary = {'path': '~/.config/fcitx/skk/user.dict', 'sorted': 1, 'encoding': 'utf-8'}
+let g:eskk#large_dictionary = {'path': '/usr/share/skk/SKK-JISYO.L', 'sorted': 1, 'encoding': 'euc-jp'}
+let g:eskk#show_annotation = 1
+
+augroup eskk_autoenable
+    autocmd!
+    autocmd InsertEnter *.md,*.pxv call eskk#enable()
+augroup END
+
+" let g:eskk#marker_henkan = "[変換]"
+" let g:eskk#marker_henkan_select = "[選択]"
+" let g:eskk#marker_okuri = "[送り]"
+" let g:eskk#marker_jisyo_touroku = "[辞書]"
+'''

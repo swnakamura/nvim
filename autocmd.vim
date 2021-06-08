@@ -76,8 +76,10 @@ augroup LuaHighlight
   autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
 augroup END
 
-augroup limitlento80
-    autocmd!
-    " autocmd Filetype tex,gitcommit execute "set colorcolumn=" . join(range(81,335), ',')
-    " autocmd Filetype tex,gitcommit hi ColorColumn cterm=NONE ctermbg=251 ctermfg=237 guibg=#cad0de guifg=#576a9e
-augroup end
+exe 'source' expand("~/.config/nvim/autocmd_eskk.vim")
+
+" augroup limitlento80
+"     autocmd!
+"     autocmd Filetype tex,gitcommit execute "set colorcolumn=" . join(range(81,335), ',')
+"     autocmd Filetype tex,gitcommit hi ColorColumn cterm=NONE ctermbg=251 ctermfg=237 guibg=#cad0de guifg=#576a9e
+" augroup end
