@@ -13,10 +13,14 @@ augroup fileType
   au FileType           mail      setlocal noet spell
   au FileType           gitcommit setlocal spell
   au FileType           markdown  setlocal noet spell
-  au BufNewFile,BufRead *.grg     setlocal nowrap
-  au BufNewFile,BufRead *.jl      setf     julia
-  au BufNewFile,BufRead *.pxv     setf     pixiv
   au filetype           help      setlocal spell noet
+  au BufNewFile,BufRead *.grg     setlocal nowrap
+  au BufNewFile,BufRead *.jl      setf julia
+  au BufRead,BufNewFile *.elm     setf elm
+  au BufRead,BufNewFile *.ipynb   setf python
+  au BufRead,BufNewFile *.re      setf review
+  au BufRead,BufNewFile *.pxv     setf pixiv
+  au BufRead,BufNewFile *.hml     setf hameln
 augroup END
 
 augroup localleader
@@ -76,7 +80,7 @@ augroup LuaHighlight
   autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
 augroup END
 
-" exe 'source' expand("~/.config/nvim/autocmd_eskk.vim")
+exe 'source' expand("~/.config/nvim/autocmd_eskk.vim")
 
 " augroup limitlento80
 "     autocmd!
