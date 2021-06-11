@@ -44,6 +44,15 @@ nnoremap [Win]= <C-w>=
 nnoremap [Win]O <C-w>=
 nnoremap [Win]o <C-w>_<C-w>\|
 nnoremap [Win]q <Cmd>tabc<CR>
+nnoremap [Win]1 <Cmd>1tabnext<CR>
+nnoremap [Win]2 <Cmd>2tabnext<CR>
+nnoremap [Win]3 <Cmd>3tabnext<CR>
+nnoremap [Win]4 <Cmd>4tabnext<CR>
+nnoremap [Win]5 <Cmd>5tabnext<CR>
+nnoremap [Win]6 <Cmd>6tabnext<CR>
+nnoremap [Win]7 <Cmd>7tabnext<CR>
+nnoremap [Win]8 <Cmd>8tabnext<CR>
+nnoremap [Win]9 <Cmd>9tabnext<CR>
 
 nnoremap Q :copen<CR>
 
