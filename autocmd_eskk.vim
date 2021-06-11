@@ -3,6 +3,14 @@ augroup vimrc_eskk
   autocmd User eskk-enable-post lmap <buffer> I <Plug>(eskk:disable)
 augroup END
 
+autocmd User eskk-enable-post call s:eskk_enable_post()
+function! s:eskk_enable_post()
+    EskkMap -force <C-n> <Down>
+    EskkMap -force <C-p> <Up>
+    EskkMap -force <C-a> <Home>
+    EskkMap -force <C-e> <End>
+endfunction
+
 autocmd User eskk-initialize-pre call s:eskk_initial_pre()
   function! s:eskk_initial_pre()
     let t = eskk#table#new('rom_to_hira*', 'rom_to_hira')

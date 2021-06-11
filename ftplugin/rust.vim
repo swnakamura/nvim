@@ -1,5 +1,5 @@
 " " compiler settings
-nnoremap     <buffer>      <F3>  :cd %:p:h<CR>:make!   check<CR>
+nnoremap     <buffer>      <F3>  :cd %:p:h<CR>:make!   check<CR>:copen<CR>
 nnoremap     <buffer>      <F15> :cd %:p:h<CR>:make    check<CR>
 nnoremap     <buffer>      <F4>  :cd %:p:h<CR>:make!   build<CR>
 nnoremap     <buffer>      <F16> :cd %:p:h<CR>:make    build<CR>

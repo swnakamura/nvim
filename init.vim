@@ -1,9 +1,13 @@
+" set guifont=Source\ Code\ Pro:h16
+" set guifont=FiraCode\ Nerd\ Font:h16
+" set guifont=Ricty-Regular:h16
+" set guifont=Noto\ Sans\ Mono\ CJK\ JP:h16
+
 filetype plugin indent off
 " map space to leader
 let mapleader = "\<Space>"
 let maplocalleader = "\<C-space>"
 let g:vimtex_compiler_progname = 'nvr'
-let g:dark_colorscheme=0
 
 let g:loaded_python_provier=1
 let g:python3_host_prog='/usr/bin/python3'
