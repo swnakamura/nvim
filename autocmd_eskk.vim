@@ -11,6 +11,24 @@ function! s:eskk_enable_post()
     EskkMap -force <C-e> <End>
 endfunction
 
+let g:eskk_autoenable=1
+nnoremap <silent><expr> <F2> <SID>markdown_eskk_toggle()
+
+augroup eskk_autoenable
+    autocmd!
+    autocmd InsertEnter *.md,*.pxv if g:eskk_autoenable | call eskk#enable() | endif
+    " autocmd FileType markdown,pixiv nnoremap <buffer><silent><expr> <F2> <SID>markdown_eskk_toggle()
+augroup END
+
+function! s:markdown_eskk_toggle() abort
+  let g:eskk_autoenable = g:eskk_autoenable == 1 ? 0 : 1
+  if g:eskk_autoenable ==# 1
+    echomsg '日本語入力モードON'
+  else
+    echomsg '日本語入力モードOFF'
+  endif
+endfunction
+
 autocmd User eskk-initialize-pre call s:eskk_initial_pre()
   function! s:eskk_initial_pre()
     let t = eskk#table#new('rom_to_hira*', 'rom_to_hira')

@@ -364,7 +364,7 @@ let g:eskk#show_annotation = 1
 
 augroup eskk_autoenable
     autocmd!
-    autocmd InsertEnter *.md,*.pxv,*.hml call eskk#enable()
+    autocmd InsertEnter *.md,*.pxv call eskk#enable()
 augroup END
 
 " let g:eskk#marker_henkan = "[変換]"
