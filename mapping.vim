@@ -168,6 +168,10 @@ function! ExecExCommand(cmd)
   return ''
 endfunction
 
+" very magic検索
+nnoremap / /\v
+nnoremap ? ?\v
+
 " 行頭へ移動
 cnoremap <C-A> <Home>
 inoremap <C-A> <Home>
