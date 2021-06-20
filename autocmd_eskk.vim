@@ -1,8 +1,3 @@
-augroup vimrc_eskk
-  autocmd!
-  autocmd User eskk-enable-post lmap <buffer> I <Plug>(eskk:disable)
-augroup END
-
 autocmd User eskk-enable-post call s:eskk_enable_post()
 function! s:eskk_enable_post()
     EskkMap -force <C-n> <Down>
@@ -16,7 +11,7 @@ nnoremap <silent><expr> <F2> <SID>markdown_eskk_toggle()
 
 augroup eskk_autoenable
     autocmd!
-    autocmd InsertEnter *.md,*.pxv if g:eskk_autoenable | call eskk#enable() | endif
+    autocmd InsertEnter *.md,*.pxv,*.ltx if g:eskk_autoenable | call eskk#enable() | endif
     " autocmd FileType markdown,pixiv nnoremap <buffer><silent><expr> <F2> <SID>markdown_eskk_toggle()
 augroup END
 

@@ -362,11 +362,6 @@ let g:eskk#dictionary = {'path': '~/.config/fcitx/skk/user.dict', 'sorted': 1, '
 let g:eskk#large_dictionary = {'path': '/usr/share/skk/SKK-JISYO.L', 'sorted': 1, 'encoding': 'euc-jp'}
 let g:eskk#show_annotation = 1
 
-augroup eskk_autoenable
-    autocmd!
-    autocmd InsertEnter *.md,*.pxv call eskk#enable()
-augroup END
-
 " let g:eskk#marker_henkan = "[変換]"
 " let g:eskk#marker_henkan_select = "[選択]"
 " let g:eskk#marker_okuri = "[送り]"
