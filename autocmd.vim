@@ -53,11 +53,19 @@ function! Visualmatch()
         unlet s:visual_match_id
     endif
     if index(['v', ''], mode()) != -1 && line('v') == line('.')
-        let selected_column = {
-                    \'first': min([col('v')-1,col('.')-1]),
-                    \'last' : max([col('v')-1,col('.')-1])
+        let len_of_char_of_v   = strlen(matchstr(getline('v'), '.', col('v')-1))
+        let len_of_char_of_dot = strlen(matchstr(getline('.'), '.', col('.')-1))
+        let selected_column_idx = {
+                    \'first': min([
+                                \col('v')-1,
+                                \col('.')-1
+                                \]),
+                    \'last' : max([
+                                \col('v')-2+len_of_char_of_v,
+                                \col('.')-2+len_of_char_of_dot
+                                \])
                     \}
-        let s:visual_match_id = matchadd('Search', getline('.')[selected_column['first']:selected_column['last']])
+        let s:visual_match_id = matchadd('Search', getline('.')[selected_column_idx['first']:selected_column_idx['last']])
     endif
 endfunction
 
