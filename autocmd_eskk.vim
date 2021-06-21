@@ -26,6 +26,7 @@ endfunction
 
 autocmd User eskk-initialize-pre call s:eskk_initial_pre()
   function! s:eskk_initial_pre()
+    " hira
     let t = eskk#table#new('rom_to_hira*', 'rom_to_hira')
     call t.add_map('~', '～')
     call t.add_map('zc', '©')
