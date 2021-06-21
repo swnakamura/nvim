@@ -42,6 +42,11 @@ endif
 nnoremap <silent> <cr> :let searchTerm = '\v<'.expand("<cword>").'>' <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<cr>
 vnoremap <silent> <cr> :let searchTerm = '\v<'.expand("<cword>").'>' <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<cr>
 
+augroup unsetCR
+    autocmd!
+    autocmd Filetype qf nnoremap <buffer> <CR> <CR>
+augroup END
+
 colorscheme iceberg
 " 最後に設定
 filetype plugin indent on
