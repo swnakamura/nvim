@@ -33,11 +33,33 @@ augroup localleader
     autocmd FileType ruby map <buffer> <localleader>r :%AsyncRun ruby<CR>
 augroup END
 
+" 検索中の領域をハイライトする
+" ヘルプドキュメントからコピーした
 augroup vimrc-incsearch-highlight
   au!
   au CmdlineEnter /,\? :set hlsearch
   au CmdlineLeave /,\? :set nohlsearch
 augroup END
+
+" 選択した領域をハイライトする
+augroup instant-visual-highlight
+    au!
+    autocmd CursorMoved,CursorHold * call Visualmatch()
+augroup END
+
+function! Visualmatch()
+    if exists("s:visual_match_id")
+        call matchdelete(s:visual_match_id)
+        unlet s:visual_match_id
+    endif
+    if index(['v', ''], mode()) != -1 && line('v') == line('.')
+        let selected_column = {
+                    \'first': min([col('v')-1,col('.')-1]),
+                    \'last' : max([col('v')-1,col('.')-1])
+                    \}
+        let s:visual_match_id = matchadd('Search', getline('.')[selected_column['first']:selected_column['last']])
+    endif
+endfunction
 
 augroup Binary
     au!
