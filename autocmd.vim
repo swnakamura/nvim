@@ -48,7 +48,7 @@ augroup instant-visual-highlight
 augroup END
 
 function! Visualmatch()
-    if exists("s:visual_match_id")
+    if exists("s:visual_match_id") && index(map(getmatches(), {_, val -> val['id']}), s:visual_match_id) != -1
         call matchdelete(s:visual_match_id)
         unlet s:visual_match_id
     endif
