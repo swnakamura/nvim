@@ -57,10 +57,10 @@ nnoremap [Win]9 <Cmd>9tabnext<CR>
 nnoremap Q :copen<CR>
 
 " move by display line
-" noremap j  gj
-" noremap k  gk
-" noremap gj j
-" noremap gk k
+nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
+xnoremap <expr> j (v:count == 0 && mode() ==# 'v') ? 'gj' : 'j'
+nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
+xnoremap <expr> k (v:count == 0 && mode() ==# 'v') ? 'gk' : 'k'
 
 " always replace considering zenkaku
 nnoremap r  gr
@@ -169,8 +169,8 @@ function! ExecExCommand(cmd)
 endfunction
 
 " very magic検索
-nnoremap / /\v
-nnoremap ? ?\v
+" nnoremap / /\v
+" nnoremap ? ?\v
 
 " 行頭へ移動
 cnoremap <C-A> <Home>
