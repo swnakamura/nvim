@@ -69,7 +69,7 @@ set foldcolumn=2
 
 set backspace=eol,indent,start
 
-set diffopt+=vertical
+set diffopt+=vertical,algorithm:patience,indent-heuristic
 
 set wildmenu
 set wildmode=list:full
