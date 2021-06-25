@@ -65,7 +65,7 @@ function! Visualmatch()
                                 \col('.')-2+len_of_char_of_dot
                                 \])
                     \}
-        let s:visual_match_id = matchadd('Search', getline('.')[selected_column_idx['first']:selected_column_idx['last']])
+        let s:visual_match_id = matchadd('Search', '\M' .. getline('.')[selected_column_idx['first']:selected_column_idx['last']])
     endif
 endfunction
 
