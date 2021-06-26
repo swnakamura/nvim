@@ -61,6 +61,10 @@ nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
 xnoremap <expr> j (v:count == 0 && mode() ==# 'v') ? 'gj' : 'j'
 nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
 xnoremap <expr> k (v:count == 0 && mode() ==# 'v') ? 'gk' : 'k'
+nnoremap gj j
+nnoremap gk k
+xnoremap gj j
+xnoremap gk k
 
 " always replace considering zenkaku
 nnoremap r  gr
