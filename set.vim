@@ -40,6 +40,8 @@ set number
 " listchar settings
 set list listchars=tab:»-,trail:~,extends:»,precedes:«,nbsp:%
 
+set scrolloff=5
+
 " show double width characters properly
 set ambiwidth=single
 

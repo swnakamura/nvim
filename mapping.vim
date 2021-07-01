@@ -92,8 +92,6 @@ nnoremap <silent> <leader>Q :qa<CR>
 nnoremap <silent> <leader>bd <Cmd>bd<CR>
 
 
-set scrolloff=5
-
 " increase and decrease by plus/minus
 nnoremap +  <C-a>
 nnoremap -  <C-x>
