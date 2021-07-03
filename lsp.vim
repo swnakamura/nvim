@@ -28,6 +28,10 @@ if executable('vim-language-server')
     let g:LSP_commands['vim'] = 'vimls'
 endif
 
+if executable(texlab)
+    let g:LSP_commands['tex'] = 'texlab'
+endif
+
 " 追加したそれぞれの言語についてLSP設定を起動
 for [key, val] in items(g:LSP_commands)
     exe 'lua require''lspconfig''.' . val . '.setup{}'
