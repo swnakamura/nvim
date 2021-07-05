@@ -28,7 +28,7 @@ if executable('vim-language-server')
     let g:LSP_commands['vim'] = 'vimls'
 endif
 
-if executable(texlab)
+if executable('texlab')
     let g:LSP_commands['tex'] = 'texlab'
 endif
 
