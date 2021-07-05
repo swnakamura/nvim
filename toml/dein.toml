@@ -387,3 +387,6 @@ EOF
 '''
 hook_install = 'TSUpdate'
 hook_post_update = 'TSUpdate'
+
+[[plugins]]
+repo = 'tversteeg/registers.nvim'
