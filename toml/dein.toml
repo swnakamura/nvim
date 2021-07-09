@@ -391,3 +391,9 @@ hook_post_update = 'TSUpdate'
 
 [[plugins]]
 repo = 'tversteeg/registers.nvim'
+
+[[plugins]]
+repo = 'https://github.com/inkarkat/vim-SpellCheck'
+
+[[plugins]]
+repo = 'https://github.com/inkarkat/vim-ingo-library'
