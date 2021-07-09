@@ -379,6 +379,7 @@ require'nvim-treesitter.configs'.setup {
     disable = {
       'lua',
       'toml',
+      'tex',
     }
   },
   ensure_installed = 'maintained'
