@@ -380,6 +380,7 @@ require'nvim-treesitter.configs'.setup {
       'lua',
       'toml',
       'tex',
+      'latex',
     }
   },
   ensure_installed = 'maintained'
