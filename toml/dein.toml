@@ -398,3 +398,6 @@ repo = 'https://github.com/inkarkat/vim-SpellCheck'
 
 [[plugins]]
 repo = 'https://github.com/inkarkat/vim-ingo-library'
+
+[[plugins]]
+repo = 'tweekmonster/helpful.vim'
