@@ -413,7 +413,7 @@ snippet prf "proof" b
 \end{proof}
 endsnippet
 
-snippet defi "definition" bA
+snippet defi "definition" b
 \define{$1}[$2][$3]$0
 endsnippet
 
@@ -732,7 +732,7 @@ endsnippet
 priority 200
 context "math()"
 snippet <_> "leftrightarrow" iA
-\Longleftrightarrow
+\Leftrightarrow
 endsnippet
 
 priority 200
@@ -774,6 +774,11 @@ endsnippet
 context "math()"
 snippet subs "subset" iA
 \subset 
+endsnippet
+
+context "math()"
+snippet sups "supset" iA
+\supset 
 endsnippet
 
 context "math()"
