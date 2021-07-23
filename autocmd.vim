@@ -44,7 +44,9 @@ augroup END
 " 選択した領域をハイライトする
 augroup instant-visual-highlight
     au!
-    autocmd CursorMoved,CursorHold * call Visualmatch()
+    if !exists("g:vscode")
+        autocmd CursorMoved,CursorHold * call Visualmatch()
+    endif
 augroup END
 
 function! Visualmatch()
