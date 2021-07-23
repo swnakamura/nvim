@@ -111,7 +111,7 @@ augroup LuaHighlight
   autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
 augroup END
 
-exe 'source' expand("~/.config/nvim/autocmd_eskk.vim")
+exe 'source' expand("~/.config/nvim/autocmd_fcitx.vim")
 
 augroup limitlento80
     autocmd!
