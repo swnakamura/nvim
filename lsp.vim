@@ -28,8 +28,15 @@ if executable('vim-language-server')
     let g:LSP_commands['vim'] = 'vimls'
 endif
 
+" latex
 if executable('texlab')
     let g:LSP_commands['tex'] = 'texlab'
+endif
+
+" js/ts
+if executable('deno')
+    let g:LSP_commands['typescript'] = 'denols'
+    let g:LSP_commands['javascript'] = 'denols'
 endif
 
 " 追加したそれぞれの言語についてLSP設定を起動
