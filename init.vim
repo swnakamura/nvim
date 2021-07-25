@@ -50,6 +50,7 @@ augroup unsetCR
 augroup END
 
 if !exists('g:vscode')
+    set background=dark
     colorscheme iceberg
 endif
 " 最後に設定
