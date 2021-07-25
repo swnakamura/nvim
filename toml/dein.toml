@@ -60,9 +60,9 @@ repo = 'cohama/lexima.vim'
 repo = 'Shougo/defx.nvim'
 hook_add = '''
 call defx#custom#column('indent',{'indent': "-"})
-nnoremap <silent> st        :Defx -new -auto-cd -columns=time:size:indent:icons:space:space:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=tab      -vertical-preview -preview-width=`eval('&columns')-40` <CR>
-nnoremap <silent> <leader>d :Defx -new -auto-cd -columns=time:size:indent:icons:space:space:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=no       -vertical-preview -preview-width=`eval('&columns')-40` <CR>
-nnoremap <silent> <leader>n :Defx -new -auto-cd -columns=size:indent:icons:space:space:filename      -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=vertical -vertical-preview -preview-width=`eval('&columns')-50` -winwidth=50<CR>
+nnoremap <silent> st        :Defx -new -auto-cd -columns=time:size:indent:icons:space:space:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=tab      -vertical-preview -preview-width=`float2nr(eval('&columns')*0.8)` <CR>
+nnoremap <silent> <leader>d :Defx -new -auto-cd -columns=time:size:indent:icons:space:space:filename -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=no       -vertical-preview -preview-width=`float2nr(eval('&columns')*0.8)` <CR>
+nnoremap <silent> <leader>n :Defx -new -auto-cd -columns=size:indent:icons:space:space:filename      -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=vertical -vertical-preview -preview-width=`float2nr(eval('&columns')*0.8)` -winwidth=50<CR>
 
 autocmd FileType defx call s:defx_my_settings()
 function!  s:defx_my_settings() abort
