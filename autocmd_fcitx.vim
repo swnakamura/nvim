@@ -9,7 +9,7 @@ nnoremap <silent><expr> <F2> <SID>fcitx_toggle()
 augroup fcitx_autoenable
     autocmd!
     autocmd InsertEnter *.md,*.pxv,*.ltx if g:fcitx_autoenable | call s:enable() | endif
-    autocmd InsertLeave *.md,*.pxv,*.ltx call s:disable()
+    autocmd InsertLeave * call s:disable()
     " autocmd FileType markdown,pixiv nnoremap <buffer><silent><expr> <F2> <SID>fcitx_toggle()
 augroup END
 
