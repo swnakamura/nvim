@@ -110,10 +110,10 @@ nnoremap <silent> <leader>s <Cmd>update<CR>
 nnoremap <silent> <leader>ws <Cmd>wall<CR>
 
 "reload init.vim
-nnoremap <silent> <leader>r <Cmd>so ~/.config/nvim/init.vim<CR>
+" nnoremap <silent> <leader>r <Cmd>so ~/.config/nvim/init.vim<CR>
 
 "open init.vim in new tab
-nnoremap <silent> <leader>fed <Cmd>tabnew<CR><Cmd>e ~/.config/nvim/init.vim<CR>
+" nnoremap <silent> <leader>fed <Cmd>tabnew<CR><Cmd>e ~/.config/nvim/init.vim<CR>
 
 " grep
 nnoremap <leader>vv :vimgrep // %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left>
