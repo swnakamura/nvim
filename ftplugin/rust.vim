@@ -1,4 +1,4 @@
-" " compiler settings
+" compiler settings
 nnoremap     <buffer>      <F15>  :cd %:p:h<CR>:make    check<CR>:copen<CR>
 nnoremap     <buffer>      <F3> :cd %:p:h<CR>:make    check<CR>
 nnoremap     <buffer>      <F4>  :cd %:p:h<CR>:make!   build<CR>

@@ -15,7 +15,7 @@ let g:slime_target = "tmux"
 let g:slime_dont_ask_default = 1
 let g:slime_default_config = {"socket_name": "default", "target_pane": ":.1"}
 
-let g:nvim_home_directory = expand('~/ghq/github.com/woodyZootopia/nvim') . '/'
+let g:nvim_home_directory = expand('~/.config/nvim') . '/'
 
 " source plugins
 exe 'source' expand(g:nvim_home_directory . 'api_key.vim')
