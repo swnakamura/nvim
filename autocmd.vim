@@ -99,6 +99,19 @@ augroup CSV_TSV
     au BufWritePre              *.tsv %s/ \+	/	/ge
 augroup END
 
+augroup defx_hijack_netrw
+    let s:netrw_alternative_defx = g:defx_default_invocation .. ' -columns=time:size:indent:icons:space:space:filename'
+    au!
+    au VimEnter * sil! au! FileExplorer *
+    au BufEnter * if s:isdir(expand('%')) | bd | exe s:netrw_alternative_defx | endif
+augroup END
+
+fu! s:isdir(dir) abort
+    return !empty(a:dir) && (isdirectory(a:dir) ||
+       \ (!empty($SYSTEMDRIVE) && isdirectory('/'.tolower($SYSTEMDRIVE[0]).a:dir)))
+endfu
+
+
 augroup JupyterNotebook
     au!
     au BufReadPost *.ipynb %!jupytext --from ipynb --to py:percent
