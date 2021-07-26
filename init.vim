@@ -3,6 +3,8 @@
 " set guifont=Ricty-Regular:h16
 " set guifont=Noto\ Sans\ Mono\ CJK\ JP:h16
 
+cd %:p:h
+
 filetype plugin indent off
 " map space to leader
 let mapleader = "\<Space>"
@@ -20,7 +22,7 @@ let g:slime_target = "tmux"
 let g:slime_dont_ask_default = 1
 let g:slime_default_config = {"socket_name": "default", "target_pane": ":.1"}
 
-let g:nvim_home_directory = expand('~/.config/nvim') . '/'
+let g:nvim_home_directory = expand('~/ghq/github.com/woodyZootopia/nvim') . '/'
 
 " source plugins
 exe 'source' expand(g:nvim_home_directory . 'api_key.vim')
@@ -33,6 +35,7 @@ if !exists('g:vscode')
     exe 'source' expand(g:nvim_home_directory . 'lsp.vim')
 endif
 exe 'source' expand(g:nvim_home_directory . 'autocmd.vim')
+exe 'source' expand(g:nvim_home_directory . "autocmd_fcitx.vim")
 exe 'source' expand(g:nvim_home_directory . 'mark.vim')
 
 
