@@ -1,10 +1,3 @@
-" set guifont=Source\ Code\ Pro:h16
-" set guifont=FiraCode\ Nerd\ Font:h16
-" set guifont=Ricty-Regular:h16
-" set guifont=Noto\ Sans\ Mono\ CJK\ JP:h16
-
-cd %:p:h
-
 filetype plugin indent off
 " map space to leader
 let mapleader = "\<Space>"
