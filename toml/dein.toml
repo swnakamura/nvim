@@ -61,10 +61,10 @@ repo = 'Shougo/defx.nvim'
 hook_add = '''
 call defx#custom#column('indent',{'indent': "-"})
 
-let g:defx_default_invocation = "Defx -new -auto-cd -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -split=tab -vertical-preview -preview-width=`float2nr(eval('&columns')*0.8)`"
-nnoremap <silent> st        :exe g:defx_default_invocation '-columns=time:size:indent:icons:space:space:filename'         <CR>
-nnoremap <silent> <leader>d :exe g:defx_default_invocation '-columns=time:size:indent:icons:space:space:filename'         <CR>
-nnoremap <silent> <leader>n :exe g:defx_default_invocation '-columns=size:indent:icons:space:space:filename -winwidth=50' <CR>
+let g:defx_default_invocation = "Defx -new -auto-cd -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -vertical-preview -preview-width=`float2nr(eval('&columns')*0.8)`"
+nnoremap <silent> st        :exe g:defx_default_invocation '-split=tab      -columns=time:size:indent:icons:space:space:filename'         <CR>
+nnoremap <silent> <leader>d :exe g:defx_default_invocation '-split=no       -columns=time:size:indent:icons:space:space:filename'         <CR>
+nnoremap <silent> <leader>n :exe g:defx_default_invocation '-split=vertical -columns=size:indent:icons:space:space:filename -winwidth=50' <CR>
 
 autocmd FileType defx call s:defx_my_settings()
 function!  s:defx_my_settings() abort
