@@ -102,12 +102,16 @@ vmap     g- g<C-x>
 nnoremap ' `
 nnoremap ` '
 
-" save with <C-l> in insert mode
-inoremap <C-l> <ESC>:update<CR>a
-
-"save by <leader>s
-nnoremap <silent> <leader>s <Cmd>update<CR>
-nnoremap <silent> <leader>ws <Cmd>wall<CR>
+if !exists('g:vscode')
+    " save with <C-l> in insert mode
+    inoremap <C-l> <ESC>:update<CR>a
+    "save by <leader>s
+    nnoremap <silent> <leader>s <Cmd>update<CR>
+    nnoremap <silent> <leader>ws <Cmd>wall<CR>
+else
+    nnoremap <leader>s <Cmd>call VSCodeNotify('workbench.action.files.save')<CR>
+    inoremap <C-l> <ESC>:call VSCodeNotify('workbench.action.files.save')<CR>a
+endif
 
 "reload init.vim
 " nnoremap <silent> <leader>r <Cmd>so ~/.config/nvim/init.vim<CR>
