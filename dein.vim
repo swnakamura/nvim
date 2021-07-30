@@ -14,10 +14,14 @@ if dein#load_state(s:dein_dir)
   " locate toml directory beforehand
   let s:toml      = s:cache_home . 'toml/dein.toml'
   let s:lazy_toml = s:cache_home . 'toml/dein_lazy.toml'
+  let s:novscode_toml = s:cache_home . 'toml/dein_novscode.toml'
 
   " read toml file and cache them
   call dein#load_toml(s:toml,      {'lazy': 0})
   call dein#load_toml(s:lazy_toml, {'lazy': 1})
+  if !exists('g:vscode')
+    call dein#load_toml(s:novscode_toml, {'lazy': 0})
+  endif
 
   call dein#end()
   call dein#save_state()
