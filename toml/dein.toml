@@ -16,8 +16,6 @@ repo = 'cohama/lexima.vim'
 [[plugins]]
 repo = 'Shougo/deol.nvim'
 [[plugins]]
-repo = 'kristijanhusak/defx-git'
-[[plugins]]
 repo = 'haya14busa/vim-asterisk'
 hook_add = '''
 map *   <Plug>(asterisk-*)

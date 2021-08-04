@@ -101,10 +101,9 @@ augroup END
 
 if !exists('g:vscode')
     augroup defx_hijack_netrw
-        let s:netrw_alternative_defx = g:defx_default_invocation .. ' -columns=time:size:indent:icons:space:space:filename'
         au!
         au VimEnter * sil! au! FileExplorer *
-        au BufEnter * if s:isdir(expand('%')) | bd | exe s:netrw_alternative_defx | endif
+        au BufEnter * if s:isdir(expand('%')) | bd | exe g:defx_default_invocation | endif
     augroup END
 endif
 
