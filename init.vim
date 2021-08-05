@@ -31,12 +31,6 @@ exe 'source' expand(g:nvim_home_directory . 'autocmd.vim')
 exe 'source' expand(g:nvim_home_directory . "autocmd_fcitx.vim")
 exe 'source' expand(g:nvim_home_directory . 'mark.vim')
 
-
-let g:dark_colorscheme=v:false
-if !g:dark_colorscheme
-    set background=light
-endif
-
 nnoremap <silent> <cr> :let searchTerm = '\v<'.expand("<cword>").'>' <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<cr>
 vnoremap <silent> <cr> :let searchTerm = '\v<'.expand("<cword>").'>' <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<cr>
 
