@@ -262,3 +262,13 @@ repo = 'LeafCage/vimhelpgenerator.git'
 [[plugins]]
 repo = 'tversteeg/registers.nvim'
 
+[[plugins]]
+repo = 'woodyZootopia/iceberg.vim'
+rev = 'support_LSP'
+[[plugins]]
+repo = 'cocopon/pgmnt.vim'
+[[plugins]]
+repo = 'altercation/vim-colors-solarized'
+[[plugins]]
+repo = 'arcticicestudio/nord-vim'
+

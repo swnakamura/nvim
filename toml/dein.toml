@@ -2,14 +2,6 @@
 repo = 'honza/vim-snippets'
 
 [[plugins]]
-repo = 'woodyZootopia/iceberg.vim'
-rev = 'support_LSP'
-[[plugins]]
-repo = 'cocopon/pgmnt.vim'
-[[plugins]]
-repo = 'altercation/vim-colors-solarized'
-
-[[plugins]]
 repo = 'cohama/lexima.vim'
 
 
