@@ -272,3 +272,5 @@ repo = 'altercation/vim-colors-solarized'
 [[plugins]]
 repo = 'arcticicestudio/nord-vim'
 
+[[plugins]]
+repo = 'ray-x/lsp_signature.nvim'

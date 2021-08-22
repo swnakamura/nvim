@@ -98,3 +98,6 @@ repo = 'https://github.com/inkarkat/vim-ingo-library'
 
 [[plugins]]
 repo = 'tweekmonster/helpful.vim'
+
+[[plugins]]
+repo = 'vim-denops/denops.vim'
