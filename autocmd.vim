@@ -42,12 +42,12 @@ augroup vimrc-incsearch-highlight
 augroup END
 
 " 選択した領域をハイライトする
-augroup instant-visual-highlight
-    au!
-    if !exists("g:vscode")
-        autocmd CursorMoved,CursorHold * call Visualmatch()
-    endif
-augroup END
+if !exists("g:vscode")
+    augroup instant-visual-highlight
+        au!
+            autocmd CursorMoved,CursorHold * call Visualmatch()
+    augroup END
+endif
 
 function! Visualmatch()
     if exists("s:visual_match_id") && index(map(getmatches(), {_, val -> val['id']}), s:visual_match_id) != -1
