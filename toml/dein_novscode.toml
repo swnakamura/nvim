@@ -126,9 +126,6 @@ nnoremap <silent> <space>fg  <Cmd>Rg<CR>
 '''
 
 [[plugins]]
-repo = 'Shougo/deoplete-lsp'
-
-[[plugins]]
 repo = 'airblade/vim-gitgutter'
 hook_add = '''
 let g:gitgutter_preview_win_floating = 0
@@ -221,15 +218,18 @@ nnoremap U :UndotreeToggle<CR>
 '''
 
 [[plugins]]
-repo = 'hoob3rt/lualine.nvim'
+repo = 'itchyny/lightline.vim'
 hook_add = '''
-lua << EOF
-require'lualine'.setup{
-   options={
-        theme='iceberg_dark',
-    },
-}
-EOF
+if exists("g:dark_colorscheme")
+    let g:lightline = {
+                \ 'colorscheme': 'iceberg',
+                \}
+else
+    let g:lightline = {
+                \ 'colorscheme': 'iceberg',
+                \}
+endif
+let g:lightline.subseparator = { 'left': '', 'right': '' }
 '''
 
 [[plugins]]
@@ -275,3 +275,25 @@ repo = 'arcticicestudio/nord-vim'
 
 [[plugins]]
 repo = 'ray-x/lsp_signature.nvim'
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+merged = '0'
+hook_add = '''
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    disable = {
+      'lua',
+      'toml',
+      'tex',
+      'latex',
+    }
+  },
+  ensure_installed = 'maintained'
+}
+EOF
+'''
+hook_install = 'TSUpdate'
+hook_post_update = 'TSUpdate'
