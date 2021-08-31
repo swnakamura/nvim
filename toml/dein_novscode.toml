@@ -3,9 +3,10 @@ repo = 'Shougo/ddc.vim'
 hook_add = '''
 call ddc#custom#patch_global('sources', ['nvimlsp', 'around'])
 call ddc#custom#patch_global('sourceOptions', {
-    \ '_': { 'matchers': ['matcher_fuzzy'] },
-    \ 'around': { 'sorters': ['sorter_rank'] },
+    \ 'around': { 'sorters': ['sorter_rank'], 'mark': 'A'},
     \ 'nvimlsp': { 'mark':'lsp', 'forceCompletionPattern': '\\.|:|->'},
+    \ '_': { 'matchers': ['matcher_fuzzy'] ,
+    \        'sorters':  ['sorter_rank']},
     \   })
 call ddc#custom#patch_global('sourceParams', {
     \ 'nvimlsp': { 'kindLabels': { 'Class': 'c' } },

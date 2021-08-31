@@ -88,8 +88,6 @@ repo = 'kyazdani42/nvim-web-devicons'
 repo = 'tikhomirov/vim-glsl'
 [[plugins]]
 repo = 'Shougo/neco-syntax'
-[[plugins]]
-repo = 'yuratomo/gmail.vim'
 
 [[plugins]]
 repo = 'https://github.com/inkarkat/vim-SpellCheck'
@@ -101,3 +99,12 @@ repo = 'tweekmonster/helpful.vim'
 
 [[plugins]]
 repo = 'vim-denops/denops.vim'
+
+[[plugins]]
+repo = 'David-Kunz/treesitter-unit'
+hook_add = '''
+xnoremap iu :lua require"treesitter-unit".select()<CR>
+xnoremap au :lua require"treesitter-unit".select(true)<CR>
+onoremap iu :<c-u>lua require"treesitter-unit".select()<CR>
+onoremap au :<c-u>lua require"treesitter-unit".select(true)<CR>
+'''
