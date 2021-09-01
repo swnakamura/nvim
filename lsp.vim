@@ -41,7 +41,9 @@ endif
 
 " 追加したそれぞれの言語についてLSP設定を起動
 for [key, val] in items(g:LSP_commands)
-    exe 'lua require''lspconfig''.' . val . '.setup{}'
+    exe 'lua require''lspconfig''.' . val . '.setup{
+                \require "lsp_signature".on_attach()
+                \}'
 endfor
 
 " https://github.com/neovim/nvim-lspconfig そのまま
@@ -74,3 +76,5 @@ augroup lspAutoFormat
     autocmd!
     autocmd BufWritePre *.js,*.ts,*.rs,*.c,*.cpp, lua vim.lsp.buf.formatting_sync(nil, 1000)
 augroup END
+
+lua require "lsp_signature".setup()
