@@ -39,6 +39,8 @@ let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowTo
 cabbrev dein call dein#install()
 cabbrev deup call dein#check_update(v:true)
 
+autocmd VimEnter * call dein#call_hook('post_source')
+
 " use termdebug
 packadd termdebug
 let g:termdebug_wide=163

@@ -292,3 +292,13 @@ EOF
 '''
 hook_install = 'TSUpdate'
 hook_post_update = 'TSUpdate'
+
+[[plugins]]
+repo = 'ggandor/lightspeed.nvim'
+hook_post_source = '''
+unmap f
+unmap F
+unmap S
+nmap S <Plug>Lightspeed_s
+xmap S <Plug>Lightspeed_s
+'''
