@@ -1,18 +1,19 @@
 [[plugins]]
 repo = 'Shougo/ddc.vim'
 hook_add = '''
-call ddc#custom#patch_global('sources', ['nvimlsp', 'around'])
+call ddc#custom#patch_global('sources', ['nvimlsp', 'around', 'ultisnips'])
 call ddc#custom#patch_global('sourceOptions', {
-    \ 'around': { 'sorters': ['sorter_rank'], 'mark': 'A'},
     \ 'nvimlsp': { 'mark':'lsp', 'forceCompletionPattern': '\\.|:|->'},
-    \ '_': { 'matchers': ['matcher_fuzzy'] ,
-    \        'sorters':  ['sorter_rank']},
+    \ 'around': { 'mark': 'A' },
+    \ 'ultisnips': { 'mark': 'US' },
+    \ '_': { 'matchers': ['matcher_fuzzy'],
+    \        'sorters':  ['ddc-sorter_rank']},
     \   })
 call ddc#custom#patch_global('sourceParams', {
     \ 'nvimlsp': { 'kindLabels': { 'Class': 'c' } },
     \   })
 call ddc#custom#patch_global('filterParams', {
-    \ 'matcher_fuzzy': {'camelcase': v:false},
+    \ 'matcher_fuzzy': {'camelcase': v:true},
     \ })
 call ddc#enable()
 '''
