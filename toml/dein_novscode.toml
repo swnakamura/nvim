@@ -299,6 +299,8 @@ hook_post_source = '''
 unmap f
 unmap F
 unmap S
-nmap S <Plug>Lightspeed_s
-xmap S <Plug>Lightspeed_s
+ounmap x
+xunmap x
+nmap t <Plug>Lightspeed_s
+xmap t <Plug>Lightspeed_s
 '''
