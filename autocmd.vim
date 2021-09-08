@@ -129,7 +129,7 @@ augroup END
 
 augroup limitlento80
     autocmd!
-    autocmd Filetype tex,gitcommit execute "setlocal colorcolumn=" . join(range(81,335), ',')
-    autocmd Filetype tex,gitcommit hi ColorColumn cterm=NONE ctermbg=251 ctermfg=237 guibg=#cad0de guifg=#576a9e
+    autocmd Filetype tex,gitcommit execute "setlocal colorcolumn=" . join(range(81, &columns), ',')
+    autocmd Filetype tex,gitcommit hi! link ColorColumn LineNr
     autocmd Filetype tex,gitcommit setlocal textwidth=80
 augroup end
