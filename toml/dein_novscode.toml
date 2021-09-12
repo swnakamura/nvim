@@ -1,20 +1,20 @@
 [[plugins]]
 repo = 'Shougo/ddc.vim'
 hook_add = '''
-call ddc#custom#patch_global('sources', ['nvimlsp', 'around', 'ultisnips'])
+call ddc#custom#patch_global('sources', ['nvimlsp', 'around', 'ultisnips', 'buffer'])
 call ddc#custom#patch_global('sourceOptions', {
     \ 'nvimlsp': { 'mark':'lsp', 'forceCompletionPattern': '\\.|:|->'},
     \ 'around': { 'mark': 'A' },
+    \ 'buffer': { 'mark': 'B' },
     \ 'ultisnips': { 'mark': 'US' },
     \ '_': { 'matchers': ['matcher_fuzzy'],
-    \        'sorters':  ['ddc-sorter_rank']},
+    \        'sorters':  ['sorter_rank'],
+    \        'ignoreCase': v:true},
     \   })
 call ddc#custom#patch_global('sourceParams', {
     \ 'nvimlsp': { 'kindLabels': { 'Class': 'c' } },
+    \ 'buffer': {'requireSameFiletype': v:false},
     \   })
-call ddc#custom#patch_global('filterParams', {
-    \ 'matcher_fuzzy': {'camelcase': v:true},
-    \ })
 call ddc#enable()
 '''
 [[plugins]]
@@ -30,6 +30,8 @@ repo = 'matsui54/ddc-ultisnips'
 repo = 'Shougo/ddc-sorter_rank'
 [[plugins]]
 repo = 'Shougo/ddc-around'
+[[plugins]]
+repo = 'matsui54/ddc-buffer'
 
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
