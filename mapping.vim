@@ -189,3 +189,5 @@ nnoremap<silent> gss :SaveSession<CR>
 nnoremap<silent> gsr :StartRepeatedSave<CR>
 nnoremap<silent> gsl :LoadSession<CR>
 nnoremap<silent> gsc :CleanUpSession<CR>
+
+cabbrev gs GhostStart

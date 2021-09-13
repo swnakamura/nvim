@@ -303,7 +303,6 @@ unmap f
 unmap F
 unmap S
 ounmap x
-xunmap x
 nmap t <Plug>Lightspeed_s
 xmap t <Plug>Lightspeed_s
 nmap T <Plug>Lightspeed_S
