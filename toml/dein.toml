@@ -80,6 +80,10 @@ xmap ga  <Plug>(EasyAlign)
 repo = 'Shougo/echodoc.vim'
 [[plugins]]
 repo = 'fuenor/jpmoveword.vim'
+hook_add = '''
+let g:jpmoveword_separator='，．、。'
+let g:matchpairs_textobject=1
+'''
 [[plugins]]
 repo = 'tpope/vim-rhubarb'
 [[plugins]]
