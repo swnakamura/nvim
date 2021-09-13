@@ -307,3 +307,6 @@ xunmap x
 nmap t <Plug>Lightspeed_s
 xmap t <Plug>Lightspeed_s
 '''
+
+[[plugins]]
+repo = 'gamoutatsumi/dps-ghosttext.vim'
