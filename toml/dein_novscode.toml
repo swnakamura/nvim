@@ -1,12 +1,13 @@
 [[plugins]]
 repo = 'Shougo/ddc.vim'
 hook_add = '''
-call ddc#custom#patch_global('sources', ['nvimlsp', 'around', 'ultisnips', 'buffer'])
+call ddc#custom#patch_global('sources', ['nvimlsp', 'around', 'ultisnips', 'buffer', 'file'])
 call ddc#custom#patch_global('sourceOptions', {
-    \ 'nvimlsp': { 'mark':'lsp', 'forceCompletionPattern': '\\.|:|->'},
+    \ 'nvimlsp': { 'mark':'lsp', 'forceCompletionPattern': '\.\w*|:\w*|->\w*'},
     \ 'around': { 'mark': 'A' },
     \ 'buffer': { 'mark': 'B' },
     \ 'ultisnips': { 'mark': 'US' },
+    \ 'file': { 'mark': 'F' },
     \ '_': { 'matchers': ['matcher_fuzzy'],
     \        'sorters':  ['sorter_rank'],
     \        'ignoreCase': v:true},
@@ -32,6 +33,8 @@ repo = 'Shougo/ddc-sorter_rank'
 repo = 'Shougo/ddc-around'
 [[plugins]]
 repo = 'matsui54/ddc-buffer'
+[[plugins]]
+repo = 'LumaKernel/ddc-file'
 
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
