@@ -5,5 +5,5 @@ haven/
 tmp/
 .netrwhist
 templates/
-*.spl
+spell/
 api_key.vim
