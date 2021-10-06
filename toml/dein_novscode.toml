@@ -1,9 +1,9 @@
 [[plugins]]
 repo = 'Shougo/ddc.vim'
 hook_add = '''
-call ddc#custom#patch_global('sources', ['nvimlsp', 'around', 'ultisnips', 'buffer', 'file'])
+call ddc#custom#patch_global('sources', ['nvim-lsp', 'around', 'ultisnips', 'buffer', 'file'])
 call ddc#custom#patch_global('sourceOptions', {
-    \ 'nvimlsp': { 'mark':'lsp', 'forceCompletionPattern': '\.\w*|:\w*|->\w*'},
+    \ 'nvim-lsp': { 'mark':'lsp', 'forceCompletionPattern': '\.\w*|:\w*|->\w*'},
     \ 'around': { 'mark': 'A' },
     \ 'buffer': { 'mark': 'B' },
     \ 'ultisnips': { 'mark': 'US' },
@@ -13,7 +13,7 @@ call ddc#custom#patch_global('sourceOptions', {
     \        'ignoreCase': v:true},
     \   })
 call ddc#custom#patch_global('sourceParams', {
-    \ 'nvimlsp': { 'kindLabels': { 'Class': 'c' } },
+    \ 'nvim-lsp': { 'kindLabels': { 'Class': 'c' } },
     \ 'buffer': {'requireSameFiletype': v:false},
     \   })
 call ddc#enable()
