@@ -23,7 +23,7 @@ function! s:fcitx_toggle() abort
 endfunction
 
 function! s:enable() abort
-    if index(['markdown', 'pixiv', 'html'], &filetype) != -1 "if filetype is one of these...
+    if index(['markdown', 'pixiv', 'html', 'tex'], &filetype) != -1 "if filetype is one of these...
         call system('fcitx-remote -o')
     endif
 endfunction
