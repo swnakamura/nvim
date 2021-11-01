@@ -77,4 +77,6 @@ augroup lspAutoFormat
     autocmd BufWritePre *.js,*.ts,*.rs,*.c,*.cpp, lua vim.lsp.buf.formatting_sync(nil, 1000)
 augroup END
 
-lua require "lsp_signature".setup()
+lua require "lsp_signature".setup({
+            \ floating_window_above_cur_line = true
+            \ })

@@ -127,9 +127,9 @@ augroup LuaHighlight
   autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
 augroup END
 
-augroup limitlento80
-    autocmd!
-    autocmd Filetype tex,gitcommit execute "setlocal colorcolumn=" . join(range(81, &columns), ',')
-    autocmd Filetype tex,gitcommit hi! link ColorColumn LineNr
-    autocmd Filetype tex,gitcommit setlocal textwidth=80
-augroup end
+" augroup limitlento80
+"     autocmd!
+"     autocmd Filetype tex,gitcommit execute "setlocal colorcolumn=" . join(range(81, &columns), ',')
+"     autocmd Filetype tex,gitcommit hi! link ColorColumn LineNr
+"     autocmd Filetype tex,gitcommit setlocal textwidth=80
+" augroup end
