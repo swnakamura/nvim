@@ -67,8 +67,15 @@ function! Visualmatch()
                                 \col('.')-2+len_of_char_at_dot
                                 \])
                     \}
-        let s:visual_match_id = matchadd('Search',
-                                        \'\V' .. escape(getline('.')[selected_column_idx['first']:selected_column_idx['last']], '\'))
+        " let s:visual_match_id = matchadd('Search',
+        "                                 \'\V' .. escape(getline('.')[selected_column_idx['first']:selected_column_idx['last']], '\'))
+        if mode() == 'v'
+            let s:visual_match_id = matchadd('Search',
+                                            \'\V' .. escape(getline('.')[selected_column_idx['first']:selected_column_idx['last']], '\'))
+        else
+            let s:visual_match_id = matchadd('Search',
+                                            \'\V\<' .. escape(getline('.')[selected_column_idx['first']:selected_column_idx['last']], '\') .. '\>')
+        endif
     endif
 endfunction
 
