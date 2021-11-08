@@ -144,10 +144,10 @@ nmap ]w :lnext<CR>       " 次へ
 nmap [W <Cmd>lfirst<CR> " 最初へ
 nmap ]W <Cmd>llast<CR>  " 最後へ
 
-" In quickfix window...
+" In quickfix window, `p` to preview
 augroup QuickfixWindow
     autocmd!
-    autocmd filetype qf nnoremap <buffer> p <CR>zz<C-w>j
+    autocmd filetype qf nnoremap <buffer> p <CR>zz<C-w>p
 augroup END
 
 " one push to add/remove tabs
