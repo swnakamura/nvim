@@ -20,7 +20,7 @@ augroup file-type
   au BufRead,BufNewFile *.elm     setf elm
   au BufRead,BufNewFile *.ipynb   setf python
   au BufRead,BufNewFile *.re      setf review
-  au BufRead,BufNewFile *.pxv     setf pixiv
+  au BufRead,BufNewFile *.pxv,*as     setf pixiv
   au BufRead,BufNewFile *.hml     setf hameln
 
   " 長い行は構文ファイルを読み込まない
