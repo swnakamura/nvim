@@ -13,7 +13,7 @@ augroup fileType
   au FileType           mail      setlocal noet spell
   au FileType           gitcommit setlocal spell
   au FileType           markdown  setlocal noet spell
-  au filetype           help      setlocal spell noet
+  au FileType           help      setlocal noet spell 
   au BufNewFile,BufRead *.grg     setlocal nowrap
   au BufNewFile,BufRead *.jl      setf julia
   au BufRead,BufNewFile *.elm     setf elm
@@ -23,7 +23,7 @@ augroup fileType
   au BufRead,BufNewFile *.hml     setf hameln
 augroup END
 
-augroup localleader
+augroup local-leader
     autocmd!
     autocmd FileType tex    map <buffer> <localleader>s <plug>(vimtex-env-toggle-star)
     autocmd FileType tex    map <buffer> <localleader>t <plug>(vimtex-toc-toggle)
@@ -41,7 +41,7 @@ augroup vimrc-incsearch-highlight
   au CmdlineLeave /,\? :set nohlsearch
 augroup END
 
-" 選択した領域をハイライトする
+" 選択した領域を自動でハイライトする
 if !exists("g:vscode")
     augroup instant-visual-highlight
         au!
@@ -54,7 +54,7 @@ function! Visualmatch()
         call matchdelete(s:visual_match_id)
         unlet s:visual_match_id
     endif
-    if index(['v', ''], mode()) != -1 && line('v') == line('.')
+    if index(['v', "\<C-v>"], mode()) != -1 && line('v') == line('.')
         let len_of_char_at_v   = strlen(matchstr(getline('v'), '.', col('v')-1))
         let len_of_char_at_dot = strlen(matchstr(getline('.'), '.', col('.')-1))
         let selected_column_idx = {
@@ -67,8 +67,6 @@ function! Visualmatch()
                                 \col('.')-2+len_of_char_at_dot
                                 \])
                     \}
-        " let s:visual_match_id = matchadd('Search',
-        "                                 \'\V' .. escape(getline('.')[selected_column_idx['first']:selected_column_idx['last']], '\'))
         if mode() == 'v'
             let s:visual_match_id = matchadd('Search',
                                             \'\V' .. escape(getline('.')[selected_column_idx['first']:selected_column_idx['last']], '\'))

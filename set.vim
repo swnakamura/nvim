@@ -28,7 +28,7 @@ set viewdir   =~/.config/nvim/tmp//
 " don't use preview window; I prefer popup/floating window
 set completeopt-=preview
 
-set nf=alpha,octal,hex,bin
+set nrformats=alpha,octal,hex,bin
 
 " search settings
 set ignorecase smartcase incsearch nohlsearch nowrapscan

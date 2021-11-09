@@ -23,11 +23,11 @@ vmap s [Win]
 nnoremap <Space> <Nop>
 nnoremap <C-space> <Nop>
 " window control
-nnoremap [Win]s :split<CR>
-nnoremap [Win]v :vsplit<CR>
+nnoremap [Win]s <Cmd>split<CR>
+nnoremap [Win]v <Cmd>vsplit<CR>
 " st is used by defx
-nnoremap [Win]c :tab sp<CR>
-nnoremap [Win]C :-tab sp<CR>
+nnoremap [Win]c <Cmd>tab sp<CR>
+nnoremap [Win]C <Cmd>-tab sp<CR>
 nnoremap [Win]j <C-w>j
 nnoremap [Win]k <C-w>k
 nnoremap [Win]l <C-w>l
@@ -36,7 +36,7 @@ nnoremap [Win]J <C-w>J
 nnoremap [Win]K <C-w>K
 nnoremap [Win]L <C-w>L
 nnoremap [Win]H <C-w>H
-nnoremap [Win]z :terminal<CR>
+nnoremap [Win]z <Cmd>terminal<CR>
 nnoremap [Win]n gt
 nnoremap [Win]p gT
 nnoremap [Win]r <C-w>r
@@ -54,7 +54,7 @@ nnoremap [Win]7 <Cmd>7tabnext<CR>
 nnoremap [Win]8 <Cmd>8tabnext<CR>
 nnoremap [Win]9 <Cmd>9tabnext<CR>
 
-nnoremap Q :copen<CR>
+nnoremap Q <Cmd>copen<CR>
 
 " move by display line
 nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
@@ -84,9 +84,9 @@ nnoremap x "_x
 
 " quit this window by q
 nnoremap <silent> <leader>q <Cmd>q<CR>
-" nnoremap <silent> <leader>q :<C-u>bd<CR>
-nnoremap <silent> <leader>wq :qa<CR>
-nnoremap <silent> <leader>Q :qa<CR>
+" nnoremap <silent> <leader>q <Cmd><C-u>bd<CR>
+nnoremap <silent> <leader>wq <Cmd>qa<CR>
+nnoremap <silent> <leader>Q <Cmd>qa<CR>
 
 " delete this buffer by bd
 nnoremap <silent> <leader>bd <Cmd>bd<CR>
@@ -104,20 +104,20 @@ nnoremap ` '
 
 if !exists('g:vscode')
     " save with <C-l> in insert mode
-    inoremap <C-l> <ESC>:update<CR>a
+    inoremap <C-l> <Cmd>update<CR>
     "save by <leader>s
     nnoremap <silent> <leader>s <Cmd>update<CR>
     nnoremap <silent> <leader>ws <Cmd>wall<CR>
 else
     nnoremap <leader>s <Cmd>call VSCodeNotify('workbench.action.files.save')<CR>
-    inoremap <C-l> <ESC>:call VSCodeNotify('workbench.action.files.save')<CR>a
+    inoremap <C-l> <Cmd>call VSCodeNotify('workbench.action.files.save')<CR>
 endif
 
 "reload init.vim
 " nnoremap <silent> <leader>r <Cmd>so ~/.config/nvim/init.vim<CR>
 
 "open init.vim in new tab
-" nnoremap <silent> <leader>fed <Cmd>tabnew<CR><Cmd>e ~/.config/nvim/init.vim<CR>
+" nnoremap <silent> <leader>fed <Cmd>tabnew ~/.config/nvim/init.vim<CR>
 
 " grep
 nnoremap <leader>vv :vimgrep // %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left>
@@ -125,22 +125,22 @@ nnoremap <leader>vv :vimgrep // %:p:h/*<Left><Left><Left><Left><Left><Left><Left
 " recursive search
 let s:use_vim_grep = 0
 if s:use_vim_grep
-    nnoremap <leader>vr :vimgrep // %:p:h/**<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+    nnoremap <leader>vr <Cmd>vimgrep // %:p:h/**<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 else
     " nnoremap <silent> <space>vr  <Cmd>Rg<CR>
     set grepprg=rg\ --vimgrep\ --no-heading\ -uuu
-    nnoremap <leader>vr :grep -e ""<Left>
+    nnoremap <leader>vr <Cmd>grep -e ""<Left>
 endif
 
 " quickfix jump
-nmap [q :cprevious<CR>   " 前へ
-nmap ]q :cnext<CR>       " 次へ
+nmap [q <Cmd>cprevious<CR>   " 前へ
+nmap ]q <Cmd>cnext<CR>       " 次へ
 nmap [Q <Cmd>cfirst<CR> " 最初へ
 nmap ]Q <Cmd>clast<CR>  " 最後へ
 
 "window-local quickfix jump
-nmap [w :lprevious<CR>   " 前へ
-nmap ]w :lnext<CR>       " 次へ
+nmap [w <Cmd>lprevious<CR>   " 前へ
+nmap ]w <Cmd>lnext<CR>       " 次へ
 nmap [W <Cmd>lfirst<CR> " 最初へ
 nmap ]W <Cmd>llast<CR>  " 最後へ
 
@@ -185,9 +185,9 @@ inoremap <C-A> <Home>
 cnoremap <C-E> <End>
 inoremap <C-E> <End>
 
-nnoremap<silent> gss :SaveSession<CR>
-nnoremap<silent> gsr :StartRepeatedSave<CR>
-nnoremap<silent> gsl :LoadSession<CR>
-nnoremap<silent> gsc :CleanUpSession<CR>
+nnoremap<silent> gss <Cmd>SaveSession<CR>
+nnoremap<silent> gsr <Cmd>StartRepeatedSave<CR>
+nnoremap<silent> gsl <Cmd>LoadSession<CR>
+nnoremap<silent> gsc <Cmd>CleanUpSession<CR>
 
 cabbrev gs GhostStart

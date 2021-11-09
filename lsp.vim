@@ -39,6 +39,10 @@ if executable('deno')
     let g:LSP_commands['javascript'] = 'denols'
 endif
 
+let s:local_path=expand("~")
+
+exe 'lua require''lspconfig''.ocamlls.setup{}'
+
 " 追加したそれぞれの言語についてLSP設定を起動
 for [key, val] in items(g:LSP_commands)
     exe 'lua require''lspconfig''.' . val . '.setup{
@@ -65,7 +69,7 @@ function! LC_maps()
         nnoremap <buffer> <silent> [d    <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
         nnoremap <buffer> <silent> ]d    <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
         nnoremap <buffer> <silent> Q     <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
-        nnoremap <buffer> gF       <cmd>lua vim.lsp.buf.formatting_sync(nil, 10000)<CR>
+        nnoremap <buffer>          gF    <cmd>lua vim.lsp.buf.formatting_sync(nil, 10000)<CR>
     endif
 endfunction
 

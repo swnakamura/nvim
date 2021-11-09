@@ -28,28 +28,6 @@ let g:eskk#show_annotation = 1
 '''
 
 [[plugins]]
-repo = 'nvim-treesitter/nvim-treesitter'
-merged = '0'
-hook_add = '''
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-    disable = {
-      'lua',
-      'toml',
-      'tex',
-      'latex',
-    }
-  },
-  ensure_installed = 'maintained'
-}
-EOF
-'''
-hook_install = 'TSUpdate'
-hook_post_update = 'TSUpdate'
-
-[[plugins]]
 repo = 'Shougo/deoplete.nvim'
 hook_add = '''
 let g:deoplete#enable_at_startup = 1

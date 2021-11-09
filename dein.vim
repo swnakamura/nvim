@@ -6,15 +6,15 @@ if !isdirectory(s:dein_repo_dir)
   call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
 endif
 let &runtimepath = &runtimepath . ',' . s:dein_repo_dir
-let g:python3_host_prog = substitute(system("which python3"), '\n', '', 'g')
+let g:python3_host_prog = exepath('python3')
 
 let g:dein#types#git#clone_depth = 1
 if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir)
   " locate toml directory beforehand
   let s:toml      = s:cache_home . 'toml/dein.toml'
   let s:lazy_toml = s:cache_home . 'toml/dein_lazy.toml'
   let s:novscode_toml = s:cache_home . 'toml/dein_novscode.toml'
+  call dein#begin(s:dein_dir, [s:toml, s:lazy_toml, s:novscode_toml])
 
   " read toml file and cache them
   call dein#load_toml(s:toml,      {'lazy': 0})
