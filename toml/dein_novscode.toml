@@ -39,6 +39,8 @@ repo = 'LumaKernel/ddc-file'
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
 [[plugins]]
+repo = 'williamboman/nvim-lsp-installer'
+[[plugins]]
 repo = 'Sirver/ultisnips'
 hook_add = '''
 " Trigger configuration. You need to change this to something else than <tab> if you use https://github.com/Valloric/YouCompleteMe.
@@ -265,8 +267,7 @@ repo = 'LeafCage/vimhelpgenerator.git'
 repo = 'tversteeg/registers.nvim'
 
 [[plugins]]
-repo = 'woodyZootopia/iceberg.vim'
-rev = 'support_LSP'
+repo = '~/ghq/github.com/woodyZootopia/iceberg.vim'
 [[plugins]]
 repo = 'cocopon/pgmnt.vim'
 [[plugins]]
