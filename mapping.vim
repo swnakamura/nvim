@@ -156,6 +156,10 @@ augroup QuickfixWindow
     autocmd filetype qf nnoremap <buffer> k k
 augroup END
 
+" search with C-p/C-n
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+
 " one push to add/remove tabs
 nnoremap > >>
 nnoremap < <<

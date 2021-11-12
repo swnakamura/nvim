@@ -3,11 +3,11 @@ repo = 'Shougo/ddc.vim'
 hook_add = '''
 call ddc#custom#patch_global('sources', ['nvim-lsp', 'around', 'ultisnips', 'buffer', 'file'])
 call ddc#custom#patch_global('sourceOptions', {
+    \ 'file': { 'mark': 'F', 'forceCompletionPattern': '\S/\S*'},
     \ 'nvim-lsp': { 'mark':'lsp', 'forceCompletionPattern': '\.\w*|:\w*|->\w*'},
     \ 'around': { 'mark': 'A' },
     \ 'buffer': { 'mark': 'B' },
     \ 'ultisnips': { 'mark': 'US' },
-    \ 'file': { 'mark': 'F', 'forceCompletionPattern': '\S/\S*'},
     \ '_': { 'matchers': ['matcher_fuzzy'],
     \        'sorters':  ['sorter_rank'],
     \        'ignoreCase': v:true},
@@ -169,13 +169,17 @@ nnoremap <leader>gc :Git commit -v<CR>
 nnoremap <leader>gb :Git blame<CR>
 nnoremap <leader>gl :tab sp<CR>:Gclog<CR><C-w>j
 nnoremap <leader>gh :tab sp<CR>:0Gclog<CR>
-" abbrev for git history: create new quickfix tab for history
 nnoremap <leader>gp :Git push<CR>
 nnoremap <leader>gf :Git fetch<CR>
 nnoremap <leader>gd :Gvdiff!<CR>
 nnoremap <leader>gr :Git rebase -i<CR>
 nnoremap <leader>gg :Glgrep ""<Left>
 nnoremap <leader>gm :Git merge 
+
+nnoremap <Up> :Gwrite<CR>
+nnoremap <C-Up> :Git commit -v<CR>
+nnoremap <Right> :Gvdiff!<CR>
+nnoremap <Down> :Git fetch<CR>
 '''
 
 [[plugins]]
