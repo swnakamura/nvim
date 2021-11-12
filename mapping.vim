@@ -56,6 +56,8 @@ nnoremap [Win]9 <Cmd>9tabnext<CR>
 
 nnoremap Q <Cmd>copen<CR>
 
+nnoremap <leader><leader> <C-^>
+
 " move by display line
 nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
 xnoremap <expr> j (v:count == 0 && mode() ==# 'v') ? 'gj' : 'j'
@@ -144,10 +146,14 @@ nmap ]w <Cmd>lnext<CR>       " 次へ
 nmap [W <Cmd>lfirst<CR> " 最初へ
 nmap ]W <Cmd>llast<CR>  " 最後へ
 
-" In quickfix window, `p` to preview
+" In quickfix window
 augroup QuickfixWindow
     autocmd!
+    " `p` to preview
     autocmd filetype qf nnoremap <buffer> p <CR>zz<C-w>p
+    " linewise movement
+    autocmd filetype qf nnoremap <buffer> j j
+    autocmd filetype qf nnoremap <buffer> k k
 augroup END
 
 " one push to add/remove tabs
