@@ -31,11 +31,6 @@ exe 'source' g:nvim_home_directory .. 'autocmd.vim'
 exe 'source' g:nvim_home_directory .. "autocmd_fcitx.vim"
 exe 'source' g:nvim_home_directory .. 'mark.vim'
 
-" augroup unsetCR
-"     autocmd!
-"     autocmd Filetype qf nnoremap <buffer> <CR> <CR>
-" augroup END
-
 if !exists('g:vscode')
     set background=dark
     colorscheme iceberg
