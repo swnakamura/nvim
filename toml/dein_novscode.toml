@@ -271,34 +271,12 @@ repo = '~/ghq/github.com/woodyZootopia/iceberg.vim'
 [[plugins]]
 repo = 'cocopon/pgmnt.vim'
 [[plugins]]
-repo = 'altercation/vim-colors-solarized'
+repo = 'cocopon/inspecthi.vim'
 [[plugins]]
-repo = 'arcticicestudio/nord-vim'
+repo = 'cocopon/colorswatch.vim'
 
 [[plugins]]
 repo = 'ray-x/lsp_signature.nvim'
-
-[[plugins]]
-repo = 'nvim-treesitter/nvim-treesitter'
-merged = '0'
-hook_add = '''
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-    disable = {
-      'lua',
-      'toml',
-      'tex',
-      'latex',
-    }
-  },
-  ensure_installed = 'maintained'
-}
-EOF
-'''
-hook_install = 'TSUpdate'
-hook_post_update = 'TSUpdate'
 
 [[plugins]]
 repo = 'ggandor/lightspeed.nvim'
