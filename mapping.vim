@@ -188,6 +188,17 @@ endfunction
 " nnoremap / /\v
 " nnoremap ? ?\v
 
+
+" quickfix jump
+nnoremap <silent> [f <Cmd>cp<CR>
+nnoremap <silent> ]f <Cmd>cn<CR>
+nnoremap <silent> [F <Cmd>cfirst<CR>
+nnoremap <silent> ]F <Cmd>clast<CR>
+nnoremap [t <Cmd>lp<CR>
+nnoremap ]t <Cmd>lne<CR>
+nnoremap [T <Cmd>lfirst<CR>
+nnoremap ]T <Cmd>llast<CR>
+
 " 行頭へ移動
 cnoremap <C-A> <Home>
 inoremap <C-A> <Home>
