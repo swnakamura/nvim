@@ -1,20 +1,26 @@
 "plugin settings
-let s:cache_home = expand('~/.config/nvim/')
-let s:dein_dir = s:cache_home . 'dein'
-let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
-if !isdirectory(s:dein_repo_dir)
-  call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
+let s:nvim_home = expand('~/.config/nvim/')
+let s:dein_home = s:nvim_home . 'dein'
+
+if !isdirectory(s:dein_home)
+  call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_home))
 endif
-let &runtimepath = &runtimepath . ',' . s:dein_repo_dir
+let &runtimepath = &runtimepath . ',' . s:dein_home
 let g:python3_host_prog = exepath('python3')
 
 let g:dein#types#git#clone_depth = 1
-if dein#load_state(s:dein_dir)
-  " locate toml directory beforehand
-  let s:toml      = s:cache_home . 'toml/dein.toml'
-  let s:lazy_toml = s:cache_home . 'toml/dein_lazy.toml'
-  let s:novscode_toml = s:cache_home . 'toml/dein_novscode.toml'
-  call dein#begin(s:dein_dir, [s:toml, s:lazy_toml, s:novscode_toml])
+if dein#load_state(s:dein_home)
+  " list toml directory
+  let s:toml      = s:nvim_home . 'toml/dein.toml'
+  let s:lazy_toml = s:nvim_home . 'toml/dein_lazy.toml'
+  let s:novscode_toml = s:nvim_home . 'toml/dein_novscode.toml'
+
+  " obtain cache directory
+  let s:cache_home = expand('~/.cache/')
+  let s:cache_dein = s:cache_home . 'dein/dein.vim'
+
+  " let's begin...
+  call dein#begin(s:cache_dein, [s:toml, s:lazy_toml, s:novscode_toml])
 
   " read toml file and cache them
   call dein#load_toml(s:toml,      {'lazy': 0})
@@ -23,6 +29,7 @@ if dein#load_state(s:dein_dir)
     call dein#load_toml(s:novscode_toml, {'lazy': 0})
   endif
 
+  " finished!
   call dein#end()
   call dein#save_state()
 endif
