@@ -3,8 +3,8 @@
 tnoremap <silent> <C-[> <C-\><C-n>
 tnoremap <silent> <C-l> <C-\><C-n>
 "move to the end of a text after copying/pasting it
-vnoremap <silent> y y`]
-vnoremap <silent> p p`]
+xnoremap <silent> y y`]
+xnoremap <silent> p p`]
 nnoremap <silent> p p`]
 
 " Space+something to move to an end
@@ -12,14 +12,14 @@ nnoremap <silent> p p`]
 " noremap <leader>l $
 " noremap <leader>k gg
 " noremap <leader>j G
-noremap H ^
-noremap L $
+nnoremap H ^
+nnoremap L $
+xnoremap H ^
+xnoremap L $
 
 " unmap s,space
 nnoremap [Win] <Nop>
-vnoremap [Win] <Nop>
 nmap s [Win]
-vmap s [Win]
 nnoremap <Space> <Nop>
 nnoremap <C-space> <Nop>
 " window control
@@ -96,8 +96,8 @@ nnoremap <silent> <leader>bd <Cmd>bd<CR>
 " increase and decrease by plus/minus
 nnoremap +  <C-a>
 nnoremap -  <C-x>
-vmap     g+ g<C-a>
-vmap     g- g<C-x>
+xnoremap g+ g<C-a>
+xnoremap g- g<C-x>
 
 " switch quote and backquote
 nnoremap ' `

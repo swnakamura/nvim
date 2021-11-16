@@ -179,6 +179,7 @@ nnoremap <leader>gm :Git merge
 nnoremap <Up> :Gwrite<CR>
 nnoremap <C-Up> :Git commit -v<CR>
 nnoremap <Right> :vert :Gdiffsplit<CR>
+nnoremap <C-Right> :vert :Gdiffsplit!<CR>
 nnoremap <Left> :Git blame<CR>
 nnoremap <Down> :Dispatch! git fetch<CR>
 '''
