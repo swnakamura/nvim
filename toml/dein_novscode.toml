@@ -171,14 +171,14 @@ nnoremap <leader>gl :tab sp<CR>:Gclog<CR><C-w>j
 nnoremap <leader>gh :tab sp<CR>:0Gclog<CR>
 nnoremap <leader>gp :Dispatch! git push<CR>
 nnoremap <leader>gf :Dispatch! git fetch<CR>
-nnoremap <leader>gd :vert :Gdiffsplit!<CR>
+nnoremap <leader>gd :vert :Gdiffsplit<CR>
 nnoremap <leader>gr :Git rebase -i<CR>
 nnoremap <leader>gg :Glgrep ""<Left>
 nnoremap <leader>gm :Git merge 
 
 nnoremap <Up> :Gwrite<CR>
 nnoremap <C-Up> :Git commit -v<CR>
-nnoremap <Right> :vert :Gdiffsplit!<CR>
+nnoremap <Right> :vert :Gdiffsplit<CR>
 nnoremap <Left> :Git blame<CR>
 nnoremap <Down> :Dispatch! git fetch<CR>
 '''

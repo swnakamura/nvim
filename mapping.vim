@@ -86,7 +86,6 @@ nnoremap x "_x
 
 " quit this window by q
 nnoremap <silent> <leader>q <Cmd>q<CR>
-" nnoremap <silent> <leader>q <Cmd><C-u>bd<CR>
 nnoremap <silent> <leader>wq <Cmd>qa<CR>
 nnoremap <silent> <leader>Q <Cmd>qa<CR>
 
@@ -150,10 +149,15 @@ nmap ]W <Cmd>llast<CR>  " 最後へ
 augroup QuickfixWindow
     autocmd!
     " `p` to preview
-    autocmd filetype qf nnoremap <buffer> p <CR>zz<C-w>p
-    " linewise movement
+    autocmd FileType qf nnoremap <buffer> p <CR>zz<C-w>p
+    " always move linewise
     autocmd filetype qf nnoremap <buffer> j j
     autocmd filetype qf nnoremap <buffer> k k
+    " capital J/K to move+preview
+    autocmd FileType qf nmap <buffer> J jp
+    autocmd FileType qf nmap <buffer> K kp
+    " Press Q again to close quickfix window
+    autocmd FileType qf nnoremap <buffer> Q <Cmd>q<CR>
 augroup END
 
 " search with C-p/C-n
