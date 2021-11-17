@@ -20,6 +20,7 @@ function! s:fcitx_toggle() abort
   else
     echomsg '日本語入力モードOFF'
   endif
+  return ''
 endfunction
 
 function! s:enable() abort
