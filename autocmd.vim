@@ -11,7 +11,6 @@ augroup fileType
   au FileType           tsv       setlocal nowrap
   au FileType           text      setlocal noet spell
   au FileType           mail      setlocal noet spell
-  au FileType           fugitive  setlocal synmaxcol=3000
   au FileType           gitcommit setlocal spell
   au FileType           markdown  setlocal noet spell
   au FileType           help      setlocal noet spell 
@@ -22,6 +21,9 @@ augroup fileType
   au BufRead,BufNewFile *.re      setf review
   au BufRead,BufNewFile *.pxv     setf pixiv
   au BufRead,BufNewFile *.hml     setf hameln
+
+  " 長い行は構文ファイルを読み込まない
+  au FileType           csv,tsv,json  setlocal synmaxcol=256
 augroup END
 
 augroup local-leader

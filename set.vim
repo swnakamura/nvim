@@ -51,9 +51,6 @@ set showtabline=2 laststatus=2
 " transparent popup window
 set winblend=8 pumblend=12
 
-" 長い行は構文ファイルを読み込まない
-set synmaxcol=256
-
 " statusline settting
 " set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']\ '}%{FugitiveStatusline()}%=\ col:%3v,\ line:%l/%L%8P\
 
