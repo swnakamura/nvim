@@ -17,10 +17,10 @@ hook_add = '''
 let g:textobj_python_no_default_key_mappings = 1
 call textobj#user#map('python', {
       \   'class': {
-      \     'select-a': '<buffer>ac',
-      \     'select-i': '<buffer>ic',
-      \     'move-n': '<buffer>]c',
-      \     'move-p': '<buffer>[c',
+      \     'select-a': '<buffer>ax',
+      \     'select-i': '<buffer>ix',
+      \     'move-n': '<buffer>]x',
+      \     'move-p': '<buffer>[x',
       \   },
       \   'function': {
       \     'select-a': '<buffer>af',

@@ -43,7 +43,6 @@ let g:vimtex_syntax_enabled = 0
 " completion
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
-cabbrev dein call dein#install()
 cabbrev deup call dein#check_update(v:true)
 
 autocmd VimEnter * call dein#call_hook('post_source')

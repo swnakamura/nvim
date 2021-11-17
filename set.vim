@@ -98,4 +98,3 @@ else
 endif
 
 set clipboard+=unnamedplus
-set runtimepath+=/home/snakamura/programming/my_nvim_plugin/novelformatter.vim

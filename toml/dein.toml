@@ -1,12 +1,8 @@
+# denops!
 [[plugins]]
-repo = 'honza/vim-snippets'
+repo = 'vim-denops/denops.vim'
 
-[[plugins]]
-repo = 'cohama/lexima.vim'
-
-
-[[plugins]]
-repo = 'Shougo/deol.nvim'
+# vim-asterisk
 [[plugins]]
 repo = 'haya14busa/vim-asterisk'
 hook_add = '''
@@ -20,14 +16,18 @@ map z#  <Plug>(asterisk-z#)
 map gz# <Plug>(asterisk-gz#)
 let g:asterisk#keeppos = 1
 '''
+
+# paren closing completion
 [[plugins]]
 repo = 'kana/vim-smartinput'
-[[plugins]]
-repo = 'osyo-manga/shabadou.vim'
+
+# operator argumentation
 [[plugins]]
 repo = 'kana/vim-operator-user'
 [[plugins]]
 repo = 'rhysd/vim-operator-surround'
+
+# textobj argumentation
 [[plugins]]
 repo = 'kana/vim-textobj-user'
 hook_add = '''
@@ -63,6 +63,8 @@ omap iv <Plug>(textobj-entire-i)
 xmap av <Plug>(textobj-entire-a)
 xmap iv <Plug>(textobj-entire-i)
 '''
+
+# commenter
 [[plugins]]
 repo = 'scrooloose/nerdcommenter'
 hook_add = '''
@@ -70,48 +72,42 @@ let g:NERDSpaceDelims=1
 let g:NERDDefaultAlign='left'
 let g:NERDCustomDelimiters = {'vim': {'left': '"','right':''}}
 '''
+
+# align
 [[plugins]]
 repo = 'junegunn/vim-easy-align'
 hook_add = '''
 xmap ga  <Plug>(EasyAlign)
 '''
 
-[[plugins]]
-repo = 'Shougo/echodoc.vim'
+# move words
 [[plugins]]
 repo = 'fuenor/jpmoveword.vim'
 hook_add = '''
 let g:jpmoveword_separator='，．、。・「」『』（）【】'
 let g:matchpairs_textobject=1
 '''
+
+# :Gbrowse to open github
 [[plugins]]
 repo = 'tpope/vim-rhubarb'
-[[plugins]]
-repo = 'kyazdani42/nvim-web-devicons'
-[[plugins]]
-repo = 'tikhomirov/vim-glsl'
-[[plugins]]
-repo = 'Shougo/neco-syntax'
 
+# :SpellCheck to put spell errors to quickfix
 [[plugins]]
 repo = 'https://github.com/inkarkat/vim-SpellCheck'
 [[plugins]]
 repo = 'https://github.com/inkarkat/vim-ingo-library'
 
+# :HelpfulVersion to view version
 [[plugins]]
 repo = 'tweekmonster/helpful.vim'
 
+# misc
 [[plugins]]
-repo = 'vim-denops/denops.vim'
-
+repo = 'kyazdani42/nvim-web-devicons'
 [[plugins]]
-repo = 'David-Kunz/treesitter-unit'
-hook_add = '''
-xnoremap iu :lua require"treesitter-unit".select()<CR>
-xnoremap au :lua require"treesitter-unit".select(true)<CR>
-onoremap iu :<c-u>lua require"treesitter-unit".select()<CR>
-onoremap au :<c-u>lua require"treesitter-unit".select(true)<CR>
-'''
+repo = 'tikhomirov/vim-glsl'
 
+# :Dispatch to run asynchronously
 [[plugins]]
 repo = 'tpope/vim-dispatch'
