@@ -142,7 +142,7 @@ augroup END
 
 augroup lua-highlight
   autocmd!
-  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
+  autocmd TextYankPost * silent! lua vim.highlight.on_yank({higroup='Pmenu', timeout=200})
 augroup END
 
 " augroup limitlento80
