@@ -1,4 +1,4 @@
-augroup fileType
+augroup file-type
   au!
   au BufRead            *.cls     set      ft=tex
   au FileType           python    setlocal foldmethod=indent
@@ -90,7 +90,7 @@ function! Visualmatch()
     endif
 endfunction
 
-augroup Binary
+augroup binary-xxd
     au!
     au BufReadPre  *.bin setlocal bin
     au BufReadPre  *.img setlocal bin
@@ -109,7 +109,7 @@ augroup Binary
     au BufWritePost * set nomod | endif
 augroup END
 
-augroup CSV_TSV
+augroup csv-tsv
     au!
     au BufReadPost,BufWritePost *.csv %!column -s, -o, -t
     au BufWritePre              *.csv %s/\s\+,/,/ge
@@ -118,7 +118,7 @@ augroup CSV_TSV
 augroup END
 
 if !exists('g:vscode')
-    augroup defx_hijack_netrw
+    augroup defx-hijack-netrw
         au!
         au VimEnter * sil! au! FileExplorer *
         au BufEnter * if s:isdir(expand('%')) | bd | exe g:defx_default_invocation | endif
@@ -131,7 +131,7 @@ fu! s:isdir(dir) abort
 endfu
 
 
-augroup JupyterNotebook
+augroup jupyter-notebook
     au!
     au BufReadPost *.ipynb %!jupytext --from ipynb --to py:percent
     au BufWritePre *.ipynb let g:jupyter_previous_location = getpos('.')
@@ -140,7 +140,7 @@ augroup JupyterNotebook
     au BufWritePost *.ipynb if exists('g:jupyter_previous_location') | call setpos('.', g:jupyter_previous_location) | endif
 augroup END
 
-augroup LuaHighlight
+augroup lua-highlight
   autocmd!
   autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
 augroup END
