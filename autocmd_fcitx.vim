@@ -25,10 +25,10 @@ endfunction
 
 function! s:enable() abort
     if index(['markdown', 'pixiv', 'html', 'tex'], &filetype) != -1 "if filetype is one of these...
-        call system('fcitx-remote -o')
+        call system('fcitx5-remote -o')
     endif
 endfunction
 
 function! s:disable() abort
-    call system('fcitx-remote -c')
+    call system('fcitx5-remote -c')
 endfunction
