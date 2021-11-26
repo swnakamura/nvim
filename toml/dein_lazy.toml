@@ -6,7 +6,7 @@ repo = 'mattn/emmet-vim'
 hook_add = '''
 let g:user_emmet_leader_key=',,'
 '''
-on_ft = ['html','vue', 'htmldjango']
+on_ft = ['html', 'xml', 'vue', 'htmldjango']
 [[plugins]]
 repo = 'hynek/vim-python-pep8-indent'
 on_ft = ['python']
