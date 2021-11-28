@@ -306,3 +306,26 @@ xmap T <Plug>Lightspeed_S
 
 [[plugins]]
 repo = 'gamoutatsumi/dps-ghosttext.vim'
+
+[[plugins]]
+
+repo = 'nvim-treesitter/nvim-treesitter'
+merged = '0'
+hook_post_source = '''
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    disable = {
+      'lua',
+      'toml',
+      'tex',
+      'latex',
+    }
+  },
+  ensure_installed = 'maintained'
+}
+EOF
+'''
+hook_install = 'TSUpdate'
+hook_post_update = 'TSUpdate'
