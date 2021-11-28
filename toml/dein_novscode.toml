@@ -185,9 +185,8 @@ nnoremap <leader>gm :Git merge
 
 nnoremap <Up> :Gwrite<CR>
 nnoremap <C-Up> :Git commit -v<CR>
-nnoremap <Right> :vert :Gdiffsplit<CR>
-nnoremap <C-Right> :vert :Gdiffsplit!<CR>
-nnoremap <Left> :Git blame<CR>
+nnoremap <expr> <Right> '<Cmd>' . (&diff ? 'only' : 'vert Gdiffsplit!') . '<CR>'
+nnoremap <expr> <Left> '<Cmd>' . (&ft==#'fugitiveblame' ? 'quit' : 'Git blame') . '<CR>'
 nnoremap <Down> :Dispatch! git fetch<CR>
 '''
 
