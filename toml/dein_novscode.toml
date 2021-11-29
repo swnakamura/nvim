@@ -308,7 +308,6 @@ xmap T <Plug>Lightspeed_S
 repo = 'gamoutatsumi/dps-ghosttext.vim'
 
 [[plugins]]
-
 repo = 'nvim-treesitter/nvim-treesitter'
 merged = '0'
 hook_post_source = '''
