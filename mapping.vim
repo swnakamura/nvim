@@ -171,27 +171,17 @@ nnoremap < <<
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]>
 
-" 補完せず補完ウィンドウを閉じてから移動
-" inoremap <silent> <expr> <C-b> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal b')<CR>" : "<C-r>=ExecExCommand('normal b')<CR>"
-" inoremap <silent> <expr> <C-f> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal w')<CR>" : "<C-r>=ExecExCommand('normal w')<CR>"
-" inoremap <silent> <expr> <A-b> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal h')<CR>" : "<C-r>=ExecExCommand('normal h')<CR>"
-" inoremap <silent> <expr> <A-f> pumvisible() ? "<C-e><C-r>=ExecExCommand('normal l')<CR>" : "<C-r>=ExecExCommand('normal l')<CR>"
-
 inoremap <silent> <expr> <C-b> "<C-r>=ExecExCommand('normal b')<CR>"
-inoremap <silent> <expr> <C-f> "<C-r>=ExecExCommand('normal w')<CR>"
-" 行移動
+inoremap <silent> <expr> <C-b> "<C-r>=ExecExCommand('normal b')<CR>"
 inoremap <silent> <expr> <C-p> "<C-r>=ExecExCommand('normal gk')<CR>"
 inoremap <silent> <expr> <C-n> "<C-r>=ExecExCommand('normal gj')<CR>"
 
+" 移動はこの関数を使わないとうまく行かない
+" --nopluginだとうまくいく．Ultisnipあたりが悪さをしているのだろうか？
 function! ExecExCommand(cmd)
   silent exec a:cmd
   return ''
 endfunction
-
-" very magic検索
-" nnoremap / /\v
-" nnoremap ? ?\v
-
 
 " quickfix jump
 nnoremap [t <Cmd>lp<CR>
