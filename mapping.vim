@@ -20,6 +20,7 @@ xnoremap L $
 " unmap s,space
 nnoremap [Win] <Nop>
 nmap s [Win]
+xnoremap s <Nop>
 nnoremap <Space> <Nop>
 nnoremap <C-space> <Nop>
 " window control
