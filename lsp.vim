@@ -50,7 +50,6 @@ for [key, val] in items(g:LSP_commands)
                 \}'
 endfor
 
-" https://github.com/neovim/nvim-lspconfig そのまま
 function! LC_maps()
     if has_key(g:LSP_commands, &filetype)
         nnoremap <buffer> <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>

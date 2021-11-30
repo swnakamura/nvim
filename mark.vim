@@ -2,8 +2,6 @@
 " Copied from http://saihoooooooo.hatenablog.com/entry/2013/04/30/001908 and
 " slightly modified
 
-" マーク設定 : {{{
-
 let g:markrement_char = get(g:, 'markrement_char', [
 \     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
 \     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
@@ -26,7 +24,7 @@ nnoremap ]k ]`
 nnoremap [k [`
 
 " 一覧表示
-" nnoremap ml :<C-u>marks<CR>
+nnoremap ml :<C-u>marks<CR>
 
 augroup markMove
     autocmd!
@@ -35,5 +33,3 @@ augroup markMove
     " バッファ読み込み時にマークを初期化
     autocmd BufReadPost * delmarks!
 augroup END
-
-" }}}
