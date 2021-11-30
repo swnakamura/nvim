@@ -167,7 +167,7 @@ nnoremap < <<
 nnoremap <C-]> g<C-]>
 
 inoremap <silent> <expr> <C-b> "<C-r>=ExecExCommand('normal b')<CR>"
-inoremap <silent> <expr> <C-b> "<C-r>=ExecExCommand('normal b')<CR>"
+inoremap <silent> <expr> <C-f> "<C-r>=ExecExCommand('normal w')<CR>"
 inoremap <silent> <expr> <C-p> "<C-r>=ExecExCommand('normal gk')<CR>"
 inoremap <silent> <expr> <C-n> "<C-r>=ExecExCommand('normal gj')<CR>"
 
