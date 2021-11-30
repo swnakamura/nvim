@@ -322,7 +322,10 @@ require'nvim-treesitter.configs'.setup {
       'latex',
     }
   },
-  ensure_installed = 'maintained'
+  indent = {
+    enable = false
+  }
+  -- ensure_installed = 'maintained'
 }
 EOF
 '''
