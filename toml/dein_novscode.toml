@@ -167,6 +167,8 @@ xmap ic         <Plug>(GitGutterTextObjectInnerVisual)
 xmap ac         <Plug>(GitGutterTextObjectOuterVisual)
 
 nmap <Up> <Plug>(GitGutterStageHunk)
+nmap <PageUp> <Plug>(GitGutterPrevHunk)
+nmap <PageDown> <Plug>(GitGutterNextHunk)
 '''
 
 [[plugins]]
