@@ -58,7 +58,7 @@ augroup END
 if !exists("g:vscode")
     augroup instant-visual-highlight
         au!
-            autocmd CursorMoved,CursorHold * call Visualmatch()
+            autocmd CursorMoved,CursorHold,ModeChanged * call Visualmatch()
     augroup END
 endif
 
