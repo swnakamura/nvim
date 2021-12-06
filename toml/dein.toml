@@ -111,3 +111,41 @@ repo = 'tikhomirov/vim-glsl'
 # :Dispatch to run asynchronously
 [[plugins]]
 repo = 'tpope/vim-dispatch'
+
+[[plugins]]
+repo = 'ap/vim-css-color'
+[[plugins]]
+repo = 'hail2u/vim-css3-syntax'
+[[plugins]]
+repo = 'pangloss/vim-javascript'
+[[plugins]]
+repo = 'kchmck/vim-coffee-script'
+[[plugins]]
+repo = 'hynek/vim-python-pep8-indent'
+[[plugins]]
+repo = 'jceb/vim-orgmode'
+[[plugins]]
+repo = 'qnighy/satysfi.vim'
+[[plugins]]
+repo = 'cakebaker/scss-syntax.vim'
+[[plugins]]
+repo = 'bps/vim-textobj-python'
+hook_add = '''
+let g:textobj_python_no_default_key_mappings = 1
+'''
+hook_post_source = '''
+call textobj#user#map('python', {
+      \   'class': {
+      \     'select-a': '<buffer>ax',
+      \     'select-i': '<buffer>ix',
+      \     'move-n': '<buffer>]x',
+      \     'move-p': '<buffer>[x',
+      \   },
+      \   'function': {
+      \     'select-a': '<buffer>af',
+      \     'select-i': '<buffer>if',
+      \     'move-n': '<buffer>]f',
+      \     'move-p': '<buffer>[f',
+      \   }
+      \ })
+'''

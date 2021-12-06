@@ -1,35 +1,9 @@
 [[plugins]]
-repo = 'jceb/vim-orgmode'
-on_ft = 'org'
-[[plugins]]
 repo = 'mattn/emmet-vim'
 hook_add = '''
 let g:user_emmet_leader_key=',,'
 '''
 on_ft = ['html', 'xml', 'vue', 'htmldjango']
-[[plugins]]
-repo = 'hynek/vim-python-pep8-indent'
-on_ft = ['python']
-[[plugins]]
-repo = 'bps/vim-textobj-python'
-on_ft = 'python'
-hook_add = '''
-let g:textobj_python_no_default_key_mappings = 1
-call textobj#user#map('python', {
-      \   'class': {
-      \     'select-a': '<buffer>ax',
-      \     'select-i': '<buffer>ix',
-      \     'move-n': '<buffer>]x',
-      \     'move-p': '<buffer>[x',
-      \   },
-      \   'function': {
-      \     'select-a': '<buffer>af',
-      \     'select-i': '<buffer>if',
-      \     'move-n': '<buffer>]f',
-      \     'move-p': '<buffer>[f',
-      \   }
-      \ })
-'''
 [[plugins]]
 repo = 'lervag/vimtex'
 on_ft = ['tex']
@@ -64,15 +38,6 @@ let g:vimtex_compiler_latexmk = {
       \}
 '''
 [[plugins]]
-repo = 'hail2u/vim-css3-syntax'
-on_ft = ['html','htm']
-[[plugins]]
-repo = 'pangloss/vim-javascript'
-on_ft = ['html','htm', 'js']
-[[plugins]]
-repo = 'kchmck/vim-coffee-script'
-on_ft = ['html','htm']
-[[plugins]]
 repo = 'AtsushiM/search-parent.vim'
 on_ft = ['sass','scss','css']
 [[plugins]]
@@ -80,12 +45,6 @@ repo = 'akiyan/vim-textobj-php'
 on_ft = ['html','htm']
 [[plugins]]
 repo = 'tpope/vim-surround'
-on_ft = ['html','htm']
-[[plugins]]
-repo = 'ap/vim-css-color'
-on_ft = ['html','htm', 'vim']
-[[plugins]]
-repo = 'cakebaker/scss-syntax.vim'
 on_ft = ['html','htm']
 [[plugins]]
 repo = 'godlygeek/tabular'
@@ -102,9 +61,6 @@ on_ft = ['html', 'htm', 'js']
 [[plugins]]
 repo = 'AtsushiM/sass-compile.vim'
 on_ft = ['sass','scss']
-[[plugins]]
-repo = 'qnighy/satysfi.vim'
-on_ft = ['satysfi','saty']
 [[plugins]]
 repo = 'plasticboy/vim-markdown'
 on_ft = ['markdown']
