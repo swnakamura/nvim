@@ -66,6 +66,6 @@ ax.legend()
 plt.savefig(f"{data_path}.pdf", bbox_inches='tight')
 endsnippet
 
-snippet plot_instantly "one-liner to plot something" b
-import matplotlib.pyplot as plt; plt.imshow($1);plt.show()
+snippet plot_instantly "one-liner for plot-debugging" b
+from matplotlib.pyplot import hist,imshow,show; imshow($1);show()
 endsnippet
