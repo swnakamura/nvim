@@ -64,10 +64,10 @@ function! LC_maps()
         nnoremap <buffer> <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
         nnoremap <buffer> <silent> gi    <cmd>lua vim.lsp.buf.implementation()<CR>
         nnoremap <buffer> <silent> gr    <cmd>lua vim.lsp.buf.rename()<CR>
-        nnoremap <buffer> <silent> ge    <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
-        nnoremap <buffer> <silent> [d    <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-        nnoremap <buffer> <silent> ]d    <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
-        nnoremap <buffer> <silent> Q     <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
+        nnoremap <buffer> <silent> ge    <cmd>lua vim.diagnostic.show_line_diagnostics()<CR>
+        nnoremap <buffer> <silent> [d    <cmd>lua vim.diagnostic.goto_prev()<CR>
+        nnoremap <buffer> <silent> ]d    <cmd>lua vim.diagnostic.goto_next()<CR>
+        nnoremap <buffer> <silent> Q     <cmd>lua vim.diagnostic.set_loclist()<CR>
         nnoremap <buffer>          gF    <cmd>lua vim.lsp.buf.formatting_sync(nil, 10000)<CR>
     endif
 endfunction
