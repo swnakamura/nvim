@@ -179,7 +179,6 @@ nnoremap <leader>gs :Git <CR><C-w>T
 nnoremap <leader>ga :Gwrite<CR>
 nnoremap <leader>gc :Git commit -v<CR>
 nnoremap <leader>gb :Git blame<CR>
-nnoremap <leader>gl :tab sp<CR>:Gclog<CR><C-w>j
 nnoremap <leader>gh :tab sp<CR>:0Gclog<CR>
 nnoremap <leader>gp :Dispatch! git push<CR>
 nnoremap <leader>gf :Dispatch! git fetch<CR>
@@ -328,4 +327,10 @@ repo = 'justinmk/vim-sneak'
 hook_post_source = '''
 map t <Plug>Sneak_s
 map T <Plug>Sneak_S
+'''
+
+[[plugins]]
+repo = 'cohama/agit.vim'
+hook_add = '''
+nnoremap <leader>gl :Agit<CR>
 '''
