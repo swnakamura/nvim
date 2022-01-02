@@ -1,4 +1,4 @@
-" let b:fcitx_autoenable=1
+let g:fcitx_autoenable=1
 " set iminsert=2
 " set imsearch=2
 " set imcmdline
@@ -9,18 +9,15 @@ inoremap <silent><expr> <F2> <SID>fcitx_toggle()
 
 augroup fcitx_autoenable
     autocmd!
-    autocmd InsertEnter * if get(b:, 'fcitx_autoenable', v:false) | call s:enable() | endif
+    autocmd InsertEnter * if get(b:, 'fcitx_autoenable', '0') | call s:enable() | endif
     autocmd InsertLeave * call s:disable()
     " autocmd FileType markdown,pixiv nnoremap <buffer><silent><expr> <F2> <SID>fcitx_toggle()
 augroup END
 
 function! s:fcitx_toggle() abort
-  let b:fcitx_autoenable = !get(b:, 'fcitx_autoenable', v:false)
-  if b:fcitx_autoenable ==# v:true
-    echo '日本語入力モードON'
-    if index(['i'], mode()) != -1
-        call s:enable()
-    endif
+  let b:fcitx_autoenable = !get(b:, 'fcitx_autoenable', '1')
+  if b:fcitx_autoenable ==# 1
+    echomsg '日本語入力モードON'
   else
     echo '日本語入力モードOFF'
     if index(['i'], mode()) != -1
