@@ -19,6 +19,7 @@ let g:nvim_home_directory = stdpath('config') . '/'
 
 " source plugins
 exe 'source' g:nvim_home_directory .. 'api_key.vim'
+exe 'source' g:nvim_home_directory .. 'cdiff.vim'
 exe 'source' g:nvim_home_directory .. 'dein.vim'
 
 " source other settings
