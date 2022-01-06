@@ -15,7 +15,7 @@ augroup fcitx_autoenable
 augroup END
 
 function! s:fcitx_toggle() abort
-  let b:fcitx_autoenable = !get(b:, 'fcitx_autoenable', '1')
+  let b:fcitx_autoenable = !get(b:, 'fcitx_autoenable', '0')
   if b:fcitx_autoenable ==# 1
     echomsg '日本語入力モードON'
   else
