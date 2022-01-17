@@ -67,5 +67,5 @@ plt.savefig(f"{data_path}.pdf", bbox_inches='tight')
 endsnippet
 
 snippet plot_instantly "one-liner for plot-debugging" b
-from matplotlib.pyplot import hist,imshow,show; imshow($1);show()
+from matplotlib.pyplot import plot,hist,imshow,scatter,show,savefig; imshow($1);show()
 endsnippet
