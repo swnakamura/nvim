@@ -55,8 +55,6 @@ nnoremap [Win]7 <Cmd>7tabnext<CR>
 nnoremap [Win]8 <Cmd>8tabnext<CR>
 nnoremap [Win]9 <Cmd>9tabnext<CR>
 
-nnoremap Q <Cmd>copen<CR>
-
 nnoremap <leader><leader> <C-^>
 
 " move by display line
@@ -135,11 +133,14 @@ nmap ]q <Cmd>cnext<CR>       " 次へ
 nmap [Q <Cmd>cfirst<CR> " 最初へ
 nmap ]Q <Cmd>clast<CR>  " 最後へ
 
-"window-local quickfix jump
+" window-local quickfix jump
 nmap [w <Cmd>lprevious<CR>   " 前へ
 nmap ]w <Cmd>lnext<CR>       " 次へ
 nmap [W <Cmd>lfirst<CR> " 最初へ
 nmap ]W <Cmd>llast<CR>  " 最後へ
+
+" Open quickfix window
+nnoremap Q <Cmd>copen<CR>
 
 " In quickfix window
 augroup QuickfixWindow
