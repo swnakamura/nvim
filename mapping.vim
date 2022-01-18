@@ -140,7 +140,7 @@ nmap [W <Cmd>lfirst<CR> " 最初へ
 nmap ]W <Cmd>llast<CR>  " 最後へ
 
 " Open quickfix window
-nnoremap Q <Cmd>copen<CR>
+" nnoremap Q <Cmd>copen<CR>
 
 " In quickfix window
 augroup QuickfixWindow
