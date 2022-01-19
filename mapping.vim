@@ -87,10 +87,10 @@ nnoremap <silent> <leader>bd <Cmd>bd<CR>
 
 
 " increase and decrease by plus/minus
-" nnoremap +  <C-a>
-" nnoremap -  <C-x>
-" xnoremap g+ g<C-a>
-" xnoremap g- g<C-x>
+nnoremap +  <C-a>
+nnoremap -  <C-x>
+xnoremap g+ g<C-a>
+xnoremap g- g<C-x>
 
 " switch quote and backquote
 nnoremap ' `
