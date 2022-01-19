@@ -67,6 +67,10 @@ nnoremap gk k
 xnoremap gj j
 xnoremap gk k
 
+" ctrlで行固定移動
+nnoremap <C-j> <C-e>j
+nnoremap <C-k> <C-y>k
+
 " always replace considering doublewidth
 nnoremap r  gr
 nnoremap R  gR
