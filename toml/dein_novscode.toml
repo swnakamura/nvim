@@ -66,7 +66,7 @@ repo = 'Shougo/defx.nvim'
 hook_add = '''
 call defx#custom#column('indent',{'indent': "-"})
 
-let g:defx_default_invocation = "Defx -new -auto-cd -show-ignored-files `expand('%:p:h')` -search=`expand('%:p')` -vertical-preview -preview-width=`min([eval('&columns')-50, float2nr(eval('&columns')*0.8)])` -columns=time:size:indent:icons:space:space:git:filename"
+let g:defx_default_invocation = "Defx -new -auto-cd -show-ignored-files -vertical-preview -preview-width=`min([eval('&columns')-50, float2nr(eval('&columns')*0.8)])` -columns=time:size:indent:icons:space:space:git:filename "
 
 nnoremap <silent> st        :exe g:defx_default_invocation '-split=tab'     <CR>
 nnoremap <silent> <leader>d :exe g:defx_default_invocation '-split=no'      <CR>
