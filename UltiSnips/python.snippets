@@ -42,8 +42,7 @@ for ite, DATA in enumerate(DATA_LIST):
 	datax = data["$6"]
 	datay = data[DATA['column']]
 
-	ax.scatter(datax, datay, s=10,
-			   facecolor='none', edgecolor=cmap(ite), linewidths=0.1, label=DATA['name'], marker=MARKER_LIST[ite])
+	ax.scatter(datax, datay, s=10, facecolor='none', edgecolor=cmap(ite), linewidths=0.1, label=DATA['name'], marker=MARKER_LIST[ite])
 	ax.plot(datax, datay, linewidth=0.1, color=cmap(ite))
 
 	# fitting
