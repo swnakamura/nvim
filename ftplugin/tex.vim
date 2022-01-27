@@ -1,14 +1,6 @@
-" inoremap <buffer> ,, $$<`1`><Left><Left><Left><Left><Left><Left>
-" imap     <buffer> .. <Plug>(vimtex-cmd-create)
 inoremap <buffer> #s \section{}<Left>
 inoremap <buffer> ##s \subsection{}<Left>
 inoremap <buffer> ###s \subsubsection{}<Left>
-" inoremap <buffer> __ _{\rm }<`1`><Left><Left><Left><Left><Left><Left>
-
-function! Synctex()
-    execute "!zathura --synctex-forward " . line('.') . ":" . col('.') . ":" . bufname('%') . " " . g:syncpdf
-endfunction
-map <buffer> <C-enter> :call Synctex()<CR>
 
 setlocal foldmethod=indent
 
@@ -19,3 +11,7 @@ noremap <buffer> <localleader>d <plug>(vimtex-delim-toggle-modifier)
 noremap <buffer> <F5>           :VimtexCompile<CR>
 noremap <buffer> <F6>           :VimtexClean<CR>
 noremap <buffer> <F7>           :VimtexCompileOutput<CR>
+
+imap <buffer> ( (
+imap <buffer> { {
+imap <buffer> [ [
