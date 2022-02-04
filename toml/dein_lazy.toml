@@ -47,12 +47,6 @@ on_ft = ['html','htm']
 repo = 'tpope/vim-surround'
 on_ft = ['html','htm']
 [[plugins]]
-repo = 'godlygeek/tabular'
-on_ft = ['md']
-hook_add = '''
-xmap gga :Tabular
-'''
-[[plugins]]
 repo = 'wokalski/autocomplete-flow'
 on_ft = ['html', 'htm', 'js']
 [[plugins]]
