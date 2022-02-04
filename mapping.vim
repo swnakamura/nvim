@@ -82,7 +82,7 @@ nnoremap gR R
 nnoremap x "_x
 
 " quit this window by q
-nnoremap <silent> <leader>q <Cmd>q<CR>
+nnoremap <silent> <leader>q <Cmd>Sayonara<CR>
 nnoremap <silent> <leader>wq <Cmd>qa<CR>
 nnoremap <silent> <leader>Q <Cmd>qa<CR>
 

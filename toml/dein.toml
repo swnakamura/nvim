@@ -149,3 +149,6 @@ call textobj#user#map('python', {
       \   }
       \ })
 '''
+
+[[plugins]]
+repo = 'mhinz/vim-sayonara.git'
