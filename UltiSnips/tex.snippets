@@ -696,6 +696,11 @@ snippet trs "tranposed" iA
 endsnippet
 
 context "math()"
+snippet .T "tranposed" iA
+^\top
+endsnippet
+
+context "math()"
 snippet "([^\\])abs" "abs" irA
 `!p snip.rv = match.group(1)`\abs{$1}$0
 endsnippet
@@ -973,6 +978,24 @@ priority 101
 context "math()"
 snippet "vihat" "hat" riA
 \\hat{${VISUAL}}$0
+endsnippet
+
+priority 10
+context "math()"
+snippet "til" "tilde" riA
+\tilde{$1}$0
+endsnippet
+
+priority 100
+context "math()"
+snippet "([a-zA-Z])til" "tilde" riA
+\tilde{`!p snip.rv=match.group(1)`}
+endsnippet
+
+priority 101
+context "math()"
+snippet "vitil" "tilde" riA
+\\tilde{${VISUAL}}$0
 endsnippet
 
 context "math()"
@@ -1318,7 +1341,7 @@ endsnippet
 
 priority 10
 context "math()"
-snippet pp "point-to-point-vector" iA
+snippet ptp "point-to-point-vector" iA
 \ppvec{$1}$0
 endsnippet
 
