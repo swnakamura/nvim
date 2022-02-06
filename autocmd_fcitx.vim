@@ -1,4 +1,4 @@
-let g:fcitx_autoenable=1
+let b:fcitx_autoenable=1
 " set iminsert=2
 " set imsearch=2
 " set imcmdline
