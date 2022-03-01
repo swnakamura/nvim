@@ -75,7 +75,7 @@ let g:defx_default_invocation = "Defx
     \ -columns=time:size:indent:icons:space:space:git:filename
     \ -buffer-name=defx"
 
-nnoremap <silent> [win]t        :exe g:defx_default_invocation '-split=tab'                   expand('%:p:h') '-search=' . expand('%:p')<CR>
+nnoremap <silent> [Win]t    :exe g:defx_default_invocation '-split=tab'                   expand('%:p:h') '-search=' . expand('%:p')<CR>
 nnoremap <silent> <leader>d :exe g:defx_default_invocation '-split=no'                    expand('%:p:h') '-search=' . expand('%:p')<CR>
 nnoremap <silent> <leader>n :exe g:defx_default_invocation '-split=vertical -winwidth=50' expand('%:p:h') '-search=' . expand('%:p')<CR>
 
