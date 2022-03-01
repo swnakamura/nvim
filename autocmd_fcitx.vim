@@ -1,4 +1,4 @@
-let b:fcitx_autoenable=1
+" let b:fcitx_autoenable=1
 " set iminsert=2
 " set imsearch=2
 " set imcmdline
@@ -31,9 +31,7 @@ function! s:fcitx_toggle() abort
 endfunction
 
 function! s:enable() abort
-    if index(['markdown', 'pixiv', 'html', 'tex'], &filetype) != -1 "if filetype is one of these...
-        call system('fcitx5-remote -o')
-    endif
+    call system('fcitx5-remote -o')
 endfunction
 
 function! s:disable() abort
