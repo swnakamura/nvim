@@ -14,7 +14,7 @@ augroup file-type
   au FileType           gitcommit setlocal spell
   au FileType           markdown  setlocal noet spell
   au FileType           help      setlocal noet spell 
-  au FileType           defx      call DefxLocalMapping()
+  au FileType           defx      call s:defxLocalMapping()
   au BufNewFile,BufRead *.grg     setlocal nowrap
   au BufNewFile,BufRead *.jl      setf julia
   au BufRead,BufNewFile *.elm     setf elm
@@ -29,11 +29,13 @@ augroup END
 
 " When in defx window and created a new window, use another defx instance for
 " it
-function! DefxLocalMapping() abort
+function! s:defxLocalMapping() abort
     nnoremap <buffer> [Win]s <Cmd>split<CR><Cmd>exe g:defx_default_invocation<CR>
     nnoremap <buffer> [Win]v <Cmd>vsplit<CR><Cmd>exe g:defx_default_invocation<CR>
     nnoremap <buffer> [Win]c <Cmd>tab sp<CR><Cmd>exe g:defx_default_invocation<CR>
+    nnoremap <buffer> [Win]t <Cmd>tab sp<CR><Cmd>exe g:defx_default_invocation<CR>
     nnoremap <buffer> [Win]C <Cmd>-tab sp<CR><Cmd>exe g:defx_default_invocation<CR>
+    nnoremap <buffer> <leader>d <Cmd>exe g:defx_default_invocation<CR>
 endfunction
 
 augroup local-leader
