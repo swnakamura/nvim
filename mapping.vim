@@ -37,7 +37,7 @@ nnoremap [Win]J <C-w>J
 nnoremap [Win]K <C-w>K
 nnoremap [Win]L <C-w>L
 nnoremap [Win]H <C-w>H
-nnoremap [Win]z <Cmd>terminal<CR>
+nnoremap [Win]z <Cmd>cd %:h<CR><Cmd>terminal<CR>
 nnoremap [Win]n gt
 nnoremap [Win]p gT
 nnoremap [Win]r <C-w>r
