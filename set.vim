@@ -49,7 +49,7 @@ set ambiwidth=single
 set showtabline=2 laststatus=2
 
 " transparent popup window
-set winblend=8 pumblend=12
+set winblend=25 pumblend=20
 
 " statusline settting
 " set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']\ '}%{FugitiveStatusline()}%=\ col:%3v,\ line:%l/%L%8P\
@@ -67,7 +67,7 @@ set inccommand=split
 " don't fold by default
 set foldlevel=99
 " reserve two columns for fold
-set foldcolumn=2
+" set foldcolumn=2
 
 set backspace=eol,indent,start
 
@@ -76,6 +76,9 @@ set diffopt+=vertical,algorithm:patience,indent-heuristic
 set wildmenu
 set wildmode=list:full
 set wildignore=*.o,*.obj,*.pyc,*.so,*.dll
+
+" モード変更時に表示しない
+set noshowmode
 
 set mouse=a
 
