@@ -309,6 +309,9 @@ repo = 'cocopon/colorswatch.vim'
 
 [[plugins]]
 repo = 'gamoutatsumi/dps-ghosttext.vim'
+hook_post_source = '''
+let g:dps_ghosttext#ftmap['www.overleaf.com']='tex'
+'''
 
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
