@@ -84,7 +84,7 @@ xmap ga  <Plug>(EasyAlign)
 [[plugins]]
 repo = 'fuenor/jpmoveword.vim'
 hook_add = '''
-let g:jpmoveword_separator='，．、。・「」『』（）【】'
+let g:jpmoveword_separator='，．、。・「」『』（）【】\\'
 let g:matchpairs_textobject=1
 '''
 
