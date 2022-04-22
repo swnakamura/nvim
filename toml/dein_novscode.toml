@@ -3,6 +3,12 @@
 repo = 'Shougo/ddc.vim'
 hook_add = '''
 call ddc#custom#patch_global('sources', ['file', 'nvim-lsp', 'around', 'ultisnips', 'buffer'])
+set dictionary+=/usr/share/dict/words
+call ddc#custom#set_context(["python", "c", "cpp", "[a-z, A-Z]+"], { ->
+  \ ddc#syntax#in('Comment') || ddc#syntax#in('String') ? {
+  \   'sources': ['file', 'dictionary', 'around', 'buffer'],
+  \ } : {} })
+call ddc#custom#patch_filetype(["text", "markdown"], 'sources', ['dictionary', 'file', 'around', 'buffer'])
 call ddc#custom#patch_global('sourceOptions', {
     \ 'file': { 'mark': 'F', 'forceCompletionPattern': '\S/\S*'},
     \ 'nvim-lsp': { 'mark':'lsp', 'forceCompletionPattern': '\.\w*|:\w*|->\w*'},
@@ -36,6 +42,8 @@ repo = 'Shougo/ddc-around'
 repo = 'matsui54/ddc-buffer'
 [[plugins]]
 repo = 'LumaKernel/ddc-file'
+[[plugins]]
+repo = 'matsui54/ddc-dictionary'
 
 # LSP configuration
 [[plugins]]
