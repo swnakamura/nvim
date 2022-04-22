@@ -2,10 +2,9 @@
 
 tnoremap <silent> <C-[> <C-\><C-n>
 tnoremap <silent> <C-l> <C-\><C-n>
-"move to the end of a text after copying/pasting it
+
+" move to the end of a text after copying
 xnoremap <silent> y y`]
-xnoremap <silent> p p`]
-nnoremap <silent> p p`]
 
 " Space+something to move to an end
 " noremap <leader>h ^
