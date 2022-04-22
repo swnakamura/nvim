@@ -44,11 +44,13 @@ let s:local_path=expand("~")
 exe 'lua require''lspconfig''.ocamlls.setup{}'
 
 " 追加したそれぞれの言語についてLSP設定を起動
-for [key, val] in items(g:LSP_commands)
-    exe 'lua require''lspconfig''.' . val . '.setup{
-                \require "lsp_signature".on_attach()
-                \}'
-endfor
+lua << EOF
+for key, lsp in pairs(vim.g.LSP_commands) do
+  require('lspconfig')[lsp].setup {
+    require "lsp_signature".on_attach()
+  }
+end
+EOF
 
 function! LC_maps()
     if has_key(g:LSP_commands, &filetype)
