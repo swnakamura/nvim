@@ -8,7 +8,7 @@ call ddc#custom#set_context(["python", "c", "cpp", "[a-z, A-Z]+"], { ->
   \ ddc#syntax#in('Comment') || ddc#syntax#in('String') ? {
   \   'sources': ['file', 'dictionary', 'around', 'buffer'],
   \ } : {} })
-call ddc#custom#patch_filetype(["text", "markdown", "gitcommit"], 'sources', ['dictionary', 'file', 'around', 'buffer'])
+call ddc#custom#patch_filetype(["text", "markdown", "gitcommit"], 'sources', ['file', 'around', 'buffer', 'dictionary'])
 call ddc#custom#patch_global('sourceOptions', {
     \ 'file': { 'mark': 'F', 'forceCompletionPattern': '\S/\S*'},
     \ 'nvim-lsp': { 'mark':'lsp', 'forceCompletionPattern': '\.\w*|:\w*|->\w*'},
