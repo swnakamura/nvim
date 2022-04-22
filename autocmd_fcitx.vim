@@ -1,9 +1,3 @@
-let b:fcitx_autoenable=1
-" set iminsert=2
-" set imsearch=2
-" set imcmdline
-" set imactivatefunc=ImActivate
-
 nnoremap <silent><expr> <F2> <SID>fcitx_toggle()
 inoremap <silent><expr> <F2> <SID>fcitx_toggle()
 
