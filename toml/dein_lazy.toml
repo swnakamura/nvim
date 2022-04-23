@@ -1,7 +1,7 @@
 [[plugins]]
 repo = 'mattn/emmet-vim'
 hook_add = '''
-let g:user_emmet_leader_key=',,'
+let g:user_emmet_leader_key=','
 '''
 on_ft = ['html', 'xml', 'vue', 'htmldjango']
 [[plugins]]

@@ -17,9 +17,9 @@ let g:slime_default_config = {"socket_name": "default", "target_pane": ":.1"}
 
 let g:nvim_home_directory = stdpath('config') . '/'
 
-" source plugins
 exe 'source' g:nvim_home_directory .. 'api_key.vim'
-exe 'source' g:nvim_home_directory .. 'cdiff.vim'
+
+" source plugins
 exe 'source' g:nvim_home_directory .. 'dein.vim'
 
 " source other settings
