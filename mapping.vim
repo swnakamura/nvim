@@ -99,6 +99,10 @@ xnoremap g- g<C-x>
 nnoremap ' `
 nnoremap ` '
 
+" select pasted text
+nnoremap gp `[v`]
+nnoremap gP `[V`]
+
 if !exists('g:vscode')
     " save with <C-l> in insert mode
     inoremap <C-l> <Cmd>update<CR>
