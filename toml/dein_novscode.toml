@@ -340,8 +340,8 @@ require'nvim-treesitter.configs'.setup {
   },
   indent = {
     enable = false
-  }
-  -- ensure_installed = 'maintained'
+  },
+  ensure_installed = {'c', 'cpp', 'python', 'rust', 'latex', 'vim'}
 }
 EOF
 '''
