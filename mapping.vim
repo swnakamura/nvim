@@ -1,8 +1,5 @@
 " nmap <F5> <localleader>r
 
-tnoremap <silent> <C-[> <C-\><C-n>
-tnoremap <silent> <C-l> <C-\><C-n>
-
 " move to the end of a text after copying
 xnoremap <silent> y y`]
 
@@ -36,7 +33,7 @@ nnoremap [Win]J <C-w>J
 nnoremap [Win]K <C-w>K
 nnoremap [Win]L <C-w>L
 nnoremap [Win]H <C-w>H
-nnoremap [Win]z <Cmd>cd %:h<CR><Cmd>terminal<CR>
+" nnoremap [Win]z <Cmd>cd %:h<CR><Cmd>terminal<CR>
 nnoremap [Win]n gt
 nnoremap [Win]p gT
 nnoremap [Win]r <C-w>r
