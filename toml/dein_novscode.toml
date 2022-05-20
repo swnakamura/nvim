@@ -349,13 +349,6 @@ hook_install = 'TSUpdate'
 hook_post_update = 'TSUpdate'
 
 [[plugins]]
-repo = 'justinmk/vim-sneak'
-hook_post_source = '''
-map t <Plug>Sneak_s
-map T <Plug>Sneak_S
-'''
-
-[[plugins]]
 repo = 'cohama/agit.vim'
 hook_add = '''
 nnoremap <leader>gl :Agit<CR>
