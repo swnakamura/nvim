@@ -65,9 +65,9 @@ if !exists("g:vscode")
 endif
 
 function! Visualmatch()
-    if exists("s:visual_match_id") && index(map(getmatches(), {_, val -> val['id']}), s:visual_match_id) != -1
-        call matchdelete(s:visual_match_id)
-        unlet s:visual_match_id
+    if exists("w:visual_match_id")
+        call matchdelete(w:visual_match_id)
+        unlet w:visual_match_id
     endif
     if index(['v', "\<C-v>"], mode()) != -1 && line('v') == line('.')
         let len_of_char_at_v   = strlen(matchstr(getline('v'), '.', col('v')-1))
@@ -83,10 +83,10 @@ function! Visualmatch()
                                 \])
                     \}
         if mode() == 'v'
-            let s:visual_match_id = matchadd('Search',
+            let w:visual_match_id = matchadd('Search',
                                             \'\V' .. escape(getline('.')[selected_column_idx['first']:selected_column_idx['last']], '\'))
         else
-            let s:visual_match_id = matchadd('Search',
+            let w:visual_match_id = matchadd('Search',
                                             \'\V\<' .. escape(getline('.')[selected_column_idx['first']:selected_column_idx['last']], '\') .. '\>')
         endif
     endif
