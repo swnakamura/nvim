@@ -92,6 +92,36 @@ function! Visualmatch()
     endif
 endfunction
 
+" 単語を自動でハイライトする
+augroup cursor-word-highlight
+    au!
+   "  autocmd ColorScheme * hi CursorWord gui=underline guisp=#6b7089
+   "  autocmd CursorHold * call Wordmatch()
+   "  autocmd InsertEnter * call DelWordmatch()
+augroup END
+
+function! Wordmatch()
+    call DelWordmatch()
+
+    let w:cursorword = expand('<cword>')
+    if w:cursorword != ''
+        let w:wordmatch_id =  matchadd('CursorWord','\V\<' .. w:cursorword .. '\>')
+    endif
+
+    " if exists('w:wordmatch_tid')
+    "     call timer_stop(w:wordmatch_tid)
+    "     unlet w:wordmatch_tid
+    " endif
+    " let w:wordmatch_tid = timer_start(200, 'DelWordmatch')
+endfunction
+
+function! DelWordmatch(...)
+    if exists('w:wordmatch_id')
+        call matchdelete(w:wordmatch_id)
+        unlet w:wordmatch_id
+    endif
+endfunction
+
 augroup binary-xxd
     au!
     au BufReadPre  *.bin setlocal bin
