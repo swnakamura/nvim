@@ -149,14 +149,6 @@ augroup csv-tsv
     au BufWritePre              *.tsv %s/ \+	/	/ge
 augroup END
 
-if !exists('g:vscode')
-    augroup defx-hijack-netrw
-        au!
-        au VimEnter * sil! au! FileExplorer *
-        au BufEnter * if s:isdir(expand('%')) | let s:dirname=expand('%') | bd | exe g:defx_default_invocation . s:dirname | endif
-    augroup END
-endif
-
 fu! s:isdir(dir) abort
     return !empty(a:dir) && (isdirectory(a:dir) ||
        \ (!empty($SYSTEMDRIVE) && isdirectory('/'.tolower($SYSTEMDRIVE[0]).a:dir)))
