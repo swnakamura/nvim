@@ -1,12 +1,16 @@
 require'nvim-tree'.setup {
+    respect_buf_cwd = true,
     view = {
         mappings = {
             list = {
                 { key = { "<CR>", "o", "<2-LeftMouse>", "p" }, action = "edit" },
-                { key = { "h" }, action = "dir_up" },
-                { key = { "l" }, action = "cd" },
-                { key = { "." }, action = "toggle_dotfiles" },
-                { key = { "s" }, action = "" },
+                { key = "h", action = "dir_up" },
+                { key = "l", action = "cd" },
+                { key = ".", action = "toggle_dotfiles" },
+                { key = "s", action = "" },
+                { key = "x", action = "system_open" },
+                { key = "C", action = "cut" },
+                { key = "P", action = "paste" }
             }
         }
     }
