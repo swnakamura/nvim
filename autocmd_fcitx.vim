@@ -12,6 +12,9 @@ function! s:fcitx_toggle() abort
   let b:fcitx_autoenable = !get(b:, 'fcitx_autoenable', '0')
   if b:fcitx_autoenable ==# 1
     echomsg '日本語入力モードON'
+    if index(['i'], mode()) != -1
+        call s:enable()
+    endif
   else
     echo '日本語入力モードOFF'
     if index(['i'], mode()) != -1
