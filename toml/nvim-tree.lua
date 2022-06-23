@@ -13,6 +13,7 @@ require'nvim-tree'.setup {
                 { key = "P", action = "paste" },
                 { key = "p", action = "preview" }
             }
-        }
+        },
+        adaptive_size = true,
     }
 }
