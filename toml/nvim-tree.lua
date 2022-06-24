@@ -11,7 +11,8 @@ require'nvim-tree'.setup {
                 { key = "x", action = "system_open" },
                 { key = "C", action = "cut" },
                 { key = "P", action = "paste" },
-                { key = "p", action = "preview" }
+                { key = "p", action = "preview" },
+                { key = "q", action = "" }
             }
         },
         adaptive_size = true,
