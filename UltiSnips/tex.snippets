@@ -231,7 +231,7 @@ snippet marker-circuitikz "mark every pin" b
 endsnippet
 
 snippet wcond "with condition" iA
-\wcond{$1}{$2}$0
+\wcond{$2}{$1}$0
 endsnippet
 
 snippet beg "begin{} / end{}" bA
@@ -356,6 +356,12 @@ context "math()"
 priority 10
 snippet mrm "mathrm" iA
 \mathrm{$1}$0
+endsnippet
+
+context "math()"
+priority 10
+snippet mbb "mathbb" iA
+\mathbb{$1}$0
 endsnippet
 
 context "math()"
@@ -718,6 +724,16 @@ endsnippet
 context "math()"
 snippet "([^\\])dim" "dim" irA
 `!p snip.rv = match.group(1)`\dim{$1}$0
+endsnippet
+
+context "math()"
+snippet "([^\\])par" "partial" irA
+`!p snip.rv = match.group(1)`\partial
+endsnippet
+
+context "math()"
+snippet "([^\\])tra" "trace" irA
+`!p snip.rv = match.group(1)`\mathrm{tr}
 endsnippet
 
 context "math()"
@@ -1228,14 +1244,28 @@ snippet "([^\\])exp" "exp" irA
 `!p snip.rv = match.group(1)`\exp 
 endsnippet
 
+priority 10
 context "math()"
 snippet "([^\\])min" "min" irA
 `!p snip.rv = match.group(1)`\min 
 endsnippet
 
+priority 11
+context "math()"
+snippet "([^\\])argmin" "argmin" irA
+`!p snip.rv = match.group(1)`\argmin 
+endsnippet
+
+priority 10
 context "math()"
 snippet "([^\\])max" "max" irA
 `!p snip.rv = match.group(1)`\max 
+endsnippet
+
+priority 11
+context "math()"
+snippet "([^\\])argmax" "argmax" irA
+`!p snip.rv = match.group(1)`\argmax 
 endsnippet
 
 context "math()"
