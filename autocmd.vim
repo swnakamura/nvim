@@ -60,6 +60,7 @@ augroup END
 if !exists("g:vscode")
     augroup instant-visual-highlight
         au!
+        autocmd ColorScheme * hi SearchWordMatch gui=reverse
         autocmd CursorMoved,CursorHold * call Visualmatch()
     augroup END
 endif
@@ -83,10 +84,10 @@ function! Visualmatch()
                                 \])
                     \}
         if mode() == 'v'
-            let w:visual_match_id = matchadd('Search',
+            let w:visual_match_id = matchadd('SearchWordMatch',
                                             \'\V' .. escape(getline('.')[selected_column_idx['first']:selected_column_idx['last']], '\'))
         else
-            let w:visual_match_id = matchadd('Search',
+            let w:visual_match_id = matchadd('SearchWordMatch',
                                             \'\V\<' .. escape(getline('.')[selected_column_idx['first']:selected_column_idx['last']], '\') .. '\>')
         endif
     endif
@@ -94,10 +95,10 @@ endfunction
 
 " 単語を自動でハイライトする
 augroup cursor-word-highlight
-    au!
-   "  autocmd ColorScheme * hi CursorWord gui=underline guisp=#6b7089
-   "  autocmd CursorHold * call Wordmatch()
-   "  autocmd InsertEnter * call DelWordmatch()
+  au!
+  autocmd ColorScheme * hi CursorWord gui=bold
+  autocmd CursorHold * call Wordmatch()
+  autocmd InsertEnter * call DelWordmatch()
 augroup END
 
 function! Wordmatch()
