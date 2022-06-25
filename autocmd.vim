@@ -96,7 +96,7 @@ endfunction
 " 単語を自動でハイライトする
 augroup cursor-word-highlight
   au!
-  autocmd ColorScheme * hi CursorWord gui=bold
+  autocmd ColorScheme * hi CursorWord guibg=#2d324c
   autocmd CursorHold * call Wordmatch()
   autocmd InsertEnter * call DelWordmatch()
 augroup END
