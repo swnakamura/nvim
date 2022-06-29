@@ -63,9 +63,10 @@ nnoremap gk k
 xnoremap gj j
 xnoremap gk k
 
-" ctrlで行固定移動
-nnoremap <C-j> <C-e>j
-nnoremap <C-k> <C-y>k
+" ctrlで画面上・下に移動
+nnoremap <C-j> L
+nnoremap <C-k> H
+nnoremap <C-m> M
 
 " always replace considering doublewidth
 nnoremap r  gr
