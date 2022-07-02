@@ -22,7 +22,7 @@ nnoremap <C-space> <Nop>
 " window control
 nnoremap [Win]s <Cmd>split<CR>
 nnoremap [Win]v <Cmd>vsplit<CR>
-" st is used by defx
+" st is used by nvim-tree
 nnoremap [Win]c <Cmd>tab sp<CR>
 nnoremap [Win]C <Cmd>-tab sp<CR>
 nnoremap [Win]j <C-w>j
