@@ -15,29 +15,17 @@ augroup file-type
   au FileType           markdown     setlocal noet spell
   au FileType           help         setlocal noet spell
   au FileType           txt,tex      setlocal isk+=-
-  au FileType           defx         call     s:defxLocalMapping()
   au BufNewFile,BufRead *.grg        setlocal nowrap
   au BufNewFile,BufRead *.jl         setf     julia
-  au BufRead,BufNewFile *.elm        setf     elm
-  au BufRead,BufNewFile *.ipynb      setf     python
-  au BufRead,BufNewFile *.re         setf     review
-  au BufRead,BufNewFile *.pxv,*as    setf     pixiv
-  au BufRead,BufNewFile *.hml        setf     hameln
+  au BufNewFile,BufRead *.elm        setf     elm
+  au BufNewFile,BufRead *.ipynb      setf     python
+  au BufNewFile,BufRead *.re         setf     review
+  au BufNewFile,BufRead *.pxv,*as    setf     pixiv
+  au BufNewFile,BufRead *.hml        setf     hameln
 
   " 長い行がありそうな拡張子なら構文解析を途中でやめる
   au FileType           csv,tsv,json setlocal synmaxcol=256
 augroup END
-
-" When in defx window and created a new window, use another defx instance for
-" it
-function! s:defxLocalMapping() abort
-    nnoremap <buffer> [Win]s <Cmd>split<CR><Cmd>exe g:defx_default_invocation<CR>
-    nnoremap <buffer> [Win]v <Cmd>vsplit<CR><Cmd>exe g:defx_default_invocation<CR>
-    nnoremap <buffer> [Win]c <Cmd>tab sp<CR><Cmd>exe g:defx_default_invocation<CR>
-    nnoremap <buffer> [Win]t <Cmd>tab sp<CR><Cmd>exe g:defx_default_invocation<CR>
-    nnoremap <buffer> [Win]C <Cmd>-tab sp<CR><Cmd>exe g:defx_default_invocation<CR>
-    nnoremap <buffer> <leader>d <Cmd>exe g:defx_default_invocation<CR>
-endfunction
 
 augroup local-leader
     autocmd!
