@@ -14,6 +14,7 @@ augroup file-type
   au FileType           gitcommit    setlocal spell
   au FileType           markdown     setlocal noet spell
   au FileType           help         setlocal noet spell
+  au FileType           txt,tex      setlocal isk+=-
   au FileType           defx         call     s:defxLocalMapping()
   au BufNewFile,BufRead *.grg        setlocal nowrap
   au BufNewFile,BufRead *.jl         setf     julia
