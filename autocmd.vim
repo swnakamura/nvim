@@ -104,7 +104,7 @@ augroup END
 function! Wordmatch()
     call DelWordmatch()
 
-    let w:cursorword = expand('<cword>')
+    let w:cursorword = expand('<cword>')->escape('\')
     if w:cursorword != ''
         let w:wordmatch_id =  matchadd('CursorWord','\V\<' .. w:cursorword .. '\>')
     endif
