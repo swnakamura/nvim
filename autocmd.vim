@@ -1,27 +1,27 @@
 augroup file-type
   au!
-  au BufRead            *.cls        set ft=tex
-  au FileType           python       setlocal foldmethod=indent
-  au FileType           c,cpp        setlocal foldmethod=indent
-  au FileType           go           setlocal tabstop=4 shiftwidth=4 noexpandtab | set formatoptions+=r
-  au FileType           tex          setlocal tabstop=4 shiftwidth=4 foldmethod=syntax spell
-  au FileType           tex          let b:lexima_disabled = 1
-  au FileType           html         setlocal nowrap
-  au FileType           csv          setlocal nowrap
-  au FileType           tsv          setlocal nowrap
-  au FileType           text         setlocal noet spell
-  au FileType           mail         setlocal noet spell
-  au FileType           gitcommit    setlocal spell
-  au FileType           markdown     setlocal noet spell
-  au FileType           help         setlocal noet spell
-  au FileType           txt,tex      setlocal isk+=-
-  au BufNewFile,BufRead *.grg        setlocal nowrap
-  au BufNewFile,BufRead *.jl         setf     julia
-  au BufNewFile,BufRead *.elm        setf     elm
-  au BufNewFile,BufRead *.ipynb      setf     python
-  au BufNewFile,BufRead *.re         setf     review
-  au BufNewFile,BufRead *.pxv,*as    setf     pixiv
-  au BufNewFile,BufRead *.hml        setf     hameln
+  au BufRead            *.cls            set ft=tex
+  au FileType           python           setlocal foldmethod=indent
+  au FileType           c,cpp            setlocal foldmethod=indent
+  au FileType           go               setlocal tabstop=4 shiftwidth=4 noexpandtab | set formatoptions+=r
+  au FileType           tex              setlocal tabstop=4 shiftwidth=4 foldmethod=syntax spell
+  au FileType           tex              let b:lexima_disabled = 1
+  au FileType           html             setlocal nowrap
+  au FileType           csv              setlocal nowrap
+  au FileType           tsv              setlocal nowrap
+  au FileType           text             setlocal noet spell
+  au FileType           mail             setlocal noet spell
+  au FileType           gitcommit        setlocal spell
+  au FileType           markdown         setlocal noet spell
+  au FileType           help             setlocal noet spell
+  au FileType           txt,tex,markdown setlocal isk+=-
+  au BufNewFile,BufRead *.grg            setlocal nowrap
+  au BufNewFile,BufRead *.jl             setf     julia
+  au BufNewFile,BufRead *.elm            setf     elm
+  au BufNewFile,BufRead *.ipynb          setf     python
+  au BufNewFile,BufRead *.re             setf     review
+  au BufNewFile,BufRead *.pxv,*as        setf     pixiv
+  au BufNewFile,BufRead *.hml            setf     hameln
 
   " 長い行がありそうな拡張子なら構文解析を途中でやめる
   au FileType           csv,tsv,json setlocal synmaxcol=256
