@@ -1,4 +1,8 @@
 filetype plugin indent off
+
+let g:do_filetype_lua = 1
+let g:did_load_filetypes = 0
+
 " map space as leader
 let g:mapleader = "\<Space>"
 let g:maplocalleader = "\<C-space>"
