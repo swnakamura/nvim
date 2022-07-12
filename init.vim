@@ -21,20 +21,20 @@ let g:slime_default_config = {"socket_name": "default", "target_pane": ":.1"}
 
 let g:nvim_home_directory = stdpath('config') . '/'
 
-exe 'source' g:nvim_home_directory .. 'api_key.vim'
+exe 'source' g:nvim_home_directory .. 'rcs/api_key.vim'
 
 " source plugins
-exe 'source' g:nvim_home_directory .. 'dein.vim'
+exe 'source' g:nvim_home_directory .. 'rcs/dein.vim'
 
 " source other settings
-exe 'source' g:nvim_home_directory .. 'set.vim'
-exe 'source' g:nvim_home_directory .. 'mapping.vim'
+exe 'source' g:nvim_home_directory .. 'rcs/set.vim'
+exe 'source' g:nvim_home_directory .. 'rcs/mapping.vim'
 if !exists('g:vscode')
-    exe 'source' g:nvim_home_directory .. 'lsp.vim'
+    exe 'source' g:nvim_home_directory .. 'rcs/lsp.vim'
 endif
-exe 'source' g:nvim_home_directory .. 'autocmd.vim'
-exe 'source' g:nvim_home_directory .. "autocmd_fcitx.vim"
-exe 'source' g:nvim_home_directory .. 'mark.vim'
+exe 'source' g:nvim_home_directory .. 'rcs/autocmd.vim'
+exe 'source' g:nvim_home_directory .. "rcs/autocmd_fcitx.vim"
+exe 'source' g:nvim_home_directory .. 'rcs/mark.vim'
 
 if !exists('g:vscode')
     set background=dark

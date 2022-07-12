@@ -8,7 +8,7 @@ call ddc#custom#set_context(["python", "c", "cpp", "[a-z, A-Z]+"], { ->
   \ ddc#syntax#in('Comment') || ddc#syntax#in('String') || ddc#syntax#in('rustCommentLineDoc') ? {
   \   'sources': ['file', 'dictionary', 'around', 'buffer'],
   \ } : {} })
-call ddc#custom#patch_filetype(["text", "markdown", "gitcommit", 'tex'], 'sources', ['file', 'around', 'buffer', 'dictionary'])
+call ddc#custom#patch_filetype(["text", "markdown", "gitcommit", 'tex'], 'sources', ['file', 'around', 'buffer', 'spell_user', 'dictionary'])
 call ddc#custom#patch_global('sourceOptions', {
     \ 'file': { 'mark': 'F', 'forceCompletionPattern': '\S/\S*'},
     \ 'nvim-lsp': { 'mark':'lsp', 'forceCompletionPattern': '\.\w*|:\w*|->\w*'},
@@ -44,6 +44,8 @@ repo = 'matsui54/ddc-buffer'
 repo = 'LumaKernel/ddc-file'
 [[plugins]]
 repo = 'matsui54/ddc-dictionary'
+[[plugins]]
+repo = '~/ghq/github.com/woodyZootopia/ddc-spell-user'
 
 # LSP configuration
 [[plugins]]
@@ -67,15 +69,6 @@ let g:UltiSnipsEditSplit="vertical"
 '''
 [[plugins]]
 repo = 'honza/vim-snippets'
-
-[[plugins]]
-repo =  'kyazdani42/nvim-tree.lua'
-hook_add = '''
-exe 'source' expand('~/.config/nvim/toml/nvim-tree.lua')
-nnoremap <silent> [Win]t    :<C-u>tab sp<CR>:exe 'lcd' expand('%:p:h')<CR>:NvimTreeToggle<CR>
-nnoremap <silent> <leader>d :<C-u>exe 'lcd' expand('%:p:h')<CR>:NvimTreeToggle<CR>
-nnoremap <silent> <leader>n :<C-u>exe 'lcd' expand('%:p:h')<CR>:NvimTreeFocus<CR>
-'''
 
 # fzf
 [[plugins]]
