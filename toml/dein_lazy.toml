@@ -68,13 +68,3 @@ on_ft = ['rust']
 repo = 'luochen1990/rainbow'
 on_ft = ['lisp']
 
-[[plugins]]
-repo =  'kyazdani42/nvim-tree.lua'
-hook_add = '''
-exe 'source' expand('~/.config/nvim/toml/nvim-tree.lua')
-nnoremap <silent> [Win]t    :<C-u>tab sp<CR>:exe 'lcd' expand('%:p:h')<CR>:NvimTreeToggle<CR>
-nnoremap <silent> <leader>d :<C-u>exe 'lcd' expand('%:p:h')<CR>:NvimTreeToggle<CR>
-nnoremap <silent> <leader>n :<C-u>exe 'lcd' expand('%:p:h')<CR>:NvimTreeFocus<CR>
-'''
-on_event = 'CursorMoved'
-
