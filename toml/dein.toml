@@ -94,20 +94,20 @@ let g:matchpairs_textobject=1
 repo = 'tpope/vim-rhubarb'
 
 # :SpellCheck to put spell errors to quickfix
-[[plugins]]
-repo = 'https://github.com/inkarkat/vim-SpellCheck'
-[[plugins]]
-repo = 'https://github.com/inkarkat/vim-ingo-library'
+# [[plugins]]
+# repo = 'https://github.com/inkarkat/vim-SpellCheck'
+# [[plugins]]
+# repo = 'https://github.com/inkarkat/vim-ingo-library'
 
 # :HelpfulVersion to view version
-[[plugins]]
-repo = 'tweekmonster/helpful.vim'
+# [[plugins]]
+# repo = 'tweekmonster/helpful.vim'
 
 # misc
 [[plugins]]
 repo = 'kyazdani42/nvim-web-devicons'
-[[plugins]]
-repo = 'tikhomirov/vim-glsl'
+# [[plugins]]
+# repo = 'tikhomirov/vim-glsl'
 
 # :Dispatch to run asynchronously
 [[plugins]]
@@ -115,20 +115,20 @@ repo = 'tpope/vim-dispatch'
 
 [[plugins]]
 repo = 'ap/vim-css-color'
-[[plugins]]
-repo = 'hail2u/vim-css3-syntax'
-[[plugins]]
-repo = 'pangloss/vim-javascript'
-[[plugins]]
-repo = 'kchmck/vim-coffee-script'
-[[plugins]]
-repo = 'hynek/vim-python-pep8-indent'
-[[plugins]]
-repo = 'jceb/vim-orgmode'
-[[plugins]]
-repo = 'qnighy/satysfi.vim'
-[[plugins]]
-repo = 'cakebaker/scss-syntax.vim'
+# [[plugins]]
+# repo = 'hail2u/vim-css3-syntax'
+# [[plugins]]
+# repo = 'pangloss/vim-javascript'
+# [[plugins]]
+# repo = 'kchmck/vim-coffee-script'
+# [[plugins]]
+# repo = 'hynek/vim-python-pep8-indent'
+# [[plugins]]
+# repo = 'jceb/vim-orgmode'
+# [[plugins]]
+# repo = 'qnighy/satysfi.vim'
+# [[plugins]]
+# repo = 'cakebaker/scss-syntax.vim'
 [[plugins]]
 repo = 'bps/vim-textobj-python'
 hook_add = '''

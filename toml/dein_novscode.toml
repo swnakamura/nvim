@@ -28,8 +28,8 @@ call ddc#enable()
 [[plugins]]
 repo = 'Shougo/ddc-nvim-lsp'
 
-[[plugins]]
-repo = 'Shougo/ddc-matcher_head'
+# [[plugins]]
+# repo = 'Shougo/ddc-matcher_head'
 [[plugins]]
 repo = 'matsui54/ddc-matcher_fuzzy'
 [[plugins]]
@@ -148,33 +148,6 @@ repo = 'lukas-reineke/indent-blankline.nvim'
 repo = 'majutsushi/tagbar'
 hook_add = '''
 nmap <leader>t :TagbarToggle<CR>
-let g:tagbar_type_go = {
-        \ 'ctagstype' : 'go',
-        \ 'kinds'     : [
-            \ 'p:package',
-            \ 'i:imports:1',
-            \ 'c:constants',
-            \ 'v:variables',
-            \ 't:types',
-            \ 'n:interfaces',
-            \ 'w:fields',
-            \ 'e:embedded',
-            \ 'm:methods',
-            \ 'r:constructor',
-            \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-\ }
 
 let g:tagbar_sort = 0
 let g:tagbar_autoclose = 0
@@ -219,7 +192,7 @@ nmap <c-c><c-p> <Plug>SlimeParagraphSend{?[^\n]<CR>
 [[plugins]]
 repo = 'skywind3000/asyncrun.vim'
 hook_add = '''
-let g:asyncrun_bell=1
+let g:asyncrun_bell = 1
 let g:asyncrun_open = 8
 '''
 
@@ -230,22 +203,21 @@ let g:gitsession_autosave = 1
 let g:gitsession_tmp_dir = g:nvim_home_directory .. '/tmp/gitsession'
 '''
 
-[[plugins]]
-repo = 'LeafCage/vimhelpgenerator.git'
+# [[plugins]]
+# repo = 'LeafCage/vimhelpgenerator.git'
 
 [[plugins]]
 repo = 'tversteeg/registers.nvim'
 
 # colorscheme
 [[plugins]]
-# repo = '~/ghq/github.com/woodyZootopia/iceberg.vim'
 repo = 'cocopon/iceberg.vim'
-[[plugins]]
-repo = 'cocopon/pgmnt.vim'
-[[plugins]]
-repo = 'cocopon/inspecthi.vim'
-[[plugins]]
-repo = 'cocopon/colorswatch.vim'
+# [[plugins]]
+# repo = 'cocopon/pgmnt.vim'
+# [[plugins]]
+# repo = 'cocopon/inspecthi.vim'
+# [[plugins]]
+# repo = 'cocopon/colorswatch.vim'
 
 [[plugins]]
 repo = 'gamoutatsumi/dps-ghosttext.vim'

@@ -1,5 +1,11 @@
 augroup file-type
   au!
+  au BufNewFile,BufRead *.cls                       setf tex
+  au BufNewFile,BufRead *.jl                        setf julia
+  au BufNewFile,BufRead *.elm                       setf elm
+  au BufNewFile,BufRead *.ipynb                     setf python
+  au BufNewFile,BufRead *.re                        setf review
+  au BufNewFile,BufRead *.log                       setf log
   au FileType           python,c,cpp                setlocal foldmethod=indent
   au FileType           go                          setlocal tabstop=4 shiftwidth=4 noexpandtab | set formatoptions+=r
   au FileType           tex                         setlocal tabstop=4 shiftwidth=4 foldmethod=syntax spell
@@ -9,12 +15,6 @@ augroup file-type
   au FileType           gitcommit                   setlocal spell
   au FileType           text,tex,markdown,gitcommit setlocal isk+=-
   au FileType           log                         setlocal nowrap
-  au BufNewFile,BufRead *.cls                       setf tex
-  au BufNewFile,BufRead *.jl                        setf julia
-  au BufNewFile,BufRead *.elm                       setf elm
-  au BufNewFile,BufRead *.ipynb                     setf python
-  au BufNewFile,BufRead *.re                        setf review
-  au BufNewFile,BufRead *.log                       setf log
 
   " 長い行がありそうな拡張子なら構文解析を途中でやめる
   au FileType           csv,tsv,json setlocal synmaxcol=256
