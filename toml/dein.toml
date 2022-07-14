@@ -5,17 +5,7 @@ repo = 'vim-denops/denops.vim'
 # vim-asterisk
 [[plugins]]
 repo = 'haya14busa/vim-asterisk'
-hook_add = '''
-map *   <Plug>(asterisk-*)
-map #   <Plug>(asterisk-#)
-map g*  <Plug>(asterisk-g*)
-map g#  <Plug>(asterisk-g#)
-map z*  <Plug>(asterisk-z*)
-map gz* <Plug>(asterisk-gz*)
-map z#  <Plug>(asterisk-z#)
-map gz# <Plug>(asterisk-gz#)
-let g:asterisk#keeppos = 1
-'''
+hook_add = 'call woodyZootopia#init#asterisk#add()'
 
 # paren closing completion
 [[plugins]]
@@ -30,24 +20,7 @@ repo = 'rhysd/vim-operator-surround'
 # textobj argumentation
 [[plugins]]
 repo = 'kana/vim-textobj-user'
-hook_add = '''
-" operator mappings
-map        <silent>sa             <Plug>(operator-surround-append)
-map        <silent>sd             <Plug>(operator-surround-delete)
-map        <silent>sr             <Plug>(operator-surround-replace)
-omap       ab                     <Plug>(textobj-multiblock-a)
-omap       ib                     <Plug>(textobj-multiblock-i)
-vmap       ab                     <Plug>(textobj-multiblock-a)
-vmap       ib                     <Plug>(textobj-multiblock-i)
-
-" if you use vim-textobj-multiblock
-nmap <silent>sdd <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
-nmap <silent>srr <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
-
-" if you use vim-textobj-between
-nmap <silent>sdb <Plug>(operator-surround-delete)<Plug>(textobj-between-a)
-nmap <silent>srb <Plug>(operator-surround-replace)<Plug>(textobj-between-a)
-'''
+hook_add = 'call woodyZootopia#init#textobjuser#add()'
 [[plugins]]
 repo = 'kana/vim-textobj-syntax'
 [[plugins]]
@@ -56,23 +29,12 @@ repo = 'thinca/vim-textobj-between'
 repo = 'osyo-manga/vim-textobj-multiblock'
 [[plugins]]
 repo = 'kana/vim-textobj-entire'
-hook_add = '''
-let g:textobj_entire_no_default_key_mappings = 1
-omap av <Plug>(textobj-entire-a)
-omap iv <Plug>(textobj-entire-i)
-xmap av <Plug>(textobj-entire-a)
-xmap iv <Plug>(textobj-entire-i)
-'''
+hook_add = 'call woodyZootopia#init#textobjentire#add()'
 
 # commenter
 [[plugins]]
 repo = 'scrooloose/nerdcommenter'
-hook_add = '''
-let g:NERDSpaceDelims=1
-let g:NERDDefaultAlign='left'
-let g:NERDCustomDelimiters = {'vim': {'left': '"','right':''}}
-noremap <C-_> <Plug>NERDCommenterToggle
-'''
+hook_add = 'call woodyZootopia#init#nerdcommenter#add()'
 
 # align
 [[plugins]]
@@ -134,22 +96,7 @@ repo = 'bps/vim-textobj-python'
 hook_add = '''
 let g:textobj_python_no_default_key_mappings = 1
 '''
-hook_post_source = '''
-call textobj#user#map('python', {
-      \   'class': {
-      \     'select-a': '<buffer>ax',
-      \     'select-i': '<buffer>ix',
-      \     'move-n': '<buffer>]x',
-      \     'move-p': '<buffer>[x',
-      \   },
-      \   'function': {
-      \     'select-a': '<buffer>af',
-      \     'select-i': '<buffer>if',
-      \     'move-n': '<buffer>]f',
-      \     'move-p': '<buffer>[f',
-      \   }
-      \ })
-'''
+hook_post_source = 'call woodyZootopia#init#textobjpython#add()'
 
 [[plugins]]
 repo = 'mhinz/vim-sayonara.git'
