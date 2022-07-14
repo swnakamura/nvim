@@ -8,11 +8,13 @@ augroup file-type
   au FileType           text,mail,markdown,help     setlocal noet spell
   au FileType           gitcommit                   setlocal spell
   au FileType           text,tex,markdown,gitcommit setlocal isk+=-
+  au FileType           log                         setlocal nowrap
   au BufNewFile,BufRead *.cls                       setf tex
   au BufNewFile,BufRead *.jl                        setf julia
   au BufNewFile,BufRead *.elm                       setf elm
   au BufNewFile,BufRead *.ipynb                     setf python
   au BufNewFile,BufRead *.re                        setf review
+  au BufNewFile,BufRead *.log                       setf log
 
   " 長い行がありそうな拡張子なら構文解析を途中でやめる
   au FileType           csv,tsv,json setlocal synmaxcol=256
