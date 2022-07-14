@@ -5,7 +5,7 @@ repo = 'vim-denops/denops.vim'
 # vim-asterisk
 [[plugins]]
 repo = 'haya14busa/vim-asterisk'
-hook_add = 'call woodyZootopia#init#asterisk#add()'
+hook_add = 'call Asterisk_add()'
 
 # paren closing completion
 [[plugins]]
@@ -20,7 +20,7 @@ repo = 'rhysd/vim-operator-surround'
 # textobj argumentation
 [[plugins]]
 repo = 'kana/vim-textobj-user'
-hook_add = 'call woodyZootopia#init#textobjuser#add()'
+hook_add = 'call Textobjuser_add()'
 [[plugins]]
 repo = 'kana/vim-textobj-syntax'
 [[plugins]]
@@ -29,12 +29,12 @@ repo = 'thinca/vim-textobj-between'
 repo = 'osyo-manga/vim-textobj-multiblock'
 [[plugins]]
 repo = 'kana/vim-textobj-entire'
-hook_add = 'call woodyZootopia#init#textobjentire#add()'
+hook_add = 'call Textobjentire_add()'
 
 # commenter
 [[plugins]]
 repo = 'scrooloose/nerdcommenter'
-hook_add = 'call woodyZootopia#init#nerdcommenter#add()'
+hook_add = 'call Nerdcommenter_add()'
 
 # align
 [[plugins]]
@@ -96,7 +96,7 @@ repo = 'bps/vim-textobj-python'
 hook_add = '''
 let g:textobj_python_no_default_key_mappings = 1
 '''
-hook_post_source = 'call woodyZootopia#init#textobjpython#add()'
+hook_post_source = 'call Textobjpython_postsource()'
 
 [[plugins]]
 repo = 'mhinz/vim-sayonara.git'

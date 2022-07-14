@@ -7,7 +7,7 @@ on_ft = ['html', 'xml', 'vue', 'htmldjango']
 [[plugins]]
 repo = 'lervag/vimtex'
 on_ft = ['tex']
-hook_add = 'call woodyZootopia#init#vimtex#add()'
+hook_add = 'call Vimtex_add()'
 [[plugins]]
 repo = 'AtsushiM/search-parent.vim'
 on_ft = ['sass','scss','css']

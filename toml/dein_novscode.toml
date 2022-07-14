@@ -1,7 +1,7 @@
 # ddc and its plugins
 [[plugins]]
 repo = 'Shougo/ddc.vim'
-hook_add = 'call woodyZootopia#init#ddc#add()'
+hook_add = 'call Ddc_add()'
 [[plugins]]
 repo = 'Shougo/ddc-nvim-lsp'
 
@@ -51,71 +51,20 @@ repo = 'honza/vim-snippets'
 [[plugins]]
 repo = 'junegunn/fzf'
 build = './install --bin'
-hook_install = '''
-fzf#install()
-'''
+hook_install = 'fzf#install()'
+
 [[plugins]]
 repo = 'junegunn/fzf.vim'
 depends = 'fzf'
-hook_add = '''
-nnoremap <silent> <space>fr  <Cmd>History<CR>
-nnoremap <silent> <space>ff  <Cmd>Files<CR>
-nnoremap <silent> <space>fb  <Cmd>Buffers<CR>
-nnoremap <silent> <space>fc  <Cmd>History:<CR>
-" nnoremap <silent> <space>fgc  <Cmd>Commits<CR>
-nnoremap <silent> <space>fm  <Cmd>Maps<CR>
-nnoremap <silent> <space>fh  <Cmd>Helptags<CR>
-nnoremap <silent> <space>ft  <Cmd>Tags<CR>
-nnoremap <silent> <space>fg  <Cmd>Rg<CR>
-'''
+hook_add = 'call Fzf_add()'
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
-hook_add = '''
-let g:gitgutter_preview_win_floating = 1
-nmap <Leader>hs <Plug>(GitGutterStageHunk)
-nmap <Leader>hu <Plug>(GitGutterUndoHunk)
-nmap <Leader>hp <Plug>(GitGutterPreviewHunk)
-nmap ]h         <Plug>(GitGutterNextHunk)
-nmap [h         <Plug>(GitGutterPrevHunk)
-omap ih         <Plug>(GitGutterTextObjectInnerPending)
-omap ah         <Plug>(GitGutterTextObjectOuterPending)
-xmap ih         <Plug>(GitGutterTextObjectInnerVisual)
-xmap ah         <Plug>(GitGutterTextObjectOuterVisual)
-nmap ]c         <Plug>(GitGutterNextHunk)
-nmap [c         <Plug>(GitGutterPrevHunk)
-omap ic         <Plug>(GitGutterTextObjectInnerPending)
-omap ac         <Plug>(GitGutterTextObjectOuterPending)
-xmap ic         <Plug>(GitGutterTextObjectInnerVisual)
-xmap ac         <Plug>(GitGutterTextObjectOuterVisual)
-
-nmap <Up> <Plug>(GitGutterStageHunk)
-nmap <PageUp> <Plug>(GitGutterPrevHunk)<Plug>(GitGutterPreviewHunk)
-nmap <PageDown> <Plug>(GitGutterNextHunk)<Plug>(GitGutterPreviewHunk)
-'''
+hook_add = 'call Gitgutter_add()'
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
-hook_add = '''
-nnoremap <leader>gs :Git <CR><C-w>T
-nnoremap <leader>ga :Gwrite<CR>
-nnoremap <leader>gc :Git commit -v<CR>
-nnoremap <leader>gb :Git blame<CR>
-nnoremap <leader>gh :tab sp<CR>:0Gclog<CR>
-nnoremap <leader>gp :Dispatch! git push<CR>
-nnoremap <leader>gf :Dispatch! git fetch<CR>
-nnoremap <leader>gd :vert :Gdiffsplit<CR>
-nnoremap <leader>gr :Git rebase -i<CR>
-nnoremap <leader>gg :Glgrep ""<Left>
-nnoremap <leader>gm :Git merge 
-
-nnoremap <S-Up> :Gwrite<CR>
-nnoremap <C-Up> :Git commit -v<CR>
-nnoremap <expr> <Right> '<Cmd>' . (&diff ? 'only' : 'vert Gdiffsplit!') . '<CR>'
-nnoremap <expr> <Left> '<Cmd>' . (&ft==#'fugitiveblame' ? 'quit' : 'Git blame') . '<CR>'
-nnoremap <Down> :Dispatch! git fetch<CR>
-nnoremap <C-Down> :Dispatch! git pull<CR>
-'''
+hook_add = 'call Fugitive_add()'
 
 # indentline implementation in lua
 [[plugins]]
@@ -138,25 +87,7 @@ nnoremap U :UndotreeToggle<CR>
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'
-hook_add = '''
-let g:lightline = {
-            \  'colorscheme': 'iceberg',
-            \  'active': {
-                \     'right' : [ [ 'lineinfo' ],
-                \            [ 'percent', 'editdistance', 'fileencoding' ],
-                \            [ 'fileformat', 'fileencoding', 'filetype' ] ]
-                \ },
-                \ 'component_function': {
-                    \    'editdistance': 'NCCCachedEditDistance',
-                    \}
-                \}
-
-"let g:lightline.separator = { 'left': "\ue0b8", 'right': "\ue0be" }
-"let g:lightline.subseparator = { 'left':  "\ue0b9", 'right': "\ue0b9"  }
-"let g:lightline.tabline_separator = { 'left': "\ue0bc", 'right': "\ue0ba" }
-"let g:lightline.tabline_subseparator = { 'left': "\ue0bb", 'right': "\ue0bb" }
-"let g:denops#debug=1
-'''
+hook_add = 'call Lightline_add()'
 
 [[plugins]]
 repo = 'jpalardy/vim-slime'
@@ -205,25 +136,7 @@ let g:dps_ghosttext#ftmap['www.overleaf.com']='tex'
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
 merged = '0'
-hook_post_source = '''
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-    disable = {
-      'lua',
-      'toml',
-      'tex',
-      'latex',
-    }
-  },
-  indent = {
-    enable = false
-  },
-  ensure_installed = {'c', 'cpp', 'python', 'rust', 'latex', 'vim'}
-}
-EOF
-'''
+hook_post_source = 'call Treesitter_postsource()'
 hook_install = 'TSUpdate'
 hook_post_update = 'TSUpdate'
 
