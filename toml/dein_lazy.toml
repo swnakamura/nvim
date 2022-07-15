@@ -91,8 +91,9 @@ repo = 'kana/vim-smartinput'
 on_event = 'InsertEnter'
 
 [[plugins]]
-repo = 'ap/vim-css-color'
+repo = 'norcalli/nvim-colorizer.lua'
 on_ft = ['css', 'vim', 'markdown']
+hook_post_source = '''luado require 'colorizer'.setup()'''
 
 # LSP configuration
 [[plugins]]
