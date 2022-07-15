@@ -21,8 +21,8 @@ repo = 'matsui54/ddc-buffer'
 repo = 'LumaKernel/ddc-file'
 [[plugins]]
 repo = 'matsui54/ddc-dictionary'
-[[plugins]]
-repo = '~/ghq/github.com/woodyZootopia/ddc-spell-user'
+# [[plugins]]
+# repo = '~/ghq/github.com/woodyZootopia/ddc-spell-user'
 
 # LSP configuration
 [[plugins]]
