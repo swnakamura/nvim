@@ -113,8 +113,8 @@ else
 endif
 
 "reload init.vim
-nnoremap <silent> <leader>rr <Cmd>so ~/.config/nvim/init.vim<CR>
-nnoremap <silent> <leader>re <Cmd>e ~/.config/nvim/init.vim<CR>
+nnoremap <silent> <leader>rr <Cmd>so $MYVIMRC<CR>
+nnoremap <silent> <leader>re <Cmd>e $MYVIMRC<CR>
 
 "open init.vim in new tab
 " nnoremap <silent> <leader>fed <Cmd>tabnew ~/.config/nvim/init.vim<CR>
