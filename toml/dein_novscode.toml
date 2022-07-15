@@ -1,29 +1,3 @@
-# ddc and its plugins
-[[plugins]]
-repo = 'Shougo/ddc.vim'
-hook_add = 'call Ddc_add()'
-[[plugins]]
-repo = 'Shougo/ddc-nvim-lsp'
-
-# [[plugins]]
-# repo = 'Shougo/ddc-matcher_head'
-[[plugins]]
-repo = 'matsui54/ddc-matcher_fuzzy'
-[[plugins]]
-repo = 'matsui54/ddc-ultisnips'
-[[plugins]]
-repo = 'Shougo/ddc-sorter_rank'
-[[plugins]]
-repo = 'Shougo/ddc-around'
-[[plugins]]
-repo = 'matsui54/ddc-buffer'
-[[plugins]]
-repo = 'LumaKernel/ddc-file'
-[[plugins]]
-repo = 'matsui54/ddc-dictionary'
-# [[plugins]]
-# repo = '~/ghq/github.com/woodyZootopia/ddc-spell-user'
-
 # LSP configuration
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
