@@ -365,17 +365,17 @@ snippet mbb "mathbb" iA
 endsnippet
 
 context "math()"
-snippet "([^\\])bm" "bm" irA
+snippet "([^\\])mbm" "bm" irA
 `!p snip.rv = match.group(1)`\bm{$1}$0
 endsnippet
 
 context "math()"
-snippet "([^\\])bf" "bf" irA
+snippet "([^\\])mbf" "bf" irA
 `!p snip.rv = match.group(1)`\mathbf{$1}$0
 endsnippet
 
 context "math()"
-snippet "([^\\])tt" "tt" irA
+snippet "([^\\])mtt" "tt" irA
 `!p snip.rv = match.group(1)`\mathtt{$1}$0
 endsnippet
 
