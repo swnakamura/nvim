@@ -65,3 +65,46 @@ repo = 'matsui54/ddc-dictionary'
 # [[plugins]]
 # repo = '~/ghq/github.com/woodyZootopia/ddc-spell-user'
 
+[[plugins]]
+repo =  'kyazdani42/nvim-tree.lua'
+hook_add = '''
+nmap <silent> <leader>d :<C-u>exe 'lcd' expand('%:p:h')<CR><Cmd>NvimTreeToggle<CR>
+nmap <silent> [Win]t    :<C-u>tab sp<CR><leader>d
+nmap <silent> <leader>n <Cmd>NvimTreeFocus<CR>
+'''
+hook_post_source = '''
+exe 'source' expand('~/.config/nvim/toml/nvim-tree.lua')
+'''
+on_map = ['<Cmd>NvimTreeToggle', '<Cmd>NvimTreeFocus']
+
+# align
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+hook_add = '''
+xmap ga  <Plug>(EasyAlign)
+'''
+on_map = '<Plug>(EasyAlign)'
+
+# paren closing completion
+[[plugins]]
+repo = 'kana/vim-smartinput'
+on_event = 'InsertEnter'
+
+[[plugins]]
+repo = 'ap/vim-css-color'
+on_ft = ['css', 'vim', 'markdown']
+
+# LSP configuration
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+on_ft = ['c', 'cpp', 'rust', 'python', 'vim', 'tex', 'javascript', 'typescript']
+depends = ['nvim-lsp-installer', 'lsp_signature.nvim']
+hook_post_source = '''
+if !exists('g:vscode')
+    exe 'source' g:nvim_home_directory .. 'rcs/lsp.vim'
+endif
+'''
+[[plugins]]
+repo = 'williamboman/nvim-lsp-installer'
+[[plugins]]
+repo = 'ray-x/lsp_signature.nvim'

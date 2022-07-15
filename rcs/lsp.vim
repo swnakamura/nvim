@@ -74,7 +74,9 @@ function! LC_maps()
     endif
 endfunction
 
-autocmd BufEnter * call LC_maps()
+LspStart " このバッファのLSPを起動
+call LC_maps() " このバッファのために呼ぶし
+autocmd BufEnter * call LC_maps() " 今後のバッファのためにautocmd
 
 " 特定のファイルの時、保存時に整形する
 augroup lspAutoFormat

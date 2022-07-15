@@ -1,11 +1,3 @@
-# LSP configuration
-[[plugins]]
-repo = 'neovim/nvim-lspconfig'
-[[plugins]]
-repo = 'williamboman/nvim-lsp-installer'
-[[plugins]]
-repo = 'ray-x/lsp_signature.nvim'
-
 # Ultisnip and snippet list
 [[plugins]]
 repo = 'Sirver/ultisnips'

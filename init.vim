@@ -30,9 +30,6 @@ exe 'source' g:nvim_home_directory .. 'rcs/dein.vim'
 " source other settings
 exe 'source' g:nvim_home_directory .. 'rcs/set.vim'
 exe 'source' g:nvim_home_directory .. 'rcs/mapping.vim'
-if !exists('g:vscode')
-    exe 'source' g:nvim_home_directory .. 'rcs/lsp.vim'
-endif
 exe 'source' g:nvim_home_directory .. 'rcs/autocmd.vim'
 exe 'source' g:nvim_home_directory .. "rcs/autocmd_fcitx.vim"
 exe 'source' g:nvim_home_directory .. 'rcs/mark.vim'
