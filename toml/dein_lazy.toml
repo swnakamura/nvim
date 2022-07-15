@@ -93,7 +93,10 @@ on_event = 'InsertEnter'
 [[plugins]]
 repo = 'norcalli/nvim-colorizer.lua'
 on_ft = ['css', 'vim', 'markdown']
-hook_post_source = '''luado require 'colorizer'.setup()'''
+hook_post_source = '''
+luado require 'colorizer'.setup()
+ColorizerAttachToBuffer " Attach to the current buffer
+'''
 
 # LSP configuration
 [[plugins]]
