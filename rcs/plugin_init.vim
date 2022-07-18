@@ -158,8 +158,8 @@ function! Fugitive_add() abort
     nnoremap <leader>gc :Git commit -v<CR>
     nnoremap <leader>gb :Git blame<CR>
     nnoremap <leader>gh :tab sp<CR>:0Gclog<CR>
-    nnoremap <leader>gp :Dispatch! git push<CR>
-    nnoremap <leader>gf :Dispatch! git fetch<CR>
+    nnoremap <leader>gp <Cmd>Dispatch! git push<CR>
+    nnoremap <leader>gf <Cmd>Dispatch! git fetch<CR>
     nnoremap <leader>gd :vert :Gdiffsplit<CR>
     nnoremap <leader>gr :Git rebase -i<CR>
     nnoremap <leader>gg :Glgrep ""<Left>
@@ -169,8 +169,8 @@ function! Fugitive_add() abort
     nnoremap <C-Up> :Git commit -v<CR>
     nnoremap <expr> <Right> '<Cmd>' . (&diff ? 'only' : 'vert Gdiffsplit!') . '<CR>'
     nnoremap <expr> <Left> '<Cmd>' . (&ft==#'fugitiveblame' ? 'quit' : 'Git blame') . '<CR>'
-    nnoremap <Down> :Dispatch! git fetch<CR>
-    nnoremap <C-Down> :Dispatch! git pull<CR>
+    nnoremap <Down> <Cmd>Dispatch! git fetch<CR>
+    nnoremap <C-Down> <Cmd>Dispatch! git pull<CR>
 endfunction
 
 function! Lightline_add() abort

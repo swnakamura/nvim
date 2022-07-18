@@ -61,8 +61,6 @@ repo = 'kyazdani42/nvim-web-devicons'
 # repo = 'tikhomirov/vim-glsl'
 
 # :Dispatch to run asynchronously
-[[plugins]]
-repo = 'tpope/vim-dispatch'
 
 # [[plugins]]
 # repo = 'hail2u/vim-css3-syntax'
@@ -78,12 +76,6 @@ repo = 'tpope/vim-dispatch'
 # repo = 'qnighy/satysfi.vim'
 # [[plugins]]
 # repo = 'cakebaker/scss-syntax.vim'
-[[plugins]]
-repo = 'bps/vim-textobj-python'
-hook_add = '''
-let g:textobj_python_no_default_key_mappings = 1
-'''
-hook_post_source = 'call Textobjpython_postsource()'
 
 [[plugins]]
 repo = 'mhinz/vim-sayonara.git'

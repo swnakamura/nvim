@@ -112,3 +112,15 @@ endif
 repo = 'williamboman/nvim-lsp-installer'
 [[plugins]]
 repo = 'ray-x/lsp_signature.nvim'
+
+[[plugins]]
+repo = 'tpope/vim-dispatch'
+on_map = '<Cmd>Dispatch!'
+
+[[plugins]]
+repo = 'bps/vim-textobj-python'
+hook_add = '''
+let g:textobj_python_no_default_key_mappings = 1
+'''
+hook_post_source = 'call Textobjpython_postsource()'
+on_ft = 'python'

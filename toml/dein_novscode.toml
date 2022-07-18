@@ -97,6 +97,7 @@ repo = 'cocopon/iceberg.vim'
 repo = 'gamoutatsumi/dps-ghosttext.vim'
 hook_post_source = '''
 let g:dps_ghosttext#ftmap['www.overleaf.com']='tex'
+let g:dps_ghosttext#ftmap['localhost:8888']='python'
 '''
 
 [[plugins]]
@@ -109,7 +110,7 @@ hook_post_update = 'TSUpdate'
 [[plugins]]
 repo = 'cohama/agit.vim'
 hook_add = '''
-nnoremap <leader>gl :Agit<CR>
+nnoremap <leader>gl <Cmd>Agit<CR>
 '''
 
 [[plugins]]
