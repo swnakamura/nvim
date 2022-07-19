@@ -27,11 +27,6 @@ repo = 'osyo-manga/vim-textobj-multiblock'
 repo = 'kana/vim-textobj-entire'
 hook_add = 'call Textobjentire_add()'
 
-# commenter
-[[plugins]]
-repo = 'scrooloose/nerdcommenter'
-hook_add = 'call Nerdcommenter_add()'
-
 # move words
 [[plugins]]
 repo = 'fuenor/jpmoveword.vim'

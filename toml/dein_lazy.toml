@@ -124,3 +124,17 @@ let g:textobj_python_no_default_key_mappings = 1
 '''
 hook_post_source = 'call Textobjpython_postsource()'
 on_ft = 'python'
+
+# commenter
+[[plugins]]
+repo = 'b3nj5m1n/kommentary'
+hook_add = 'call Nerdcommenter_add()'
+on_map = '<Plug>kommentary'
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+merged = '0'
+hook_post_source = 'call Treesitter_postsource()'
+hook_install = 'TSUpdate'
+hook_post_update = 'TSUpdate'
+on_ft = ['c', 'cpp', 'python', 'rust', 'latex', 'vim']

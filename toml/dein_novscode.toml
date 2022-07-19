@@ -101,13 +101,6 @@ let g:dps_ghosttext#ftmap['localhost:8888']='python'
 '''
 
 [[plugins]]
-repo = 'nvim-treesitter/nvim-treesitter'
-merged = '0'
-hook_post_source = 'call Treesitter_postsource()'
-hook_install = 'TSUpdate'
-hook_post_update = 'TSUpdate'
-
-[[plugins]]
 repo = 'cohama/agit.vim'
 hook_add = '''
 nnoremap <leader>gl <Cmd>Agit<CR>

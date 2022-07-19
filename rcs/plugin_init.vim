@@ -36,10 +36,12 @@ function! Ddc_add() abort
 endfunction
 
 function! Nerdcommenter_add() abort
-    let g:NERDSpaceDelims=1
-    let g:NERDDefaultAlign='left'
-    let g:NERDCustomDelimiters = {'vim': {'left': '"','right':''}}
-    noremap <C-_> <Plug>NERDCommenterToggle
+    nnoremap <C-->             <Plug>kommentary_line_default
+    vnoremap <C-->             <Plug>kommentary_visual_default<ESC>
+    nnoremap <leader>c<leader> <Plug>kommentary_line_default
+    vnoremap <leader>c<leader> <Plug>kommentary_visual_default<ESC>
+    nnoremap <leader>cc        <Plug>kommentary_line_increase
+    vnoremap <leader>cc        <Plug>kommentary_visual_increase<ESC>
 endfunction
 
 function! Textobjentire_add() abort
