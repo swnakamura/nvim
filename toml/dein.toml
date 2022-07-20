@@ -55,14 +55,6 @@ repo = 'kyazdani42/nvim-web-devicons'
 # [[plugins]]
 # repo = 'tikhomirov/vim-glsl'
 
-# :Dispatch to run asynchronously
-
-# [[plugins]]
-# repo = 'hail2u/vim-css3-syntax'
-# [[plugins]]
-# repo = 'pangloss/vim-javascript'
-# [[plugins]]
-# repo = 'kchmck/vim-coffee-script'
 # [[plugins]]
 # repo = 'hynek/vim-python-pep8-indent'
 # [[plugins]]
