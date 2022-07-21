@@ -42,6 +42,8 @@ function! Nerdcommenter_add() abort
     vnoremap <leader>c<leader> <Plug>kommentary_visual_default<ESC>
     nnoremap <leader>cc        <Plug>kommentary_line_increase
     vnoremap <leader>cc        <Plug>kommentary_visual_increase<ESC>
+    nnoremap <leader>cy        yy<Plug>kommentary_line_increase
+    vnoremap <leader>cy        ygv<Plug>kommentary_visual_increase<ESC>
 endfunction
 
 function! Textobjentire_add() abort
