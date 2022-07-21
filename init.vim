@@ -37,6 +37,14 @@ exe 'source' g:nvim_home_directory .. 'rcs/mark.vim'
 if !exists('g:vscode')
     set background=dark
     colorscheme iceberg
+    " Do not show unnecessary separation colors
+    hi LineNr guibg=#161821
+    hi VertSplit guifg=#161821 guibg=#161821
+    hi SignColumn guibg=#161821
+    hi GitGutterAdd guibg=#161821
+    hi GitGutterAdd guibg=#161821
+    " Do not show line in deleted
+    hi DiffDelete guifg=#53343b
 endif
 " 最後に設定
 filetype plugin indent on
