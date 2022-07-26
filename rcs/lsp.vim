@@ -41,8 +41,6 @@ endif
 
 let s:local_path=expand("~")
 
-exe 'lua require''lspconfig''.ocamlls.setup{}'
-
 " 追加したそれぞれの言語についてLSP設定を起動
 lua << EOF
 for key, lsp in pairs(vim.g.LSP_commands) do
@@ -74,7 +72,6 @@ function! LC_maps()
     endif
 endfunction
 
-LspStart " このバッファのLSPを起動
 call LC_maps() " このバッファのために呼ぶし
 autocmd BufEnter * call LC_maps() " 今後のバッファのためにautocmd
 

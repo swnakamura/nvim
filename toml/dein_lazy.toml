@@ -107,6 +107,7 @@ hook_post_source = '''
 if !exists('g:vscode')
     exe 'source' g:nvim_home_directory .. 'rcs/lsp.vim'
 endif
+LspStart
 '''
 [[plugins]]
 repo = 'williamboman/nvim-lsp-installer'
