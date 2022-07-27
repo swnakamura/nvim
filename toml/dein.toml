@@ -66,3 +66,7 @@ repo = 'kyazdani42/nvim-web-devicons'
 
 [[plugins]]
 repo = 'mhinz/vim-sayonara.git'
+
+[[plugins]]
+repo = 'williamboman/mason.nvim'
+hook_post_source = 'lua require("mason").setup()'
