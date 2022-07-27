@@ -17,7 +17,7 @@ function! Ddc_add() abort
       \ ddc#syntax#in('Comment') || ddc#syntax#in('String') || ddc#syntax#in('rustCommentLineDoc') ? {
       \   'sources': ['file', 'dictionary', 'around', 'buffer'],
       \ } : {} })
-    call ddc#custom#patch_filetype(["text", "markdown", "gitcommit", 'tex'], 'sources', ['file', 'around', 'buffer', 'dictionary'])
+    call ddc#custom#patch_filetype(["text", "markdown", "gitcommit", 'tex'], 'sources', ['file', 'nvim-lsp', 'ultisnips', 'around', 'buffer', 'dictionary'])
     call ddc#custom#patch_global('sourceOptions', {
         \ 'file': { 'mark': 'F', 'forceCompletionPattern': '\S/\S*'},
         \ 'nvim-lsp': { 'mark':'lsp', 'forceCompletionPattern': '\.\w*|:\w*|->\w*'},
