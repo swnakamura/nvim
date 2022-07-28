@@ -102,15 +102,13 @@ ColorizerAttachToBuffer " Attach to the current buffer
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
 on_ft = ['c', 'cpp', 'rust', 'python', 'vim', 'tex', 'javascript', 'typescript']
-depends = ['mason-lspconfig.nvim', 'lsp_signature.nvim']
+depends = 'lsp_signature.nvim'
 hook_post_source = '''
 if !exists('g:vscode')
     exe 'source' g:nvim_home_directory .. 'rcs/lsp.vim'
 endif
 LspStart
 '''
-[[plugins]]
-repo = 'williamboman/mason-lspconfig.nvim'
 [[plugins]]
 repo = 'ray-x/lsp_signature.nvim'
 
