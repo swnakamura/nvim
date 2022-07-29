@@ -63,6 +63,3 @@ repo = 'kyazdani42/nvim-web-devicons'
 # repo = 'qnighy/satysfi.vim'
 # [[plugins]]
 # repo = 'cakebaker/scss-syntax.vim'
-
-[[plugins]]
-repo = 'mhinz/vim-sayonara.git'

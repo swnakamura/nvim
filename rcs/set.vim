@@ -11,6 +11,7 @@ set cursorline
 set shada=!,'3000,<0,s10,h,%0
 
 " do not include buffer info in session
+set sessionoptions-=blank
 set sessionoptions-=buffers
 
 " file encoding
