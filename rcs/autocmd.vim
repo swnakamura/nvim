@@ -31,7 +31,7 @@ augroup local-leader
 augroup END
 
 " 検索中の領域をハイライトする
-" ヘルプドキュメントからコピーした
+" ヘルプドキュメント('incsearch')からコピーした
 augroup vimrc-incsearch-highlight
   au!
   au CmdlineEnter /,\? :set hlsearch

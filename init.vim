@@ -37,6 +37,9 @@ exe 'source' g:nvim_home_directory .. 'rcs/mark.vim'
 if !exists('g:vscode')
     set background=dark
     colorscheme iceberg
+    " Less bright search color
+    hi clear Search
+    hi Search                gui=bold,underline guisp=#e27878
     " Do not show unnecessary separation colors
     hi LineNr                guibg=#161821
     hi CursorLineNr          guibg=#161821
