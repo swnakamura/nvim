@@ -173,6 +173,11 @@ nnoremap < <<
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]>
 
+" visual modeで複数行を選択して'/'を押すと，その範囲内での検索を行う
+xnoremap <expr> / (line('.') == line('v')) ?
+            \ '/' :
+            \ "<ESC>" . ((line('.') < line('v')) ? '/' : '?') . '\%>' . (min([line('v'), line('.')])-1) . 'l\%<' . (max([line('v'), line('.')])+1) . 'l'
+
 inoremap <silent> <expr> <C-b> "<C-r>=ExecExCommand('normal b')<CR>"
 inoremap <silent> <expr> <C-f> "<C-r>=ExecExCommand('normal w')<CR>"
 inoremap <silent> <expr> <C-p> "<C-r>=ExecExCommand('normal gk')<CR>"
