@@ -3,9 +3,9 @@
 repo = 'vim-denops/denops.vim'
 
 # vim-asterisk
-[[plugins]]
-repo = 'haya14busa/vim-asterisk'
-hook_add = 'call Asterisk_add()'
+# [[plugins]]
+# repo = 'haya14busa/vim-asterisk'
+# hook_add = 'call Asterisk_add()'
 
 # operator argumentation
 [[plugins]]
