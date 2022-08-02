@@ -105,6 +105,12 @@ repo = 'cohama/agit.vim'
 hook_add = '''
 nnoremap <leader>gl <Cmd>Agit<CR>
 '''
+hook_post_source = '''
+hi link agitStatAdded diffAdded
+hi link agitStatRemoved diffRemoved
+hi link agitDiffAdd diffAdded
+hi link agitDiffRemove diffRemoved
+'''
 
 [[plugins]]
 repo = 'voldikss/vim-floaterm.git'
