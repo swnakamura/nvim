@@ -16,5 +16,13 @@ require'nvim-tree'.setup {
             }
         },
         adaptive_size = true,
+    },
+    git = {
+        ignore = false
+    },
+    renderer = {
+        icons = {
+            git_placement = "after"
+        }
     }
 }
