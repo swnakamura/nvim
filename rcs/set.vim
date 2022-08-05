@@ -60,7 +60,7 @@ set tabstop=4 shiftwidth=4
 set smarttab smartindent expandtab
 
 "日本語(マルチバイト文字)行の連結時には空白を入力しない
-set formatoptions+=mM
+setglobal formatoptions+=mM
 
 " show the result of command with split window
 set inccommand=split
