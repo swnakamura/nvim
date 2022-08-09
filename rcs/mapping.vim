@@ -13,45 +13,75 @@ nnoremap L $
 xnoremap H ^
 xnoremap L $
 
-" unmap s,space
-nnoremap [Win] <Nop>
-nmap s [Win]
-xnoremap s <Nop>
 nnoremap <Space> <Nop>
 nnoremap <C-space> <Nop>
+
+" unmap s,space
+nnoremap <Plug>(my-win) <Nop>
+nmap s <Plug>(my-win)
+xnoremap s <Nop>
 " window control
-nnoremap [Win]s <Cmd>split<CR>
-nnoremap [Win]v <Cmd>vsplit<CR>
+nnoremap <Plug>(my-win)s <Cmd>split<CR>
+nnoremap <Plug>(my-win)v <Cmd>vsplit<CR>
 " st is used by nvim-tree
-nnoremap [Win]c <Cmd>tab sp<CR>
-nnoremap [Win]C <Cmd>-tab sp<CR>
-nnoremap [Win]j <C-w>j
-nnoremap [Win]k <C-w>k
-nnoremap [Win]l <C-w>l
-nnoremap [Win]h <C-w>h
-nnoremap [Win]J <C-w>J
-nnoremap [Win]K <C-w>K
-nnoremap [Win]L <C-w>L
-nnoremap [Win]H <C-w>H
-" nnoremap [Win]z <Cmd>cd %:h<CR><Cmd>terminal<CR>
-nnoremap [Win]n gt
-nnoremap [Win]p gT
-nnoremap [Win]r <C-w>r
-nnoremap [Win]= <C-w>=
-nnoremap [Win]O <C-w>=
-nnoremap [Win]o <C-w>_<C-w>\|
-nnoremap [Win]q <Cmd>tabc<CR>
-nnoremap [Win]1 <Cmd>1tabnext<CR>
-nnoremap [Win]2 <Cmd>2tabnext<CR>
-nnoremap [Win]3 <Cmd>3tabnext<CR>
-nnoremap [Win]4 <Cmd>4tabnext<CR>
-nnoremap [Win]5 <Cmd>5tabnext<CR>
-nnoremap [Win]6 <Cmd>6tabnext<CR>
-nnoremap [Win]7 <Cmd>7tabnext<CR>
-nnoremap [Win]8 <Cmd>8tabnext<CR>
-nnoremap [Win]9 <Cmd>9tabnext<CR>
+nnoremap <Plug>(my-win)c <Cmd>tab sp<CR>
+nnoremap <Plug>(my-win)C <Cmd>-tab sp<CR>
+nnoremap <Plug>(my-win)j <C-w>j
+nnoremap <Plug>(my-win)k <C-w>k
+nnoremap <Plug>(my-win)l <C-w>l
+nnoremap <Plug>(my-win)h <C-w>h
+nnoremap <Plug>(my-win)J <C-w>J
+nnoremap <Plug>(my-win)K <C-w>K
+nnoremap <Plug>(my-win)L <C-w>L
+nnoremap <Plug>(my-win)H <C-w>H
+" nnoremap <Plug>(my-win)z <Cmd>cd %:h<CR><Cmd>terminal<CR>
+nnoremap <Plug>(my-win)n gt
+nnoremap <Plug>(my-win)p gT
+nnoremap <Plug>(my-win)r <C-w>r
+nnoremap <Plug>(my-win)= <C-w>=
+nnoremap <Plug>(my-win)O <C-w>=
+nnoremap <Plug>(my-win)o <C-w>_<C-w>\|
+nnoremap <Plug>(my-win)q <Cmd>tabc<CR>
+nnoremap <Plug>(my-win)1 <Cmd>1tabnext<CR>
+nnoremap <Plug>(my-win)2 <Cmd>2tabnext<CR>
+nnoremap <Plug>(my-win)3 <Cmd>3tabnext<CR>
+nnoremap <Plug>(my-win)4 <Cmd>4tabnext<CR>
+nnoremap <Plug>(my-win)5 <Cmd>5tabnext<CR>
+nnoremap <Plug>(my-win)6 <Cmd>6tabnext<CR>
+nnoremap <Plug>(my-win)7 <Cmd>7tabnext<CR>
+nnoremap <Plug>(my-win)8 <Cmd>8tabnext<CR>
+nnoremap <Plug>(my-win)9 <Cmd>9tabnext<CR>
+
+nnoremap <S-Left>  <C-w><<C-w><
+nnoremap <S-Right> <C-w>><C-w>>
+nnoremap <S-Up>    <C-w>+<C-w>+
+nnoremap <S-Down>  <C-w>-<C-w>-
+
+" w!! to save with sudo
+cabbr w!! w !sudo tee > /dev/null %
 
 nnoremap <leader><leader> <C-^>
+
+nnoremap <Plug>(my-switch) <Nop>
+nmap <localleader> <Plug>(my-switch)
+nnoremap <silent> <Plug>(my-switch)s :<C-u>setl spell! spell?<CR>
+nnoremap <silent> <Plug>(my-switch)l :<C-u>setl list! list?<CR>
+" nnoremap <silent> <Plug>(my-switch)t :<C-u>setl expandtab! expandtab?<CR>
+nnoremap <silent> <Plug>(my-switch)w :<C-u>setl wrap! wrap?<CR>
+nnoremap <silent> <Plug>(my-switch)p :<C-u>setl paste! paste?<CR>
+nnoremap <silent> <Plug>(my-switch)b :<C-u>setl scrollbind! scrollbind?<CR>
+nnoremap <silent> <Plug>(my-switch)y :call <SID>toggle_syntax()<CR>
+function! s:toggle_syntax() abort
+  if exists('g:syntax_on')
+    syntax off
+    redraw
+    echo 'syntax off'
+  else
+    syntax on
+    redraw
+    echo 'syntax on'
+  endif
+endfunction
 
 " move by display line
 nnoremap <expr> j v:count == 0 ? 'gj' : 'j'

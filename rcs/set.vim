@@ -76,7 +76,11 @@ set diffopt+=vertical,algorithm:patience,indent-heuristic
 
 set wildmenu
 set wildmode=list:full
-set wildignore=*.o,*.obj,*.pyc,*.so,*.dll
+set wildignore+=*.o
+set wildignore+=*.obj
+set wildignore+=*.pyc
+set wildignore+=*.so
+set wildignore+=*.dll
 
 set splitbelow
 set splitright
