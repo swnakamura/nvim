@@ -43,7 +43,6 @@ if !exists('g:vscode')
     " Do not show unnecessary separation colors
     hi LineNr                guibg=#161821
     hi CursorLineNr          guibg=#161821
-    hi VertSplit             guifg=#161821 guibg=#161821
     hi SignColumn            guibg=#161821
     hi GitGutterAdd          guibg=#161821
     hi GitGutterChange       guibg=#161821

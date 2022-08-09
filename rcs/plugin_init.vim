@@ -12,7 +12,9 @@ endfunction
 
 function! Ddc_add() abort
     call ddc#custom#patch_global('sources', ['file', 'nvim-lsp', 'around', 'ultisnips', 'buffer'])
-    set dictionary+=/usr/share/dict/words
+    if filereadable('/usr/share/dict/words')
+        set dictionary+=/usr/share/dict/words
+    endif
     call ddc#custom#set_context(["python", "c", "cpp", "[a-z, A-Z]+"], { ->
       \ ddc#syntax#in('Comment') || ddc#syntax#in('String') || ddc#syntax#in('rustCommentLineDoc') ? {
       \   'sources': ['file', 'dictionary', 'around', 'buffer'],
