@@ -8,7 +8,7 @@ augroup file-type
   au BufNewFile,BufRead *.log                       setf log
   au FileType           python,c,cpp                setlocal foldmethod=indent
   au FileType           go                          setlocal tabstop=4 shiftwidth=4 noexpandtab | set formatoptions+=r
-  au FileType           tex                         setlocal tabstop=4 shiftwidth=4 foldmethod=syntax spell
+  au FileType           tex                         setlocal tabstop=4 shiftwidth=4 foldmethod=syntax spell conceallevel=1
   au FileType           tex                         let b:lexima_disabled = 1
   au FileType           html,csv,tsv                setlocal nowrap
   au FileType           text,mail,markdown,help     setlocal noet spell
