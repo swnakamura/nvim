@@ -198,9 +198,20 @@ snippet rb "emphasize" w
 \ruby{${1:漢字}}{${2:読み}}$0
 endsnippet
 
-snippet bibtex "load my bibtex"
-\bibliographystyle{jplain}
-\bibliography{/home/woody/Documents/macros/database.bib}
+snippet biblatex "biblatex-preamble"
+\usepackage[
+    backend=biber,
+    style=numeric,
+    sortlocale=en_US,
+    natbib=true,
+    url=true, 
+    doi=true,
+    eprint=false
+]{biblatex}
+endsnippet
+
+snippet print-bibliography "print bibliography"
+\printbibliography
 endsnippet
 
 snippet tikz "tikz" b
@@ -250,11 +261,6 @@ snippet d, "Math" wA
 \[
 $1
 \] $0
-endsnippet
-
-context "math()"
-snippet prime "prime(dash)" wA
-'
 endsnippet
 
 priority 10

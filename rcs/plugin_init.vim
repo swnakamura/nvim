@@ -198,12 +198,13 @@ require'nvim-treesitter.configs'.setup {
       'toml',
       'tex',
       'latex',
+      'vim',
     }
   },
   indent = {
     enable = false
   },
-  ensure_installed = {'c', 'cpp', 'python', 'rust', 'latex', 'vim'}
+  ensure_installed = {'c', 'cpp', 'python', 'rust'}
 }
 EOF
 endfunction

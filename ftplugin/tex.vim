@@ -13,3 +13,7 @@ noremap <buffer> <F6>           :VimtexClean<CR>
 noremap <buffer> <F7>           :VimtexCompileOutput<CR>
 noremap <buffer> <F8>           <plug>(vimtex-env-toggle-star)
 noremap <buffer> <F9>           <plug>(vimtex-env-change)
+
+imap <buffer> ( (
+imap <buffer> [ [
+imap <buffer> { {
