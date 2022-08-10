@@ -1,21 +1,21 @@
 augroup file-type
   au!
-  au BufNewFile,BufRead *.cls                       setf tex
-  au BufNewFile,BufRead *.jl                        setf julia
-  au BufNewFile,BufRead *.elm                       setf elm
-  au BufNewFile,BufRead *.ipynb                     setf python
-  au BufNewFile,BufRead *.re                        setf review
-  au BufNewFile,BufRead *.log                       setf log
-  au FileType           python,c,cpp                setlocal foldmethod=indent
-  au FileType           go                          setlocal tabstop=4 shiftwidth=4 noexpandtab | set formatoptions+=r
-  au FileType           tex                         setlocal tabstop=4 shiftwidth=4 foldmethod=syntax spell conceallevel=1
-  au FileType           tex                         let b:lexima_disabled = 1
-  au FileType           html,csv,tsv                setlocal nowrap
-  au FileType           text,mail,markdown,help     setlocal noet spell
-  au FileType           gitcommit                   setlocal spell
+  au BufNewFile,BufRead *.cls                            setf tex
+  au BufNewFile,BufRead *.jl                             setf julia
+  au BufNewFile,BufRead *.elm                            setf elm
+  au BufNewFile,BufRead *.ipynb                          setf python
+  au BufNewFile,BufRead *.re                             setf review
+  au BufNewFile,BufRead *.log                            setf log
+  au FileType           python,c,cpp                     setlocal foldmethod=indent
+  au FileType           go                               setlocal tabstop=4 shiftwidth=4 noexpandtab | set formatoptions+=r
+  au FileType           tex                              setlocal tabstop=4 shiftwidth=4 foldmethod=syntax spell conceallevel=1
+  au FileType           tex                              let b:lexima_disabled = 1
+  au FileType           html,csv,tsv                     setlocal nowrap
+  au FileType           text,mail,markdown,help          setlocal noet spell
+  au FileType           gitcommit                        setlocal spell
   " テキストについて-もkeywordとする
-  au FileType           text,tex,markdown,gitcommit setlocal isk+=-
-  au FileType           log                         setlocal nowrap
+  au FileType           text,tex,markdown,gitcommit,help setlocal isk+=-
+  au FileType           log                              setlocal nowrap
 
   " 長い行がありそうな拡張子なら構文解析を途中でやめる
   au FileType           csv,tsv,json                setlocal synmaxcol=256
