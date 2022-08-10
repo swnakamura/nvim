@@ -69,7 +69,7 @@ repo = 'matsui54/ddc-dictionary'
 repo =  'kyazdani42/nvim-tree.lua'
 hook_add = '''
 nmap <silent> <leader>d :<C-u>exe 'lcd' expand('%:p:h')<CR><Cmd>NvimTreeToggle<CR>
-nmap <silent> [Win]t    :<C-u>tab sp<CR><leader>d
+nmap <silent> <Plug>(my-win)t    :<C-u>tab sp<CR><leader>d
 nmap <silent> <leader>n <Cmd>NvimTreeFocus<CR>
 '''
 hook_post_source = '''
