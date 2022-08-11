@@ -38,11 +38,6 @@ if has('vim_starting') && dein#check_install()
   call dein#install()
 endif
 
-let g:vimtex_syntax_enabled = 0
-
-" completion
-let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
-
 if exists("g:dein#install_github_api_token")
     cabbrev deup call dein#check_update(v:true)
 else
