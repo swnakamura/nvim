@@ -4,7 +4,9 @@ inoremap <silent><expr> <F2> <SID>fcitx_toggle()
 augroup fcitx_autoenable
     autocmd!
     autocmd InsertEnter * if get(b:, 'fcitx_autoenable', '0') | call s:enable() | endif
+    autocmd CmdLineEnter /,\? if get(b:, 'fcitx_autoenable', '0') | call s:enable() | endif
     autocmd InsertLeave * call s:disable()
+    autocmd CmdlineLeave /,\? call s:disable()
     " autocmd FileType markdown,pixiv nnoremap <buffer><silent><expr> <F2> <SID>fcitx_toggle()
 augroup END
 
