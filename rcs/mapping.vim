@@ -125,12 +125,15 @@ nnoremap gR R
 nnoremap x "_x
 
 " quit this window by q
-nnoremap <silent> <leader>q <Cmd>q<CR>
+nnoremap <silent> <leader>q :call <SID>sayonara()<CR>
+function s:sayonara() abort
+    let bufnr = bufnr()
+    quit
+    if bufnr->win_findbuf()->len() == 0
+        silent! exe 'bdel' bufnr
+    endif
+endfunction
 nnoremap <silent> <leader>wq <Cmd>qa<CR>
-nnoremap <silent> <leader>Q <Cmd>qa<CR>
-
-" delete this buffer by bd
-nnoremap <silent> <leader>bd <Cmd>bd<CR>
 
 
 " increase and decrease by plus/minus
