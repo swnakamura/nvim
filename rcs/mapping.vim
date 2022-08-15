@@ -82,16 +82,33 @@ function! s:toggle_syntax() abort
     echo 'syntax on'
   endif
 endfunction
-
-" move by display line
-nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
-xnoremap <expr> j (v:count == 0 && mode() ==# 'v') ? 'gj' : 'j'
-nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
-xnoremap <expr> k (v:count == 0 && mode() ==# 'v') ? 'gk' : 'k'
-nnoremap gj j
-nnoremap gk k
-xnoremap gj j
-xnoremap gk k
+nnoremap <silent> <Plug>(my-switch)m :call <SID>toggle_move_g()<CR>
+function s:toggle_move_g() abort
+    if exists('b:gj_gk_enabled')
+        unlet b:gj_gk_enabled
+        echo 'gj/gk disabled'
+        nunmap k
+        nunmap j
+        xunmap k
+        xunmap j
+        nunmap gk
+        nunmap gj
+        xunmap gk
+        xunmap gj
+    else
+        let b:gj_gk_enabled=1
+        echo 'gj/gk enabled'
+        " move by display line
+        nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
+        xnoremap <expr> j (v:count == 0 && mode() ==# 'v') ? 'gj' : 'j'
+        nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
+        xnoremap <expr> k (v:count == 0 && mode() ==# 'v') ? 'gk' : 'k'
+        nnoremap gj j
+        nnoremap gk k
+        xnoremap gj j
+        xnoremap gk k
+    endif
+endfunction
 
 " ctrlで画面上・下に移動
 nnoremap <C-j> L
