@@ -39,7 +39,7 @@ if executable('deno')
     let g:LSP_commands['javascript'] = 'denols'
 endif
 
-let s:local_path=expand("~")
+let s:local_path=$HOME
 
 " 追加したそれぞれの言語についてLSP設定を起動
 lua << EOF

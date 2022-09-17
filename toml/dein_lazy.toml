@@ -73,7 +73,7 @@ nmap <silent> <Plug>(my-win)t    :<C-u>tab sp<CR><leader>d
 nmap <silent> <leader>n <Cmd>NvimTreeFocus<CR>
 '''
 hook_post_source = '''
-exe 'source' expand('~/.config/nvim/toml/nvim-tree.lua')
+exe 'source' $HOME . '/.config/nvim/toml/nvim-tree.lua'
 '''
 on_map = ['<Cmd>NvimTreeToggle', '<Cmd>NvimTreeFocus']
 

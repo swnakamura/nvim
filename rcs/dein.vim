@@ -1,5 +1,5 @@
 "plugin settings
-let s:nvim_home = expand('~/.config/nvim/')
+let s:nvim_home = $HOME . '/.config/nvim/'
 let s:dein_home = s:nvim_home . 'dein'
 
 if !isdirectory(s:dein_home)
@@ -16,7 +16,7 @@ if dein#load_state(s:dein_home)
   let s:novscode_toml = s:nvim_home . 'toml/dein_novscode.toml'
 
   " obtain cache directory
-  let s:cache_home = expand('~/.cache/')
+  let s:cache_home = $HOME . '/.cache/'
   let s:cache_dein = s:cache_home . 'dein/dein.vim'
 
   " let's begin...
