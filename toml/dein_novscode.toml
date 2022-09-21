@@ -1,14 +1,11 @@
 # Ultisnip and snippet list
 [[plugins]]
-repo = 'Sirver/ultisnips'
+repo = 'L3MON4D3/LuaSnip'
 hook_add = '''
-" Trigger configuration. You need to change this to something else than <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+call Luasnip_add()
+'''
+hook_post_source = '''
+exe 'source' $HOME . '/.config/nvim/toml/luasnip.lua'
 '''
 [[plugins]]
 repo = 'honza/vim-snippets'
@@ -25,7 +22,7 @@ depends = 'fzf'
 hook_add = 'call Fzf_add()'
 
 [[plugins]]
-repo = 'airblade/vim-gitgutter'
+repo = '~/ghq/github.com/airblade/vim-gitgutter'
 hook_add = 'call Gitgutter_add()'
 
 [[plugins]]
@@ -130,6 +127,9 @@ hook_install = 'TSUpdate'
 hook_post_update = 'TSUpdate'
 
 [[plugins]]
+repo = '~/ghq/github.com/woodyZootopia/novel_formatter'
+
+[[plugins]]
 repo = 'https://github.com/nvim-orgmode/orgmode'
 hook_post_source = '''
 lua <<EOF
@@ -159,8 +159,6 @@ lua <<EOF
 require("noice").setup()
 EOF
 '''
-[[plugins]]
-repo = 'kristijanhusak/defx-git'
 [[plugins]]
 repo = '~/ghq/github.com/woodyZootopia/novel-preview.vim'
 

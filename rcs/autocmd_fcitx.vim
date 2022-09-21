@@ -27,9 +27,9 @@ function! s:fcitx_toggle() abort
 endfunction
 
 function! s:enable() abort
-    call system('fcitx5-remote -o')
+    call system('zenhan.exe 1')
 endfunction
 
 function! s:disable() abort
-    call system('fcitx5-remote -c')
+    call system('zenhan.exe 0')
 endfunction
