@@ -119,7 +119,7 @@ let g:floaterm_width=0.9
 let g:floaterm_height=0.9
 nnoremap <Plug>(my-win)z <Cmd>FloatermToggle<CR>
 tnoremap <silent> <C-[> <C-\><C-n>:FloatermToggle<CR>
-tnoremap <silent> <C-l> <C-\><C-n>:FloatermToggle<CR>
+tnoremap <silent> <C-l> <C-\><C-n>
 '''
 
 # [[plugins]]
