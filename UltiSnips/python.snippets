@@ -1,3 +1,9 @@
+snippet pdb "pydebug" b
+__import__('pdb').set_trace()
+endsnippet
+snippet pf "print format" b
+print(f"{$1}")$0
+endsnippet
 snippet plotbase "plot base" b
 from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
