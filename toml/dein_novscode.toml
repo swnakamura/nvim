@@ -146,9 +146,9 @@ let g:defx_default_invocation = "Defx
     \ -columns=time:size:indent:icons:space:space:git:filename
     \ -buffer-name=defx"
 
-nnoremap <silent> <Plug>(my-win)t    :exe g:defx_default_invocation '-split=tab'                   expand('%:p:h') '-search=' . expand('%:p')<CR>
-nnoremap <silent> <leader>d :exe g:defx_default_invocation '-split=no'                    expand('%:p:h') '-search=' . expand('%:p')<CR>
-nnoremap <silent> <leader>n :exe g:defx_default_invocation '-split=vertical -winwidth=50' expand('%:p:h') '-search=' . expand('%:p')<CR>
+nnoremap <silent> <Plug>(my-win)t :exe g:defx_default_invocation expand('%:p:h') '-split=tab -columns=time:size:indent:icons:space:space:git:filename'<CR>
+nnoremap <silent> <leader>d       :exe g:defx_default_invocation expand('%:p:h') '-split=no  -columns=time:size:indent:icons:space:space:git:filename'<CR>
+nnoremap <silent> <leader>n       :exe g:defx_default_invocation expand('%:p:h') '-split=vertical -winwidth=30 -direction=topleft -columns=indent:icons:space:filename'<CR>
 
 autocmd FileType defx call s:defx_my_settings()
 function!  s:defx_my_settings() abort

@@ -19,7 +19,21 @@ augroup file-type
 
   " 長い行がありそうな拡張子なら構文解析を途中でやめる
   au FileType           csv,tsv,json                setlocal synmaxcol=256
+
+  " 下を参照
+  au FileType           defx                             call s:defxLocalMapping()
 augroup END
+
+" When in defx window and created a new window, use another defx instance for
+" it
+function! s:defxLocalMapping() abort
+    nnoremap <buffer> <Plug>(my-win)s <Cmd>split<CR><Cmd>exe g:defx_default_invocation<CR>
+    nnoremap <buffer> <Plug>(my-win)v <Cmd>vsplit<CR><Cmd>exe g:defx_default_invocation<CR>
+    nnoremap <buffer> <Plug>(my-win)c <Cmd>tab sp<CR><Cmd>exe g:defx_default_invocation<CR>
+    nnoremap <buffer> <Plug>(my-win)t <Cmd>tab sp<CR><Cmd>exe g:defx_default_invocation<CR>
+    nnoremap <buffer> <Plug>(my-win)C <Cmd>-tab sp<CR><Cmd>exe g:defx_default_invocation<CR>
+    nnoremap <buffer> <leader>d <Cmd>exe g:defx_default_invocation<CR>
+endfunction
 
 augroup local-leader
     autocmd!
