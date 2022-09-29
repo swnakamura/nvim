@@ -35,15 +35,15 @@ function! s:defxLocalMapping() abort
     nnoremap <buffer> <leader>d <Cmd>exe g:defx_default_invocation<CR>
 endfunction
 
-augroup local-leader
-    autocmd!
-    autocmd FileType tex    map <buffer> <localleader>s <plug>(vimtex-env-toggle-star)
-    autocmd FileType tex    map <buffer> <localleader>t <plug>(vimtex-toc-toggle)
-    autocmd FileType tex    map <buffer> <localleader>e <plug>(vimtex-env-change)
-    autocmd FileType tex    map <buffer> <localleader>d <plug>(vimtex-delim-toggle-modifier)
-    autocmd FileType python map <buffer> <localleader>r :%AsyncRun python<CR>
-    autocmd FileType ruby   map <buffer> <localleader>r :%AsyncRun ruby<CR>
-augroup END
+if !exists('g:vscode')
+    augroup defx-hijack-netrw
+        au!
+        au VimEnter * sil! au! FileExplorer *
+        au BufEnter * if s:isdir(expand('%')) 
+        au BufEnter *   let s:dirname=expand('%') | bd | exe g:defx_default_invocation . s:dirname 
+        au BufEnter * endif
+    augroup END
+endif
 
 "autopep8を<sift>+fで実行
 function! Preserve(command)
