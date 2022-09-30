@@ -15,7 +15,7 @@ set sessionoptions-=blank
 set sessionoptions-=buffers
 
 " file encoding
-set encoding=utf-8 fileencodings=utf-8,ios-2022-jp,euc-jp,sjis,cp932
+set fileencodings=utf-8,ios-2022-jp,euc-jp,sjis,cp932
 
 " use gui colors
 set termguicolors
@@ -32,7 +32,7 @@ set completeopt-=preview
 set nrformats=alpha,octal,hex,bin
 
 " search settings
-set ignorecase smartcase incsearch nohlsearch nowrapscan
+set ignorecase smartcase nohlsearch nowrapscan
 
 " line number settings
 set relativenumber
@@ -57,7 +57,7 @@ set winblend=25 pumblend=20
 
 " tab settings
 set tabstop=4 shiftwidth=4
-set smarttab smartindent expandtab
+set smartindent expandtab
 
 "日本語(マルチバイト文字)行の連結時には空白を入力しない
 setglobal formatoptions+=mM
@@ -89,8 +89,6 @@ set splitright
 set noshowmode
 
 set mouse=a
-
-set signcolumn=auto
 
 set matchpairs+=「:」,（:）,『:』,【:】,〈:〉,《:》,〔:〕,｛:｝
 
