@@ -45,7 +45,6 @@ if !exists('g:vscode')
     augroup END
 endif
 
-"autopep8を<sift>+fで実行
 function! Preserve(command)
     " Save the last search.
     let search = @/

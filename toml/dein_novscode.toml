@@ -160,6 +160,7 @@ function!  s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> l             defx#call_async_action('open_directory')
     nnoremap <silent><buffer><expr> K             defx#do_action('new_directory')
     nnoremap <silent><buffer><expr> L             defx#do_action('new_file')
+    nnoremap <silent><buffer><expr> a             defx#do_action('new_file')
     nnoremap <silent><buffer><expr> h             defx#call_async_action('cd', ['..'])
     nnoremap <silent><buffer><expr> d             defx#do_action('remove_trash',[v:true])
     nnoremap <silent><buffer><expr> D             defx#do_action('remove')
