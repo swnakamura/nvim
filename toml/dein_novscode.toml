@@ -203,3 +203,29 @@ endfunction
 repo = 'kristijanhusak/defx-icons'
 [[plugins]]
 repo = 'kristijanhusak/defx-git'
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+merged = '0'
+hook_post_source = 'call Treesitter_postsource()'
+hook_install = 'TSUpdate'
+hook_post_update = 'TSUpdate'
+
+[[plugins]]
+repo = 'https://github.com/nvim-orgmode/orgmode'
+hook_post_source = '''
+lua <<EOF
+-- Load custom tree-sitter grammar for org filetype
+require('orgmode').setup_ts_grammar()
+
+require('orgmode').setup({
+  org_agenda_files = {'~/org/*'},
+  org_default_notes_file = '~/org/refile.org',
+})
+EOF
+augroup org-mode
+    autocmd FileType org nnoremap <buffer> + <Cmd>lua require("orgmode").action("org_mappings.todo_next_state")<CR>
+    autocmd FileType org nnoremap <buffer> t <Cmd>lua require("orgmode").action("org_mappings.todo_next_state")<CR>
+    autocmd FileType org nnoremap <buffer> - <Cmd>lua require("orgmode").action("org_mappings.todo_prev_state")<CR>
+augroup END
+'''

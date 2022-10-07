@@ -119,14 +119,6 @@ hook_add = 'call Nerdcommenter_add()'
 on_map = '<Plug>kommentary'
 
 [[plugins]]
-repo = 'nvim-treesitter/nvim-treesitter'
-merged = '0'
-hook_post_source = 'call Treesitter_postsource()'
-hook_install = 'TSUpdate'
-hook_post_update = 'TSUpdate'
-on_ft = ['c', 'cpp', 'python', 'rust', 'latex', 'vim']
-
-[[plugins]]
 repo = 'hail2u/vim-css3-syntax'
 on_ft = 'css'
 [[plugins]]
