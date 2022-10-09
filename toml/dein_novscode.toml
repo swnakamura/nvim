@@ -122,16 +122,6 @@ tnoremap <silent> <C-[> <C-\><C-n>:FloatermToggle<CR>
 tnoremap <silent> <C-l> <C-\><C-n>
 '''
 
-# [[plugins]]
-# repo='~/ghq/github.com/woodyZootopia/novel-char-counter'
-# hook_post_source='''
-# augroup calc-novel-diff
-#     autocmd!
-#     autocmd BufReadPost,BufWritePost,InsertLeave *.txt call NCCUpdateEditDistance()
-# augroup END
-
-# '''
-
 [[plugins]]
 repo = 'Shougo/defx.nvim'
 hook_add = '''

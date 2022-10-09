@@ -58,10 +58,6 @@ repo = 'kyazdani42/nvim-web-devicons'
 # [[plugins]]
 # repo = 'hynek/vim-python-pep8-indent'
 # [[plugins]]
-# repo = 'jceb/vim-orgmode'
-# [[plugins]]
-# repo = 'qnighy/satysfi.vim'
-# [[plugins]]
 # repo = 'cakebaker/scss-syntax.vim'
 
 [[plugins]]
