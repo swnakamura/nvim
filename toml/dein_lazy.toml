@@ -43,8 +43,8 @@ on_ft = ['lisp']
 [[plugins]]
 repo = 'Shougo/ddc.vim'
 hook_post_source = 'call Ddc_add()'
-on_event = 'InsertEnter'
-depends = ['ddc-nvim-lsp', 'ddc-matcher_fuzzy', 'ddc-ultisnips', 'ddc-sorter_rank', 'ddc-around', 'ddc-buffer', 'ddc-file', 'ddc-dictionary']
+on_event = ['InsertEnter', 'CmdlineEnter']
+depends = ['ddc-nvim-lsp', 'ddc-matcher_fuzzy', 'ddc-ultisnips', 'ddc-sorter_rank', 'ddc-around', 'ddc-buffer', 'ddc-file', 'ddc-dictionary', 'pum.vim', 'ddc-cmdline', 'ddc-cmdline-history']
 
 [[plugins]]
 repo = 'Shougo/ddc-nvim-lsp'
@@ -62,6 +62,12 @@ repo = 'matsui54/ddc-buffer'
 repo = 'LumaKernel/ddc-file'
 [[plugins]]
 repo = 'matsui54/ddc-dictionary'
+[[plugins]]
+repo = 'Shougo/pum.vim'
+[[plugins]]
+repo = 'Shougo/ddc-cmdline'
+[[plugins]]
+repo = 'Shougo/ddc-cmdline-history'
 
 # align
 [[plugins]]

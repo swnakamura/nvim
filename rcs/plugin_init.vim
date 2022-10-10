@@ -12,6 +12,7 @@ endfunction
 
 function! Ddc_add() abort
     call ddc#custom#patch_global('sources', ['file', 'nvim-lsp', 'around', 'ultisnips', 'buffer'])
+    call ddc#custom#patch_global('cmdlineSources', ['cmdline', 'cmdline-history', 'file', 'around'])
     if filereadable('/usr/share/dict/words')
         set dictionary+=/usr/share/dict/words
     endif
@@ -29,12 +30,69 @@ function! Ddc_add() abort
         \ '_': { 'matchers': ['matcher_fuzzy'],
         \        'sorters':  ['sorter_rank'],
         \        'ignoreCase': v:true},
-        \   })
+        \ 'cmdline': {
+        \       'mark': 'cmdline',
+        \       'forceCompletionPattern': '\S/\S*',
+        \       'dup': 'force',
+        \   }
+        \})
     call ddc#custom#patch_global('sourceParams', {
         \ 'nvim-lsp': { 'kindLabels': { 'Class': 'c' } },
         \ 'buffer': {'requireSameFiletype': v:false},
         \   })
     call ddc#enable()
+
+    " Use pum.vim
+	call ddc#custom#patch_global('autoCompleteEvents', [
+		\ 'InsertEnter', 'TextChangedI', 'TextChangedP',
+		\ 'CmdlineEnter', 'CmdlineChanged',
+		\ ])
+    call ddc#custom#patch_global('completionMenu', 'pum.vim')
+
+    " pum mappings
+    inoremap <silent><expr> <C-n>   pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' : "<C-r>=ExecExCommand('normal gj')<CR>"
+    inoremap <silent><expr> <C-p>   pum#visible() ? '<Cmd>call pum#map#insert_relative(-1)<CR>' : "<C-r>=ExecExCommand('normal gk')<CR>"
+
+    " command line settings
+	nnoremap : <Cmd>call CommandlinePre()<CR>:
+	function! CommandlinePre() abort
+	  " Note: It disables default command line completion!
+	  cnoremap <expr> <Tab>
+	  \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+	  \ ddc#manual_complete()
+	  cnoremap <expr> <S-Tab>
+	  \ pum#visible() ? '<Cmd>call pum#map#insert_relative(-1)<CR>' :
+	  \ ddc#manual_complete()
+	  cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+	  cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+
+	  " Overwrite sources
+	  if !exists('b:prev_buffer_config')
+		let b:prev_buffer_config = ddc#custom#get_buffer()
+	  endif
+	  call ddc#custom#patch_buffer('sources',
+			  \ ['cmdline', 'cmdline-history', 'around'])
+
+	  autocmd User DDCCmdlineLeave ++once call CommandlinePost()
+	  autocmd InsertEnter <buffer> ++once call CommandlinePost()
+	  " Enable command line completion
+	  call ddc#enable_cmdline_completion()
+	endfunction
+
+	function! CommandlinePost() abort
+	  cunmap <Tab>
+	  cunmap <S-Tab>
+	  cunmap <C-y>
+	  cunmap <C-e>
+
+	  " Restore sources
+	  if exists('b:prev_buffer_config')
+		call ddc#custom#set_buffer(b:prev_buffer_config)
+		unlet b:prev_buffer_config
+	  else
+		call ddc#custom#set_buffer({})
+	  endif
+	endfunction
 endfunction
 
 function! Nerdcommenter_add() abort
