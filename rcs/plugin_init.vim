@@ -95,18 +95,6 @@ function! Ddc_add() abort
 	endfunction
 endfunction
 
-function! Nerdcommenter_add() abort
-    nnoremap <C-->             <Plug>kommentary_line_default
-    vnoremap <C-->             <Plug>kommentary_visual_default<ESC>
-    nnoremap <leader>c<leader> <Plug>kommentary_line_default
-    vnoremap <leader>c<leader> <Plug>kommentary_visual_default<ESC>
-    nnoremap <leader>cc        <Plug>kommentary_line_increase
-    vnoremap <leader>cc        <Plug>kommentary_visual_increase<ESC>
-    nnoremap <leader>c         <Plug>kommentary_motion_increase
-    nnoremap <leader>cy        yy<Plug>kommentary_line_increase
-    vnoremap <leader>cy        ygv<Plug>kommentary_visual_increase<ESC>
-endfunction
-
 function! Textobjentire_add() abort
     let g:textobj_entire_no_default_key_mappings = 1
     omap av <Plug>(textobj-entire-a)

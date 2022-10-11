@@ -62,3 +62,13 @@ repo = 'kyazdani42/nvim-web-devicons'
 
 [[plugins]]
 repo = 'wellle/context.vim'
+
+# commenter
+[[plugins]]
+repo = 'preservim/nerdcommenter'
+hook_add = '''
+let g:NERDSpaceDelims=1
+let g:NERDDefaultAlign='left'
+let g:NERDCustomDelimiters = {'vim': {'left': '"','right':''}}
+noremap <C-_> <Plug>NERDCommenterToggle
+'''

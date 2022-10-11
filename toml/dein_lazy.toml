@@ -174,11 +174,6 @@ let g:textobj_python_no_default_key_mappings = 1
 hook_post_source = 'call Textobjpython_postsource()'
 on_ft = 'python'
 
-# commenter
-[[plugins]]
-repo = 'b3nj5m1n/kommentary'
-hook_add = 'call Nerdcommenter_add()'
-on_map = '<Plug>kommentary'
 
 [[plugins]]
 repo = 'hail2u/vim-css3-syntax'
