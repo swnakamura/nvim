@@ -147,3 +147,15 @@ augroup org-mode
     autocmd FileType org nnoremap <buffer> - <Cmd>lua require("orgmode").action("org_mappings.todo_prev_state")<CR>
 augroup END
 '''
+[[plugins]]
+repo = 'MunifTanjim/nui.nvim'
+[[plugins]]
+repo = 'rcarriga/nvim-notify'
+
+[[plugins]]
+repo = 'https://github.com/folke/noice.nvim'
+hook_post_source = '''
+lua <<EOF
+require("noice").setup()
+EOF
+'''
