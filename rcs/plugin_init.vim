@@ -250,7 +250,7 @@ require'nvim-treesitter.configs'.setup {
   indent = {
     enable = false
   },
-  ensure_installed = {'c', 'cpp', 'python', 'rust'}
+  ensure_installed = {'c', 'cpp', 'python', 'rust', 'org'}
 }
 EOF
 endfunction
