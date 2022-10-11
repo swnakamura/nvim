@@ -117,8 +117,8 @@ repo = 'voldikss/vim-floaterm.git'
 hook_add = '''
 let g:floaterm_width=0.9
 let g:floaterm_height=0.9
-nnoremap <Plug>(my-win)z <Cmd>FloatermToggle<CR>
-tnoremap <silent> <C-[> <C-\><C-n>:FloatermToggle<CR>
+nnoremap <Plug>(my-win)z :<C-u>ContextDisable<CR>:FloatermToggle<CR>
+tnoremap <silent> <C-[> <C-\><C-n>:FloatermToggle<CR>:ContextEnable<CR>
 tnoremap <silent> <C-l> <C-\><C-n>
 '''
 
