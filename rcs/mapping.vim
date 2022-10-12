@@ -196,16 +196,16 @@ else
 endif
 
 " quickfix jump
-nmap [q <Cmd>cprevious<CR>   " 前へ
-nmap ]q <Cmd>cnext<CR>       " 次へ
-nmap [Q <Cmd>cfirst<CR> " 最初へ
-nmap ]Q <Cmd>clast<CR>  " 最後へ
+nmap [q <Cmd>cprevious<CR>
+nmap ]q <Cmd>cnext<CR>
+nmap [Q <Cmd>cfirst<CR>
+nmap ]Q <Cmd>clast<CR>
 
 " window-local quickfix jump
-nmap [w <Cmd>lprevious<CR>   " 前へ
-nmap ]w <Cmd>lnext<CR>       " 次へ
-nmap [W <Cmd>lfirst<CR> " 最初へ
-nmap ]W <Cmd>llast<CR>  " 最後へ
+nmap [w <Cmd>lprevious<CR>
+nmap ]w <Cmd>lnext<CR>
+nmap [W <Cmd>lfirst<CR>
+nmap ]W <Cmd>llast<CR>
 
 " Open quickfix window
 " nnoremap Q <Cmd>copen<CR>
