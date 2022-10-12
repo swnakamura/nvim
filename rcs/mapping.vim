@@ -109,6 +109,20 @@ function s:toggle_move_g() abort
         xnoremap gk k
     endif
 endfunction
+let g:is_noice_enabled = v:true
+nnoremap <silent> <Plug>(my-switch)n :call <SID>toggle_noice()<CR>
+function s:toggle_noice() abort
+    if g:is_noice_enabled
+        let g:is_noice_enabled=v:false
+        Noice disable
+        set cmdheight=1
+        echomsg 'noice disabled'
+    else
+        let g:is_noice_enabled=v:true
+        Noice enable
+        echomsg 'noice enabled'
+    endif
+endfunction
 
 " ctrlで画面上・下に移動
 nnoremap <C-j> L
