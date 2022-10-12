@@ -139,15 +139,19 @@ nnoremap gR R
 nnoremap x "_x
 
 " quit this window by q
-nnoremap <silent> <leader>q :call <SID>sayonara()<CR>
-function s:sayonara() abort
-    let bufnr = bufnr()
-    quit
-    if bufnr->win_findbuf()->len() == 0
-        silent! exe 'bdel' bufnr
-    endif
+nnoremap <silent> <leader>q <Cmd>quit<CR>
+nnoremap <silent> <leader>wq :<C-u>call <SID>del_not_shown_buffer()<CR>:qall<CR>
+" nnoremap <silent> <leader>wq :qall<CR>
+
+function <SID>del_not_shown_buffer() abort
+    let buflist = nvim_list_bufs()
+    for b in buflist
+        if b->win_findbuf() == [] && b->bufname() != ''
+            echo b->bufname()
+            silent! exec 'bdel ' . b
+        endif
+    endfor
 endfunction
-nnoremap <silent> <leader>wq <Cmd>qa<CR>
 
 
 " increase and decrease by plus/minus
