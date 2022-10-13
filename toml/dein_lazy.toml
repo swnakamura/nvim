@@ -56,16 +56,19 @@ on_event = ['InsertEnter', 'CmdlineEnter']
 hook_post_source = 'call Nvim_cmp_postsource()'
 
 [[plugins]]
-repo =  'kyazdani42/nvim-tree.lua'
+repo = 'https://github.com/nvim-neo-tree/neo-tree.nvim'
+depends = ['plenary.nvim']
 hook_add = '''
-nmap <silent> <leader>d :<C-u>exe 'lcd' expand('%:p:h')<CR><Cmd>NvimTreeToggle<CR>
+nmap <silent> <leader>d :<C-u>exe 'lcd' expand('%:p:h')<CR><Cmd>Neotree reveal<CR>
 nmap <silent> <Plug>(my-win)t    :<C-u>tab sp<CR><leader>d
-nmap <silent> <leader>n <Cmd>NvimTreeFocus<CR>
+let g:neo_tree_remove_legacy_commands = 1
 '''
 hook_post_source = '''
 exe 'source' $HOME . '/.config/nvim/toml/nvim-tree.lua'
 '''
-on_map = ['<Cmd>NvimTreeToggle', '<Cmd>NvimTreeFocus']
+on_map = ['<Cmd>Neotree']
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
 
 # align
 [[plugins]]
