@@ -35,16 +35,6 @@ function! s:defxLocalMapping() abort
     nnoremap <buffer> <leader>d <Cmd>exe g:defx_default_invocation<CR>
 endfunction
 
-if !exists('g:vscode')
-    augroup defx-hijack-netrw
-        au!
-        au VimEnter * sil! au! FileExplorer *
-        au BufEnter * if s:isdir(expand('%')) 
-        au BufEnter *   let s:dirname=expand('%') | bd | exe g:defx_default_invocation . s:dirname 
-        au BufEnter * endif
-    augroup END
-endif
-
 function! Preserve(command)
     " Save the last search.
     let search = @/
