@@ -50,6 +50,8 @@ if !exists('g:vscode')
     hi GitGutterDelete       guibg=#161821
     " Do not show horizontal line in deleted
     hi DiffDelete guifg=#53343b
+    " nvim-tree setting
+    hi! link NvimTreeIndentMarker LineNr
 endif
 " 最後に設定
 filetype plugin indent on

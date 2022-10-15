@@ -53,7 +53,9 @@ repo = 'quangnguyen30192/cmp-nvim-ultisnips'
 repo = 'hrsh7th/nvim-cmp'
 depends = ['nvim-lspconfig', 'cmp-nvim-lsp', 'cmp-buffer', 'cmp-path', 'cmp-cmdline', 'cmp-nvim-ultisnips' ]
 on_event = ['InsertEnter', 'CmdlineEnter']
-hook_post_source = 'call Nvim_cmp_postsource()'
+hook_post_source = '''
+exe 'source' $HOME . '/.config/nvim/toml/nvim-cmp.lua'
+'''
 
 [[plugins]]
 repo =  'kyazdani42/nvim-tree.lua'
