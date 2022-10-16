@@ -67,3 +67,5 @@ require('lspconfig')['clangd'].setup {
 }
 require('lspconfig')['texlab'].setup {
 }
+require('lspconfig')['vimls'].setup {
+}
