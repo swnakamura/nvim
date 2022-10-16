@@ -78,7 +78,7 @@ autocmd BufEnter * call LC_maps() " 今後のバッファのためにautocmd
 " 特定のファイルの時、保存時に整形する
 augroup lspAutoFormat
     autocmd!
-    autocmd BufWritePre *.js,*.ts,*.rs,*.c,*.cpp, lua vim.lsp.buf.formatting_sync(nil, 1000)
+    autocmd BufWritePre *.js,*.ts,*.rs,*.c,*.cpp, lua vim.lsp.buf.format(nil, 1000)
 augroup END
 
 lua require "lsp_signature".setup({

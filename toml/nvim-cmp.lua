@@ -69,3 +69,5 @@ require('lspconfig')['texlab'].setup {
 }
 require('lspconfig')['vimls'].setup {
 }
+require('lspconfig')['rust_analyzer'].setup {
+}
