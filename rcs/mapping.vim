@@ -65,12 +65,23 @@ nnoremap <leader><leader> <C-^>
 nnoremap <Plug>(my-switch) <Nop>
 nmap <localleader> <Plug>(my-switch)
 nnoremap <silent> <Plug>(my-switch)s :<C-u>setl spell! spell?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-s> :<C-u>setl spell! spell?<CR>
 nnoremap <silent> <Plug>(my-switch)l :<C-u>setl list! list?<CR>
-" nnoremap <silent> <Plug>(my-switch)t :<C-u>setl expandtab! expandtab?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-l> :<C-u>setl list! list?<CR>
+nnoremap <silent> <Plug>(my-switch)t :<C-u>setl expandtab! expandtab?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-t> :<C-u>setl expandtab! expandtab?<CR>
 nnoremap <silent> <Plug>(my-switch)w :<C-u>setl wrap! wrap?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-w> :<C-u>setl wrap! wrap?<CR>
 nnoremap <silent> <Plug>(my-switch)p :<C-u>setl paste! paste?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-p> :<C-u>setl paste! paste?<CR>
 nnoremap <silent> <Plug>(my-switch)b :<C-u>setl scrollbind! scrollbind?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-b> :<C-u>setl scrollbind! scrollbind?<CR>
 nnoremap <silent> <Plug>(my-switch)y :call <SID>toggle_syntax()<CR>
+nnoremap <silent> <Plug>(my-switch)<C-y> :call <SID>toggle_syntax()<CR>
+nnoremap <silent> <Plug>(my-switch)m :call <SID>toggle_move_g()<CR>
+nnoremap <silent> <Plug>(my-switch)<C-m> :call <SID>toggle_move_g()<CR>
+nnoremap <silent> <Plug>(my-switch)n :call <SID>toggle_noice()<CR>
+nnoremap <silent> <Plug>(my-switch)<C-n> :call <SID>toggle_noice()<CR>
 function! s:toggle_syntax() abort
   if exists('g:syntax_on')
     syntax off
@@ -82,7 +93,6 @@ function! s:toggle_syntax() abort
     echo 'syntax on'
   endif
 endfunction
-nnoremap <silent> <Plug>(my-switch)m :call <SID>toggle_move_g()<CR>
 function s:toggle_move_g() abort
     if exists('b:gj_gk_enabled')
         unlet b:gj_gk_enabled
@@ -110,7 +120,6 @@ function s:toggle_move_g() abort
     endif
 endfunction
 let g:is_noice_enabled = v:true
-nnoremap <silent> <Plug>(my-switch)n :call <SID>toggle_noice()<CR>
 function s:toggle_noice() abort
     if g:is_noice_enabled
         let g:is_noice_enabled=v:false
