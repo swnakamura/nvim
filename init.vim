@@ -32,7 +32,6 @@ exe 'source' g:nvim_home_directory .. 'rcs/set.vim'
 exe 'source' g:nvim_home_directory .. 'rcs/mapping.vim'
 exe 'source' g:nvim_home_directory .. 'rcs/autocmd.vim'
 exe 'source' g:nvim_home_directory .. "rcs/autocmd_fcitx.vim"
-exe 'source' g:nvim_home_directory .. 'rcs/mark.vim'
 
 if !exists('g:vscode')
     set background=dark
