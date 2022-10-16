@@ -1,6 +1,6 @@
 "plugin settings
-let s:nvim_home = $HOME . '/.config/nvim/'
-let s:dein_home = s:nvim_home . 'dein'
+let s:neovim_home = $HOME . '/.config/nvim/'
+let s:dein_home = s:neovim_home . 'dein'
 
 if !isdirectory(s:dein_home)
   call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_home))
@@ -11,12 +11,12 @@ let g:python3_host_prog = exepath('python3')
 let g:dein#types#git#clone_depth = 1
 if dein#load_state(s:dein_home)
   " list toml directory
-  let s:toml      = s:nvim_home . 'toml/dein.toml'
-  let s:lazy_toml = s:nvim_home . 'toml/dein_lazy.toml'
-  let s:novscode_toml = s:nvim_home . 'toml/dein_novscode.toml'
+  let s:toml      = s:neovim_home . 'toml/dein.toml'
+  let s:lazy_toml = s:neovim_home . 'toml/dein_lazy.toml'
+  let s:novscode_toml = s:neovim_home . 'toml/dein_novscode.toml'
 
   " obtain cache directory
-  let s:cache_home = $HOME . '/.cache/'
+  let s:cache_home = s:neovim_home . '/.cache/'
   let s:cache_dein = s:cache_home . 'dein/dein.vim'
 
   " let's begin...
