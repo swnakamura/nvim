@@ -176,7 +176,7 @@ repo='williamboman/mason-lspconfig.nvim'
 hook_add='''
 lua <<EOF
 require("mason-lspconfig").setup({
-    ensure_installed = { "sumneko_lua", "rust_analyzer", "pyright", "vim-language-server" }
+    ensure_installed = { "sumneko_lua", "rust_analyzer", "pyright", "vimls" }
 })
 EOF
 '''
