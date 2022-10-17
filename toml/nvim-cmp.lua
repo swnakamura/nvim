@@ -63,16 +63,22 @@ cmp.setup.cmdline(':', {
     })
 })
 
+local lspkind = require('lspkind')
+cmp.setup {
+  formatting = {
+    format = function(entry, vim_item)
+      if vim.tbl_contains({ 'path' }, entry.source.name) then
+        local icon, hl_group = require('nvim-web-devicons').get_icon(entry:get_completion_item().label)
+        if icon then
+          vim_item.kind = icon
+          vim_item.kind_hl_group = hl_group
+          return vim_item
+        end
+      end
+      return lspkind.cmp_format({ with_text = true })(entry, vim_item)
+    end
+  }
+}
+
 -- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
--- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-require('lspconfig')['pyright'].setup {
-}
-require('lspconfig')['clangd'].setup {
-}
-require('lspconfig')['texlab'].setup {
-}
-require('lspconfig')['vimls'].setup {
-}
-require('lspconfig')['rust_analyzer'].setup {
-}
