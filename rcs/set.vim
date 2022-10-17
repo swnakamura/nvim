@@ -94,6 +94,8 @@ set matchpairs+=「:」,（:）,『:』,【:】,〈:〉,《:》,〔:〕,｛:｝
 
 set spelllang=en,cjk
 
+setglobal signcolumn=yes
+
 " tmux cursor shape setting
 if exists('$TMUX')
   let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
