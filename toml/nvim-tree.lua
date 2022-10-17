@@ -20,6 +20,8 @@ require'nvim-tree'.setup {
                 { key = "l", action = "cd" },
                 { key = ".", action = "toggle_dotfiles" },
                 { key = "s", action = "" },
+                { key = "<C-s>", action = "split" },
+                { key = "<C-c>", action = "tabnew" },
                 { key = "x", action = "system_open" },
                 { key = "C", action = "cut" },
                 { key = "P", action = "paste" },

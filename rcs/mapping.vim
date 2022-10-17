@@ -25,6 +25,8 @@ nnoremap <Plug>(my-win)s <Cmd>split<CR>
 nnoremap <Plug>(my-win)v <Cmd>vsplit<CR>
 " st is used by nvim-tree
 nnoremap <Plug>(my-win)c <Cmd>tab sp<CR>
+nnoremap <C-w>c          <Cmd>tab sp<CR>
+nnoremap <C-w><C-c>      <Cmd>tab sp<CR>
 nnoremap <Plug>(my-win)C <Cmd>-tab sp<CR>
 nnoremap <Plug>(my-win)j <C-w>j
 nnoremap <Plug>(my-win)k <C-w>k
