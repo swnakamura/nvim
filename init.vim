@@ -55,5 +55,3 @@ endif
 " 最後に設定
 filetype plugin indent on
 syntax enable
-
-set conceallevel=0
