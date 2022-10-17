@@ -159,3 +159,43 @@ lua <<EOF
 require("noice").setup()
 EOF
 '''
+[[plugins]]
+repo = 'kristijanhusak/defx-git'
+[[plugins]]
+repo = '~/ghq/github.com/woodyZootopia/novel-preview.vim'
+
+[[plugins]]
+repo='~/ghq/github.com/woodyZootopia/novel-char-counter'
+hook_post_source='''
+augroup calc-novel-diff
+    autocmd!
+    autocmd BufReadPost,BufWritePost,InsertLeave *.txt call NCCUpdateEditDistance()
+augroup END
+'''
+
+# LSP configuration
+[[plugins]]
+repo='williamboman/mason.nvim'
+hook_add='''
+lua <<EOF
+require("mason").setup()
+EOF
+'''
+
+[[plugins]]
+repo='williamboman/mason-lspconfig.nvim'
+hook_add='''
+lua <<EOF
+require("mason-lspconfig").setup({
+    ensure_installed = { "sumneko_lua", "rust_analyzer", "pyright", "vim-language-server" }
+})
+EOF
+'''
+
+[[plugins]]
+repo = 'ray-x/lsp_signature.nvim'
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+hook_add = '''
+exe 'source' $HOME . '/.config/nvim/toml/lsp.lua'
+'''

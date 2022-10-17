@@ -93,20 +93,6 @@ luado require 'colorizer'.setup()
 ColorizerAttachToBuffer " Attach to the current buffer
 '''
 
-# LSP configuration
-[[plugins]]
-repo = 'neovim/nvim-lspconfig'
-on_ft = ['c', 'cpp', 'rust', 'python', 'vim', 'tex', 'javascript', 'typescript']
-depends = 'lsp_signature.nvim'
-hook_post_source = '''
-if !exists('g:vscode')
-    exe 'source' g:nvim_home_directory .. 'rcs/lsp.vim'
-endif
-LspStart
-'''
-[[plugins]]
-repo = 'ray-x/lsp_signature.nvim'
-
 [[plugins]]
 repo = 'tpope/vim-dispatch'
 on_map = '<Cmd>Dispatch!'
