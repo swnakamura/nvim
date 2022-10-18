@@ -20,13 +20,14 @@ local rep = extras.rep
 local postfix = require("luasnip.extras.postfix").postfix
 
 ls.add_snippets("python", {
-    s({
-        trig = "pf",
-        name = "print format"
-    }, {
-        t("print(\"f{"), i(1), t("}\")")
-    }),
-    s("pdb", {
-        t("__import__(\"pdb\").set_trace()")
-    }),
+    ls.parser.parse_snippet("pf", "print(f\"{$1}\")$0"),
+    ls.parser.parse_snippet("pdb", "__import__('pdb').set_trace()"),
+})
+
+ls.add_snippets("html", {
+    ls.parser.parse_snippet("rb", "<ruby>$1<rp> (</rp><rt>$2</rt><rp>) </rp></ruby>$0")
+})
+
+ls.add_snippets("markdown", {
+    ls.parser.parse_snippet("rb", "<ruby>$1<rp> (</rp><rt>$2</rt><rp>) </rp></ruby>$0")
 })
