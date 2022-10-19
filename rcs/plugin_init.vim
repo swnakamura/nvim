@@ -1,100 +1,3 @@
-function! Asterisk_add() abort
-    map *   <Plug>(asterisk-*)
-    map #   <Plug>(asterisk-#)
-    map g*  <Plug>(asterisk-g*)
-    map g#  <Plug>(asterisk-g#)
-    map z*  <Plug>(asterisk-z*)
-    map gz* <Plug>(asterisk-gz*)
-    map z#  <Plug>(asterisk-z#)
-    map gz# <Plug>(asterisk-gz#)
-    let g:asterisk#keeppos = 1
-endfunction
-
-function! Ddc_add() abort
-    call ddc#custom#patch_global('sources', ['file', 'nvim-lsp', 'around', 'ultisnips', 'buffer'])
-    call ddc#custom#patch_global('cmdlineSources', ['cmdline', 'cmdline-history', 'file', 'around'])
-    if filereadable('/usr/share/dict/words')
-        set dictionary+=/usr/share/dict/words
-    endif
-    call ddc#custom#set_context(["python", "c", "cpp", "[a-z, A-Z]+"], { ->
-      \ ddc#syntax#in('Comment') || ddc#syntax#in('String') || ddc#syntax#in('rustCommentLineDoc') ? {
-      \   'sources': ['file', 'dictionary', 'around', 'buffer'],
-      \ } : {} })
-    call ddc#custom#patch_filetype(["text", "markdown", "gitcommit", 'tex'], 'sources', ['file', 'nvim-lsp', 'ultisnips', 'around', 'buffer', 'dictionary'])
-    call ddc#custom#patch_global('sourceOptions', {
-        \ 'file': { 'mark': 'F', 'forceCompletionPattern': '\S/\S*'},
-        \ 'nvim-lsp': { 'mark':'lsp', 'forceCompletionPattern': '\.\w*|:\w*|->\w*'},
-        \ 'around': { 'mark': 'A' },
-        \ 'buffer': { 'mark': 'B' },
-        \ 'ultisnips': { 'mark': 'US' },
-        \ '_': { 'matchers': ['matcher_fuzzy'],
-        \        'sorters':  ['sorter_rank'],
-        \        'ignoreCase': v:true},
-        \ 'cmdline': {
-        \       'mark': 'cmdline',
-        \       'forceCompletionPattern': '\S/\S*',
-        \       'dup': 'force',
-        \   }
-        \})
-    call ddc#custom#patch_global('sourceParams', {
-        \ 'nvim-lsp': { 'kindLabels': { 'Class': 'c' } },
-        \ 'buffer': {'requireSameFiletype': v:false},
-        \   })
-    call ddc#enable()
-
-    " Use pum.vim
-	call ddc#custom#patch_global('autoCompleteEvents', [
-		\ 'InsertEnter', 'TextChangedI', 'TextChangedP',
-		\ 'CmdlineEnter', 'CmdlineChanged',
-		\ ])
-    call ddc#custom#patch_global('completionMenu', 'pum.vim')
-
-    " pum mappings
-    inoremap <silent><expr> <C-n>   pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' : "<C-r>=ExecExCommand('normal gj')<CR>"
-    inoremap <silent><expr> <C-p>   pum#visible() ? '<Cmd>call pum#map#insert_relative(-1)<CR>' : "<C-r>=ExecExCommand('normal gk')<CR>"
-
-    " command line settings
-	nnoremap : <Cmd>call CommandlinePre()<CR>:
-	function! CommandlinePre() abort
-	  " Note: It disables default command line completion!
-	  cnoremap <expr> <Tab>
-	  \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
-	  \ ddc#manual_complete()
-	  cnoremap <expr> <S-Tab>
-	  \ pum#visible() ? '<Cmd>call pum#map#insert_relative(-1)<CR>' :
-	  \ ddc#manual_complete()
-	  cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
-	  cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
-
-	  " Overwrite sources
-	  if !exists('b:prev_buffer_config')
-		let b:prev_buffer_config = ddc#custom#get_buffer()
-	  endif
-	  call ddc#custom#patch_buffer('sources',
-			  \ ['cmdline', 'cmdline-history', 'around'])
-
-	  autocmd User DDCCmdlineLeave ++once call CommandlinePost()
-	  autocmd InsertEnter <buffer> ++once call CommandlinePost()
-	  " Enable command line completion
-	  call ddc#enable_cmdline_completion()
-	endfunction
-
-	function! CommandlinePost() abort
-	  cunmap <Tab>
-	  cunmap <S-Tab>
-	  cunmap <C-y>
-	  cunmap <C-e>
-
-	  " Restore sources
-	  if exists('b:prev_buffer_config')
-		call ddc#custom#set_buffer(b:prev_buffer_config)
-		unlet b:prev_buffer_config
-	  else
-		call ddc#custom#set_buffer({})
-	  endif
-	endfunction
-endfunction
-
 function! Textobjentire_add() abort
     let g:textobj_entire_no_default_key_mappings = 1
     omap av <Plug>(textobj-entire-a)
@@ -147,13 +50,10 @@ function! Vimtex_add() abort
     " let g:vimtex_quickfix_enabled=0
     let g:vimtex_quickfix_mode = 0
     let g:vimtex_fold_manual = 1
+    let g:vimtex_syntax_enabled = 0
+    let g:vimtex_syntax_conceal_disable = 1
     " let g:vimtex_view_method='zathura'
     " set fillchars=fold:\ 
-    " let g:vimtex_mappings_disable = {
-    "     \ 'n': ['tsc', 'tse', 'tsd', 'tsD', 'tsf'],
-    "     \ 'x': ['tsd', 'tsD', 'tsf'],
-    "     \ 'i': [']]'],
-    "     \}
     let g:vimtex_compiler_latexmk = {
             \ 'build_dir' : 'livepreview',
           \}
@@ -242,15 +142,13 @@ require'nvim-treesitter.configs'.setup {
     disable = {
       'lua',
       'toml',
-      'tex',
-      'latex',
       'vim',
     }
   },
   indent = {
     enable = false
   },
-  ensure_installed = {'c', 'cpp', 'python', 'rust', 'org'}
+  ensure_installed = {'c', 'cpp', 'python', 'rust', 'org', 'latex'}
 }
 EOF
 endfunction

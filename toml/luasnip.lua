@@ -40,3 +40,34 @@ ls.add_snippets("html", {
 ls.add_snippets("markdown", {
     ls.parser.parse_snippet("rb", "<ruby>$1<rp> (</rp><rt>$2</rt><rp>) </rp></ruby>$0")
 })
+ls.add_snippets("tex", {
+    ls.parser.parse_snippet("jbase",
+    [[
+\documentclass[12pt,a4paper,titlepage]{jlreq}
+% \usepackage{/home/snakamura/ghq/github.com/woodyZootopia/latex-macros/macros-maths}
+% \usepackage[
+%     backend=biber,
+%     style=numeric,
+%     sortlocale=en_US,
+%     natbib=true,
+%     url=true, 
+%     doi=true,
+%     eprint=false
+% ]{biblatex}
+% \addbibresource{citations.bib}
+% \usepackage{luatexja-ruby}
+%
+\title{${1:レポート}}
+\author{${2}}
+%
+\begin{document}
+\maketitle
+
+\setcounter{tocdepth}{5}
+% \tableofcontents
+
+${0:Hello, world!}
+\end{document}
+]]
+    )
+})

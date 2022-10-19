@@ -20,7 +20,7 @@ exe 'source' $HOME . '/.config/nvim/toml/luasnip.lua'
 [[plugins]]
 repo = 'https://github.com/iurimateus/luasnip-latex-snippets.nvim'
 hook_add = '''
-lua require'luasnip-latex-snippets'.setup()
+lua require'luasnip-latex-snippets'.setup({use_treesitter = true})
 '''
 
 # fzf
