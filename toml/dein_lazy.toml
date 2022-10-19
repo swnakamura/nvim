@@ -48,12 +48,12 @@ repo = 'hrsh7th/cmp-path'
 [[plugins]]
 repo = 'hrsh7th/cmp-cmdline'
 [[plugins]]
-repo = 'quangnguyen30192/cmp-nvim-ultisnips'
+repo = 'saadparwaiz1/cmp_luasnip'
 [[plugins]]
 repo = 'onsails/lspkind.nvim'
 [[plugins]]
 repo = 'hrsh7th/nvim-cmp'
-depends = ['nvim-lspconfig', 'cmp-nvim-lsp', 'cmp-buffer', 'cmp-path', 'cmp-cmdline', 'cmp-nvim-ultisnips', 'lspkind.nvim']
+depends = ['nvim-lspconfig', 'cmp-nvim-lsp', 'cmp-buffer', 'cmp-path', 'cmp-cmdline', 'cmp_luasnip', 'lspkind.nvim']
 on_event = ['InsertEnter', 'CmdlineEnter']
 hook_post_source = '''
 exe 'source' $HOME . '/.config/nvim/toml/nvim-cmp.lua'
