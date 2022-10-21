@@ -42,6 +42,7 @@ cmp.setup.filetype('gitcommit', {
         { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
     }, {
         { name = 'buffer' },
+        { name = 'look' },
     })
 })
 
@@ -81,4 +82,23 @@ cmp.setup {
 }
 
 -- Set up lspconfig.
+local lsp_flags = {
+    -- This is the default in Nvim 0.7+
+    debounce_text_changes = 150,
+}
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+require('lspconfig')['pyright'].setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    flags = lsp_flags,
+}
+require('lspconfig')['rust_analyzer'].setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    flags = lsp_flags,
+}
+require('lspconfig')['sumneko_lua'].setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    flags = lsp_flags,
+}
