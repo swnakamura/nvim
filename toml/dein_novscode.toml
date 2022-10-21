@@ -195,6 +195,3 @@ EOF
 repo = 'ray-x/lsp_signature.nvim'
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
-hook_add = '''
-exe 'source' $HOME . '/.config/nvim/toml/lsp.lua'
-'''
