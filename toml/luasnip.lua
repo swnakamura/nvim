@@ -42,6 +42,12 @@ ls.add_snippets("markdown", {
     ls.parser.parse_snippet("rb", "<ruby>$1<rp> (</rp><rt>$2</rt><rp>) </rp></ruby>$0")
 })
 ls.add_snippets("tex", {
+    ls.parser.parse_snippet("bf", "\\textbf{$1}"),
+    ls.parser.parse_snippet("it", "\\textit{$1}"),
+    ls.parser.parse_snippet("sc", "\\textsc{$1}"),
+    ls.parser.parse_snippet("sf", "\\textsf{$1}"),
+    ls.parser.parse_snippet("tt", "\\texttt{$1}"),
+    ls.parser.parse_snippet("em", "\\emph{$1}"),
     ls.parser.parse_snippet("jbase",
     [[
 \documentclass[12pt,a4paper,titlepage]{jlreq}
