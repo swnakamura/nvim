@@ -166,7 +166,14 @@ repo = 'rcarriga/nvim-notify'
 repo = 'https://github.com/folke/noice.nvim'
 hook_post_source = '''
 lua <<EOF
-require("noice").setup()
+require("noice").setup({
+    routes = {
+        {
+          filter = { event = "msg_show", kind = "search_count" },
+          opts = { skip = true },
+        },
+      }
+    })
 EOF
 '''
 [[plugins]]
