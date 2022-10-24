@@ -40,7 +40,7 @@ repo = 'luochen1990/rainbow'
 on_ft = ['lisp']
 
 [[plugins]]
-repo = 'hrsh7th/cmp-look'
+repo = 'octaltree/cmp-look'
 [[plugins]]
 repo = 'hrsh7th/cmp-nvim-lsp'
 [[plugins]]
@@ -55,7 +55,7 @@ repo = 'saadparwaiz1/cmp_luasnip'
 repo = 'onsails/lspkind.nvim'
 [[plugins]]
 repo = 'hrsh7th/nvim-cmp'
-depends = ['nvim-lspconfig', 'cmp-nvim-lsp', 'cmp-buffer', 'cmp-path', 'cmp-cmdline', 'cmp_luasnip', 'lspkind.nvim', 'cmp-look']
+depends = ['nvim-lspconfig', 'cmp-nvim-lsp', 'cmp-buffer', 'cmp-path', 'cmp-cmdline', 'cmp_luasnip', 'lspkind.nvim', 'cmp-look', 'cmp-git']
 on_event = ['InsertEnter', 'CmdlineEnter']
 on_ft = ['python', 'rust', 'lua', 'vim']
 hook_post_source = '''
