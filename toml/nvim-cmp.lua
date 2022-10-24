@@ -1,5 +1,5 @@
 -- Set up nvim-cmp.
-local cmp = require'cmp'
+local cmp = require 'cmp'
 
 cmp.setup({
     snippet = {
@@ -20,11 +20,11 @@ cmp.setup({
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = function(fallback)
-                if cmp.visible() then
-                    cmp.mapping.abort()
-                end
-                fallback()
-            end,
+            if cmp.visible() then
+                cmp.mapping.abort()
+            end
+            fallback()
+        end,
         ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     }),
     sources = cmp.config.sources({
@@ -66,19 +66,19 @@ cmp.setup.cmdline(':', {
 
 local lspkind = require('lspkind')
 cmp.setup {
-  formatting = {
-    format = function(entry, vim_item)
-      if vim.tbl_contains({ 'path' }, entry.source.name) then
-        local icon, hl_group = require('nvim-web-devicons').get_icon(entry:get_completion_item().label)
-        if icon then
-          vim_item.kind = icon
-          vim_item.kind_hl_group = hl_group
-          return vim_item
+    formatting = {
+        format = function(entry, vim_item)
+            if vim.tbl_contains({ 'path' }, entry.source.name) then
+                local icon, hl_group = require('nvim-web-devicons').get_icon(entry:get_completion_item().label)
+                if icon then
+                    vim_item.kind = icon
+                    vim_item.kind_hl_group = hl_group
+                    return vim_item
+                end
+            end
+            return lspkind.cmp_format({ with_text = true })(entry, vim_item)
         end
-      end
-      return lspkind.cmp_format({ with_text = true })(entry, vim_item)
-    end
-  }
+    }
 }
 
 
@@ -112,7 +112,7 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', 'gr', vim.lsp.buf.rename, bufopts)
     vim.keymap.set('n', 'gR', vim.lsp.buf.references, bufopts)
     vim.keymap.set('n', 'gF', function() vim.lsp.buf.format { async = true } end, bufopts)
-    require "lsp_signature".on_attach(signature_setup, bufnr)  -- Note: add in lsp client on-attach
+    require "lsp_signature".on_attach(signature_setup, bufnr) -- Note: add in lsp client on-attach
 end
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 require('lspconfig')['pyright'].setup {

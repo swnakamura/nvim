@@ -23,8 +23,9 @@ ls.add_snippets("python", {
     ls.parser.parse_snippet("pf", "print(f\"{$1}\")$0"),
     ls.parser.parse_snippet("pdb", "__import__('pdb').set_trace()"),
     ls.parser.parse_snippet("td", "# TODO: "),
-    ls.parser.parse_snippet({trig="plot_instantly", name="plot_instantly"},
-    [[
+    ls.parser.parse_snippet("pltimport", "import matplotlib.pyplot as plt"),
+    ls.parser.parse_snippet({ trig = "plot_instantly", name = "plot_instantly" },
+        [[
 from matplotlib.pyplot import plot,hist,imshow,scatter,show,savefig,legend,clf,figure,close
 import matplotlib.pyplot as plt
 imshow($1)
@@ -49,7 +50,7 @@ ls.add_snippets("tex", {
     ls.parser.parse_snippet("tt", "\\texttt{$1}"),
     ls.parser.parse_snippet("em", "\\emph{$1}"),
     ls.parser.parse_snippet("jbase",
-    [[
+        [[
 \documentclass[12pt,a4paper,titlepage]{jlreq}
 % \usepackage{/home/snakamura/ghq/github.com/woodyZootopia/latex-macros/macros-maths}
 % \usepackage[
