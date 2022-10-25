@@ -40,7 +40,25 @@ cmp.setup({
 cmp.setup.filetype('gitcommit', {
     sources = cmp.config.sources({
         { name = 'buffer' },
-        { name = 'look' },
+        {
+            name = 'look',
+            keyword_length = 5,
+        },
+    })
+})
+
+-- Set configuration for specific filetype.
+cmp.setup.filetype('tex', {
+    sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' },
+    }, {
+        { name = 'buffer' },
+        { name = 'path' },
+        {
+            name = 'look',
+            keyword_length = 5,
+        },
     })
 })
 
