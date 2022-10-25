@@ -127,8 +127,8 @@ repo = 'voldikss/vim-floaterm.git'
 hook_add = '''
 let g:floaterm_width=0.9
 let g:floaterm_height=0.9
-nnoremap <Plug>(my-win)z :<C-u>ContextDisable<CR>:FloatermToggle<CR>
-tnoremap <silent> <C-[> <C-\><C-n>:FloatermToggle<CR>:ContextEnable<CR>
+nnoremap <Plug>(my-win)z <Cmd>FloatermToggle<CR>
+tnoremap <silent> <C-[> <C-\><C-n>:FloatermToggle<CR>
 tnoremap <silent> <C-l> <C-\><C-n>
 '''
 
@@ -138,6 +138,11 @@ merged = '0'
 hook_post_source = 'call Treesitter_postsource()'
 hook_install = 'TSUpdate'
 hook_post_update = 'TSUpdate'
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter-context'
+hook_post_source ='lua require"treesitter-context".setup()'
+depends = ['nvim-treesitter']
 
 [[plugins]]
 repo = 'https://github.com/nvim-orgmode/orgmode'

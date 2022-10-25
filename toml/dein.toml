@@ -60,10 +60,6 @@ repo = 'kyazdani42/nvim-web-devicons'
 # [[plugins]]
 # repo = 'cakebaker/scss-syntax.vim'
 
-[[plugins]]
-repo = 'wellle/context.vim'
-hook_add ='let g:context_add_mappings = 0'
-
 # commenter
 [[plugins]]
 repo = 'preservim/nerdcommenter'
