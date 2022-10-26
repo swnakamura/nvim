@@ -30,9 +30,10 @@ cmp.setup({
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
-    }, {
         { name = 'buffer' },
         { name = 'path' }
+    }, {
+        { name = 'look' }
     })
 })
 
@@ -52,9 +53,9 @@ cmp.setup.filetype('tex', {
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
-    }, {
         { name = 'buffer' },
-        { name = 'path' },
+        { name = 'path' }
+    }, {
         {
             name = 'look',
             keyword_length = 5,
