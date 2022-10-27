@@ -15,9 +15,6 @@ on_ft = ['sass','scss','css']
 repo = 'akiyan/vim-textobj-php'
 on_ft = ['html','htm']
 [[plugins]]
-repo = 'tpope/vim-surround'
-on_ft = ['html','htm']
-[[plugins]]
 repo = 'wokalski/autocomplete-flow'
 on_ft = ['html', 'htm', 'js']
 [[plugins]]

@@ -139,16 +139,12 @@ function! Treesitter_postsource() abort
 require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
-    disable = {
-      'lua',
-      'toml',
-      'vim',
-    }
   },
   indent = {
     enable = false
   },
-  ensure_installed = {'c', 'cpp', 'python', 'rust', 'org', 'latex'}
+  ensure_installed = {'c', 'cpp', 'python', 'rust', 'org', 'latex'},
+  auto_install = true
 }
 EOF
 endfunction

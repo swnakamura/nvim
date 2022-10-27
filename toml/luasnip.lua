@@ -22,7 +22,7 @@ local postfix = require("luasnip.extras.postfix").postfix
 ls.add_snippets("python", {
     ls.parser.parse_snippet("pf", "print(f\"{$1}\")$0"),
     ls.parser.parse_snippet("pdb", "__import__('pdb').set_trace()"),
-    ls.parser.parse_snippet("td", "# TODO: "),
+    ls.parser.parse_snippet("todo", "# TODO: "),
     ls.parser.parse_snippet("pltimport", "import matplotlib.pyplot as plt"),
     ls.parser.parse_snippet({ trig = "plot_instantly", name = "plot_instantly" },
         [[
@@ -31,6 +31,13 @@ import matplotlib.pyplot as plt
 imshow($1)
 show()
 $0
+]]
+    ),
+    ls.parser.parse_snippet({ trig = "argument_parser", name = "argument_parser" },
+        [[
+p = argparse.ArgumentParser()
+p.add_argument('${1:foo}')
+args = p.parse_args()
 ]]
     ),
 })

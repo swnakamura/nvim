@@ -238,6 +238,7 @@ augroup QuickfixWindow
     autocmd FileType qf nmap <buffer> K kp
     " Press Q again to close quickfix window
     autocmd FileType qf nnoremap <buffer> Q <Cmd>q<CR>
+    autocmd FileType qf setlocal nowrap
 augroup END
 
 " search with C-p/C-n

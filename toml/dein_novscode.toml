@@ -95,7 +95,8 @@ repo = 'tversteeg/registers.nvim'
 
 # colorscheme
 [[plugins]]
-repo = 'cocopon/iceberg.vim'
+repo = 'https://github.com/arrow2nd/iceberg.vim'
+rev = 'fix-treesitter'
 # [[plugins]]
 # repo = 'cocopon/pgmnt.vim'
 # [[plugins]]
@@ -148,7 +149,7 @@ depends = ['nvim-treesitter']
 repo = 'https://github.com/nvim-orgmode/orgmode'
 hook_post_source = '''
 lua <<EOF
--- Load custom tree-sitter grammar for org filetype
+-- Load custom treesitter grammar for org filetype
 require('orgmode').setup_ts_grammar()
 
 require('orgmode').setup({
