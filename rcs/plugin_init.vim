@@ -145,6 +145,7 @@ require'nvim-treesitter.configs'.setup {
   },
   ensure_installed = {'c', 'cpp', 'python', 'rust', 'org', 'latex'},
   auto_install = true
+  additional_vim_regex_highlighting = ['diff'],
 }
 EOF
 endfunction
