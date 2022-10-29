@@ -138,14 +138,14 @@ function! Treesitter_postsource() abort
     lua <<EOF
 require'nvim-treesitter.configs'.setup {
   highlight = {
-    enable = true,
+    enable = true
   },
   indent = {
     enable = false
   },
   ensure_installed = {'c', 'cpp', 'python', 'rust', 'org', 'latex'},
-  auto_install = true
-  additional_vim_regex_highlighting = ['diff'],
+  auto_install = true,
+  additional_vim_regex_highlighting = {'diff'},
 }
 EOF
 endfunction
