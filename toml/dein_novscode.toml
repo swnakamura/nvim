@@ -167,6 +167,13 @@ augroup END
 repo = 'MunifTanjim/nui.nvim'
 [[plugins]]
 repo = 'rcarriga/nvim-notify'
+hook_post_source = '''
+lua <<EOF
+require'notify'.setup({
+    top_down=false
+})
+EOF
+'''
 
 [[plugins]]
 repo = 'https://github.com/folke/noice.nvim'
