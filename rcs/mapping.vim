@@ -62,6 +62,8 @@ nnoremap <S-Down>  <C-w>-<C-w>-
 " w!! to save with sudo
 cabbr w!! w !sudo tee > /dev/null %
 
+nnoremap <leader>e :edit 
+
 nnoremap <leader><leader> <C-^>
 
 nnoremap <Plug>(my-switch) <Nop>
