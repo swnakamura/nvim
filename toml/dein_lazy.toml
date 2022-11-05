@@ -56,7 +56,7 @@ depends = ['nvim-lspconfig', 'cmp-nvim-lsp', 'cmp-buffer', 'cmp-path', 'cmp-cmdl
 on_event = ['InsertEnter', 'CmdlineEnter']
 on_ft = ['python', 'rust', 'lua', 'vim']
 hook_post_source = '''
-exe 'source' $HOME . '/.config/nvim/toml/nvim-cmp.lua'
+exe 'source' $HOME . '/.config/nvim/toml/nvim-cmp_and_lsp.lua'
 '''
 
 [[plugins]]

@@ -133,28 +133,3 @@ function! Lightline_add() abort
     "let g:lightline.tabline_separator = { 'left': "\ue0bc", 'right': "\ue0ba" }
     "let g:lightline.tabline_subseparator = { 'left': "\ue0bb", 'right': "\ue0bb" }
 endfunction
-
-function! Treesitter_postsource() abort
-    lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = {'diff', 'org'},
-    disable = {'json', 'diff', 'org'},
-  },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = "vac",
-      node_incremental = "M",
-      scope_incremental = "S",
-      node_decremental = "m",
-    },
-  },
-  indent = {
-    enable = false
-  },
-  auto_install = true,
-}
-EOF
-endfunction

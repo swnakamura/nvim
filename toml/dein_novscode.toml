@@ -136,7 +136,9 @@ tnoremap <silent> <C-l> <C-\><C-n>
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
 merged = '0'
-hook_post_source = 'call Treesitter_postsource()'
+hook_post_source = '''
+exe 'source' $HOME . '/.config/nvim/toml/treesitter.lua'
+'''
 hook_install = 'TSUpdate'
 hook_post_update = 'TSUpdate'
 
