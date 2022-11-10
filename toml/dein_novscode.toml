@@ -92,6 +92,11 @@ let g:gitsession_tmp_dir = g:nvim_home_directory .. '/tmp/gitsession'
 
 [[plugins]]
 repo = 'tversteeg/registers.nvim'
+hook_post_source = '''
+lua <<EOF
+require("registers").setup()
+EOF
+'''
 
 # colorscheme
 [[plugins]]
