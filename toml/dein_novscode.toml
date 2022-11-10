@@ -192,7 +192,8 @@ require("noice").setup({
           filter = { event = "msg_show", kind = "search_count" },
           opts = { skip = true },
         },
-      }
+      },
+    lsp = { signature = {enabled = false} }
     })
 EOF
 '''
@@ -220,5 +221,12 @@ EOF
 
 [[plugins]]
 repo = 'ray-x/lsp_signature.nvim'
+hook_post_source = '''
+lua <<EOF
+require "lsp_signature".setup({
+    noice = true,
+})
+EOF
+'''
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
