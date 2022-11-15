@@ -100,7 +100,7 @@ EOF
 
 # colorscheme
 [[plugins]]
-repo = 'cocopon/iceberg.vim'
+repo = 'https://github.com/arrow2nd/iceberg.vim'
 rev = 'fix-treesitter'
 # [[plugins]]
 # repo = 'cocopon/pgmnt.vim'
