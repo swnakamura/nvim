@@ -197,8 +197,6 @@ require("noice").setup({
     })
 EOF
 '''
-[[plugins]]
-repo = 'kristijanhusak/defx-git'
 
 # LSP configuration
 [[plugins]]
