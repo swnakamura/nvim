@@ -24,6 +24,7 @@ ls.add_snippets("python", {
     ls.parser.parse_snippet("pdb", "__import__('pdb').set_trace()"),
     ls.parser.parse_snippet("todo", "# TODO: "),
     ls.parser.parse_snippet("pltimport", "import matplotlib.pyplot as plt"),
+    ls.parser.parse_snippet("ifmain", "if __name__ == \"__main__\":"),
     ls.parser.parse_snippet({ trig = "plot_instantly", name = "plot_instantly" },
         [[
 from matplotlib.pyplot import plot,hist,imshow,scatter,show,savefig,legend,clf,figure,close
