@@ -61,9 +61,9 @@ hook_add = '''
 nnoremap U :UndotreeToggle<CR>
 '''
 
-[[plugins]]
-repo = 'itchyny/lightline.vim'
-hook_add = 'call Lightline_add()'
+# [[plugins]]
+# repo = 'itchyny/lightline.vim'
+# hook_add = 'call Lightline_add()'
 
 [[plugins]]
 repo = 'jpalardy/vim-slime'
@@ -177,35 +177,6 @@ repo='williamboman/mason.nvim'
 hook_add='''
 lua <<EOF
 require("mason").setup()
-EOF
-'''
-
-[[plugins]]
-repo = 'MunifTanjim/nui.nvim'
-[[plugins]]
-repo = 'rcarriga/nvim-notify'
-hook_post_source = '''
-lua <<EOF
-require'notify'.setup({
-    top_down=false
-})
-EOF
-'''
-
-[[plugins]]
-repo = 'https://github.com/folke/noice.nvim'
-hook_post_source = '''
-lua <<EOF
-require("noice").setup({
-    -- routes = {
-    --     {
-    --       filter = { event = "msg_show", kind = "search_count" },
-    --       opts = { skip = true },
-    --     },
-    --   },
-    lsp = { signature = {enabled = false} },
-    replace = true,
-    })
 EOF
 '''
 

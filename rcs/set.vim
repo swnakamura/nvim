@@ -47,7 +47,11 @@ set scrolloff=5
 set ambiwidth=single
 
 " always show finetabline,statusline
-set showtabline=2 laststatus=2
+set showtabline=2
+
+set laststatus=0
+set rulerformat=%40(%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P%)
+set statusline=%#Normal#%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 
 " transparent popup window
 set winblend=25 pumblend=20
@@ -87,6 +91,8 @@ set splitright
 
 " モード変更時に表示しない
 set noshowmode
+
+set title
 
 set mouse=a
 
