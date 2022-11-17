@@ -37,6 +37,10 @@ if !exists('g:vscode')
     " Less bright search color
     hi clear Search
     hi Search                gui=bold,underline guisp=#e27878
+    " Statusline and ruler color
+    hi StatusLine            gui=NONE guibg=#0f1117 guifg=#444b71
+    hi StatusLineNC          gui=NONE guibg=#0f1117 guifg=#444b71
+    hi User1                 gui=NONE guibg=#0f1117 guifg=#444b71
     " Do not show unnecessary separation colors
     hi LineNr                guibg=#161821
     hi CursorLineNr          guibg=#161821

@@ -1,6 +1,8 @@
 " if you can't type quickly, change this.
 set timeoutlen=400
 
+set clipboard=unnamedplus
+
 " update quickly
 set updatetime=100
 
@@ -50,8 +52,8 @@ set ambiwidth=single
 set showtabline=2
 
 set laststatus=0
-set rulerformat=%40(%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P%)
-set statusline=%#Normal#%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+set rulerformat=%50(%1*%=%f\ %([%H%M%R]%)\ %12.(%l,%c%V%)\ %P%)
+set statusline=%=%f\ %([%H%M%R]%)\ %12.(%l,%c%V%)\ %P
 
 " transparent popup window
 set winblend=25 pumblend=20
