@@ -181,6 +181,35 @@ EOF
 '''
 
 [[plugins]]
+repo = 'MunifTanjim/nui.nvim'
+[[plugins]]
+repo = 'rcarriga/nvim-notify'
+hook_post_source = '''
+lua <<EOF
+require'notify'.setup({
+    top_down=false
+})
+EOF
+'''
+
+[[plugins]]
+repo = 'https://github.com/folke/noice.nvim'
+hook_post_source = '''
+lua <<EOF
+require("noice").setup({
+    -- routes = {
+    --     {
+    --       filter = { event = "msg_show", kind = "search_count" },
+    --       opts = { skip = true },
+    --     },
+    --   },
+    lsp = { signature = {enabled = false} },
+    replace = true,
+    })
+EOF
+'''
+
+[[plugins]]
 repo='williamboman/mason-lspconfig.nvim'
 hook_add='''
 lua <<EOF
