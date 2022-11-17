@@ -31,7 +31,8 @@ cmp.setup({
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'buffer' },
-        { name = 'path' }
+        { name = 'path' },
+        { name = 'nvim_lsp_signature_help' }
     }, {
         { name = 'look' }
     })
@@ -129,7 +130,6 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', 'gr', vim.lsp.buf.rename, bufopts)
     vim.keymap.set('n', 'gR', vim.lsp.buf.references, bufopts)
     vim.keymap.set('n', 'gF', function() vim.lsp.buf.format { async = true } end, bufopts)
-    require "lsp_signature".on_attach(signature_setup, bufnr) -- Note: add in lsp client on-attach
 end
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 require('lspconfig')['pyright'].setup {

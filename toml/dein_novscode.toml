@@ -191,13 +191,4 @@ EOF
 '''
 
 [[plugins]]
-repo = 'ray-x/lsp_signature.nvim'
-hook_post_source = '''
-lua <<EOF
-require "lsp_signature".setup({
-    noice = true,
-})
-EOF
-'''
-[[plugins]]
 repo = 'neovim/nvim-lspconfig'
