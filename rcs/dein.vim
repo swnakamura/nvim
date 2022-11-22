@@ -39,9 +39,9 @@ if has('vim_starting') && dein#check_install()
 endif
 
 if exists("g:dein#install_github_api_token")
-    cabbrev deup call dein#check_update(v:true)
+  cabbrev deup call dein#check_update(v:true)
 else
-    cabbrev deup call dein#update()
+  cabbrev deup call dein#update()
 endif
 
 autocmd VimEnter * call dein#call_hook('post_source')

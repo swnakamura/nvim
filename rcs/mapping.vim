@@ -98,43 +98,43 @@ function! s:toggle_syntax() abort
   endif
 endfunction
 function s:toggle_move_g() abort
-    if exists('b:gj_gk_enabled')
-        unlet b:gj_gk_enabled
-        echo 'gj/gk disabled'
-        nunmap k
-        nunmap j
-        xunmap k
-        xunmap j
-        nunmap gk
-        nunmap gj
-        xunmap gk
-        xunmap gj
-    else
-        let b:gj_gk_enabled=1
-        echo 'gj/gk enabled'
-        " move by display line
-        nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
-        xnoremap <expr> j (v:count == 0 && mode() ==# 'v') ? 'gj' : 'j'
-        nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
-        xnoremap <expr> k (v:count == 0 && mode() ==# 'v') ? 'gk' : 'k'
-        nnoremap gj j
-        nnoremap gk k
-        xnoremap gj j
-        xnoremap gk k
-    endif
+  if exists('b:gj_gk_enabled')
+    unlet b:gj_gk_enabled
+    echo 'gj/gk disabled'
+    nunmap k
+    nunmap j
+    xunmap k
+    xunmap j
+    nunmap gk
+    nunmap gj
+    xunmap gk
+    xunmap gj
+  else
+    let b:gj_gk_enabled=1
+    echo 'gj/gk enabled'
+    " move by display line
+    nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
+    xnoremap <expr> j (v:count == 0 && mode() ==# 'v') ? 'gj' : 'j'
+    nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
+    xnoremap <expr> k (v:count == 0 && mode() ==# 'v') ? 'gk' : 'k'
+    nnoremap gj j
+    nnoremap gk k
+    xnoremap gj j
+    xnoremap gk k
+  endif
 endfunction
 let g:is_noice_enabled = v:true
 function s:toggle_noice() abort
-    if g:is_noice_enabled
-        let g:is_noice_enabled=v:false
-        Noice disable
-        set cmdheight=1
-        echomsg 'noice disabled'
-    else
-        let g:is_noice_enabled=v:true
-        Noice enable
-        echomsg 'noice enabled'
-    endif
+  if g:is_noice_enabled
+    let g:is_noice_enabled=v:false
+    Noice disable
+    set cmdheight=1
+    echomsg 'noice disabled'
+  else
+    let g:is_noice_enabled=v:true
+    Noice enable
+    echomsg 'noice enabled'
+  endif
 endfunction
 
 " ctrlで画面上・下に移動
@@ -157,13 +157,13 @@ nnoremap <silent> <leader>wq :<C-u>call <SID>del_not_shown_buffer()<CR>:qall<CR>
 " nnoremap <silent> <leader>wq :qall<CR>
 
 function <SID>del_not_shown_buffer() abort
-    let buflist = nvim_list_bufs()
-    for b in buflist
-        if b->win_findbuf() == [] && b->bufname() != ''
-            echo b->bufname()
-            silent! exec 'bdel ' . b
-        endif
-    endfor
+  let buflist = nvim_list_bufs()
+  for b in buflist
+    if b->win_findbuf() == [] && b->bufname() != ''
+      echo b->bufname()
+      silent! exec 'bdel ' . b
+    endif
+  endfor
 endfunction
 
 
@@ -182,14 +182,14 @@ nnoremap gp `[v`]
 nnoremap gP `[V`]
 
 if !exists('g:vscode')
-    " save with <C-l> in insert mode
-    inoremap <C-l> <Cmd>update<CR>
-    "save by <leader>s
-    nnoremap <silent> <leader>s <Cmd>update<CR>
-    nnoremap <silent> <leader>ws <Cmd>wall<CR>
+  " save with <C-l> in insert mode
+  inoremap <C-l> <Cmd>update<CR>
+  "save by <leader>s
+  nnoremap <silent> <leader>s <Cmd>update<CR>
+  nnoremap <silent> <leader>ws <Cmd>wall<CR>
 else
-    nnoremap <leader>s <Cmd>call VSCodeNotify('workbench.action.files.save')<CR>
-    inoremap <C-l> <Cmd>call VSCodeNotify('workbench.action.files.save')<CR>
+  nnoremap <leader>s <Cmd>call VSCodeNotify('workbench.action.files.save')<CR>
+  inoremap <C-l> <Cmd>call VSCodeNotify('workbench.action.files.save')<CR>
 endif
 
 "reload init.vim
@@ -205,11 +205,11 @@ nnoremap <leader>vv :<C-u>vimgrep // %:p:h/*<Left><Left><Left><Left><Left><Left>
 " recursive search
 let s:use_vim_grep = 0
 if s:use_vim_grep
-    nnoremap <leader>vr :<C-u>vimgrep // %:p:h/**<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+  nnoremap <leader>vr :<C-u>vimgrep // %:p:h/**<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 else
-    " nnoremap <silent> <space>vr  <Cmd>Rg<CR>
-    set grepprg=rg\ --vimgrep\ --no-heading\ -uuu
-    nnoremap <leader>vr :<C-u>grep -e ""<Left>
+  " nnoremap <silent> <space>vr  <Cmd>Rg<CR>
+  set grepprg=rg\ --vimgrep\ --no-heading\ -uuu
+  nnoremap <leader>vr :<C-u>grep -e ""<Left>
 endif
 
 " quickfix jump
@@ -229,18 +229,18 @@ nmap ]W <Cmd>llast<CR>
 
 " In quickfix window
 augroup QuickfixWindow
-    autocmd!
-    " `p` to preview
-    autocmd FileType qf nnoremap <buffer> p <CR>zz<C-w>p
-    " always move linewise
-    autocmd filetype qf nnoremap <buffer> j j
-    autocmd filetype qf nnoremap <buffer> k k
-    " capital J/K to move+preview
-    autocmd FileType qf nmap <buffer> J jp
-    autocmd FileType qf nmap <buffer> K kp
-    " Press Q again to close quickfix window
-    autocmd FileType qf nnoremap <buffer> Q <Cmd>q<CR>
-    autocmd FileType qf setlocal nowrap
+  autocmd!
+  " `p` to preview
+  autocmd FileType qf nnoremap <buffer> p <CR>zz<C-w>p
+  " always move linewise
+  autocmd filetype qf nnoremap <buffer> j j
+  autocmd filetype qf nnoremap <buffer> k k
+  " capital J/K to move+preview
+  autocmd FileType qf nmap <buffer> J jp
+  autocmd FileType qf nmap <buffer> K kp
+  " Press Q again to close quickfix window
+  autocmd FileType qf nnoremap <buffer> Q <Cmd>q<CR>
+  autocmd FileType qf setlocal nowrap
 augroup END
 
 " search with C-p/C-n
@@ -256,8 +256,8 @@ nnoremap <C-]> g<C-]>
 
 " visual modeで複数行を選択して'/'を押すと，その範囲内での検索を行う
 xnoremap <expr> / (line('.') == line('v')) ?
-            \ '/' :
-            \ ((line('.') < line('v')) ? '' : 'o') . "<ESC>" . '/\%>' . (min([line('v'), line('.')])-1) . 'l\%<' . (max([line('v'), line('.')])+1) . 'l'
+      \ '/' :
+      \ ((line('.') < line('v')) ? '' : 'o') . "<ESC>" . '/\%>' . (min([line('v'), line('.')])-1) . 'l\%<' . (max([line('v'), line('.')])+1) . 'l'
 
 inoremap <silent> <expr> <C-b> "<C-r>=ExecExCommand('normal b')<CR>"
 inoremap <silent> <expr> <C-f> "<C-r>=ExecExCommand('normal w')<CR>"

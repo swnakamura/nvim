@@ -32,27 +32,27 @@ exe 'source' g:nvim_home_directory .. 'rcs/autocmd.vim'
 exe 'source' g:nvim_home_directory .. "rcs/autocmd_fcitx.vim"
 
 if !exists('g:vscode')
-    set background=dark
-    colorscheme iceberg
-    " Less bright search color
-    hi clear Search
-    hi Search                gui=bold,underline guisp=#e27878
-    " Statusline and ruler color
-    hi StatusLine            gui=NONE guibg=#0f1117 guifg=#9a9ca5
-    hi StatusLineNC          gui=NONE guibg=#0f1117 guifg=#9a9ca5
-    hi User1                 gui=NONE guibg=#0f1117 guifg=#9a9ca5
-    " Do not show unnecessary separation colors
-    hi LineNr                guibg=#161821
-    hi CursorLineNr          guibg=#161821
-    hi SignColumn            guibg=#161821
-    hi GitGutterAdd          guibg=#161821
-    hi GitGutterChange       guibg=#161821
-    hi GitGutterChangeDelete guibg=#161821
-    hi GitGutterDelete       guibg=#161821
-    " Do not show horizontal line in deleted
-    hi DiffDelete guifg=#53343b
-    " nvim-tree setting
-    hi! link NvimTreeIndentMarker LineNr
+  set background=dark
+  colorscheme iceberg
+  " Less bright search color
+  hi clear Search
+  hi Search                gui=bold,underline guisp=#e27878
+  " Statusline and ruler color
+  hi StatusLine            gui=NONE guibg=#0f1117 guifg=#9a9ca5
+  hi StatusLineNC          gui=NONE guibg=#0f1117 guifg=#9a9ca5
+  hi User1                 gui=NONE guibg=#0f1117 guifg=#9a9ca5
+  " Do not show unnecessary separation colors
+  hi LineNr                guibg=#161821
+  hi CursorLineNr          guibg=#161821
+  hi SignColumn            guibg=#161821
+  hi GitGutterAdd          guibg=#161821
+  hi GitGutterChange       guibg=#161821
+  hi GitGutterChangeDelete guibg=#161821
+  hi GitGutterDelete       guibg=#161821
+  " Do not show horizontal line in deleted
+  hi DiffDelete guifg=#53343b
+  " nvim-tree setting
+  hi! link NvimTreeIndentMarker LineNr
 endif
 " 最後に設定
 filetype plugin indent on
