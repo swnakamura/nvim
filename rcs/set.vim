@@ -52,8 +52,8 @@ set ambiwidth=single
 set showtabline=2
 
 set laststatus=0
-set rulerformat=%50(%1*%=%f\ %([%H%M%R]%)\ %12.(%l,%c%V%)\ %P%)
-set statusline=%=%f\ %([%H%M%R]%)\ %12.(%l,%c%V%)\ %P
+set rulerformat=%50(%1*%=%f\ %([%H%M%R]%)\ %P%)
+set statusline=%=%f\ %([%H%M%R]%)\ %P
 
 " transparent popup window
 set winblend=25 pumblend=20
