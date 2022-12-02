@@ -84,7 +84,7 @@ let g:asyncrun_open = 8
 repo = 'woodyZootopia/gitsession.vim'
 hook_add = '''
 let g:gitsession_autosave = 1
-let g:gitsession_tmp_dir = g:nvim_home_directory .. '/.cache/gitsession'
+let g:gitsession_tmp_dir = g:nvim_home_directory .. '/tmp/gitsession'
 '''
 
 # [[plugins]]
