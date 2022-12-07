@@ -46,8 +46,8 @@ repo = 'tpope/vim-rhubarb'
 # repo = 'https://github.com/inkarkat/vim-ingo-library'
 
 # :HelpfulVersion to view version
-# [[plugins]]
-# repo = 'tweekmonster/helpful.vim'
+[[plugins]]
+repo = 'tweekmonster/helpful.vim'
 
 # misc
 [[plugins]]
@@ -68,4 +68,28 @@ let g:NERDSpaceDelims=1
 let g:NERDDefaultAlign='left'
 let g:NERDCustomDelimiters = {'vim': {'left': '"','right':''}}
 noremap <C-_> <Plug>NERDCommenterToggle
+'''
+
+[[plugins]]
+repo = 'https://github.com/lambdalisue/fern.vim'
+hook_add = '''
+nnoremap <leader>d <Cmd>Fern . -reveal=%<CR>
+nnoremap <leader>n <Cmd>Fern . -reveal=% -drawer<CR>
+nnoremap st :<C-u>tabnew<CR><Cmd>Fern . -reveal=% -drawer<CR>
+function! s:init_fern() abort
+  nunmap <buffer> s
+  nmap <buffer> o <Plug>(fern-action-open-or-expand)
+endfunction
+
+augroup fern-custom
+  autocmd!
+  autocmd FileType fern call s:init_fern()
+augroup END
+'''
+[[plugins]]
+repo = 'https://github.com/lambdalisue/nerdfont.vim'
+[[plugins]]
+repo = 'https://github.com/lambdalisue/fern-renderer-nerdfont.vim'
+hook_add = '''
+let g:fern#renderer = "nerdfont"
 '''
