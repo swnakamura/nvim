@@ -88,6 +88,9 @@ augroup cursor-word-highlight
 augroup END
 
 function! Wordmatch()
+  if &ft=='fern'
+    return
+  endif
   call DelWordmatch()
 
   let w:cursorword = expand('<cword>')->escape('\')
