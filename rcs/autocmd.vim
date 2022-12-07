@@ -120,20 +120,20 @@ augroup END
 
 augroup if-binary-then-xxd
   au!
-  au BufReadPre  *.bin setlocal bin
-  au BufReadPre  *.img setlocal bin
-  au BufReadPre  *.sys setlocal bin
-  au BufReadPre  *.torrent setlocal bin
-  au BufReadPre  *.out setlocal bin
-  au BufReadPre  *.a setlocal bin
+  au BufReadPre *.bin     let b:bin_xxd=1
+  au BufReadPre *.img     let b:bin_xxd=1
+  au BufReadPre *.sys     let b:bin_xxd=1
+  au BufReadPre *.torrent let b:bin_xxd=1
+  au BufReadPre *.out     let b:bin_xxd=1
+  au BufReadPre *.a       let b:bin_xxd=1
 
-  au BufReadPost * if &bin | %!xxd
+  au BufReadPost * if exists('b:bin_xxd') | %!xxd 
   au BufReadPost * setlocal ft=xxd | endif
 
-  au BufWritePre * if &bin | %!xxd -r
+  au BufWritePre * if exists('b:bin_xxd') | %!xxd -r 
   au BufWritePre * endif
 
-  au BufWritePost * if &bin | %!xxd
+  au BufWritePost * if exists('b:bin_xxd') | %!xxd 
   au BufWritePost * set nomod | endif
 augroup END
 
