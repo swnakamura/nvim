@@ -91,9 +91,6 @@ set wildignore+=*.dll
 set splitbelow
 set splitright
 
-" モード変更時に表示しない
-set noshowmode
-
 set title
 
 set mouse=a
