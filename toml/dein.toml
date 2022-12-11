@@ -75,10 +75,14 @@ repo = 'https://github.com/lambdalisue/fern.vim'
 hook_add = '''
 nnoremap <leader>d <Cmd>Fern . -reveal=%<CR>
 nnoremap <leader>n <Cmd>Fern . -reveal=% -drawer<CR>
-nnoremap st :<C-u>tabnew<CR><Cmd>Fern . -reveal=% -drawer<CR>
+nnoremap st :<C-u>tabnew<CR><Cmd>Fern . -reveal=%<CR>
 function! s:init_fern() abort
   nunmap <buffer> s
   nmap <buffer> o <Plug>(fern-action-open-or-expand)
+  nmap <buffer> L <Plug>(fern-action-new-file)
+  nmap <buffer> d <Plug>(fern-action-trash)<CR>
+  nmap <buffer> D <Plug>(fern-action-trash=)y<CR>
+  nmap <buffer> - <Plug>(fern-action-leave)
 endfunction
 
 augroup fern-custom
@@ -96,3 +100,5 @@ let g:fern#renderer = "nerdfont"
 '''
 [[plugins]]
 repo = 'https://github.com/lambdalisue/glyph-palette.vim'
+[[plugins]]
+repo = 'https://github.com/lambdalisue/fern-git-status.vim'
