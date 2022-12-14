@@ -140,9 +140,9 @@ augroup END
 augroup csv-tsv
   au!
   au BufReadPost,BufWritePost *.csv %!column -s, -o, -t
-  au BufWritePre              *.csv %s/\s\+,/,/ge
+  au BufWritePre              *.csv %s/\s\+\ze,/,/ge
   au BufReadPost,BufWritePost *.tsv %!column -s "$(printf '\t')" -o "$(printf '\t')" -t
-  au BufWritePre              *.tsv %s/ \+	/	/ge
+  au BufWritePre              *.tsv %s/ \+\ze	//ge
 augroup END
 
 fu! s:isdir(dir) abort
