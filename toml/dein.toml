@@ -1,7 +1,3 @@
-# denops!
-[[plugins]]
-repo = 'vim-denops/denops.vim'
-
 # vim-asterisk
 # [[plugins]]
 # repo = 'haya14busa/vim-asterisk'
@@ -35,71 +31,13 @@ let g:jpmoveword_separator='，．、。・「」『』（）【】\\'
 let g:matchpairs_textobject=1
 '''
 
-# :Gbrowse to open github
+# colorscheme
 [[plugins]]
-repo = 'tpope/vim-rhubarb'
-
-# :SpellCheck to put spell errors to quickfix
+repo = 'cocopon/iceberg.vim'
 # [[plugins]]
-# repo = 'https://github.com/inkarkat/vim-SpellCheck'
+# repo = 'cocopon/pgmnt.vim'
 # [[plugins]]
-# repo = 'https://github.com/inkarkat/vim-ingo-library'
-
-# :HelpfulVersion to view version
-[[plugins]]
-repo = 'tweekmonster/helpful.vim'
-
-# misc
-[[plugins]]
-repo = 'kyazdani42/nvim-web-devicons'
+# repo = 'cocopon/inspecthi.vim'
 # [[plugins]]
-# repo = 'tikhomirov/vim-glsl'
+# repo = 'cocopon/colorswatch.vim'
 
-# [[plugins]]
-# repo = 'hynek/vim-python-pep8-indent'
-# [[plugins]]
-# repo = 'cakebaker/scss-syntax.vim'
-
-# commenter
-[[plugins]]
-repo = 'preservim/nerdcommenter'
-hook_add = '''
-let g:NERDSpaceDelims=1
-let g:NERDDefaultAlign='left'
-let g:NERDCustomDelimiters = {'vim': {'left': '"','right':''}}
-noremap <C-_> <Plug>NERDCommenterToggle
-'''
-
-[[plugins]]
-repo = 'https://github.com/lambdalisue/fern.vim'
-hook_add = '''
-nnoremap <leader>d <Cmd>Fern . -reveal=%<CR>
-nnoremap <leader>n <Cmd>Fern . -reveal=% -drawer<CR>
-nnoremap st :<C-u>tabnew<CR><Cmd>Fern . -reveal=%<CR>
-function! s:init_fern() abort
-  nunmap <buffer> s
-  nmap <buffer> o <Plug>(fern-action-open-or-expand)
-  nmap <buffer> L <Plug>(fern-action-new-file)
-  nmap <buffer> d <Plug>(fern-action-trash)<CR>
-  nmap <buffer> D <Plug>(fern-action-trash=)y<CR>
-  nmap <buffer> - <Plug>(fern-action-leave)
-  nunmap <buffer> N
-endfunction
-
-augroup fern-custom
-  autocmd!
-  autocmd FileType fern call s:init_fern()
-  autocmd FileType fern call glyph_palette#apply()
-augroup END
-'''
-[[plugins]]
-repo = 'https://github.com/lambdalisue/nerdfont.vim'
-[[plugins]]
-repo = 'https://github.com/lambdalisue/fern-renderer-nerdfont.vim'
-hook_add = '''
-let g:fern#renderer = "nerdfont"
-'''
-[[plugins]]
-repo = 'https://github.com/lambdalisue/glyph-palette.vim'
-[[plugins]]
-repo = 'https://github.com/lambdalisue/fern-git-status.vim'

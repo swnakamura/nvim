@@ -105,3 +105,30 @@ on_ft = ['javascript', 'typescript']
 [[plugins]]
 repo = 'hynek/vim-python-pep8-indent'
 on_ft = 'python'
+
+# :Gbrowse to open github
+[[plugins]]
+repo = 'tpope/vim-rhubarb'
+on_cmd='Gbrowse'
+
+# :SpellCheck to put spell errors to quickfix
+# [[plugins]]
+# repo = 'https://github.com/inkarkat/vim-SpellCheck'
+# [[plugins]]
+# repo = 'https://github.com/inkarkat/vim-ingo-library'
+
+# :HelpfulVersion to view version
+[[plugins]]
+repo = 'tweekmonster/helpful.vim'
+on_cmd='HelpfulVersion'
+
+# commenter
+[[plugins]]
+repo = 'preservim/nerdcommenter'
+hook_add = '''
+let g:NERDSpaceDelims=1
+let g:NERDDefaultAlign='left'
+let g:NERDCustomDelimiters = {'vim': {'left': '"','right':''}}
+noremap <C-_> <Plug>NERDCommenterToggle
+'''
+on_map = ['<Plug>NERDCommenter']
