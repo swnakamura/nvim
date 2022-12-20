@@ -30,10 +30,10 @@ if dein#min#load_state(s:dein_home)
   call dein#begin(s:cache_dein, [s:toml, s:lazy_toml, s:denops_toml, s:fern_toml])
 
   " read toml file and cache them
-  call dein#load_toml(s:toml,      {'lazy': 0})
-  call dein#load_toml(s:lazy_toml, {'lazy': 1})
-  call dein#load_toml(s:denops_toml, {'lazy': 1})
-  call dein#load_toml(s:fern_toml, {'lazy': 1})
+  call dein#load_toml(s:toml, #{lazy: 0})
+  call dein#load_toml(s:lazy_toml, #{lazy: 1})
+  call dein#load_toml(s:denops_toml, #{lazy: 1})
+  call dein#load_toml(s:fern_toml, #{lazy: 1})
 
   " finished!
   call dein#end()
