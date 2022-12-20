@@ -61,6 +61,10 @@ on_event = ['InsertEnter', 'CmdlineEnter']
 on_ft = ['python', 'rust', 'lua', 'vim']
 hook_post_source = '''
 exe 'source' $HOME . '/.config/nvim/toml/nvim-cmp_and_lsp.lua'
+
+" いちおうもう一度マップしておく
+cnoremap <C-E> <End>
+inoremap <C-E> <End>
 '''
 
 # align

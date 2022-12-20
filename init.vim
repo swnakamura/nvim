@@ -23,6 +23,9 @@ if filereadable(g:nvim_home_directory .. 'rcs/api_key.vim')
   exe 'source' g:nvim_home_directory .. 'rcs/api_key.vim'
 endif
 
+cnoremap <C-E> <End>
+inoremap <C-E> <End>
+
 " source plugins
 exe 'source' g:nvim_home_directory .. 'rcs/plugin_init.vim'
 exe 'source' g:nvim_home_directory .. 'rcs/dein.vim'
