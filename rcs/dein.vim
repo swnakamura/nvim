@@ -15,16 +15,17 @@ let &runtimepath = &runtimepath . ',' . s:dein_home
 let g:python3_host_prog = exepath('python3')
 
 let g:dein#types#git#clone_depth = 1
-if dein#min#load_state(s:dein_home)
+" obtain cache directory
+let s:cache_home = s:neovim_home . '/.cache/'
+let s:cache_dein = s:cache_home . 'dein/dein.vim'
+
+if dein#min#load_state(s:cache_dein)
+  echomsg "Rebuilding cache"
   " list toml directory
   let s:toml      = s:neovim_home . 'toml/dein.toml'
   let s:lazy_toml = s:neovim_home . 'toml/dein_lazy.toml'
   let s:denops_toml = s:neovim_home . 'toml/denops.toml'
   let s:fern_toml = s:neovim_home . 'toml/fern.toml'
-
-  " obtain cache directory
-  let s:cache_home = s:neovim_home . '/.cache/'
-  let s:cache_dein = s:cache_home . 'dein/dein.vim'
 
   " let's begin...
   call dein#begin(s:cache_dein, [s:toml, s:lazy_toml, s:denops_toml, s:fern_toml])
