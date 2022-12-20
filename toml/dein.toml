@@ -41,3 +41,9 @@ repo = 'cocopon/iceberg.vim'
 # [[plugins]]
 # repo = 'cocopon/colorswatch.vim'
 
+[[plugins]]
+repo = 'woodyZootopia/gitsession.vim'
+hook_add = '''
+let g:gitsession_autosave = 1
+let g:gitsession_tmp_dir = g:nvim_home_directory .. '/tmp/gitsession'
+'''

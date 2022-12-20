@@ -53,6 +53,8 @@ repo = 'onsails/lspkind.nvim'
 [[plugins]]
 repo = 'hrsh7th/cmp-nvim-lsp-signature-help'
 [[plugins]]
+repo = 'neovim/nvim-lspconfig'
+[[plugins]]
 repo = 'hrsh7th/nvim-cmp'
 depends = ['nvim-lspconfig', 'cmp-nvim-lsp', 'cmp-buffer', 'cmp-path', 'cmp-cmdline', 'cmp_luasnip', 'lspkind.nvim', 'cmp-look']
 on_event = ['InsertEnter', 'CmdlineEnter']
@@ -60,7 +62,6 @@ on_ft = ['python', 'rust', 'lua', 'vim']
 hook_post_source = '''
 exe 'source' $HOME . '/.config/nvim/toml/nvim-cmp_and_lsp.lua'
 '''
-
 
 # align
 [[plugins]]
@@ -132,3 +133,213 @@ let g:NERDCustomDelimiters = {'vim': {'left': '"','right':''}}
 noremap <C-_> <Plug>NERDCommenterToggle
 '''
 on_map = ['<Plug>NERDCommenter']
+
+# LuaSnip and snippet list
+[[plugins]]
+repo = 'https://github.com/L3MON4D3/LuaSnip'
+hook_source = '''
+" press <Tab> to expand or jump in a snippet. These can also be mapped separately
+" via <Plug>luasnip-expand-snippet and <Plug>luasnip-jump-next.
+imap <silent><expr> <Tab> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>' 
+" -1 for jumping backwards.
+inoremap <silent> <S-Tab> <cmd>lua require'luasnip'.jump(-1)<Cr>
+
+snoremap <silent> <Tab> <cmd>lua require('luasnip').jump(1)<Cr>
+snoremap <silent> <S-Tab> <cmd>lua require('luasnip').jump(-1)<Cr>
+
+" For changing choices in choiceNodes (not strictly necessary for a basic setup).
+imap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'
+smap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'
+
+exe 'source' $HOME . '/.config/nvim/toml/luasnip.lua'
+'''
+on_event = 'InsertEnter'
+depends = 'luasnip-latex-snippets.nvim'
+
+[[plugins]]
+repo = 'https://github.com/iurimateus/luasnip-latex-snippets.nvim'
+hook_source = '''
+lua require'luasnip-latex-snippets'.setup({use_treesitter = true})
+'''
+
+# fzf
+[[plugins]]
+repo = 'junegunn/fzf'
+build = './install --bin'
+hook_install = 'fzf#install()'
+
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+depends = 'fzf'
+hook_add = 'call Fzf_add()'
+on_cmd = ['Files', 'Buffers', 'History', 'Maps', 'Helptags', 'Tags', 'Rg']
+depends = 'fzf'
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+hook_add = 'call Gitgutter_add()'
+on_map = '<Plug>(GitGutter'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+hook_add = 'call Fugitive_add()'
+on_cmd = ['Git', 'Gwrite', '0Gclog', 'Gdiffsplit', 'Glgrep']
+
+# indentline implementation in lua
+[[plugins]]
+repo = 'lukas-reineke/indent-blankline.nvim'
+hook_post_source = '''
+lua <<EOF
+require("indent_blankline").setup {
+    space_char_blankline = " ",
+    char_highlight_list = {
+        "IndentBlanklineIndent",
+    },
+}
+EOF
+'''
+on_event = 'CursorHold'
+
+[[plugins]]
+repo = 'majutsushi/tagbar'
+hook_add = '''
+nmap <leader>t :TagbarToggle<CR>
+
+let g:tagbar_sort = 0
+let g:tagbar_autoclose = 0
+'''
+on_cmd = 'TagbarToggle'
+
+[[plugins]]
+repo = 'mbbill/undotree'
+hook_add = '''
+nnoremap U :UndotreeToggle<CR>
+'''
+on_cmd = 'UndotreeToggle'
+
+[[plugins]]
+repo = 'jpalardy/vim-slime'
+hook_add = '''
+nmap <c-c><c-c> <Plug>SlimeParagraphSend
+nmap <c-c><c-n> <Plug>SlimeParagraphSend}/[^\n]<CR>
+nmap <c-c><c-p> <Plug>SlimeParagraphSend{?[^\n]<CR>
+'''
+on_map = '<Plug>Slime'
+
+[[plugins]]
+repo = 'skywind3000/asyncrun.vim'
+hook_add = '''
+let g:asyncrun_bell = 1
+let g:asyncrun_open = 8
+'''
+on_cmd = 'AsyncRun'
+
+[[plugins]]
+repo = 'cohama/agit.vim'
+hook_add = '''
+nnoremap <leader>gl <Cmd>Agit<CR>
+'''
+hook_post_source = '''
+hi link agitStatAdded diffAdded
+hi link agitStatRemoved diffRemoved
+hi link agitDiffAdd diffAdded
+hi link agitDiffRemove diffRemoved
+'''
+on_cmd = 'Agit'
+
+[[plugins]]
+repo = 'voldikss/vim-floaterm.git'
+hook_add = '''
+let g:floaterm_width=0.9
+let g:floaterm_height=0.9
+nnoremap <Plug>(my-win)z <Cmd>FloatermToggle<CR>
+tnoremap <silent> <C-[> <C-\><C-n>:FloatermToggle<CR>
+tnoremap <silent> <C-l> <C-\><C-n>
+'''
+on_cmd = 'FloatermToggle'
+
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+merged = '0'
+lua_source = '''
+require'jvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = {'diff', 'org'},
+    disable = {'json', 'diff'},
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "M",
+      node_incremental = "M",
+      scope_incremental = "S",
+      node_decremental = "m",
+    },
+  },
+  indent = {
+    enable = false
+  },
+  auto_install = true,
+}
+'''
+hook_install = 'TSUpdate'
+hook_post_update = 'TSUpdate'
+on_event = ['BufRead', 'CursorHold']
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter-context'
+lua_source = 'require"treesitter-context".setup()'
+depends = 'nvim-treesitter'
+on_event = 'InsertEnter'
+
+# LSP configuration
+[[plugins]]
+repo='williamboman/mason.nvim'
+lua_source='''
+require("mason").setup()
+'''
+on_event = ['BufRead', 'CursorHold']
+depends = 'mason-lspconfig.nvim'
+
+[[plugins]]
+repo='williamboman/mason-lspconfig.nvim'
+lua_source='''
+require("mason-lspconfig").setup({
+    ensure_installed = { "sumneko_lua", "rust_analyzer", "pyright", "vimls", "bashls", "clangd" }
+})
+'''
+
+# color picker
+[[plugins]]
+repo = 'https://github.com/uga-rosa/ccc.nvim'
+on_cmd = 'Ccc'
+
+[[plugins]]
+repo = 'tversteeg/registers.nvim'
+lua_source = '''
+require("registers").setup()
+'''
+on_event = ['BufRead', 'CursorHold']
+
+[[plugins]]
+repo = 'https://github.com/nvim-orgmode/orgmode'
+hook_post_source = '''
+lua <<EOF
+-- Load custom treesitter grammar for org filetype
+require('orgmode').setup_ts_grammar()
+
+require('orgmode').setup({
+  org_agenda_files = {'~/org/*'},
+  org_default_notes_file = '~/org/refile.org',
+})
+EOF
+augroup org-mode
+    autocmd FileType org nnoremap <buffer> + <Cmd>lua require("orgmode").action("org_mappings.todo_next_state")<CR>
+    autocmd FileType org nnoremap <buffer> t <Cmd>lua require("orgmode").action("org_mappings.todo_next_state")<CR>
+    autocmd FileType org nnoremap <buffer> - <Cmd>lua require("orgmode").action("org_mappings.todo_prev_state")<CR>
+augroup END
+'''
+on_event = ['BufRead', 'CursorHold']
+depends = 'nvim-treesitter'

@@ -19,7 +19,6 @@ if dein#min#load_state(s:dein_home)
   " list toml directory
   let s:toml      = s:neovim_home . 'toml/dein.toml'
   let s:lazy_toml = s:neovim_home . 'toml/dein_lazy.toml'
-  let s:novscode_toml = s:neovim_home . 'toml/dein_novscode.toml'
   let s:denops_toml = s:neovim_home . 'toml/denops.toml'
   let s:fern_toml = s:neovim_home . 'toml/fern.toml'
 
@@ -28,16 +27,13 @@ if dein#min#load_state(s:dein_home)
   let s:cache_dein = s:cache_home . 'dein/dein.vim'
 
   " let's begin...
-  call dein#begin(s:cache_dein, [s:toml, s:lazy_toml, s:novscode_toml, s:denops_toml, s:fern_toml])
+  call dein#begin(s:cache_dein, [s:toml, s:lazy_toml, s:denops_toml, s:fern_toml])
 
   " read toml file and cache them
   call dein#load_toml(s:toml,      {'lazy': 0})
   call dein#load_toml(s:lazy_toml, {'lazy': 1})
   call dein#load_toml(s:denops_toml, {'lazy': 1})
   call dein#load_toml(s:fern_toml, {'lazy': 1})
-  if !exists('g:vscode')
-    call dein#load_toml(s:novscode_toml, {'lazy': 0})
-  endif
 
   " finished!
   call dein#end()
