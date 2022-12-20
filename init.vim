@@ -19,7 +19,9 @@ let g:slime_default_config = {"socket_name": "default", "target_pane": ":.1"}
 
 let g:nvim_home_directory = stdpath('config') . '/'
 
-exe 'source' g:nvim_home_directory .. 'rcs/api_key.vim'
+if filereadable(g:nvim_home_directory .. 'rcs/api_key.vim')
+  exe 'source' g:nvim_home_directory .. 'rcs/api_key.vim'
+endif
 
 " source plugins
 exe 'source' g:nvim_home_directory .. 'rcs/plugin_init.vim'
@@ -48,6 +50,7 @@ if !exists('g:vscode')
   hi GitGutterChange       guibg=#161821
   hi GitGutterChangeDelete guibg=#161821
   hi GitGutterDelete       guibg=#161821
+  highlight IndentBlanklineIndent guifg=#51525b gui=nocombine
   " Do not show horizontal line in deleted
   hi DiffDelete guifg=#53343b
   " nvim-tree setting

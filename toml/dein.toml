@@ -83,6 +83,7 @@ function! s:init_fern() abort
   nmap <buffer> d <Plug>(fern-action-trash)<CR>
   nmap <buffer> D <Plug>(fern-action-trash=)y<CR>
   nmap <buffer> - <Plug>(fern-action-leave)
+  nunmap <buffer> N
 endfunction
 
 augroup fern-custom

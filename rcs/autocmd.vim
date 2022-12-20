@@ -26,12 +26,9 @@ function! Preserve(command)
   execute a:command
   call winrestview(l:curw)
 endfunction
-function! Autopep8()
-  call Preserve(':silent %!autopep8 -')
-endfunction
 augroup formatter
   autocmd!
-  autocmd BufWritePre *.py call Autopep8()
+  autocmd BufWritePre *.py call Preserve(':silent %!autopep8 -')
 augroup END
 
 " 検索中の領域をハイライトする
@@ -139,10 +136,11 @@ augroup END
 
 augroup csv-tsv
   au!
-  au BufReadPost,BufWritePost *.csv %!column -s, -o, -t -L
-  au BufWritePre              *.csv %s/\s\+\ze,/,/ge
-  au BufReadPost,BufWritePost *.tsv %!column -s "$(printf '\t')" -o "$(printf '\t')" -t -L
-  au BufWritePre              *.tsv %s/ \+\ze	//ge
+  au BufReadPost,BufWritePost *.csv call Preserve('silent %!column -s, -o, -t -L')
+  au BufWritePre              *.csv call Preserve('silent %s/\s\+\ze,/,/ge')
+  au BufReadPost,BufWritePost *.tsv call Preserve('silent %!column -s "$(printf ''\t'')" -o "$(printf ''\t'')" -t -L')
+  au BufWritePre              *.tsv call Preserve('silent %s/ \+\ze	//ge')
+  au BufWritePre              *.tsv call Preserve('silent %s/\s\+$//ge')
 augroup END
 
 fu! s:isdir(dir) abort

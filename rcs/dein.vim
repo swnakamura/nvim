@@ -1,4 +1,10 @@
 "plugin settings
+"
+let g:dein#install_progress_type = 'floating'
+let g:dein#install_check_diff = v:true
+let g:dein#enable_notification = v:true
+let g:dein#install_check_remote_threshold = 24 * 60 * 60
+
 let s:neovim_home = $HOME . '/.config/nvim/'
 let s:dein_home = s:neovim_home . 'dein'
 
@@ -9,7 +15,7 @@ let &runtimepath = &runtimepath . ',' . s:dein_home
 let g:python3_host_prog = exepath('python3')
 
 let g:dein#types#git#clone_depth = 1
-if dein#load_state(s:dein_home)
+if dein#min#load_state(s:dein_home)
   " list toml directory
   let s:toml      = s:neovim_home . 'toml/dein.toml'
   let s:lazy_toml = s:neovim_home . 'toml/dein_lazy.toml'

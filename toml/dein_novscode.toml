@@ -45,6 +45,19 @@ hook_add = 'call Fugitive_add()'
 # indentline implementation in lua
 [[plugins]]
 repo = 'lukas-reineke/indent-blankline.nvim'
+hook_post_source = '''
+lua <<EOF
+require("indent_blankline").setup {
+    space_char_blankline = " ",
+    char_highlight_list = {
+        "IndentBlanklineIndent",
+    },
+}
+EOF
+'''
+
+[[plugins]]
+repo = 'https://github.com/uga-rosa/ccc.nvim'
 
 [[plugins]]
 repo = 'majutsushi/tagbar'
