@@ -65,7 +65,6 @@ ls.add_snippets("tex", {
 %     backend=biber,
 %     style=numeric,
 %     sortlocale=en_US,
-%     natbib=true,
 %     url=true, 
 %     doi=true,
 %     eprint=false
@@ -83,7 +82,19 @@ ls.add_snippets("tex", {
 % \tableofcontents
 
 ${0:Hello, world!}
+
+% \printbibliography
 \end{document}
 ]]
+    ),
+    ls.parser.parse_snippet("fig",
+    [[
+\begin{figure}[b]
+    \centering
+    \includegraphics[width=\linewidth]{${1:path}}
+    \caption{${2:caption}}
+	\label{fig:${5:${1/[\W]+/_/g}}}
+\end{figure}$0
+    ]]
     )
 })
