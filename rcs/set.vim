@@ -40,6 +40,9 @@ set ignorecase smartcase nohlsearch nowrapscan
 set relativenumber
 set number
 
+" line break settings
+set breakindent
+
 " listchar settings
 set list listchars=tab:»-,trail:~,extends:»,precedes:«,nbsp:%
 
@@ -95,7 +98,7 @@ set title
 
 set mouse=a
 
-set matchpairs+=「:」,（:）,『:』,【:】,〈:〉,《:》,〔:〕,｛:｝
+set matchpairs+=「:」,（:）,『:』,【:】,〈:〉,《:》,〔:〕,｛:｝,<:>
 
 set spelllang=en,cjk
 
