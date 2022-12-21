@@ -5,15 +5,15 @@ nnoremap <leader>d <Cmd>Fern . -reveal=%<CR>
 nnoremap <leader>n <Cmd>Fern . -reveal=% -drawer<CR>
 nnoremap st :<C-u>tabnew<CR><Cmd>Fern . -reveal=%<CR>
 '''
-hook_source = '''
+hook_source='''
 function! s:init_fern() abort
   nunmap <buffer> s
+  nunmap <buffer> N
   nmap <buffer> o <Plug>(fern-action-open-or-expand)
   nmap <buffer> L <Plug>(fern-action-new-file)
   nmap <buffer> d <Plug>(fern-action-trash)<CR>
   nmap <buffer> D <Plug>(fern-action-trash=)y<CR>
   nmap <buffer> - <Plug>(fern-action-leave)
-  nunmap <buffer> N
 endfunction
 
 augroup fern-custom
@@ -22,18 +22,19 @@ augroup fern-custom
   autocmd FileType fern call glyph_palette#apply()
 augroup END
 '''
-on_cmd = 'Fern'
-depends = ['nerdfont.vim', 'fern-renderer-nerdfont.vim', 'nvim-web-devicons', 'glyph-palette.vim', 'fern-git-status.vim']
+depends = ['fern-renderer-nerdfont.vim', 'glyph-palette.vim', 'fern-git-status.vim']
 
+[[plugins]]
+repo = 'https://github.com/lambdalisue/fern-renderer-nerdfont.vim'
+hook_add = '''
+let g:fern#renderer = "nerdfont"
+'''
+depends = ['nerdfont.vim', 'nvim-web-devicons']
 [[plugins]]
 repo = 'https://github.com/lambdalisue/nerdfont.vim'
 [[plugins]]
-repo = 'https://github.com/lambdalisue/fern-renderer-nerdfont.vim'
-hook_source = '''
-let g:fern#renderer = "nerdfont"
-'''
-[[plugins]]
 repo = 'kyazdani42/nvim-web-devicons'
+
 [[plugins]]
 repo = 'https://github.com/lambdalisue/glyph-palette.vim'
 [[plugins]]

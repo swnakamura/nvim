@@ -4,6 +4,7 @@ let g:dein#install_progress_type = 'floating'
 let g:dein#install_check_diff = v:true
 let g:dein#enable_notification = v:true
 let g:dein#install_check_remote_threshold = 24 * 60 * 60
+let g:dein#types#git#clone_depth = 1
 
 let s:neovim_home = $HOME . '/.config/nvim/'
 let s:dein_home = s:neovim_home . 'dein'
@@ -12,22 +13,17 @@ if !isdirectory(s:dein_home)
   call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_home))
 endif
 let &runtimepath = &runtimepath . ',' . s:dein_home
-let g:python3_host_prog = exepath('python3')
 
-let g:dein#types#git#clone_depth = 1
-" obtain cache directory
-let s:cache_home = s:neovim_home . '/.cache/'
-let s:cache_dein = s:cache_home . 'dein/dein.vim'
+let s:cache_dein = s:neovim_home . '/.cache/dein/dein.vim'
+
+" list toml directory
+let s:toml      = s:neovim_home . 'toml/dein.toml'
+let s:lazy_toml = s:neovim_home . 'toml/dein_lazy.toml'
+let s:denops_toml = s:neovim_home . 'toml/denops.toml'
+let s:fern_toml = s:neovim_home . 'toml/fern.toml'
 
 if dein#min#load_state(s:cache_dein)
   echomsg "Rebuilding cache"
-  " list toml directory
-  let s:toml      = s:neovim_home . 'toml/dein.toml'
-  let s:lazy_toml = s:neovim_home . 'toml/dein_lazy.toml'
-  let s:denops_toml = s:neovim_home . 'toml/denops.toml'
-  let s:fern_toml = s:neovim_home . 'toml/fern.toml'
-
-  " let's begin...
   call dein#begin(s:cache_dein, [s:toml, s:lazy_toml, s:denops_toml, s:fern_toml])
 
   " read toml file and cache them
