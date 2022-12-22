@@ -7,8 +7,8 @@ nnoremap st :<C-u>tabnew<CR><Cmd>Fern . -reveal=%<CR>
 '''
 hook_source='''
 function! s:init_fern() abort
-  nunmap <buffer> s
-  nunmap <buffer> N
+  silent! nunmap <buffer> s
+  silent! nunmap <buffer> N
   nmap <buffer> o <Plug>(fern-action-open-or-expand)
   nmap <buffer> L <Plug>(fern-action-new-file)
   nmap <buffer> d <Plug>(fern-action-trash)<CR>
@@ -22,7 +22,7 @@ augroup fern-custom
   autocmd FileType fern call glyph_palette#apply()
 augroup END
 '''
-depends = ['fern-renderer-nerdfont.vim', 'glyph-palette.vim', 'fern-git-status.vim']
+depends = ['fern-renderer-nerdfont.vim', 'glyph-palette.vim', 'fern-git-status.vim', 'fern-hijack.vim']
 
 [[plugins]]
 repo = 'https://github.com/lambdalisue/fern-renderer-nerdfont.vim'
@@ -39,3 +39,5 @@ repo = 'kyazdani42/nvim-web-devicons'
 repo = 'https://github.com/lambdalisue/glyph-palette.vim'
 [[plugins]]
 repo = 'https://github.com/lambdalisue/fern-git-status.vim'
+[[plugins]]
+repo = 'https://github.com/lambdalisue/fern-hijack.vim'
