@@ -164,9 +164,9 @@ on_event = 'InsertEnter'
 depends = ['luasnip-latex-snippets.nvim','impatient.nvim']
 
 [[plugins]]
-repo = 'https://github.com/iurimateus/luasnip-latex-snippets.nvim'
+repo = '~/ghq/github.com/iurimateus/luasnip-latex-snippets.nvim'
 hook_source = '''
-lua require'luasnip-latex-snippets'.setup({use_treesitter = true})
+lua require'luasnip-latex-snippets'.setup()
 '''
 
 # fzf
@@ -276,7 +276,7 @@ require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = {'diff', 'org'},
-    disable = {'json', 'diff'},
+    disable = {'json', 'diff', 'latex'},
   },
   incremental_selection = {
     enable = true,

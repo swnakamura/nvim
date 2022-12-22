@@ -50,8 +50,8 @@ function! Vimtex_add() abort
   " let g:vimtex_quickfix_enabled=0
   let g:vimtex_quickfix_mode = 0
   let g:vimtex_fold_manual = 1
-  let g:vimtex_syntax_enabled = 0
-  let g:vimtex_syntax_conceal_disable = 1
+  " let g:vimtex_syntax_enabled = 0
+  " let g:vimtex_syntax_conceal_disable = 1
   " let g:vimtex_view_method='zathura'
   " set fillchars=fold:\ 
   let g:vimtex_compiler_latexmk = {

@@ -57,6 +57,7 @@ ls.add_snippets("tex", {
     ls.parser.parse_snippet("sf", "\\textsf{$1}"),
     ls.parser.parse_snippet("tt", "\\texttt{$1}"),
     ls.parser.parse_snippet("em", "\\emph{$1}"),
+    ls.parser.parse_snippet({trig=",,", snippetType="autosnippet"}, "$$1$"),
     ls.parser.parse_snippet("jbase",
         [[
 \documentclass[12pt,a4paper,titlepage]{jlreq}
