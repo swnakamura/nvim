@@ -36,37 +36,6 @@ on_ft = ['rust']
 repo = 'luochen1990/rainbow'
 on_ft = ['lisp']
 
-[[plugins]]
-repo = 'octaltree/cmp-look'
-[[plugins]]
-repo = 'hrsh7th/cmp-nvim-lsp'
-[[plugins]]
-repo = 'hrsh7th/cmp-buffer'
-[[plugins]]
-repo = 'hrsh7th/cmp-path'
-[[plugins]]
-repo = 'hrsh7th/cmp-cmdline'
-[[plugins]]
-repo = 'saadparwaiz1/cmp_luasnip'
-[[plugins]]
-repo = 'onsails/lspkind.nvim'
-[[plugins]]
-repo = 'hrsh7th/cmp-nvim-lsp-signature-help'
-[[plugins]]
-repo = 'neovim/nvim-lspconfig'
-[[plugins]]
-repo = 'hrsh7th/nvim-cmp'
-depends = ['impatient.nvim','nvim-lspconfig', 'cmp-nvim-lsp', 'cmp-buffer', 'cmp-path', 'cmp-cmdline', 'cmp_luasnip', 'lspkind.nvim', 'cmp-look', 'nvim-web-devicons']
-on_event = ['InsertEnter', 'CmdlineEnter']
-on_ft = ['python', 'rust', 'lua', 'vim']
-hook_post_source = '''
-exe 'source' $HOME . '/.config/nvim/toml/nvim-cmp_and_lsp.lua'
-
-" いちおうもう一度マップしておく
-cnoremap <C-E> <End>
-inoremap <C-E> <End>
-'''
-
 # align
 [[plugins]]
 repo = 'junegunn/vim-easy-align'
@@ -158,7 +127,7 @@ snoremap <silent> <S-Tab> <cmd>lua require('luasnip').jump(-1)<Cr>
 imap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'
 smap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'
 
-exe 'source' $HOME . '/.config/nvim/toml/luasnip.lua'
+exe 'source' stdpath('config') . '/toml/luasnip.lua'
 '''
 on_event = 'InsertEnter'
 depends = ['luasnip-latex-snippets.nvim','impatient.nvim']

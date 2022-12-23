@@ -1,0 +1,32 @@
+[[plugins]]
+repo = 'octaltree/cmp-look'
+[[plugins]]
+repo = 'hrsh7th/cmp-nvim-lsp'
+[[plugins]]
+repo = 'hrsh7th/cmp-buffer'
+[[plugins]]
+repo = 'hrsh7th/cmp-path'
+[[plugins]]
+repo = 'hrsh7th/cmp-cmdline'
+[[plugins]]
+repo = 'saadparwaiz1/cmp_luasnip'
+[[plugins]]
+repo = 'onsails/lspkind.nvim'
+[[plugins]]
+repo = 'hrsh7th/cmp-nvim-lsp-signature-help'
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+
+# 本体
+[[plugins]]
+repo = 'hrsh7th/nvim-cmp'
+depends = ['impatient.nvim','nvim-lspconfig', 'cmp-nvim-lsp', 'cmp-buffer', 'cmp-path', 'cmp-cmdline', 'cmp_luasnip', 'lspkind.nvim', 'cmp-look', 'nvim-web-devicons']
+on_event = ['InsertEnter', 'CmdlineEnter']
+on_ft = ['python', 'rust', 'lua', 'vim']
+hook_post_source = '''
+exe 'source' stdpath('config') . 'toml/nvim-cmp_and_lsp.lua'
+
+" いちおうもう一度マップしておく
+cnoremap <C-E> <End>
+inoremap <C-E> <End>
+'''

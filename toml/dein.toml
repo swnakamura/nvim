@@ -45,7 +45,7 @@ repo = 'cocopon/iceberg.vim'
 repo = 'woodyZootopia/gitsession.vim'
 hook_add = '''
 let g:gitsession_autosave = 1
-let g:gitsession_tmp_dir = g:nvim_home_directory .. '/tmp/gitsession'
+let g:gitsession_tmp_dir = g:nvim_conf_dir .. '/tmp/gitsession'
 '''
 [[plugins]]
 repo = 'lewis6991/impatient.nvim'

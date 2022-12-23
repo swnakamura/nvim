@@ -17,24 +17,24 @@ let g:slime_target = "tmux"
 let g:slime_dont_ask_default = 1
 let g:slime_default_config = {"socket_name": "default", "target_pane": ":.1"}
 
-let g:nvim_home_directory = stdpath('config') . '/'
+let g:nvim_conf_dir = stdpath('config') . '/'
 
-if filereadable(g:nvim_home_directory .. 'rcs/api_key.vim')
-  exe 'source' g:nvim_home_directory .. 'rcs/api_key.vim'
+if filereadable(g:nvim_conf_dir .. 'rcs/api_key.vim')
+  exe 'source' g:nvim_conf_dir .. 'rcs/api_key.vim'
 endif
 
 cnoremap <C-E> <End>
 inoremap <C-E> <End>
 
 " source plugins
-exe 'source' g:nvim_home_directory .. 'rcs/plugin_init.vim'
-exe 'source' g:nvim_home_directory .. 'rcs/dein.vim'
+exe 'source' g:nvim_conf_dir .. 'rcs/plugin_init.vim'
+exe 'source' g:nvim_conf_dir .. 'rcs/dein.vim'
 
 " source other settings
-exe 'source' g:nvim_home_directory .. 'rcs/set.vim'
-exe 'source' g:nvim_home_directory .. 'rcs/mapping.vim'
-exe 'source' g:nvim_home_directory .. 'rcs/autocmd.vim'
-exe 'source' g:nvim_home_directory .. "rcs/autocmd_fcitx.vim"
+exe 'source' g:nvim_conf_dir .. 'rcs/set.vim'
+exe 'source' g:nvim_conf_dir .. 'rcs/mapping.vim'
+exe 'source' g:nvim_conf_dir .. 'rcs/autocmd.vim'
+exe 'source' g:nvim_conf_dir .. "rcs/autocmd_fcitx.vim"
 
 if !exists('g:vscode')
   set background=dark
