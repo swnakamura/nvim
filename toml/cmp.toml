@@ -24,9 +24,5 @@ depends = ['impatient.nvim','nvim-lspconfig', 'cmp-nvim-lsp', 'cmp-buffer', 'cmp
 on_event = ['InsertEnter', 'CmdlineEnter']
 on_ft = ['python', 'rust', 'lua', 'vim']
 hook_post_source = '''
-exe 'source' stdpath('config') . 'toml/nvim-cmp_and_lsp.lua'
-
-" いちおうもう一度マップしておく
-cnoremap <C-E> <End>
-inoremap <C-E> <End>
+exe 'source' g:nvim_conf_dir . 'toml/nvim-cmp_and_lsp.lua'
 '''

@@ -19,11 +19,11 @@ cmp.setup({
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-e>'] = function(fallback)
+        ['<C-e>'] = function(_)
             if cmp.visible() then
                 cmp.mapping.abort()
             end
-            fallback()
+            vim.cmd('call feedkeys("\\<End>")')
         end,
         ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     }),
