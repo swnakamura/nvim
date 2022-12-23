@@ -259,17 +259,10 @@ xnoremap <expr> / (line('.') == line('v')) ?
       \ '/' :
       \ ((line('.') < line('v')) ? '' : 'o') . "<ESC>" . '/\%>' . (min([line('v'), line('.')])-1) . 'l\%<' . (max([line('v'), line('.')])+1) . 'l'
 
-inoremap <silent> <expr> <C-b> "<C-r>=ExecExCommand('normal b')<CR>"
-inoremap <silent> <expr> <C-f> "<C-r>=ExecExCommand('normal w')<CR>"
-inoremap <silent> <expr> <C-p> "<C-r>=ExecExCommand('normal gk')<CR>"
-inoremap <silent> <expr> <C-n> "<C-r>=ExecExCommand('normal gj')<CR>"
-
-" 移動はこの関数を使わないとうまく行かない
-" --nopluginだとうまくいく．Ultisnipあたりが悪さをしているのだろうか？
-function! ExecExCommand(cmd)
-  silent exec a:cmd
-  return ''
-endfunction
+inoremap <silent> <C-b> <C-o>b
+inoremap <silent> <C-f> <C-o>w
+inoremap <silent> <C-p> <C-o>gk
+inoremap <silent> <C-n> <C-o>gj
 
 " quickfix jump
 nnoremap [t <Cmd>lp<CR>
