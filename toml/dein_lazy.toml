@@ -275,21 +275,27 @@ on_event = 'InsertEnter'
 
 # LSP configuration
 [[plugins]]
+repo = 'neovim/nvim-lspconfig'
+depends = 'impatient.nvim'
+
+[[plugins]]
 repo='williamboman/mason.nvim'
-lua_source='''
-require("mason").setup()
+hook_post_source='''
+lua require("mason").setup()
 '''
-on_event = ['BufRead', 'CursorHold']
-depends = 'mason-lspconfig.nvim'
+depends = 'impatient.nvim'
 
 [[plugins]]
 repo='williamboman/mason-lspconfig.nvim'
-lua_source='''
-require("mason-lspconfig").setup({
-    ensure_installed = { "sumneko_lua", "rust_analyzer", "pyright", "vimls", "bashls", "clangd" }
-})
+hook_post_source='''
+lua <<EOF
+require("mason-lspconfig").setup{
+    ensure_installed = { "sumneko_lua", "rust_analyzer", "pyright", "vimls", "bashls", "clangd", 'texlab'}
+}
+EOF
 '''
-depends = 'impatient.nvim'
+depends = ['mason.nvim', 'nvim-lspconfig']
+on_event = ['BufRead', 'CursorHold']
 
 # color picker
 [[plugins]]

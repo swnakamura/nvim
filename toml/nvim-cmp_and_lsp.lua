@@ -110,11 +110,6 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<space>Q', vim.diagnostic.setloclist, opts)
 
--- Set up lspconfig.
-local lsp_flags = {
-    -- This is the default in Nvim 0.7+
-    debounce_text_changes = 150,
-}
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -135,25 +130,24 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protoc
 require('lspconfig')['pyright'].setup {
     capabilities = capabilities,
     on_attach = on_attach,
-    flags = lsp_flags,
 }
 require('lspconfig')['rust_analyzer'].setup {
     capabilities = capabilities,
     on_attach = on_attach,
-    flags = lsp_flags,
 }
 require('lspconfig')['sumneko_lua'].setup {
     capabilities = capabilities,
     on_attach = on_attach,
-    flags = lsp_flags,
 }
 require('lspconfig')['bashls'].setup {
     capabilities = capabilities,
     on_attach = on_attach,
-    flags = lsp_flags,
 }
 require('lspconfig')['clangd'].setup {
     capabilities = capabilities,
     on_attach = on_attach,
-    flags = lsp_flags,
+}
+require('lspconfig')['texlab'].setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
 }
