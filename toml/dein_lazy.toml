@@ -240,7 +240,8 @@ on_cmd = 'FloatermToggle'
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
 merged = '0'
-lua_source = '''
+hook_post_source = '''
+lua <<EOF
 require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
@@ -261,6 +262,7 @@ require'nvim-treesitter.configs'.setup {
   },
   auto_install = true,
 }
+EOF
 '''
 hook_install = 'TSUpdate'
 hook_post_update = 'TSUpdate'
@@ -269,7 +271,7 @@ depends = 'impatient.nvim'
 
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter-context'
-lua_source = 'require"treesitter-context".setup()'
+hook_post_source = 'lua require"treesitter-context".setup()'
 depends = 'nvim-treesitter'
 on_event = 'InsertEnter'
 
@@ -305,9 +307,7 @@ depends = 'impatient.nvim'
 
 [[plugins]]
 repo = 'tversteeg/registers.nvim'
-lua_source = '''
-require("registers").setup()
-'''
+hook_post_source = '''lua require("registers").setup()'''
 on_event = ['BufRead', 'CursorHold']
 depends = 'impatient.nvim'
 
