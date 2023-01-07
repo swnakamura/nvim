@@ -7,7 +7,21 @@ on_ft = ['html', 'xml', 'vue', 'htmldjango']
 [[plugins]]
 repo = 'lervag/vimtex'
 on_ft = ['tex']
-hook_add = 'call Vimtex_add()'
+hook_add = '''
+  let g:tex_flavor = 'latex'
+  let g:tex_conceal = 'abdmg'
+  let g:vimtex_fold_enabled = 1
+  let g:vimtex_view_general_viewer='evince'
+  let g:vimtex_quickfix_enabled=0
+  let g:vimtex_quickfix_mode = 0
+  let g:vimtex_fold_manual = 1
+  " Do below if using treesitter
+  " let g:vimtex_syntax_enabled = 0
+  " let g:vimtex_syntax_conceal_disable = 1
+'''
+hook_post_source = '''
+  let g:vimtex_compiler_latexmk['build_dir'] = 'livepreview'
+'''
 [[plugins]]
 repo = 'AtsushiM/search-parent.vim'
 on_ft = ['sass','scss','css']
@@ -231,7 +245,7 @@ hook_add = '''
 let g:floaterm_width=0.9
 let g:floaterm_height=0.9
 nnoremap <Plug>(my-win)z <Cmd>FloatermToggle<CR>
-tnoremap <silent> <C-[> <C-\><C-n>:FloatermToggle<CR>
+tnoremap <silent> <C-[> <C-\><C-n>:FloatermHide<CR>
 tnoremap <silent> <C-l> <C-\><C-n>
 '''
 on_cmd = 'FloatermToggle'

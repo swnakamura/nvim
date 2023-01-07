@@ -43,20 +43,6 @@ function! Textobjuser_add() abort
 endfunction
 
 function! Vimtex_add() abort
-  let g:tex_flavor = 'latex'
-  let g:tex_conceal = 'abdmg'
-  let g:vimtex_fold_enabled = 1
-  let g:vimtex_view_general_viewer='evince'
-  " let g:vimtex_quickfix_enabled=0
-  let g:vimtex_quickfix_mode = 0
-  let g:vimtex_fold_manual = 1
-  " let g:vimtex_syntax_enabled = 0
-  " let g:vimtex_syntax_conceal_disable = 1
-  " let g:vimtex_view_method='zathura'
-  " set fillchars=fold:\ 
-  let g:vimtex_compiler_latexmk = {
-        \ 'build_dir' : 'livepreview',
-        \}
 endfunction
 
 function! Fzf_add() abort
