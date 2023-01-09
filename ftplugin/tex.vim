@@ -17,3 +17,5 @@ noremap <buffer> <F9>           <plug>(vimtex-env-change)
 imap <buffer> ( (
 imap <buffer> [ [
 imap <buffer> { {
+
+let b:lexima_disabled = 1

@@ -1,2 +1,2 @@
-set tabstop=20
-set nowrap
+setlocal tabstop=20
+setlocal nowrap

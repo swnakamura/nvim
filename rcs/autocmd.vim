@@ -1,15 +1,6 @@
 augroup file-type
   au!
-  au BufNewFile,BufRead *.cls                            setf tex
-  au BufNewFile,BufRead *.jl                             setf julia
-  au BufNewFile,BufRead *.elm                            setf elm
-  au BufNewFile,BufRead *.ipynb                          setf python
-  au BufNewFile,BufRead *.re                             setf review
-  au BufNewFile,BufRead *.log                            setf log
-  au FileType           python,c,cpp                     setlocal foldmethod=indent
   au FileType           go                               setlocal tabstop=4 shiftwidth=4 noexpandtab formatoptions+=r
-  au FileType           vim                              setlocal tabstop=2 shiftwidth=2
-  au FileType           tex                              let b:lexima_disabled = 1
   au FileType           html,csv,tsv                     setlocal nowrap
   au FileType           text,mail,markdown,help          setlocal noet spell
   au FileType           gitcommit                        setlocal spell
