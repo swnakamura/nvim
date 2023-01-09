@@ -10,10 +10,10 @@ function! s:init_fern() abort
   silent! nunmap <buffer> s
   silent! nunmap <buffer> N
   nmap <buffer> o <Plug>(fern-action-open-or-expand)
-  nmap <buffer> l <Plug>(fern-action-open-or-expand)<Plug>(fern-action-cd)
-  nmap <buffer> h <Plug>(fern-action-collapse)<Plug>(fern-action-cd)
-  nmap <buffer> <CR> <Plug>(fern-action-open-or-enter)<Plug>(fern-action-cd)
-  nmap <buffer> - <Plug>(fern-action-leave)<Plug>(fern-action-cd)
+  nmap <buffer> l <Plug>(fern-action-open-or-expand)
+  nmap <buffer> h <Plug>(fern-action-collapse)
+  nmap <buffer> <CR> <Plug>(fern-action-tcd)<Plug>(fern-action-open-or-enter)
+  nmap <buffer> - <Plug>(fern-action-leave)<Plug>(fern-wait)<Plug>(fern-action-tcd:root)
   nmap <buffer> L <Plug>(fern-action-new-file)
   nmap <buffer> d <Plug>(fern-action-trash)<CR>
   nmap <buffer> D <Plug>(fern-action-trash=)y<CR>
