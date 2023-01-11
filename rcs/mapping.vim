@@ -4,16 +4,13 @@
 xnoremap <silent> y y`]
 
 " Space+something to move to an end
-" noremap <leader>h ^
-" noremap <leader>l $
-" noremap <leader>k gg
-" noremap <leader>j G
 nnoremap H ^
 nnoremap L $
 xnoremap H ^
 xnoremap L $
 
-nnoremap <Space> <Nop>
+inoremap <F1>      <Nop>
+nnoremap <Space>   <Nop>
 nnoremap <C-space> <Nop>
 
 " unmap s,space

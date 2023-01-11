@@ -50,7 +50,7 @@ if !exists('g:vscode')
   hi GitGutterChange       guibg=#161821
   hi GitGutterChangeDelete guibg=#161821
   hi GitGutterDelete       guibg=#161821
-  highlight IndentBlanklineIndent guifg=#51525b gui=nocombine
+  highlight IndentBlanklineIndent guifg=#3c3c43 gui=nocombine
   " Do not show horizontal line in deleted
   hi DiffDelete guifg=#53343b
   " nvim-tree setting
