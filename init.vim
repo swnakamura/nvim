@@ -4,7 +4,6 @@ filetype plugin indent off
 " map space as leader
 let g:mapleader = "\<Space>"
 let g:maplocalleader = "\<C-space>"
-let g:vimtex_compiler_progname = 'nvr'
 
 let g:loaded_python_provier=1
 let g:python3_host_prog='/usr/bin/python3'
