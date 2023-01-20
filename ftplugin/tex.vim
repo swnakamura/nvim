@@ -14,6 +14,8 @@ noremap <buffer> <F7>           :VimtexCompileOutput<CR>
 noremap <buffer> <F8>           <plug>(vimtex-env-toggle-star)
 noremap <buffer> <F9>           <plug>(vimtex-env-change)
 
+noremap <buffer> <2-LeftMouse>  <Cmd>VimtexView<CR>
+
 imap <buffer> ( (
 imap <buffer> [ [
 imap <buffer> { {
