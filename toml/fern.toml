@@ -3,7 +3,7 @@ repo = 'https://github.com/lambdalisue/fern.vim'
 hook_add = '''
 nnoremap <leader>d <Cmd>Fern %:h<CR>
 nnoremap <leader>n <Cmd>Fern . -reveal=% -drawer<CR>
-nnoremap st :<C-u>tabnew<CR><Cmd>Fern %:h<CR>
+nnoremap st :<C-u>tab sp<CR><Cmd>Fern %:h<CR>
 '''
 hook_source='''
 function! s:init_fern() abort
