@@ -19,5 +19,3 @@ noremap <buffer> <2-LeftMouse>  <Cmd>VimtexView<CR>
 imap <buffer> ( (
 imap <buffer> [ [
 imap <buffer> { {
-
-let b:lexima_disabled = 1

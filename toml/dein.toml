@@ -37,8 +37,6 @@ repo = 'cocopon/iceberg.vim'
 # [[plugins]]
 # repo = 'cocopon/pgmnt.vim'
 # [[plugins]]
-# repo = 'cocopon/inspecthi.vim'
-# [[plugins]]
 # repo = 'cocopon/colorswatch.vim'
 
 [[plugins]]
