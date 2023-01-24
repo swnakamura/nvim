@@ -145,7 +145,7 @@ on_event = 'InsertEnter'
 depends = ['luasnip-latex-snippets.nvim','impatient.nvim']
 
 [[plugins]]
-repo = '~/ghq/github.com/iurimateus/luasnip-latex-snippets.nvim'
+repo = 'iurimateus/luasnip-latex-snippets.nvim'
 hook_source = '''
 lua require'luasnip-latex-snippets'.setup()
 '''
