@@ -33,9 +33,9 @@ let g:matchpairs_textobject=1
 
 # colorscheme
 [[plugins]]
-repo = 'cocopon/iceberg.vim'
-# [[plugins]]
-# repo = 'cocopon/pgmnt.vim'
+repo = 'woodyZootopia/iceberg.vim'
+[[plugins]]
+repo = 'cocopon/pgmnt.vim'
 # [[plugins]]
 # repo = 'cocopon/colorswatch.vim'
 
