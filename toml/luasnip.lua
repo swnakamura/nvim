@@ -36,6 +36,7 @@ $0
     ),
     ls.parser.parse_snippet({ trig = "argument_parser", name = "argument_parser" },
         [[
+import argparse
 p = argparse.ArgumentParser()
 p.add_argument('${1:foo}')
 args = p.parse_args()

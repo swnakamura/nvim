@@ -11,6 +11,7 @@ function! s:init_fern() abort
   silent! nunmap <buffer> N
   nmap <buffer> o <Plug>(fern-action-open-or-expand)
   nmap <buffer> l <Plug>(fern-action-open-or-expand)
+  nmap <buffer> p <Plug>(fern-action-open-or-expand)<C-w>p
   nmap <buffer> <C-v> <Plug>(fern-action-open:vsplit)<C-w>p
   nmap <buffer> <C-s> <Plug>(fern-action-open:split)<C-w>p
   nmap <buffer> <C-t> <Plug>(fern-action-open:tabedit)
