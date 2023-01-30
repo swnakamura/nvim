@@ -177,15 +177,13 @@ on_cmd = ['Git', 'Gwrite', '0Gclog', 'Gdiffsplit', 'Glgrep']
 # indentline implementation in lua
 [[plugins]]
 repo = 'lukas-reineke/indent-blankline.nvim'
-hook_post_source = '''
-lua <<EOF
+lua_post_source = '''
 require("indent_blankline").setup {
     space_char_blankline = " ",
     char_highlight_list = {
         "IndentBlanklineIndent",
     },
 }
-EOF
 '''
 on_event = 'CursorHold'
 depends = 'impatient.nvim'
@@ -252,8 +250,7 @@ on_cmd = 'FloatermToggle'
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
 merged = '0'
-hook_post_source = '''
-lua <<EOF
+lua_post_source = '''
 require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
@@ -274,7 +271,6 @@ require'nvim-treesitter.configs'.setup {
   },
   auto_install = true,
 }
-EOF
 '''
 hook_install = 'TSUpdate'
 hook_post_update = 'TSUpdate'
@@ -301,12 +297,10 @@ depends = 'impatient.nvim'
 
 [[plugins]]
 repo='williamboman/mason-lspconfig.nvim'
-hook_post_source='''
-lua <<EOF
+lua_post_source='''
 require("mason-lspconfig").setup{
     ensure_installed = { "sumneko_lua", "rust_analyzer", "pyright", "vimls", "bashls", "clangd", 'texlab'}
 }
-EOF
 '''
 depends = ['mason.nvim', 'nvim-lspconfig']
 on_event = ['BufRead', 'CursorHold']
@@ -325,8 +319,7 @@ depends = 'impatient.nvim'
 
 [[plugins]]
 repo = 'https://github.com/nvim-orgmode/orgmode'
-hook_post_source = '''
-lua <<EOF
+lua_post_source = '''
 -- Load custom treesitter grammar for org filetype
 require('orgmode').setup_ts_grammar()
 
@@ -334,7 +327,8 @@ require('orgmode').setup({
   org_agenda_files = {'~/org/*'},
   org_default_notes_file = '~/org/refile.org',
 })
-EOF
+'''
+hook_post_source = '''
 augroup org-mode
     autocmd FileType org nnoremap <buffer> + <Cmd>lua require("orgmode").action("org_mappings.todo_next_state")<CR>
     autocmd FileType org nnoremap <buffer> t <Cmd>lua require("orgmode").action("org_mappings.todo_next_state")<CR>
