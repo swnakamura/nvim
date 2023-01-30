@@ -51,6 +51,11 @@ nnoremap <Plug>(my-win)7 <Cmd>7tabnext<CR>
 nnoremap <Plug>(my-win)8 <Cmd>8tabnext<CR>
 nnoremap <Plug>(my-win)9 <Cmd>9tabnext<CR>
 
+" Delete F1~F12 mapping
+for i in range(1,12)
+  exe 'inoremap <F' . i . '> <Nop>'
+endfor
+
 nnoremap <S-Left>  <C-w><<C-w><
 nnoremap <S-Right> <C-w>><C-w>>
 nnoremap <S-Up>    <C-w>+<C-w>+
