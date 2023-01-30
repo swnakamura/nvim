@@ -55,7 +55,7 @@ set ambiwidth=single
 set showtabline=2
 
 set laststatus=0
-set rulerformat=%50(%=%f\ %([%H%M%R]%)\ %P%)
+set rulerformat=%50(%=%1*\ %f\ %([%H%M%R]%)\ %P%)
 set statusline=%=%f\ %([%H%M%R]%)\ %P
 
 " transparent popup window
