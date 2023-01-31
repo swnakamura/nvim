@@ -9,6 +9,9 @@ nnoremap L $
 xnoremap H ^
 xnoremap L $
 
+xnoremap * y/\V<C-R>=escape(@", '/\')<CR><CR>
+xnoremap # y?\V<C-R>=escape(@", '/\')<CR><CR>
+
 inoremap <F1>      <Nop>
 nnoremap <Space>   <Nop>
 nnoremap <C-space> <Nop>
