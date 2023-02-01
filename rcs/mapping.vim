@@ -9,6 +9,12 @@ nnoremap L $
 xnoremap H ^
 xnoremap L $
 
+nmap gj gj<SID>g
+nmap gk gk<SID>g
+nnoremap <script> <SID>gj gj<SID>g
+nnoremap <script> <SID>gk gk<SID>g
+nmap <SID>g <Nop>
+
 xnoremap * y/\V<C-R>=escape(@", '/\')<CR><CR>
 xnoremap # y?\V<C-R>=escape(@", '/\')<CR><CR>
 
@@ -87,8 +93,6 @@ nnoremap <silent> <Plug>(my-switch)b :<C-u>setl scrollbind! scrollbind?<CR>
 nnoremap <silent> <Plug>(my-switch)<C-b> :<C-u>setl scrollbind! scrollbind?<CR>
 nnoremap <silent> <Plug>(my-switch)y :call <SID>toggle_syntax()<CR>
 nnoremap <silent> <Plug>(my-switch)<C-y> :call <SID>toggle_syntax()<CR>
-nnoremap <silent> <Plug>(my-switch)m :call <SID>toggle_move_g()<CR>
-nnoremap <silent> <Plug>(my-switch)<C-m> :call <SID>toggle_move_g()<CR>
 function! s:toggle_syntax() abort
   if exists('g:syntax_on')
     syntax off
@@ -98,32 +102,6 @@ function! s:toggle_syntax() abort
     syntax on
     redraw
     echo 'syntax on'
-  endif
-endfunction
-function s:toggle_move_g() abort
-  if exists('b:gj_gk_enabled')
-    unlet b:gj_gk_enabled
-    echo 'gj/gk disabled'
-    nunmap k
-    nunmap j
-    xunmap k
-    xunmap j
-    nunmap gk
-    nunmap gj
-    xunmap gk
-    xunmap gj
-  else
-    let b:gj_gk_enabled=1
-    echo 'gj/gk enabled'
-    " move by display line
-    nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
-    xnoremap <expr> j (v:count == 0 && mode() ==# 'v') ? 'gj' : 'j'
-    nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
-    xnoremap <expr> k (v:count == 0 && mode() ==# 'v') ? 'gk' : 'k'
-    nnoremap gj j
-    nnoremap gk k
-    xnoremap gj j
-    xnoremap gk k
   endif
 endfunction
 let g:is_noice_enabled = v:true
