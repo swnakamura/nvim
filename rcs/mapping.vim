@@ -89,8 +89,6 @@ nnoremap <silent> <Plug>(my-switch)y :call <SID>toggle_syntax()<CR>
 nnoremap <silent> <Plug>(my-switch)<C-y> :call <SID>toggle_syntax()<CR>
 nnoremap <silent> <Plug>(my-switch)m :call <SID>toggle_move_g()<CR>
 nnoremap <silent> <Plug>(my-switch)<C-m> :call <SID>toggle_move_g()<CR>
-nnoremap <silent> <Plug>(my-switch)n :call <SID>toggle_noice()<CR>
-nnoremap <silent> <Plug>(my-switch)<C-n> :call <SID>toggle_noice()<CR>
 function! s:toggle_syntax() abort
   if exists('g:syntax_on')
     syntax off
