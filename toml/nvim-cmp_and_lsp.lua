@@ -48,6 +48,9 @@ cmp.setup.filetype('gitcommit', {
         },
     })
 })
+cmp.setup.filetype('yaml', {
+    sources = cmp.config.sources({})
+})
 
 -- Set configuration for specific filetype.
 cmp.setup.filetype('tex', {
