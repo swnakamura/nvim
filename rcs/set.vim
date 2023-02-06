@@ -102,7 +102,7 @@ set matchpairs+=「:」,（:）,『:』,【:】,〈:〉,《:》,〔:〕,｛:｝,
 
 set spelllang=en,cjk
 
-setglobal signcolumn=yes
+setglobal signcolumn=yes:2
 
 " tmux cursor shape setting
 if exists('$TMUX')
