@@ -1,12 +1,3 @@
 [[plugins]]
 repo = 'vim-denops/denops.vim'
 on_event = 'CursorHold'
-
-[[plugins]]
-repo = 'gamoutatsumi/dps-ghosttext.vim'
-hook_post_source = '''
-let g:dps_ghosttext#ftmap['www.overleaf.com']='tex'
-let g:dps_ghosttext#ftmap['localhost:8888']='python'
-'''
-depends=['denops.vim']
-on_cmd='GhostStart'
