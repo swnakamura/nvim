@@ -205,6 +205,12 @@ nmap ]w <Cmd>lnext<CR>
 nmap [W <Cmd>lfirst<CR>
 nmap ]W <Cmd>llast<CR>
 
+" argument jump
+nmap [a <Cmd>previous<CR>
+nmap ]a <Cmd>next<CR>
+nmap [A <Cmd>first<CR>
+nmap ]A <Cmd>last<CR>
+
 " Open quickfix window
 " nnoremap Q <Cmd>copen<CR>
 
