@@ -270,7 +270,7 @@ require'nvim-treesitter.configs'.setup {
   auto_install = true,
 }
 '''
-hook_done_update = 'TSUpdate'
+hook_post_update = 'TSUpdate'
 on_event = 'BufRead'
 depends = 'impatient.nvim'
 
