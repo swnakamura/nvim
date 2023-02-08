@@ -120,7 +120,7 @@ let g:NERDDefaultAlign='left'
 let g:NERDCustomDelimiters = {'vim': {'left': '"','right':''}}
 noremap <C-_> <Plug>NERDCommenterToggle
 '''
-on_event = 'BufRead'
+on_event = 'VimEnter'
 
 # LuaSnip and snippet list
 [[plugins]]
@@ -167,7 +167,7 @@ depends = 'fzf'
 repo = 'airblade/vim-gitgutter'
 hook_add = 'call Gitgutter_add()'
 on_map = '<Plug>(GitGutter'
-on_event = ['BufRead', 'CursorHold']
+on_event = 'BufRead'
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
@@ -185,7 +185,7 @@ require("indent_blankline").setup {
     },
 }
 '''
-on_event = 'CursorHold'
+on_event = 'BufRead'
 depends = 'impatient.nvim'
 
 [[plugins]]
@@ -272,9 +272,8 @@ require'nvim-treesitter.configs'.setup {
   auto_install = true,
 }
 '''
-hook_install = 'TSUpdate'
-hook_post_update = 'TSUpdate'
-on_event = ['BufRead', 'CursorHold']
+hook_done_update = 'TSUpdate'
+on_event = 'BufRead'
 depends = 'impatient.nvim'
 
 [[plugins]]
@@ -303,7 +302,7 @@ require("mason-lspconfig").setup{
 }
 '''
 depends = ['mason.nvim', 'nvim-lspconfig']
-on_event = ['BufRead', 'CursorHold']
+on_event = 'BufRead'
 
 # color picker
 [[plugins]]
@@ -314,7 +313,7 @@ depends = 'impatient.nvim'
 [[plugins]]
 repo = 'tversteeg/registers.nvim'
 hook_post_source = '''lua require("registers").setup()'''
-on_event = ['BufRead', 'CursorHold']
+on_event = 'BufRead'
 depends = 'impatient.nvim'
 
 [[plugins]]
@@ -335,5 +334,5 @@ augroup org-mode
     autocmd FileType org nnoremap <buffer> - <Cmd>lua require("orgmode").action("org_mappings.todo_prev_state")<CR>
 augroup END
 '''
-on_event = ['BufRead', 'CursorHold']
+on_event = 'BufRead'
 depends = 'nvim-treesitter'
