@@ -153,8 +153,6 @@ lua require'luasnip-latex-snippets'.setup()
 # fzf
 [[plugins]]
 repo = 'junegunn/fzf'
-build = './install --bin'
-hook_install = 'fzf#install()'
 
 [[plugins]]
 repo = 'junegunn/fzf.vim'
