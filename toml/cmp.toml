@@ -20,7 +20,7 @@ repo = 'hrsh7th/cmp-nvim-lsp-signature-help'
 repo = 'hrsh7th/nvim-cmp'
 depends = ['impatient.nvim','nvim-lspconfig', 'cmp-nvim-lsp', 'cmp-buffer', 'cmp-path', 'cmp-cmdline', 'cmp_luasnip', 'lspkind.nvim', 'cmp-look', 'nvim-web-devicons']
 on_event = ['InsertEnter', 'CmdlineEnter']
-on_ft = ['python', 'rust', 'lua', 'vim']
+on_ft = ['python', 'rust', 'lua', 'sh', 'zsh', 'c', 'cpp', 'tex', 'vim']
 hook_post_source = '''
 exe 'source' g:nvim_conf_dir . 'toml/nvim-cmp_and_lsp.lua'
 '''
