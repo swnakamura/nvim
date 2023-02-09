@@ -118,10 +118,6 @@ function s:toggle_noice() abort
   endif
 endfunction
 
-" ctrlで画面上・下に移動
-nnoremap <C-j> L
-nnoremap <C-k> H
-
 " always replace considering doublewidth
 nnoremap r  gr
 nnoremap R  gR
