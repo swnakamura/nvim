@@ -6,6 +6,7 @@ augroup file-type
   au FileType           gitcommit                        setlocal spell
   " テキストについて-もkeywordとする
   au FileType           text,tex,markdown,gitcommit,help setlocal isk+=-
+  au FileType           tex setlocal isk+=@-@
   au FileType           log                              setlocal nowrap
 
   " 長い行がありそうな拡張子なら構文解析を途中でやめる
@@ -125,14 +126,14 @@ augroup if-binary-then-xxd
   au BufWritePost * set nomod | endif
 augroup END
 
-augroup csv-tsv
-  au!
-  au BufReadPost,BufWritePost *.csv call Preserve('silent %!column -s, -o, -t -L')
-  au BufWritePre              *.csv call Preserve('silent %s/\s\+\ze,/,/ge')
-  au BufReadPost,BufWritePost *.tsv call Preserve('silent %!column -s "$(printf ''\t'')" -o "$(printf ''\t'')" -t -L')
-  au BufWritePre              *.tsv call Preserve('silent %s/ \+\ze	//ge')
-  au BufWritePre              *.tsv call Preserve('silent %s/\s\+$//ge')
-augroup END
+" augroup csv-tsv
+"   au!
+"   au BufReadPost,BufWritePost *.csv call Preserve('silent %!column -s, -o, -t -L')
+"   au BufWritePre              *.csv call Preserve('silent %s/\s\+\ze,/,/ge')
+"   au BufReadPost,BufWritePost *.tsv call Preserve('silent %!column -s "$(printf ''\t'')" -o "$(printf ''\t'')" -t -L')
+"   au BufWritePre              *.tsv call Preserve('silent %s/ \+\ze	//ge')
+"   au BufWritePre              *.tsv call Preserve('silent %s/\s\+$//ge')
+" augroup END
 
 fu! s:isdir(dir) abort
   return !empty(a:dir) && (isdirectory(a:dir) ||
