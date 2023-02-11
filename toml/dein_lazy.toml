@@ -311,7 +311,7 @@ depends = 'impatient.nvim'
 [[plugins]]
 repo = 'tversteeg/registers.nvim'
 hook_post_source = '''lua require("registers").setup()'''
-on_event = 'BufRead'
+on_event = ['BufRead', 'CursorMoved', 'InsertEnter', 'CmdLineEnter']
 depends = 'impatient.nvim'
 
 [[plugins]]
