@@ -10,7 +10,7 @@ set updatetime=100
 set cursorline
 
 " shada=viminfo
-set shada=!,'3000,<0,s10,h,%0
+set shada=!,'50,<1000,s100,h,%0
 
 " do not include buffer info in session
 set sessionoptions-=blank
