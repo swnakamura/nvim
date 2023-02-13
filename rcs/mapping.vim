@@ -147,6 +147,8 @@ endfunction
 " increase and decrease by plus/minus
 nnoremap +  <C-a>
 nnoremap -  <C-x>
+xnoremap +  <C-a>
+xnoremap -  <C-x>
 xnoremap g+ g<C-a>
 xnoremap g- g<C-x>
 
