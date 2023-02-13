@@ -52,3 +52,4 @@ if !exists('g:vscode')
   " Do not show horizontal line in deleted
   hi DiffDelete guifg=#53343b
 endif
+filetype plugin indent on
