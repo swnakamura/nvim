@@ -1,6 +1,4 @@
 filetype plugin indent off
-
-
 " map space as leader
 let g:mapleader = "\<Space>"
 let g:maplocalleader = "\<C-space>"
@@ -54,6 +52,3 @@ if !exists('g:vscode')
   " Do not show horizontal line in deleted
   hi DiffDelete guifg=#53343b
 endif
-" 最後に設定
-filetype plugin indent on
-syntax enable
