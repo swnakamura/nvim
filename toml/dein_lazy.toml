@@ -296,7 +296,7 @@ depends = 'impatient.nvim'
 repo='williamboman/mason-lspconfig.nvim'
 lua_post_source='''
 require("mason-lspconfig").setup{
-    ensure_installed = { "sumneko_lua", "rust_analyzer", "pyright", "vimls", "bashls", "clangd", 'texlab'}
+    ensure_installed = { "lua_ls", "rust_analyzer", "pyright", "vimls", "bashls", "clangd", 'texlab'}
 }
 '''
 depends = ['mason.nvim', 'nvim-lspconfig']
