@@ -25,10 +25,11 @@ hook_add = 'call Textobjentire_add()'
 
 # move words
 [[plugins]]
-repo = 'fuenor/jpmoveword.vim'
+repo = 'woodyZootopia/jpmoveword.vim'
 hook_add = '''
 let g:jpmoveword_separator='，．、。・「」『』（）【】\\'
 let g:matchpairs_textobject=1
+let g:jpmoveword_stop_eol=2
 '''
 
 # colorscheme
