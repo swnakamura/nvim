@@ -127,6 +127,7 @@ nnoremap gR R
 
 " do not copy when deleting by x
 nnoremap x "_x
+xnoremap x "_x
 
 " quit this window by q
 nnoremap <silent> <leader>q <Cmd>quit<CR>
