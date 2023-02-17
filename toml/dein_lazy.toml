@@ -193,6 +193,17 @@ nmap <leader>t :TagbarToggle<CR>
 
 let g:tagbar_sort = 0
 let g:tagbar_autoclose = 0
+
+let g:tagbar_type_help = {
+    \ 'ctagstype' : 'Vimhelp',
+    \ 'kinds'     : [
+        \ 's:sections',
+        \ 'l:labels',
+        \ 'r:references:1',
+    \ ],
+    \ 'sort'    : 0,
+    \ 'deffile' : $HOME . '.ctags.d/vim.ctags'
+\ }
 '''
 on_cmd = 'TagbarToggle'
 
