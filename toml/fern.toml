@@ -21,6 +21,7 @@ function! s:init_fern() abort
   nmap <buffer> L <Plug>(fern-action-new-file)
   nmap <buffer> d <Plug>(fern-action-trash)<CR>
   nmap <buffer> D <Plug>(fern-action-trash=)y<CR>
+  nmap <buffer> ~ <Cmd>Fern ~<CR>
 endfunction
 
 augroup fern-custom

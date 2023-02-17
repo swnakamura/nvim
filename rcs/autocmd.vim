@@ -27,8 +27,8 @@ augroup END
 " ヘルプドキュメント('incsearch')からコピーした
 augroup vimrc-incsearch-highlight
   au!
-  au CmdlineEnter /,\? :set hlsearch
-  au CmdlineLeave /,\? :set nohlsearch
+  au CmdlineEnter /,\? set hlsearch
+  au CmdlineLeave /,\? set nohlsearch
 augroup END
 
 " 選択した領域を自動でハイライトする
