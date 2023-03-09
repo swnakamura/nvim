@@ -40,8 +40,13 @@ set ignorecase smartcase nohlsearch nowrapscan
 set relativenumber
 set number
 
+" No limit in preview window height
+set previewheight=999
+
 " line break settings
 set breakindent
+
+set nomodeline
 
 " listchar settings
 set list listchars=tab:»-,trail:~,extends:»,precedes:«,nbsp:%
@@ -54,9 +59,9 @@ set ambiwidth=single
 " always show finetabline,statusline
 set showtabline=2
 
-set laststatus=0
-set rulerformat=%50(%=%1*\ %f\ %([%H%M%R]%)\ %P%)
-set statusline=%=%f\ %([%H%M%R]%)\ %P
+" set laststatus=0
+" set rulerformat=%50(%=%1*\ %f\ %([%H%M%R]%)\ %P%)
+" set statusline=%=%f\ %([%H%M%R]%)\ %P
 
 " transparent popup window
 set winblend=25 pumblend=20
@@ -76,8 +81,13 @@ set inccommand=split
 
 " don't fold by default
 set foldlevel=99
-" reserve two columns for fold
-" set foldcolumn=2
+set foldtext=MyFoldText()
+function! MyFoldText()
+  let line = getline(v:foldstart)
+  let sub = substitute(line, '/\*\|\*/\|{{{\d\=', '', 'g')
+  let nline = v:foldend - v:foldstart
+  return sub . ' <' . nline  . ' lines>' . v:folddashes
+endfunction
 
 set backspace=eol,indent,start
 

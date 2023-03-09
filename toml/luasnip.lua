@@ -21,7 +21,7 @@ local postfix = require("luasnip.extras.postfix").postfix
 
 ls.add_snippets("python", {
     ls.parser.parse_snippet("pf", "print(f\"{$1}\")$0"),
-    ls.parser.parse_snippet("pdb", "__import__('pdb').set_trace()"),
+    ls.parser.parse_snippet("pdb", "__import__(\"pdb\").set_trace()"),
     ls.parser.parse_snippet("todo", "# TODO: "),
     ls.parser.parse_snippet("pltimport", "import matplotlib.pyplot as plt"),
     ls.parser.parse_snippet("ifmain", "if __name__ == \"__main__\":"),

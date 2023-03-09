@@ -20,7 +20,7 @@ function! Preserve(command)
 endfunction
 augroup formatter
   autocmd!
-  autocmd BufWritePre *.py call Preserve(':silent %!autopep8 -')
+  autocmd BufWritePre *.py call Preserve(':silent %!black -q - 2>/dev/null')
 augroup END
 
 " 検索中の領域をハイライトする

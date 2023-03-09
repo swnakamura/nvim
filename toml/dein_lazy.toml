@@ -101,10 +101,12 @@ on_ft = 'gitcommit'
 depends = 'vim-fugitive'
 
 # :SpellCheck to put spell errors to quickfix
-# [[plugins]]
-# repo = 'https://github.com/inkarkat/vim-SpellCheck'
-# [[plugins]]
-# repo = 'https://github.com/inkarkat/vim-ingo-library'
+[[plugins]]
+repo = 'https://github.com/inkarkat/vim-SpellCheck'
+on_cmd='SpellCheck'
+depends='vim-ingo-library'
+[[plugins]]
+repo = 'https://github.com/inkarkat/vim-ingo-library'
 
 # :HelpfulVersion to view version
 [[plugins]]
@@ -146,8 +148,8 @@ depends = ['luasnip-latex-snippets.nvim','impatient.nvim']
 
 [[plugins]]
 repo = 'iurimateus/luasnip-latex-snippets.nvim'
-hook_source = '''
-lua require'luasnip-latex-snippets'.setup()
+lua_source = '''
+require'luasnip-latex-snippets'.setup()
 '''
 
 # fzf
@@ -289,9 +291,9 @@ depends = 'impatient.nvim'
 
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter-context'
-hook_post_source = 'lua require"treesitter-context".setup()'
+lua_post_source = 'require"treesitter-context".setup()'
 depends = 'nvim-treesitter'
-on_event = 'InsertEnter'
+on_event = 'BufRead'
 
 # LSP configuration
 [[plugins]]
@@ -300,8 +302,8 @@ depends = 'impatient.nvim'
 
 [[plugins]]
 repo='williamboman/mason.nvim'
-hook_post_source='''
-lua require("mason").setup()
+lua_post_source='''
+require("mason").setup()
 '''
 depends = 'impatient.nvim'
 
@@ -323,7 +325,7 @@ depends = 'impatient.nvim'
 
 [[plugins]]
 repo = 'tversteeg/registers.nvim'
-hook_post_source = '''lua require("registers").setup()'''
+lua_post_source = '''require("registers").setup()'''
 on_event = ['BufRead', 'CursorMoved', 'InsertEnter', 'CmdLineEnter']
 depends = 'impatient.nvim'
 
