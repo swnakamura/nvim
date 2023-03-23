@@ -15,8 +15,8 @@ nnoremap <script> <SID>gj gj<SID>g
 nnoremap <script> <SID>gk gk<SID>g
 nmap <SID>g <Nop>
 
-xnoremap * y/\V<C-R>=escape(@", '/\')<CR><CR>
-xnoremap # y?\V<C-R>=escape(@", '/\')<CR><CR>
+xnoremap * y/\V<C-R>=substitute(escape(@", '/\'), '\n', '\\n', 'g')<CR><CR>
+xnoremap # y?\V<C-R>=substitute(escape(@", '/\'), '\n', '\\n', 'g')<CR><CR>
 
 inoremap <F1>      <Nop>
 nnoremap <Space>   <Nop>

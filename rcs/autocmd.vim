@@ -20,7 +20,7 @@ function! Preserve(command)
 endfunction
 augroup formatter
   autocmd!
-  autocmd BufWritePre *.py call Preserve(':silent %!black -q - 2>/dev/null')
+  autocmd BufWritePre *.py call Preserve(':silent %!black -q - --target-version py310 2>/dev/null')
 augroup END
 
 " 検索中の領域をハイライトする
@@ -45,7 +45,7 @@ function! Visualmatch()
     call matchdelete(w:visual_match_id)
     unlet w:visual_match_id
   endif
-  if index(['v', "\<C-v>"], mode()) != -1 && line('v') == line('.')
+  if index(['v', "\<C-v>"], mode()) != -1
     let len_of_char_at_v   = strlen(matchstr(getline('v'), '.', col('v')-1))
     let len_of_char_at_dot = strlen(matchstr(getline('.'), '.', col('.')-1))
     let selected_column_idx = {
