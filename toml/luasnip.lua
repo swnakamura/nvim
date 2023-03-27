@@ -62,6 +62,16 @@ ls.add_snippets("tex", {
     ls.parser.parse_snippet("jbase",
         [[
 \documentclass[12pt,a4paper,titlepage]{jlreq}
+% some packages
+% \usepackage{graphicx}
+% \usepackage{amsmath}
+% \usepackage{amssymb}
+% \usepackage{todonotes}
+% \usepackage{siunitx}
+% \usepackage{bm}
+% \usepackage{booktabs}
+% \usepackage{capt-of}
+% 
 % \usepackage{/home/snakamura/ghq/github.com/woodyZootopia/latex-macros/macros-maths}
 % \usepackage[
 %     backend=biber,
@@ -73,7 +83,7 @@ ls.add_snippets("tex", {
 % ]{biblatex}
 % \addbibresource{citations.bib}
 % \usepackage{luatexja-ruby}
-%
+
 \title{${1:レポート}}
 \author{${2}}
 %
@@ -97,6 +107,27 @@ ${0:Hello, world!}
     \caption{${2:caption}}
 	\label{fig:${5:${1/[\W]+/_/g}}}
 \end{figure}$0
+    ]]
+    ),
+    ls.parser.parse_snippet("preview",
+    [[
+\documentclass{jlreq}
+\usepackage[active,tightpage]{preview}
+% some packages
+% \usepackage{graphicx}
+% \usepackage{amsmath}
+% \usepackage{amssymb}
+% \usepackage{todonotes}
+% \usepackage{siunitx}
+% \usepackage{bm}
+% \usepackage{booktabs}
+% \usepackage{capt-of}
+
+\begin{document}
+\begin{preview}
+    ${0}
+\end{preview}
+\end{document}
     ]]
     )
 })
