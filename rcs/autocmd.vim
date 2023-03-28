@@ -58,12 +58,20 @@ function! Visualmatch()
           \col('.')-2+len_of_char_at_dot
           \])
           \}
+    let text = escape(getline('.')[selected_column_idx['first']:selected_column_idx['last']], '\')
+
+    " virtualeditの都合でempty textが選択されることがある．
+    " この場合全部がハイライトされてしまうので除く
+    if text == ''
+      return
+    endif
+
     if mode() == 'v'
       let w:visual_match_id = matchadd('SearchWordMatch',
-            \'\V' .. escape(getline('.')[selected_column_idx['first']:selected_column_idx['last']], '\'))
+            \'\V' .. text)
     else
       let w:visual_match_id = matchadd('SearchWordMatch',
-            \'\V\<' .. escape(getline('.')[selected_column_idx['first']:selected_column_idx['last']], '\') .. '\>')
+            \'\V\<' .. text .. '\>')
     endif
   endif
 endfunction
