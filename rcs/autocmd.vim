@@ -1,16 +1,19 @@
 augroup file-type
   au!
-  au FileType           go                               setlocal tabstop=4 shiftwidth=4 noexpandtab formatoptions+=r
-  au FileType           html,csv,tsv                     setlocal nowrap
-  au FileType           text,mail,markdown,help          setlocal noet spell
-  au FileType           gitcommit                        setlocal spell
-  " テキストについて-もkeywordとする
-  au FileType           text,tex,markdown,gitcommit,help setlocal isk+=-
-  au FileType           tex setlocal isk+=@-@
-  au FileType           log                              setlocal nowrap
+  au FileType go                                    setlocal tabstop=4 shiftwidth=4 noexpandtab formatoptions+=r
+  au FileType html,csv,tsv                          setlocal nowrap
+  au FileType text,mail,markdown,help               setlocal noet      spell
+  au FileType gitcommit                             setlocal spell
+  "  テキストについて-もkeywordとする
+  au FileType text,tex,markdown,gitcommit,help      setlocal isk+=-
+  au FileType tex                                   setlocal isk+=@-@
+  au FileType log                                   setlocal nowrap
 
-  " 長い行がありそうな拡張子なら構文解析を途中でやめる
-  au FileType           csv,tsv,json                setlocal synmaxcol=256
+  "  長い行がありそうな拡張子なら構文解析を途中でやめる
+  au FileType csv,tsv,json                          setlocal synmaxcol=256
+
+  "  プログラムっぽいファイルなら行分割
+  au FileType c,cpp,rust,go,python,lua,bash,vim,tex setlocal breakindent
 augroup END
 
 function! Preserve(command)

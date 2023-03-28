@@ -43,9 +43,6 @@ set number
 " No limit in preview window height
 set previewheight=999
 
-" line break settings
-set breakindent
-
 set nomodeline
 
 " listchar settings
