@@ -49,19 +49,18 @@ function! Visualmatch()
     unlet w:visual_match_id
   endif
   if index(['v', "\<C-v>"], mode()) != -1
-    let len_of_char_at_v   = strlen(matchstr(getline('v'), '.', col('v')-1))
-    let len_of_char_at_dot = strlen(matchstr(getline('.'), '.', col('.')-1))
-    let selected_column_idx = {
-          \'first': min([
-          \col('v')-1,
-          \col('.')-1
-          \]),
-          \'last' : max([
-          \col('v')-2+len_of_char_at_v,
-          \col('.')-2+len_of_char_at_dot
-          \])
-          \}
-    let text = escape(getline('.')[selected_column_idx['first']:selected_column_idx['last']], '\')
+    let len_of_char_at_v   = strlen(strcharpart(getline('v'), charcol('v')-1 , 1))
+    let len_of_char_at_dot = strlen(strcharpart(getline('.'), charcol('.')-1 , 1))
+
+    if line('.') == line('v')
+      let text = getline('.')->strcharpart(charcol('v')-1, charcol('.')-charcol('v'))
+    else
+      let lines=getline('v', '.')
+      let lines[0] = lines[0]->strcharpart(charcol('v')-1)
+      let lines[-1] = lines[-1]->strcharpart(0,charcol('.'))
+      let text = lines->join('\n')
+      echomsg text
+    endif
 
     " virtualeditの都合でempty textが選択されることがある．
     " この場合全部がハイライトされてしまうので除く
