@@ -55,11 +55,15 @@ function! Visualmatch()
     if line('.') == line('v')
       let text = getline('.')->strcharpart(charcol('v')-1, charcol('.')-charcol('v'))
     else
-      let lines=getline('v', '.')
-      let lines[0] = lines[0]->strcharpart(charcol('v')-1)
-      let lines[-1] = lines[-1]->strcharpart(0,charcol('.'))
+      if line('.') > line('v')
+        let selarea = ['v','.']
+      else
+        let selarea = ['.','v']
+      endif
+      let lines=getline(selarea[0], selarea[1])
+      let lines[0] = lines[0]->strcharpart(charcol(selarea[0])-1)
+      let lines[-1] = lines[-1]->strcharpart(0,charcol(selarea[1]))
       let text = lines->join('\n')
-      echomsg text
     endif
 
     " virtualeditの都合でempty textが選択されることがある．
