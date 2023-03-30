@@ -91,6 +91,8 @@ nnoremap <silent> <Plug>(my-switch)p <Cmd>setl paste! paste?<CR>
 nnoremap <silent> <Plug>(my-switch)<C-p> <Cmd>setl paste! paste?<CR>
 nnoremap <silent> <Plug>(my-switch)b <Cmd>setl scrollbind! scrollbind?<CR>
 nnoremap <silent> <Plug>(my-switch)<C-b> <Cmd>setl scrollbind! scrollbind?<CR>
+nnoremap <silent> <Plug>(my-switch)d <Cmd>if !&diff <Bar> diffthis <Bar> else <Bar> diffoff <Bar> endif <Bar> set diff?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-d> <Cmd>if !&diff <Bar> diffthis <Bar> else <Bar> diffoff <Bar> endif <Bar> set diff?<CR>
 nnoremap <silent> <Plug>(my-switch)y <Cmd>call <SID>toggle_syntax()<CR>
 nnoremap <silent> <Plug>(my-switch)<C-y> <Cmd>call <SID>toggle_syntax()<CR>
 function! s:toggle_syntax() abort
