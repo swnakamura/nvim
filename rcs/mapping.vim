@@ -79,20 +79,20 @@ nnoremap <leader><leader> <C-^>
 
 nnoremap <Plug>(my-switch) <Nop>
 nmap <localleader> <Plug>(my-switch)
-nnoremap <silent> <Plug>(my-switch)s :<C-u>setl spell! spell?<CR>
-nnoremap <silent> <Plug>(my-switch)<C-s> :<C-u>setl spell! spell?<CR>
-nnoremap <silent> <Plug>(my-switch)l :<C-u>setl list! list?<CR>
-nnoremap <silent> <Plug>(my-switch)<C-l> :<C-u>setl list! list?<CR>
-nnoremap <silent> <Plug>(my-switch)t :<C-u>setl expandtab! expandtab?<CR>
-nnoremap <silent> <Plug>(my-switch)<C-t> :<C-u>setl expandtab! expandtab?<CR>
-nnoremap <silent> <Plug>(my-switch)w :<C-u>setl wrap! wrap?<CR>
-nnoremap <silent> <Plug>(my-switch)<C-w> :<C-u>setl wrap! wrap?<CR>
-nnoremap <silent> <Plug>(my-switch)p :<C-u>setl paste! paste?<CR>
-nnoremap <silent> <Plug>(my-switch)<C-p> :<C-u>setl paste! paste?<CR>
-nnoremap <silent> <Plug>(my-switch)b :<C-u>setl scrollbind! scrollbind?<CR>
-nnoremap <silent> <Plug>(my-switch)<C-b> :<C-u>setl scrollbind! scrollbind?<CR>
-nnoremap <silent> <Plug>(my-switch)y :call <SID>toggle_syntax()<CR>
-nnoremap <silent> <Plug>(my-switch)<C-y> :call <SID>toggle_syntax()<CR>
+nnoremap <silent> <Plug>(my-switch)s <Cmd>setl spell! spell?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-s> <Cmd>setl spell! spell?<CR>
+nnoremap <silent> <Plug>(my-switch)l <Cmd>setl list! list?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-l> <Cmd>setl list! list?<CR>
+nnoremap <silent> <Plug>(my-switch)t <Cmd>setl expandtab! expandtab?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-t> <Cmd>setl expandtab! expandtab?<CR>
+nnoremap <silent> <Plug>(my-switch)w <Cmd>setl wrap! wrap?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-w> <Cmd>setl wrap! wrap?<CR>
+nnoremap <silent> <Plug>(my-switch)p <Cmd>setl paste! paste?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-p> <Cmd>setl paste! paste?<CR>
+nnoremap <silent> <Plug>(my-switch)b <Cmd>setl scrollbind! scrollbind?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-b> <Cmd>setl scrollbind! scrollbind?<CR>
+nnoremap <silent> <Plug>(my-switch)y <Cmd>call <SID>toggle_syntax()<CR>
+nnoremap <silent> <Plug>(my-switch)<C-y> <Cmd>call <SID>toggle_syntax()<CR>
 function! s:toggle_syntax() abort
   if exists('g:syntax_on')
     syntax off
