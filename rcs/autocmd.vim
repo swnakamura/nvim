@@ -62,6 +62,8 @@ function! Visualmatch()
       let lines[0] = lines[0]->strcharpart(charcol(selarea[0])-1)
       let lines[-1] = lines[-1]->strcharpart(0,charcol(selarea[1]))
       let text = lines->join('\n')
+    else
+      let text = ''
     endif
 
     " virtualeditの都合でempty textが選択されることがある．
