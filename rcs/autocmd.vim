@@ -49,11 +49,9 @@ function! Visualmatch()
     unlet w:visual_match_id
   endif
   if index(['v', "\<C-v>"], mode()) != -1
-    let len_of_char_at_v   = strlen(strcharpart(getline('v'), charcol('v')-1 , 1))
-    let len_of_char_at_dot = strlen(strcharpart(getline('.'), charcol('.')-1 , 1))
-
     if line('.') == line('v')
-      let text = getline('.')->strcharpart(charcol('v')-1, charcol('.')-charcol('v'))
+      let selcols = charcol('.') < charcol('v') ? [charcol('.'), charcol('v')] : [charcol('v'), charcol('.')]
+      let text = getline('.')->strcharpart(selcols[0]-1, selcols[1]-selcols[0]+1)
     else
       if line('.') > line('v')
         let selarea = ['v','.']
