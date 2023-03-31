@@ -54,17 +54,17 @@ function! Visualmatch()
   endif
 
   if line('.') == line('v')
-    let selcols = charcol('.') < charcol('v') ? [charcol('.'), charcol('v')] : [charcol('v'), charcol('.')]
-    let text = getline('.')->strcharpart(selcols[0]-1, selcols[1]-selcols[0]+1)
+    let colrange = charcol('.') < charcol('v') ? [charcol('.'), charcol('v')] : [charcol('v'), charcol('.')]
+    let text = getline('.')->strcharpart(colrange[0]-1, colrange[1]-colrange[0]+1)
   elseif mode() == 'v' " multiline matchingはvisual modeのみ
     if line('.') > line('v')
-      let selarea = ['v','.']
+      let linerange = ['v','.']
     else
-      let selarea = ['.','v']
+      let linerange = ['.','v']
     endif
-    let lines=getline(selarea[0], selarea[1])
-    let lines[0] = lines[0]->strcharpart(charcol(selarea[0])-1)
-    let lines[-1] = lines[-1]->strcharpart(0,charcol(selarea[1]))
+    let lines=getline(linerange[0], linerange[1])
+    let lines[0] = lines[0]->strcharpart(charcol(linerange[0])-1)
+    let lines[-1] = lines[-1]->strcharpart(0,charcol(linerange[1]))
     let text = lines->join('\n')
   else
     let text = ''
@@ -77,11 +77,9 @@ function! Visualmatch()
   endif
 
   if mode() == 'v'
-    let w:visual_match_id = matchadd('SearchWordMatch',
-          \'\V' .. text)
+    let w:visual_match_id = matchadd('SearchWordMatch', '\V' .. text)
   else
-    let w:visual_match_id = matchadd('SearchWordMatch',
-          \'\V\<' .. text .. '\>')
+    let w:visual_match_id = matchadd('SearchWordMatch', '\V\<' .. text .. '\>')
   endif
 endfunction
 
