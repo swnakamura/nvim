@@ -354,24 +354,22 @@ on_event = ['BufRead', 'CursorMoved', 'InsertEnter', 'CmdLineEnter']
 depends = 'impatient.nvim'
 
 [[plugins]]
-repo = 'nvim-neorg/neorg'
+repo = 'https://github.com/nvim-orgmode/orgmode'
 lua_post_source = '''
-require('neorg').setup {
-    load = {
-        ["core.defaults"] = {}, -- Loads default behaviour
-        ["core.norg.concealer"] = {}, -- Adds pretty icons to your documents
-        ["core.norg.dirman"] = { -- Manages Neorg workspaces
-            config = {
-                workspaces = {
-                    notes = "~/notes",
-                },
-            },
-        },
-    },
-}
+-- Load custom treesitter grammar for org filetype
+require('orgmode').setup_ts_grammar()
+
+require('orgmode').setup({
+  org_agenda_files = {'~/org/*'},
+  org_default_notes_file = '~/org/refile.org',
+})
+'''
+hook_post_source = '''
+augroup org-mode
+    autocmd FileType org nnoremap <buffer> + <Cmd>lua require("orgmode").action("org_mappings.todo_next_state")<CR>
+    autocmd FileType org nnoremap <buffer> t <Cmd>lua require("orgmode").action("org_mappings.todo_next_state")<CR>
+    autocmd FileType org nnoremap <buffer> - <Cmd>lua require("orgmode").action("org_mappings.todo_prev_state")<CR>
+augroup END
 '''
 on_event = 'BufRead'
-depends = ['nvim-treesitter', 'plenary.nvim']
-
-[[plugins]]
-repo = 'nvim-lua/plenary.nvim'
+depends = 'nvim-treesitter'
