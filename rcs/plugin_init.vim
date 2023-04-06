@@ -119,3 +119,27 @@ function! Lightline_add() abort
   "let g:lightline.tabline_separator = { 'left': "\ue0bc", 'right': "\ue0ba" }
   "let g:lightline.tabline_subseparator = { 'left': "\ue0bb", 'right': "\ue0bb" }
 endfunction
+
+function! Smartinput_postsource() abort
+  call smartinput#map_to_trigger('i', '<Bar>', '<Bar>', '<Bar>')
+  " argument of lambda function
+  call smartinput#define_rule({
+  \   'at': '(\s*\%#',
+  \   'char': '<Bar>',
+  \   'input': '<Bar><Bar><Left>',
+  \   'filetype': ['rust'],
+  \ })
+  call smartinput#define_rule({
+  \   'at': '\%#\_s*|',
+  \   'char': '<Bar>',
+  \   'input': '<C-r>=smartinput#_leave_block(''|'')<Enter><Right>',
+  \   'filetype': ['rust'],
+  \ })
+  " lifetime specifier
+  call smartinput#define_rule({
+  \   'at': '<\%#',
+  \   'char': "'",
+  \   'input': "'",
+  \   'filetype': ['rust'],
+  \ })
+endfunction
