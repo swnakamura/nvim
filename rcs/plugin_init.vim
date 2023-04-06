@@ -142,4 +142,10 @@ function! Smartinput_postsource() abort
   \   'input': "'",
   \   'filetype': ['rust'],
   \ })
+  call smartinput#define_rule({
+  \   'at': '''\%#',
+  \   'char': "'",
+  \   'input': "'",
+  \   'filetype': ['tex'],
+  \ })
 endfunction
