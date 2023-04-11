@@ -133,7 +133,7 @@ xnoremap x "_x
 
 " quit this window by q
 nnoremap <silent> <leader>q <Cmd>quit<CR>
-nnoremap <silent> <leader>wq :<C-u>call <SID>del_not_shown_buffer()<CR>:qall<CR>
+nnoremap <silent> <leader>wq <Cmd>call <SID>del_not_shown_buffer()<CR><Cmd>call <SID>quit_if_nomodified()<CR>
 " nnoremap <silent> <leader>wq :qall<CR>
 
 function <SID>del_not_shown_buffer() abort
@@ -146,6 +146,15 @@ function <SID>del_not_shown_buffer() abort
   endfor
 endfunction
 
+function <SID>quit_if_nomodified() abort
+  try
+    sbmodified
+  catch /^Vim\%((\a\+)\)\=:E84:/
+    qall
+  endtry
+  echomsg "Please save the change."
+endfunction
+
 
 " increase and decrease by plus/minus
 nnoremap +  <C-a>
@@ -155,9 +164,9 @@ xnoremap -  <C-x>
 xnoremap g+ g<C-a>
 xnoremap g- g<C-x>
 
-" switch quote and backquote
-nnoremap ' `
-nnoremap ` '
+" I can remember only one mark anyway
+nnoremap m ma
+nnoremap ' `a
 
 " select pasted text
 nnoremap gp `[v`]
