@@ -77,9 +77,9 @@ function! Visualmatch()
   endif
 
   if mode() == 'v'
-    let w:visual_match_id = matchadd('SearchWordMatch', '\V' .. text)
+    let w:visual_match_id = matchadd('SearchWordMatch', '\V' .. text->escape('\'))
   else
-    let w:visual_match_id = matchadd('SearchWordMatch', '\V\<' .. text .. '\>')
+    let w:visual_match_id = matchadd('SearchWordMatch', '\V\<' .. text->escape('\') .. '\>')
   endif
 endfunction
 
