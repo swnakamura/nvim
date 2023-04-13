@@ -65,7 +65,7 @@ function! Visualmatch()
     let lines=getline(linerange[0], linerange[1])
     let lines[0] = lines[0]->strcharpart(charcol(linerange[0])-1)
     let lines[-1] = lines[-1]->strcharpart(0,charcol(linerange[1]))
-    let text = lines->join('\n')
+    let text = lines->map({key, line -> line->escape('\')})->join('\n')
   else
     let text = ''
   endif
@@ -77,9 +77,9 @@ function! Visualmatch()
   endif
 
   if mode() == 'v'
-    let w:visual_match_id = matchadd('SearchWordMatch', '\V' .. text->escape('\'))
+    let w:visual_match_id = matchadd('SearchWordMatch', '\V' .. text)
   else
-    let w:visual_match_id = matchadd('SearchWordMatch', '\V\<' .. text->escape('\') .. '\>')
+    let w:visual_match_id = matchadd('SearchWordMatch', '\V\<' .. text .. '\>')
   endif
 endfunction
 
