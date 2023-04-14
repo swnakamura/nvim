@@ -150,9 +150,10 @@ function <SID>quit_if_nomodified() abort
   try
     sbmodified
   catch /^Vim\%((\a\+)\)\=:E84:/
+    " catching an E84 error means there's no modified buffer
     qall
   endtry
-  echomsg "Please save the change."
+  echoerr "Please save the change."
 endfunction
 
 
