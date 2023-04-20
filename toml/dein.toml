@@ -71,9 +71,7 @@ augroup END
 [[plugins]]
 repo='https://github.com/itchyny/lightline.vim'
 hook_add = '''
-let g:lightline = {
-\   'colorscheme': 'iceberg'
-\}
+call Lightline_add()
 '''
 
 [[plugins]]
