@@ -130,31 +130,12 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', 'gF', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-require('lspconfig')['pyright'].setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-}
-require('lspconfig')['rust_analyzer'].setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-}
-require('lspconfig')['lua_ls'].setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-}
-require('lspconfig')['bashls'].setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-}
-require('lspconfig')['clangd'].setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-}
-require('lspconfig')['texlab'].setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-}
-require('lspconfig')['vimls'].setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-}
+
+local servers = { 'pyright', 'rust_analyzer', 'lua_ls', 'bashls', 'clangd', 'texlab', 'vimls' }
+
+for _, lsp in ipairs(servers) do
+    require'lspconfig'[lsp].setup {
+        on_attach = on_attach,
+        capabilities = capabilities
+    }
+end
