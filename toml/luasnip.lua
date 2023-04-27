@@ -49,7 +49,19 @@ ls.add_snippets("html", {
 })
 
 ls.add_snippets("markdown", {
-    ls.parser.parse_snippet("rb", "<ruby>$1<rp> (</rp><rt>$2</rt><rp>) </rp></ruby>$0")
+    ls.parser.parse_snippet("rb", "<ruby>$1<rp> (</rp><rt>$2</rt><rp>) </rp></ruby>$0"),
+    ls.parser.parse_snippet("str", "<strong>$1</strong>$0"),
+    ls.parser.parse_snippet("acd", [[
+<details>
+<summary>
+$1
+</summary>
+
+$2
+
+</details>
+$0
+]])
 })
 ls.add_snippets("tex", {
     ls.parser.parse_snippet("bf", "\\textbf{$1}"),
