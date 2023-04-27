@@ -342,12 +342,12 @@ require('orgmode').setup({
   org_default_notes_file = '~/org/refile.org',
 })
 '''
-hook_post_source = '''
+hook_add = '''
 augroup org-mode
-    autocmd FileType org nnoremap <buffer> + <Cmd>lua require("orgmode").action("org_mappings.todo_next_state")<CR>
+    autocmd FileType org setlocal foldlevel=99
+    autocmd FileType org normal <F2>
     autocmd FileType org nnoremap <buffer> t <Cmd>lua require("orgmode").action("org_mappings.todo_next_state")<CR>
-    autocmd FileType org nnoremap <buffer> - <Cmd>lua require("orgmode").action("org_mappings.todo_prev_state")<CR>
 augroup END
 '''
-on_event = 'BufRead'
+on_ft = 'org'
 depends = 'nvim-treesitter'
