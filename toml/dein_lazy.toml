@@ -344,9 +344,11 @@ require('orgmode').setup({
 '''
 hook_add = '''
 augroup org-mode
+    autocmd FileType org setlocal conceallevel=2
     autocmd FileType org setlocal foldlevel=99
     autocmd FileType org normal <F2>
     autocmd FileType org nnoremap <buffer> t <Cmd>lua require("orgmode").action("org_mappings.todo_next_state")<CR>
+    autocmd FileType org imap <buffer> <C-CR> <C-o><Leader><CR>
 augroup END
 '''
 on_ft = 'org'
