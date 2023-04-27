@@ -3,6 +3,15 @@
 # repo = 'haya14busa/vim-asterisk'
 # hook_add = 'call Asterisk_add()'
 
+[[plugins]]
+repo='echasnovski/mini.nvim'
+lua_add = '''
+require('mini.indentscope').setup{
+    delay = 0,
+    symbol = '│',
+}
+'''
+
 # operator argumentation
 [[plugins]]
 repo = 'kana/vim-operator-user'
