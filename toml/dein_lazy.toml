@@ -69,7 +69,6 @@ hook_post_source = '''
 luado require 'colorizer'.setup()
 ColorizerAttachToBuffer " Attach to the current buffer
 '''
-depends = 'impatient.nvim'
 
 [[plugins]]
 repo = 'tpope/vim-dispatch'
@@ -146,7 +145,7 @@ smap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' 
 exe 'source' stdpath('config') . '/toml/luasnip.lua'
 '''
 on_event = 'InsertEnter'
-depends = ['luasnip-latex-snippets.nvim','impatient.nvim']
+depends = 'luasnip-latex-snippets.nvim'
 
 [[plugins]]
 repo = 'iurimateus/luasnip-latex-snippets.nvim'
@@ -188,7 +187,6 @@ require("indent_blankline").setup {
 }
 '''
 on_event = 'BufRead'
-depends = 'impatient.nvim'
 
 [[plugins]]
 repo = 'majutsushi/tagbar'
@@ -289,7 +287,6 @@ require'nvim-treesitter.configs'.setup {
 '''
 hook_post_update = 'TSUpdate'
 on_event = 'BufRead'
-depends = 'impatient.nvim'
 
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter-context'
@@ -300,14 +297,12 @@ on_event = 'BufRead'
 # LSP configuration
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
-depends = 'impatient.nvim'
 
 [[plugins]]
 repo='williamboman/mason.nvim'
 lua_post_source='''
 require("mason").setup()
 '''
-depends = 'impatient.nvim'
 
 [[plugins]]
 repo='williamboman/mason-lspconfig.nvim'
@@ -323,13 +318,11 @@ on_event = 'BufRead'
 [[plugins]]
 repo = 'https://github.com/uga-rosa/ccc.nvim'
 on_cmd = 'Ccc'
-depends = 'impatient.nvim'
 
 [[plugins]]
 repo = 'tversteeg/registers.nvim'
 lua_post_source = '''require("registers").setup()'''
 on_event = ['BufRead', 'CursorMoved', 'InsertEnter', 'CmdLineEnter']
-depends = 'impatient.nvim'
 
 [[plugins]]
 repo = 'https://github.com/nvim-orgmode/orgmode'
