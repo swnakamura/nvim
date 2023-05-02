@@ -1,3 +1,13 @@
 [[plugins]]
 repo = 'vim-denops/denops.vim'
-on_event = 'CursorHold'
+
+[[plugins]]
+repo = 'kat0h/bufpreview.vim'
+on_ft = 'markdown'
+hook_add = '''
+augroup markdown_bufpreview
+  autocmd!
+  autocmd FileType markdown nnoremap <buffer> <F5> <Cmd>PreviewMarkdown<CR>
+augroup END
+'''
+depends = 'denops.vim'

@@ -61,7 +61,8 @@ $2
 
 </details>
 $0
-]])
+]]),
+    ls.parser.parse_snippet({trig=",,", snippetType="autosnippet"}, "$$1$"),
 })
 ls.add_snippets("tex", {
     ls.parser.parse_snippet("bf", "\\textbf{$1}"),
