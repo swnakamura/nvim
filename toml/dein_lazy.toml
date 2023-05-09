@@ -150,7 +150,7 @@ depends = 'luasnip-latex-snippets.nvim'
 [[plugins]]
 repo = 'iurimateus/luasnip-latex-snippets.nvim'
 lua_source = '''
-require'luasnip-latex-snippets'.setup()
+require'luasnip-latex-snippets'.setup({use_treesitter = true})
 '''
 
 # fzf
