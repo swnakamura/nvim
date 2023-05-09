@@ -62,10 +62,6 @@ repo = 'lewis6991/impatient.nvim'
 repo = 'https://github.com/tyru/capture.vim'
 
 [[plugins]]
-repo = 'https://github.com/skanehira/preview-markdown.vim'
-hook_add = 'let g:preview_markdown_auto_update=1'
-
-[[plugins]]
 repo = 'https://github.com/subnut/nvim-ghost.nvim'
 hook_post_update = '''
   call nvim_ghost#installer#install()
