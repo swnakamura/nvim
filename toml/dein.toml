@@ -8,8 +8,8 @@ repo='echasnovski/mini.nvim'
 lua_add = '''
 require('mini.indentscope').setup{
     draw = {
-        delay = 50,
-        animation = require('mini.indentscope').gen_animation.quadratic({easing = 'out', duration=20}),
+        delay = 20,
+        animation = require('mini.indentscope').gen_animation.none()
     },
     symbol = '│',
 }

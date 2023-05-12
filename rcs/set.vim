@@ -1,7 +1,7 @@
 " if you can't type quickly, change this.
-set timeoutlen=400
+set timeoutlen=600
 
-" set clipboard=unnamedplus
+set clipboard=unnamedplus
 
 " update quickly
 set updatetime=100
