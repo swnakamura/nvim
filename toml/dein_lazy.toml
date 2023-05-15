@@ -148,7 +148,7 @@ on_event = 'InsertEnter'
 depends = 'luasnip-latex-snippets.nvim'
 
 [[plugins]]
-repo = 'iurimateus/luasnip-latex-snippets.nvim'
+repo = 'woodyZootopia/luasnip-latex-snippets.nvim'
 lua_source = '''
 require'luasnip-latex-snippets'.setup({use_treesitter = true})
 '''
