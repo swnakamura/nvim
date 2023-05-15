@@ -1,1 +1,1 @@
-nmap <buffer> m ]m
+nmap <buffer><nowait> m ]m
