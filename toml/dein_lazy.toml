@@ -173,7 +173,7 @@ on_event = 'BufRead'
 [[plugins]]
 repo = 'tpope/vim-fugitive'
 hook_add = 'call Fugitive_add()'
-on_cmd = ['Git', 'Gwrite', '0Gclog', 'Gdiffsplit', 'Glgrep']
+on_cmd = ['Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep']
 
 # indentline implementation in lua
 [[plugins]]
@@ -263,6 +263,9 @@ on_cmd = 'FloatermToggle'
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
 merged = '0'
+hook_add = '''
+filetype plugin indent on
+'''
 lua_post_source = '''
 require'nvim-treesitter.configs'.setup {
   highlight = {
