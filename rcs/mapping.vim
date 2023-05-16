@@ -286,5 +286,3 @@ nnoremap<silent> gss <Cmd>SaveSession<CR>
 nnoremap<silent> gsr <Cmd>StartRepeatedSave<CR>
 nnoremap<silent> gsl <Cmd>LoadSession<CR>
 nnoremap<silent> gsc <Cmd>CleanUpSession<CR>
-
-cabbrev gs GhostStart
