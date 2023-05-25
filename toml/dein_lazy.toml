@@ -293,7 +293,12 @@ on_event = 'BufRead'
 
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter-context'
-lua_post_source = 'require"treesitter-context".setup()'
+lua_post_source = '''
+require"treesitter-context".setup()
+vim.keymap.set("n", "[c", function()
+  require("treesitter-context").go_to_context()
+end, { silent = true })
+'''
 depends = 'nvim-treesitter'
 on_event = 'BufRead'
 
