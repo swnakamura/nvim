@@ -4,6 +4,7 @@ repo = 'vim-denops/denops.vim'
 [[plugins]]
 repo = 'kat0h/bufpreview.vim'
 on_ft = 'markdown'
+build = 'deno task prepare'
 hook_add = '''
 augroup markdown_bufpreview
   autocmd!
