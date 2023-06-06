@@ -12,8 +12,8 @@ augroup file-type
   "  長い行がありそうな拡張子なら構文解析を途中でやめる
   au FileType csv,tsv,json                          setlocal synmaxcol=256
 
-  "  プログラムっぽいファイルなら行分割
-  au FileType c,cpp,rust,go,python,lua,bash,vim,tex setlocal breakindent
+  "  プログラムっぽいファイルならbreakindent
+  au FileType c,cpp,rust,go,python,lua,bash,vim,tex,markdown setlocal breakindent
 augroup END
 
 function! Preserve(command)
