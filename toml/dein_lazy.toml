@@ -313,13 +313,19 @@ require("mason").setup()
 '''
 
 [[plugins]]
+repo='j-hui/fidget.nvim'
+lua_post_source='''
+require"fidget".setup{}
+'''
+
+[[plugins]]
 repo='williamboman/mason-lspconfig.nvim'
 lua_post_source='''
 require("mason-lspconfig").setup{
     ensure_installed = { "lua_ls", "rust_analyzer", "pyright", "vimls", "bashls", "clangd", 'texlab'}
 }
 '''
-depends = ['mason.nvim', 'nvim-lspconfig']
+depends = ['mason.nvim', 'nvim-lspconfig', 'fidget.nvim']
 on_event = 'BufRead'
 
 # color picker
