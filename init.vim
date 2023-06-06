@@ -50,6 +50,6 @@ if !exists('g:vscode')
   hi GitGutterDelete       guibg=#161821
   highlight IndentBlanklineIndent guifg=#3c3c43 gui=nocombine
   " Do not show horizontal line in deleted
-  hi DiffDelete guifg=#53343b
+  " hi DiffDelete guifg=#53343b
 endif
 filetype plugin indent on

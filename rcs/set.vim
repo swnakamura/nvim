@@ -109,4 +109,4 @@ set matchpairs+=「:」,（:）,『:』,【:】,〈:〉,《:》,〔:〕,｛:｝,
 
 set spelllang=en,cjk
 
-setglobal signcolumn=yes:2
+setglobal signcolumn=yes:1
