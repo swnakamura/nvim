@@ -153,16 +153,29 @@ lua_source = '''
 require'luasnip-latex-snippets'.setup({use_treesitter = true})
 '''
 
-# fzf
 [[plugins]]
-repo = 'junegunn/fzf'
+repo = 'nvim-telescope/telescope.nvim'
+rev = '0.1.x'
+depends = 'plenary.nvim'
+hook_add = '''
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>fr <cmd>Telescope oldfiles<cr>
+nnoremap <leader>fcl <cmd>Telescope commands<cr>
+nnoremap <leader>fch <cmd>Telescope command_history<cr>
+nnoremap <leader>ft <cmd>Telescope tags<cr>
+nnoremap <leader>fman <cmd>Telescope man_pages<cr>
+nnoremap <leader>fmap <cmd>Telescope keymaps<cr>
+nnoremap <leader>flr <cmd>Telescope lsp_references<cr>
+nnoremap <C-]> <cmd>Telescope lsp_definitions<cr>
+'''
+on_cmd = ['Telescope']
 
 [[plugins]]
-repo = 'junegunn/fzf.vim'
-depends = 'fzf'
-hook_add = 'call Fzf_add()'
-on_cmd = ['Files', 'Buffers', 'History', 'Maps', 'Helptags', 'Tags', 'Rg']
-depends = 'fzf'
+repo = 'nvim-lua/plenary.nvim'
 
 [[plugins]]
 repo = 'lewis6991/gitsigns.nvim'
