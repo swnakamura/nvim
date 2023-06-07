@@ -9,6 +9,7 @@ hook_add = '''
 augroup markdown_bufpreview
   autocmd!
   autocmd FileType markdown nnoremap <buffer> <F5> <Cmd>PreviewMarkdown<CR>
+  autocmd FileType markdown inoremap <buffer> <F5> <Cmd>PreviewMarkdown<CR>
 augroup END
 '''
 depends = 'denops.vim'
