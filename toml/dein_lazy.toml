@@ -170,6 +170,8 @@ nnoremap <leader>ft <cmd>Telescope tags<cr>
 nnoremap <leader>fman <cmd>Telescope man_pages<cr>
 nnoremap <leader>fmap <cmd>Telescope keymaps<cr>
 nnoremap <leader>flr <cmd>Telescope lsp_references<cr>
+nnoremap <leader>flx <cmd>Telescope diagnostics<cr>
+nnoremap <leader>fli <cmd>Telescope lsp_implementations<cr>
 nnoremap <C-]> <cmd>Telescope lsp_definitions<cr>
 '''
 on_cmd = ['Telescope']
