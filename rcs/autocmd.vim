@@ -55,7 +55,7 @@ function! Visualmatch()
 
   if line('.') == line('v')
     let colrange = charcol('.') < charcol('v') ? [charcol('.'), charcol('v')] : [charcol('v'), charcol('.')]
-    let text = getline('.')->strcharpart(colrange[0]-1, colrange[1]-colrange[0]+1)
+    let text = getline('.')->strcharpart(colrange[0]-1, colrange[1]-colrange[0]+1)->escape('\')
   elseif mode() == 'v' " multiline matchingはvisual modeのみ
     if line('.') > line('v')
       let linerange = ['v','.']
