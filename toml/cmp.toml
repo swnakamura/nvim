@@ -18,7 +18,7 @@ repo = 'hrsh7th/cmp-nvim-lsp-signature-help'
 # 本体
 [[plugins]]
 repo = 'hrsh7th/nvim-cmp'
-depends = ['impatient.nvim','nvim-lspconfig', 'cmp-nvim-lsp', 'cmp-buffer', 'cmp-path', 'cmp-cmdline', 'cmp_luasnip', 'lspkind.nvim', 'cmp-look', 'nvim-web-devicons']
+depends = ['nvim-lspconfig', 'cmp-nvim-lsp', 'cmp-buffer', 'cmp-path', 'cmp-cmdline', 'cmp_luasnip', 'lspkind.nvim', 'cmp-look', 'nvim-web-devicons']
 on_event = ['InsertEnter', 'CmdlineEnter']
 on_ft = ['python', 'rust', 'lua', 'sh', 'zsh', 'c', 'cpp', 'tex', 'vim']
 hook_post_source = '''
