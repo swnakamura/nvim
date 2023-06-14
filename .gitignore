@@ -1,9 +1,11 @@
-dein/
-plugged/
-haven/
+tags
+test.sh
+.luarc.json
+nvim
+lazy-lock.json
+
 .DS_Store
 tmp/
 .netrwhist
 templates/
 spell/
-api_key.vim
