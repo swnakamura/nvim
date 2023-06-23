@@ -81,10 +81,13 @@ require('lazy').setup({
       vim.keymap.set("n", "<S-Up>", ":Gwrite<CR>")
       vim.keymap.set("n", "<C-Up>", ":Git commit -v<CR>")
       vim.keymap.set("n", "<Right>",
-      function() return '<Cmd>' .. (vim.o.diff and 'only' or 'vert Gdiffsplit!') .. '<CR>' end, { expr = true })
-      vim.keymap.set("n", "<Left>", function()
-        return '<Cmd>' .. (vim.o.ft == 'fugitiveblame' and 'quit' or 'Git blame') .. '<CR>'
-      end, { expr = true })
+        function() return '<Cmd>' .. (vim.o.diff and 'only' or 'vert Gdiffsplit!') .. '<CR>' end,
+        { expr = true }
+      )
+      vim.keymap.set("n", "<Left>",
+        function() return '<Cmd>' .. (vim.o.ft == 'fugitiveblame' and 'quit' or 'Git blame') .. '<CR>' end,
+        { expr = true }
+      )
       vim.keymap.set("n", "<Down>", "<Cmd>Dispatch! git fetch<CR>")
       vim.keymap.set("n", "<C-Down>", "<Cmd>Dispatch! git pull<CR>")
     end,
@@ -148,35 +151,36 @@ hi link agitDiffRemove diffRemoved
 
             lua_ls = {
               Lua = {
-                runtime = {
-                  -- Tell the language server which version of Lua you're using
-                  -- (most likely LuaJIT in the case of Neovim)
-                  version = 'LuaJIT',
-                },
-                diagnostics = {
-                  -- Get the language server to recognize the `vim` global
-                  globals = {
-                    'vim',
-                    'require'
-                  },
-                },
-                workspace = {
-                  -- Make the server aware of Neovim runtime files
-                  library = vim.api.nvim_get_runtime_file("", true),
-                  checkThirdParty = false
-                },
-                -- Do not send telemetry data containing a randomized but unique identifier
-                telemetry = {
-                  enable = false,
-                },
+                completion = {
+                  callSnippet = "Replace"
+                }
+
+                -- runtime = {
+                --   -- Tell the language server which version of Lua you're using
+                --   -- (most likely LuaJIT in the case of Neovim)
+                --   version = 'LuaJIT',
+                -- },
+                -- diagnostics = {
+                --   -- Get the language server to recognize the `vim` global
+                --   globals = {
+                --     'vim',
+                --     'require'
+                --   },
+                -- },
+                -- workspace = {
+                --   -- Make the server aware of Neovim runtime files
+                --   library = vim.api.nvim_get_runtime_file("", true),
+                --   checkThirdParty = false
+                -- },
+                -- -- Do not send telemetry data containing a randomized but unique identifier
+                -- telemetry = {
+                --   enable = false,
+                -- },
               },
             },
           }
 
 
-          mason_lspconfig.setup {
-            ensure_installed = vim.tbl_keys(servers),
-          }
 
           local on_attach = function(_, bufnr)
             local nmap = function(keys, func, desc)
@@ -213,20 +217,34 @@ hi link agitDiffRemove diffRemoved
             vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
               vim.lsp.buf.format()
             end, { desc = 'Format current buffer with LSP' })
+
+            nmap('<leader>i', function(_)
+              vim.lsp.buf.inlay_hint(0, true)
+              vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "InsertEnter" }, {
+                once = true,
+                callback = function()
+                  vim.lsp.buf.inlay_hint(0, false)
+                end
+              })
+            end, 'Toggle inlay hint')
           end
 
-          local capabilities = vim.lsp.protocol.make_client_capabilities()
-          capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+          local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-          mason_lspconfig.setup_handlers {
+          local handlers = {
             function(server_name)
               require('lspconfig')[server_name].setup {
                 capabilities = capabilities,
                 on_attach = on_attach,
                 settings = servers[server_name],
               }
-            end,
+            end
           }
+
+          mason_lspconfig.setup({
+            handlers = handlers,
+            ensure_installed = vim.tbl_keys(servers),
+          })
         end
       },
 
@@ -325,7 +343,7 @@ hi link agitDiffRemove diffRemoved
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
       require('luasnip.loaders.from_vscode').lazy_load()
-      luasnip.config.setup {}
+      luasnip.config.setup({ enable_autosnippets = true })
 
       cmp.setup {
         snippet = {
@@ -636,6 +654,8 @@ ${0:Hello, world!}
     'iamcco/markdown-preview.nvim',
     build = function() vim.fn["mkdp#util#install"]() end,
     config = function()
+      vim.api.nvim_create_augroup('markdown_bufpreview', {})
+      vim.api.nvim_create_autocmd()
       vim.cmd([[
     augroup markdown_bufpreview
     autocmd!
