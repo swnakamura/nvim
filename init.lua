@@ -80,8 +80,11 @@ require('lazy').setup({
 
       vim.keymap.set("n", "<S-Up>", ":Gwrite<CR>")
       vim.keymap.set("n", "<C-Up>", ":Git commit -v<CR>")
-      vim.keymap.set("n", "<expr>", "<Right> '<Cmd>' . (&diff ? 'only' : 'vert Gdiffsplit!') . '<CR>'")
-      vim.keymap.set("n", "<expr>", "<Left> '<Cmd>' . (&ft==#'fugitiveblame' ? 'quit' : 'Git blame') . '<CR>'")
+      vim.keymap.set("n", "<Right>",
+      function() return '<Cmd>' .. (vim.o.diff and 'only' or 'vert Gdiffsplit!') .. '<CR>' end, { expr = true })
+      vim.keymap.set("n", "<Left>", function()
+        return '<Cmd>' .. (vim.o.ft == 'fugitiveblame' and 'quit' or 'Git blame') .. '<CR>'
+      end, { expr = true })
       vim.keymap.set("n", "<Down>", "<Cmd>Dispatch! git fetch<CR>")
       vim.keymap.set("n", "<C-Down>", "<Cmd>Dispatch! git pull<CR>")
     end,
@@ -89,6 +92,34 @@ require('lazy').setup({
     dependencies = { 'tpope/vim-dispatch', cmd = 'Dispatch' }
   },
   { 'tpope/vim-rhubarb',  cmd = 'GBrowse' },
+  {
+    'cohama/agit.vim',
+    cmd = 'Agit',
+    init = function()
+      vim.keymap.set('n', '<leader>gl', '<Cmd>Agit<CR>')
+    end,
+    config = function()
+      vim.cmd([[
+hi link agitStatAdded diffAdded
+hi link agitStatRemoved diffRemoved
+hi link agitDiffAdd diffAdded
+hi link agitDiffRemove diffRemoved
+      ]])
+    end
+  },
+
+  -- floating terminal
+  {
+    'voldikss/vim-floaterm',
+    cmd = 'FloatermToggle',
+    init = function()
+      vim.g.floaterm_width = 0.9
+      vim.g.floaterm_height = 0.9
+      vim.keymap.set('n', '<Plug>(my-win)z', '<Cmd>FloatermToggle<CR>')
+      vim.keymap.set('t', '<C-[>', '<C-\\><C-n>:FloatermHide<CR>')
+      vim.keymap.set('t', '<C-l>', '<C-\\><C-n>')
+    end
+  },
 
   -- Detect tabstop and shiftwidth automatically
   -- { 'tpope/vim-sleuth',  event = { 'BufRead', 'BufNewFile' } },
@@ -320,24 +351,6 @@ require('lazy').setup({
             behavior = cmp.ConfirmBehavior.Replace,
             select = false,
           }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-          ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            elseif luasnip.expand_or_locally_jumpable() then
-              luasnip.expand_or_jump()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif luasnip.locally_jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
         },
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
@@ -398,12 +411,158 @@ require('lazy').setup({
     end,
   },
 
+
   -- Adds latex snippets
   {
     'woodyZootopia/luasnip-latex-snippets.nvim',
     dependencies = { 'L3MON4D3/LuaSnip' },
     ft = { 'markdown', 'tex' },
     event = 'InsertEnter',
+    config = function()
+      require 'luasnip-latex-snippets'.setup({ use_treesitter = true })
+    end
+  },
+
+  {
+    'L3MON4D3/LuaSnip',
+    config = function()
+      vim.cmd([[
+imap <silent><expr> <Tab> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>'
+]])
+      local ls = require("luasnip")
+
+      ls.add_snippets("python", {
+        ls.parser.parse_snippet("pf", "print(f\"{$1}\")$0"),
+        ls.parser.parse_snippet("pdb", "__import__(\"pdb\").set_trace()"),
+        ls.parser.parse_snippet("todo", "# TODO: "),
+        ls.parser.parse_snippet("pltimport", "import matplotlib.pyplot as plt"),
+        ls.parser.parse_snippet("ifmain", "if __name__ == \"__main__\":"),
+        ls.parser.parse_snippet({ trig = "plot_instantly", name = "plot_instantly" },
+          [[
+from matplotlib.pyplot import plot,hist,imshow,scatter,show,savefig,legend,clf,figure,close
+import matplotlib.pyplot as plt
+imshow($1)
+show()
+$0
+]]
+        ),
+        ls.parser.parse_snippet({ trig = "argument_parser", name = "argument_parser" },
+          [[
+import argparse
+p = argparse.ArgumentParser()
+p.add_argument('${1:foo}')
+args = p.parse_args()
+]]
+        ),
+      })
+
+      ls.add_snippets("html", {
+        ls.parser.parse_snippet("rb", "<ruby>$1<rp> (</rp><rt>$2</rt><rp>) </rp></ruby>$0")
+      })
+
+      ls.add_snippets("text", {
+        ls.parser.parse_snippet("rb", "[[rb:$1>$2]]$0"),
+        ls.parser.parse_snippet("np", "[newpage]"),
+        ls.parser.parse_snippet("sp", "◇　◇　◇"),
+      })
+
+      ls.add_snippets("markdown", {
+        ls.parser.parse_snippet("rb", "<ruby>$1<rp> (</rp><rt>$2</rt><rp>) </rp></ruby>$0"),
+        ls.parser.parse_snippet("str", "<strong>$1</strong>$0"),
+        ls.parser.parse_snippet({ trig = ",,", snippetType = "autosnippet" }, "$$1$"),
+        ls.parser.parse_snippet("acd", [[
+<details>
+<summary>
+$1
+</summary>
+
+$2
+
+</details>
+$0
+]]),
+      })
+      ls.add_snippets("tex", {
+        ls.parser.parse_snippet("bf", "\\textbf{$1}"),
+        ls.parser.parse_snippet("it", "\\textit{$1}"),
+        ls.parser.parse_snippet("sc", "\\textsc{$1}"),
+        ls.parser.parse_snippet("sf", "\\textsf{$1}"),
+        ls.parser.parse_snippet("tt", "\\texttt{$1}"),
+        ls.parser.parse_snippet("em", "\\emph{$1}"),
+        ls.parser.parse_snippet({ trig = ",,", snippetType = "autosnippet" }, "$$1$"),
+        ls.parser.parse_snippet("jbase",
+          [[
+\documentclass[12pt,a4paper,titlepage]{jlreq}
+% some packages
+% \usepackage{graphicx}
+% \usepackage{amsmath}
+% \usepackage{amssymb}
+% \usepackage{todonotes}
+% \usepackage{siunitx}
+% \usepackage{bm}
+% \usepackage{booktabs}
+% \usepackage{capt-of}
+%
+% \usepackage{/home/snakamura/ghq/github.com/woodyZootopia/latex-macros/macros-maths}
+% \usepackage[
+%     backend=biber,
+%     style=numeric,
+%     sortlocale=en_US,
+%     url=true,
+%     doi=true,
+%     eprint=false
+% ]{biblatex}
+% \addbibresource{citations.bib}
+% \usepackage{luatexja-ruby}
+
+\title{${1:レポート}}
+\author{${2}}
+%
+\begin{document}
+\maketitle
+
+\setcounter{tocdepth}{5}
+% \tableofcontents
+
+${0:Hello, world!}
+
+% \printbibliography
+\end{document}
+]]
+        ),
+        ls.parser.parse_snippet("fig",
+          [[
+\begin{figure}[b]
+    \centering
+    \includegraphics[width=\linewidth]{${1:path}}
+    \caption{${2:caption}}
+	\label{fig:${5:${1/[\W]+/_/g}}}
+\end{figure}$0
+    ]]
+        ),
+        ls.parser.parse_snippet("preview",
+          [[
+\documentclass{jlreq}
+\usepackage[active,tightpage]{preview}
+% some packages
+% \usepackage{graphicx}
+% \usepackage{amsmath}
+% \usepackage{amssymb}
+% \usepackage{todonotes}
+% \usepackage{siunitx}
+% \usepackage{bm}
+% \usepackage{booktabs}
+% \usepackage{capt-of}
+
+\begin{document}
+\begin{preview}
+    ${0}
+\end{preview}
+\end{document}
+    ]]
+        )
+      })
+    end
   },
 
   -- Fern (filer)
@@ -416,31 +575,33 @@ require('lazy').setup({
       vim.keymap.set('n', "st", ':<C-u>tab sp<CR><Cmd>Fern %:h<CR>')
     end,
     config = function()
-      vim.cmd([[
-function! s:init_fern() abort
-  silent! nunmap <buffer> s
-  silent! nunmap <buffer> N
-  nmap <buffer> o <Plug>(fern-action-open-or-expand)
-  nmap <buffer> l <Plug>(fern-action-open-or-expand)
-  nmap <buffer> p <Plug>(fern-action-open-or-expand)<C-w><C-w>
-  nmap <buffer> <C-v> <Plug>(fern-action-open:vsplit)
-  nmap <buffer> <C-s> <Plug>(fern-action-open:split)
-  nmap <buffer> <C-t> <Plug>(fern-action-open:tabedit)
-  nmap <buffer> h <Plug>(fern-action-collapse)
-  nmap <buffer> <CR> <Plug>(fern-action-tcd)<Plug>(fern-action-open-or-enter)
-  nmap <buffer> - <Plug>(fern-action-leave)<Plug>(fern-wait)<Plug>(fern-action-tcd:root)
-  nmap <buffer> L <Plug>(fern-action-new-file)
-  nmap <buffer> d <Plug>(fern-action-trash)<CR>
-  nmap <buffer> D <Plug>(fern-action-trash=)y<CR>
-  nmap <buffer> ~ <Cmd>Fern ~<CR>
-endfunction
-
-augroup fern-custom
-  autocmd!
-  autocmd FileType fern call <SID>init_fern()
-  autocmd FileType fern call glyph_palette#apply()
-augroup END
-    ]])
+      local init_fern = function()
+        vim.keymap.del('n', 's', { buffer = true })
+        vim.keymap.del('n', 'N', { buffer = true })
+        vim.keymap.set('n', 'o', '<Plug>(fern-action-open-or-expand)', { buffer = true })
+        vim.keymap.set('n', 'l', '<Plug>(fern-action-open-or-expand)', { buffer = true })
+        vim.keymap.set('n', 'p', '<Plug>(fern-action-open-or-expand)<C-w><C-w>', { buffer = true })
+        vim.keymap.set('n', '<', '<Plug>(fern-action-open:vsplit)', { buffer = true })
+        vim.keymap.set('n', '<', '<Plug>(fern-action-open:split)', { buffer = true })
+        vim.keymap.set('n', '<', '<Plug>(fern-action-open:tabedit)', { buffer = true })
+        vim.keymap.set('n', 'h', '<Plug>(fern-action-collapse)', { buffer = true })
+        vim.keymap.set('n', '<', '<Plug>(fern-action-tcd)<Plug>(fern-action-open-or-enter)', { buffer = true })
+        vim.keymap.set('n', '-', '<Plug>(fern-action-leave)<Plug>(fern-wait)<Plug>(fern-action-tcd:root)',
+          { buffer = true })
+        vim.keymap.set('n', 'L', '<Plug>(fern-action-new-file)', { buffer = true })
+        vim.keymap.set('n', 'd', '<Plug>(fern-action-trash)<CR>', { buffer = true })
+        vim.keymap.set('n', 'D', '<Plug>(fern-action-trash=)y<CR>', { buffer = true })
+        vim.keymap.set('n', '~', '<Cmd>Fern ~<CR>', { buffer = true })
+      end
+      vim.api.nvim_create_augroup('fern-custom', {})
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'fern',
+        callback = function()
+          init_fern()
+          vim.fn['glyph_palette#apply']()
+        end,
+        group = 'fern-custom'
+      })
     end,
     dependencies = { {
       'lambdalisue/fern-renderer-nerdfont.vim',
@@ -485,6 +646,22 @@ augroup END
     end
     ,
     ft = 'markdown'
+  },
+
+  {
+    cond = false,
+    'kat0h/bufpreview.vim',
+    build = 'deno task prepare',
+    dependencies = 'vim-denops/denops.vim',
+    config = function()
+      vim.cmd([[
+    augroup markdown_bufpreview
+    autocmd!
+    autocmd FileType markdown nnoremap <buffer> <F5> <Cmd>PreviewMarkdown<CR>
+    autocmd FileType markdown inoremap <buffer> <F5> <Cmd>PreviewMarkdown<CR>
+    augroup END
+    ]])
+    end
   },
 
   {
@@ -576,6 +753,7 @@ augroup END
 
         -- Actions
         map('n', '<leader>hs', gs.stage_hunk)
+        map('n', '<Up>', gs.stage_hunk)
         map('n', '<leader>hu', gs.reset_hunk)
         map('v', '<leader>hs', function() gs.stage_hunk { vim.fn.line("."), vim.fn.line("v") } end)
         map('v', '<leader>hu', function() gs.reset_hunk { vim.fn.line("."), vim.fn.line("v") } end)
@@ -604,6 +782,9 @@ augroup END
       vim.cmd.colorscheme 'iceberg'
     end,
   },
+
+  -- capture vim script output
+  'https://github.com/tyru/capture.vim',
 
   {
     -- Set lightline as statusline
@@ -819,14 +1000,10 @@ augroup END
   {
     dir = '~/ghq/github.com/woodyZootopia/novel-preview.vim',
     ft = 'text',
-    dependencies = {
-      {
-        'vim-denops/denops.vim',
-        init = function()
-          vim.g['denops#deno'] = '/Users/snakamura/.deno/bin/deno'
-        end
-      }
-    },
+    dependencies = 'vim-denops/denops.vim',
+    init = function()
+      vim.g['denops#deno'] = '/Users/snakamura/.deno/bin/deno'
+    end,
     config = function()
       vim.keymap.set('n', '<F5>', '<Cmd>NovelPreviewStartServer<CR><Cmd>NovelPreviewAutoSend<CR>')
     end
@@ -966,6 +1143,8 @@ vim.keymap.set('n', '<Plug>(g-mode)j', 'gj<Plug>(g-mode)')
 vim.keymap.set('n', '<Plug>(g-mode)k', 'gk<Plug>(g-mode)')
 vim.keymap.set('n', '<Plug>(g-mode)', '<Nop>', { remap = true })
 
+-- do not copy when deleting by x
+vim.keymap.set({ 'n', 'x' }, 'x', '"_x')
 
 -- window control by s
 vim.keymap.set('n', '<Plug>(my-win)', '<Nop>')
@@ -1071,10 +1250,10 @@ vim.keymap.set('n', '<', '<<')
 -- tagsジャンプの時に複数ある時は一覧表示
 vim.keymap.set('n', '<C-]>', 'g<C-]>')
 
-vim.keymap.set('i', '<C-b>', "<Cmd>exec,'normal!,b'<CR>")
-vim.keymap.set('i', '<C-f>', "<Cmd>exec,'normal!,w'<CR>")
-vim.keymap.set('i', '<C-p>', "<Cmd>exec,'normal!,gk'<CR>")
-vim.keymap.set('i', '<C-n>', "<Cmd>exec,'normal!,gj'<CR>")
+vim.keymap.set('i', '<C-b>', "<Cmd>exec 'normal! b'<CR>")
+vim.keymap.set('i', '<C-f>', "<Cmd>exec 'normal! w'<CR>")
+vim.keymap.set('i', '<C-p>', "<Cmd>exec 'normal! gk'<CR>")
+vim.keymap.set('i', '<C-n>', "<Cmd>exec 'normal! gj'<CR>")
 
 vim.keymap.set('n', 'gss', '<Cmd>SaveSession<CR>')
 vim.keymap.set('n', 'gsr', '<Cmd>StartRepeatedSave<CR>')
@@ -1361,9 +1540,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
-
-
-
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
