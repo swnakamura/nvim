@@ -108,6 +108,22 @@ hi link agitDiffRemove diffRemoved
       { 'williamboman/mason.nvim', config = true },
       {
         'williamboman/mason-lspconfig.nvim',
+        dependencies =
+        {
+          -- Additional lua configuration, makes nvim stuff amazing!
+          -- needs to be loaded before lspconfig
+          'folke/neodev.nvim',
+          config = function()
+            require("neodev").setup({
+              override = function(root_dir, library)
+                library.enabled = true
+                library.plugins = true
+              end,
+            })
+          end
+        },
+
+
         config = function()
           local mason_lspconfig = require 'mason-lspconfig'
           local servers = {
@@ -220,8 +236,6 @@ hi link agitDiffRemove diffRemoved
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
 
-      -- Additional lua configuration, makes nvim stuff amazing!
-      'folke/neodev.nvim',
     },
   },
 
