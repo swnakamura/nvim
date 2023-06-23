@@ -746,8 +746,18 @@ ${0:Hello, world!}
           vim.schedule(function() gs.next_hunk({ preview = true }) end)
           return '<Ignore>'
         end, { expr = true })
+        map('n', ']h', function()
+          if vim.wo.diff then return ']c' end
+          vim.schedule(function() gs.next_hunk({ preview = true }) end)
+          return '<Ignore>'
+        end, { expr = true })
 
         map('n', '<PageUp>', function()
+          if vim.wo.diff then return '[c' end
+          vim.schedule(function() gs.prev_hunk({ preview = true }) end)
+          return '<Ignore>'
+        end, { expr = true })
+        map('n', '[h', function()
           if vim.wo.diff then return '[c' end
           vim.schedule(function() gs.prev_hunk({ preview = true }) end)
           return '<Ignore>'
