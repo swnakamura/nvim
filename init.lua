@@ -25,35 +25,6 @@ local lsp_ft = { 'c', 'python', 'rust', 'lua' }
 
 -- [[ Plugin settings ]]
 
--- Lazy loader
-local lazy_load = function(plugin)
-  vim.api.nvim_create_autocmd({ "BufRead", "BufWinEnter", "BufNewFile" }, {
-    group = vim.api.nvim_create_augroup("BeLazyOnFileOpen" .. plugin, {}),
-    callback = function()
-      local file = vim.fn.expand "%"
-      local condition = file ~= "NvimTree_1" and file ~= "[lazy]" and file ~= ""
-
-      if condition then
-        vim.api.nvim_del_augroup_by_name("BeLazyOnFileOpen" .. plugin)
-
-        -- dont defer for treesitter as it will show slow highlighting
-        -- This deferring only happens only when we do "nvim filename"
-        if condition then
-          vim.schedule(function()
-            require("lazy").load { plugins = plugin }
-
-            if plugin == "nvim-lspconfig" then
-              vim.cmd "silent! do FileType"
-            end
-          end, 10000)
-        else
-          require("lazy").load { plugins = plugin }
-        end
-      end
-    end,
-  })
-end
-
 -- NOTE: Here is where you install your plugins.
 --  You can configure plugins using the `config` key.
 --
@@ -132,9 +103,6 @@ hi link agitDiffRemove diffRemoved
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
-    init = function()
-      lazy_load "nvim-lspconfig"
-    end,
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
       { 'williamboman/mason.nvim', config = true },
@@ -890,9 +858,6 @@ ${0:Hello, world!}
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
     build = ':TSUpdate',
-    init = function()
-      lazy_load "nvim-treesitter"
-    end,
     config = function()
       require('nvim-treesitter.configs').setup {
         -- Add languages to be installed here that you want installed for treesitter
@@ -961,9 +926,6 @@ ${0:Hello, world!}
   },
   {
     'nvim-treesitter/nvim-treesitter-context',
-    init = function()
-      lazy_load "nvim-treesitter-context"
-    end,
     dependencies = 'nvim-treesitter/nvim-treesitter',
     config = function()
       require "treesitter-context".setup()
