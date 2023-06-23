@@ -576,8 +576,8 @@ ${0:Hello, world!}
     end,
     config = function()
       local init_fern = function()
-        vim.keymap.del('n', 's', { buffer = true })
-        vim.keymap.del('n', 'N', { buffer = true })
+        vim.cmd('silent! nunmap <buffer> s')
+        vim.cmd('silent! nunmap <buffer> N')
         vim.keymap.set('n', 'o', '<Plug>(fern-action-open-or-expand)', { buffer = true })
         vim.keymap.set('n', 'l', '<Plug>(fern-action-open-or-expand)', { buffer = true })
         vim.keymap.set('n', 'p', '<Plug>(fern-action-open-or-expand)<C-w><C-w>', { buffer = true })
