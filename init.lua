@@ -1275,30 +1275,28 @@ vim.keymap.set('n', 'gsc', '<Cmd>CleanUpSession<CR>')
 vim.keymap.set({ 'i', 'c' }, '<C-A>', '<Home>')
 vim.keymap.set({ 'i', 'c' }, '<C-E>', '<End>')
 
+-- Open quickfix window
+-- nnoremap Q <Cmd>copen<CR>
+-- autocmd for quickfix window
+vim.api.nvim_create_augroup('quick-fix-window', {})
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'qf',
+  callback = function()
+    vim.keymap.set('n', 'p', '<CR>zz<C-w>p', { buffer = true })
+    vim.keymap.set('n', 'j', 'j', { buffer = true })
+    vim.keymap.set('n', 'k', 'k', { buffer = true })
+    vim.keymap.set('n', 'J', 'jp', { buffer = true, remap = true })
+    vim.keymap.set('n', 'K', 'kp', { buffer = true, remap = true })
+    vim.opt_local.wrap = false
+  end,
+  group = 'quick-fix-window'
+})
+
 vim.cmd([[
 
 " vimgrep
 nnoremap <leader>vv :<C-u>vimgrep // %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
-
-" Open quickfix window
-" nnoremap Q <Cmd>copen<CR>
-
-" In quickfix window
-augroup QuickfixWindow
-  autocmd!
-  " `p` to preview
-  autocmd FileType qf nnoremap <buffer> p <CR>zz<C-w>p
-  " always move linewise
-  autocmd filetype qf nnoremap <buffer> j j
-  autocmd filetype qf nnoremap <buffer> k k
-  " capital J/K to move+preview
-  autocmd FileType qf nmap <buffer> J jp
-  autocmd FileType qf nmap <buffer> K kp
-  " Press Q again to close quickfix window
-  autocmd FileType qf nnoremap <buffer> Q <Cmd>q<CR>
-  autocmd FileType qf setlocal nowrap
-augroup END
 
 " visual modeで複数行を選択して'/'を押すと，その範囲内での検索を行う
 xnoremap <expr> / (line('.') == line('v')) ?
