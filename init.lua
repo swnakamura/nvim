@@ -642,14 +642,14 @@ ${0:Hello, world!}
     build = function() vim.fn["mkdp#util#install"]() end,
     config = function()
       vim.api.nvim_create_augroup('markdown_bufpreview', {})
-      vim.api.nvim_create_autocmd()
-      vim.cmd([[
-    augroup markdown_bufpreview
-    autocmd!
-    autocmd FileType markdown nnoremap <buffer> <F5> <Cmd>MarkdownPreview<CR>
-    autocmd FileType markdown inoremap <buffer> <F5> <Cmd>MarkdownPreview<CR>
-    augroup END
-    ]])
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'markdown',
+        callback = function()
+          vim.keymap.set({ 'n', 'i' }, '<F5>', '<Cmd>MarkdownPreview<CR>')
+        end,
+        group = 'markdown_bufpreview',
+        buffer = true
+      })
     end
     ,
     ft = 'markdown'
