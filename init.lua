@@ -426,9 +426,14 @@ hi link agitDiffRemove diffRemoved
   {
     'L3MON4D3/LuaSnip',
     config = function()
-      vim.cmd([[
-imap <silent><expr> <Tab> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>'
-]])
+      vim.keymap.set("i", "<C-k>", function()
+        if require('luasnip').expand_or_jumpable() then
+          return '<Plug>luasnip-expand-or-jump<CR>'
+        else
+          return '<C-k>'
+        end
+      end, { silent = true, expr = true })
+
       local ls = require("luasnip")
 
       ls.add_snippets("python", {
