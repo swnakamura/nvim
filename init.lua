@@ -645,10 +645,9 @@ ${0:Hello, world!}
       vim.api.nvim_create_autocmd('FileType', {
         pattern = 'markdown',
         callback = function()
-          vim.keymap.set({ 'n', 'i' }, '<F5>', '<Cmd>MarkdownPreview<CR>')
+          vim.keymap.set({ 'n', 'i' }, '<F5>', '<Cmd>MarkdownPreview<CR>', {buffer=true})
         end,
         group = 'markdown_bufpreview',
-        buffer = true
       })
     end
     ,
