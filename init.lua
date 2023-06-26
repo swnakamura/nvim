@@ -416,7 +416,7 @@ hi link agitDiffRemove diffRemoved
   {
     'woodyZootopia/luasnip-latex-snippets.nvim',
     dependencies = { 'L3MON4D3/LuaSnip' },
-    ft = { 'markdown', 'tex' },
+    ft = { 'markdown', 'tex', 'text' },
     event = 'InsertEnter',
     config = function()
       require 'luasnip-latex-snippets'.setup({ use_treesitter = true })
