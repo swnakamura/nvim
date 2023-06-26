@@ -103,6 +103,7 @@ hi link agitDiffRemove diffRemoved
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
+    event = { 'BufRead', 'BufNewFile' },
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
       { 'williamboman/mason.nvim', config = true },
@@ -639,6 +640,7 @@ ${0:Hello, world!}
   -- buffer preview for markdown
   {
     'iamcco/markdown-preview.nvim',
+    event = { 'BufRead', 'BufNewFile' },
     build = function() vim.fn["mkdp#util#install"]() end,
     config = function()
       vim.api.nvim_create_augroup('markdown_bufpreview', {})
@@ -650,8 +652,6 @@ ${0:Hello, world!}
         group = 'markdown_bufpreview',
       })
     end
-    ,
-    ft = 'markdown'
   },
 
   {
