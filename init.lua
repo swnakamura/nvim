@@ -428,7 +428,7 @@ hi link agitDiffRemove diffRemoved
     config = function()
       vim.keymap.set("i", "<C-k>", function()
         if require('luasnip').expand_or_jumpable() then
-          return '<Plug>luasnip-expand-or-jump<CR>'
+          return '<Plug>luasnip-expand-or-jump'
         else
           return '<C-k>'
         end
