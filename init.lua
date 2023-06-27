@@ -803,12 +803,11 @@ ${0:Hello, world!}
   'https://github.com/tyru/capture.vim',
 
   {
-    -- Set lightline as statusline
-    'itchyny/lightline.vim',
-    -- See `:help lualine.txt`
-    config = function()
-      vim.g.lightline = { colorscheme = 'iceberg' }
-    end,
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function ()
+      require('lualine').setup({})
+    end
   },
 
   {
