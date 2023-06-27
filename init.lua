@@ -21,8 +21,6 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local lsp_ft = { 'c', 'python', 'rust', 'lua' }
-
 -- [[ Plugin settings ]]
 
 -- NOTE: Here is where you install your plugins.
@@ -139,28 +137,6 @@ hi link agitDiffRemove diffRemoved
                 completion = {
                   callSnippet = "Replace"
                 }
-
-                -- runtime = {
-                --   -- Tell the language server which version of Lua you're using
-                --   -- (most likely LuaJIT in the case of Neovim)
-                --   version = 'LuaJIT',
-                -- },
-                -- diagnostics = {
-                --   -- Get the language server to recognize the `vim` global
-                --   globals = {
-                --     'vim',
-                --     'require'
-                --   },
-                -- },
-                -- workspace = {
-                --   -- Make the server aware of Neovim runtime files
-                --   library = vim.api.nvim_get_runtime_file("", true),
-                --   checkThirdParty = false
-                -- },
-                -- -- Do not send telemetry data containing a randomized but unique identifier
-                -- telemetry = {
-                --   enable = false,
-                -- },
               },
             },
           }
@@ -1227,8 +1203,7 @@ vim.keymap.set('n', 'gp', '`[v`]')
 vim.keymap.set('n', 'gP', '`[V`]')
 
 -- reload init.vim
-vim.keymap.set('n', '<leader>rr', '<Cmd>so,$MYVIMRC<CR>')
-vim.keymap.set('n', '<leader>re', '<Cmd>e,$MYVIMRC<CR>')
+vim.keymap.set('n', '<leader>re', '<Cmd>e $MYVIMRC<CR>')
 
 -- quickfix jump
 vim.keymap.set('n', '[q', '<Cmd>cprevious<CR>')
