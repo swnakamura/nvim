@@ -612,7 +612,7 @@ ${0:Hello, world!}
     dependencies = { {
       'lambdalisue/fern-renderer-nerdfont.vim',
       dependencies = { 'lambdalisue/nerdfont.vim',
-        'kyazdani42/nvim-web-devicons' }
+        'nvim-tree/nvim-web-devicons' }
     },
       'lambdalisue/glyph-palette.vim',
       'lambdalisue/fern-git-status.vim',
