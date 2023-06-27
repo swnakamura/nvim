@@ -996,6 +996,29 @@ ${0:Hello, world!}
     end
   },
 
+  -- ghosttext
+  {
+    'https://github.com/subnut/nvim-ghost.nvim',
+    init = function()
+      vim.api.nvim_create_augroup('nvim-ghost-user-autocmd', {})
+      vim.api.nvim_create_autocmd('User', {
+        pattern = {'www.reddit.com','www.stackoverflow.com','github.com'},
+        command = 'set filetype=markdown',
+        group='nvim-ghost-user-autocmd'
+      })
+      vim.api.nvim_create_autocmd('User', {
+        pattern = {'www.overleaf.com'},
+        command = 'set filetype=tex',
+        group='nvim-ghost-user-autocmd'
+      })
+      if vim.g.is_macos then
+        vim.g.nvim_ghost_use_script = 1
+        vim.g.nvim_ghost_python_executable = '/usr/bin/python3'
+      end
+    end,
+    build = function() vim.fn['nvim_ghost#installer#install']() end
+  },
+
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
