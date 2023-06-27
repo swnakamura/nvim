@@ -21,6 +21,8 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+vim.g.is_macos = vim.fn.has('mac')
+
 -- [[ Plugin settings ]]
 
 -- NOTE: Here is where you install your plugins.
@@ -1503,11 +1505,19 @@ function! Fcitx_toggle() abort
 endfunction
 
 function! Enable() abort
-  call system('/Users/snakamura/im-select com.justsystems.inputmethod.atok32.Japanese')
+  if g:is_macos
+    call system('/Users/snakamura/im-select com.justsystems.inputmethod.atok32.Japanese')
+  else
+    call system('fcitx5-remote -o')
+  endif
 endfunction
 
 function! Disable() abort
-  call system('/Users/snakamura/im-select com.apple.keylayout.ABC')
+  if g:is_macos
+    call system('/Users/snakamura/im-select com.apple.keylayout.ABC')
+  else
+    call system('fcitx5-remote -c')
+  endif
 endfunction
 ]])
 
