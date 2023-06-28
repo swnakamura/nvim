@@ -706,7 +706,7 @@ ${0:Hello, world!}
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',                                opts = {}, event = 'BufEnter' },
+  -- { 'folke/which-key.nvim',                                opts = {}, event = 'BufEnter' },
   {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
