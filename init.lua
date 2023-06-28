@@ -982,14 +982,20 @@ ${0:Hello, world!}
     end
   },
 
-  { dir = '~/ghq/github.com/woodyZootopia/novel_formatter' },
+  {
+    cond = vim.g.is_macos,
+    dir = '~/ghq/github.com/woodyZootopia/novel_formatter'
+  },
 
   {
+    cond = vim.g.is_macos,
     dir = '~/ghq/github.com/woodyZootopia/novel-preview.vim',
     ft = 'text',
     dependencies = 'vim-denops/denops.vim',
     init = function()
-      vim.g['denops#deno'] = '/Users/snakamura/.deno/bin/deno'
+      if vim.g.is_macos then
+        vim.g['denops#deno'] = '/Users/snakamura/.deno/bin/deno'
+      end
     end,
     config = function()
       vim.keymap.set('n', '<F5>', '<Cmd>NovelPreviewStartServer<CR><Cmd>NovelPreviewAutoSend<CR>')
