@@ -233,7 +233,7 @@ hi link agitDiffRemove diffRemoved
         vim.keymap.set('v', 'ib', '<Plug>(textobj-multiblock-i)', { remap = true })
       end,
     },
-    keys = { { 'sa', mode = '' }, { 'sd', mode = '' }, { 'sr', mode = '' } }
+    -- keys = { { 'sa', mode = '' }, { 'sd', mode = '' }, { 'sr', mode = '' } }
   },
   {
     'kana/vim-textobj-entire',
@@ -247,7 +247,7 @@ hi link agitDiffRemove diffRemoved
       vim.keymap.set('x', 'av', '<Plug>(textobj-entire-a)', { remap = true })
       vim.keymap.set('x', 'iv', '<Plug>(textobj-entire-i)', { remap = true })
     end,
-    keys = { { 'av', mode = { 'o', 'x' } }, { 'iv', mode = { 'o', 'x' } } }
+    -- keys = { { 'av', mode = { 'o', 'x' } }, { 'iv', mode = { 'o', 'x' } } }
   },
   {
     'kana/vim-textobj-syntax',
@@ -263,7 +263,7 @@ hi link agitDiffRemove diffRemoved
         { remap = true, silent = true })
     end,
     dependencies = { 'kana/vim-textobj-user' },
-    keys = { 'srb', 'sdb' }
+    -- keys = { 'srb', 'sdb' }
   },
   {
     'osyo-manga/vim-textobj-multiblock',
@@ -274,7 +274,7 @@ hi link agitDiffRemove diffRemoved
         { remap = true, silent = true })
     end,
     dependencies = { 'kana/vim-textobj-user' },
-    keys = { 'sdd', 'srr' }
+    -- keys = { 'sdd', 'srr' }
   },
 
   {
