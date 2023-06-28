@@ -783,7 +783,7 @@ ${0:Hello, world!}
   {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function ()
+    config = function()
       require('lualine').setup({})
     end
   },
@@ -1008,14 +1008,14 @@ ${0:Hello, world!}
     init = function()
       vim.api.nvim_create_augroup('nvim-ghost-user-autocmd', {})
       vim.api.nvim_create_autocmd('User', {
-        pattern = {'www.reddit.com','www.stackoverflow.com','github.com'},
+        pattern = { 'www.reddit.com', 'www.stackoverflow.com', 'github.com' },
         command = 'set filetype=markdown',
-        group='nvim-ghost-user-autocmd'
+        group = 'nvim-ghost-user-autocmd'
       })
       vim.api.nvim_create_autocmd('User', {
-        pattern = {'www.overleaf.com'},
+        pattern = { 'www.overleaf.com' },
         command = 'set filetype=tex',
-        group='nvim-ghost-user-autocmd'
+        group = 'nvim-ghost-user-autocmd'
       })
       if vim.g.is_macos then
         vim.g.nvim_ghost_use_script = 1
