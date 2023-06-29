@@ -809,7 +809,7 @@ ${0:Hello, world!}
       vim.g.NERDDefaultAlign = 'left'
       vim.g.NERDCustomDelimiters = { vim = { left = '"', right = '' } }
       vim.keymap.set("n", "<C-_>", "<Plug>NERDCommenterToggle")
-      vim.keymap.set("n", "<C-/>", "<Plug>NERDCommenterToggle")
+      vim.keymap.set({ "n", "x" }, "<C-/>", "<Plug>NERDCommenterToggle")
     end
   },
 
