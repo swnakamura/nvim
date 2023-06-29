@@ -768,8 +768,8 @@ ${0:Hello, world!}
     event = { 'BufRead', 'BufNewFile' }
   },
 
+  -- colorscheme
   {
-    -- colorscheme
     'woodyZootopia/iceberg.vim',
     priority = 1000,
     config = function()
