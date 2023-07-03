@@ -1002,6 +1002,20 @@ ${0:Hello, world!}
     end
   },
 
+  -- Zen mode
+  {
+    "folke/zen-mode.nvim",
+    config = function()
+      vim.keymap.set('n', 'Z', function()
+        require("zen-mode").toggle({
+          window = {
+            width = .65
+          }
+        })
+      end)
+    end,
+  },
+
   -- ghosttext
   {
     'https://github.com/subnut/nvim-ghost.nvim',
