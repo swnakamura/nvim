@@ -801,15 +801,14 @@ ${0:Hello, world!}
     event = { 'BufRead', 'BufNewFile' }
   },
 
-  -- "gc" to comment visual regions/lines
   {
     'preservim/nerdcommenter',
-    event = 'VimEnter',
+    event = { 'BufRead', 'BufNewFile' },
     init = function()
       vim.g.NERDSpaceDelims = 1
       vim.g.NERDDefaultAlign = 'left'
       vim.g.NERDCustomDelimiters = { vim = { left = '"', right = '' } }
-      vim.keymap.set("n", "<C-_>", "<Plug>NERDCommenterToggle")
+      vim.keymap.set({ "n", "x" }, "<C-_>", "<Plug>NERDCommenterToggle")
       vim.keymap.set({ "n", "x" }, "<C-/>", "<Plug>NERDCommenterToggle")
     end
   },
