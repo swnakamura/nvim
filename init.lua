@@ -128,10 +128,10 @@ hi link agitDiffRemove diffRemoved
         config = function()
           local mason_lspconfig = require 'mason-lspconfig'
           local servers = {
-            -- clangd = {},
+            clangd = {},
             -- gopls = {},
-            -- pyright = {},
-            -- rust_analyzer = {},
+            pyright = {},
+            rust_analyzer = {},
             -- tsserver = {},
 
             lua_ls = {
