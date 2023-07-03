@@ -671,7 +671,7 @@ ${0:Hello, world!}
   },
 
   -- rust
-  { 'rust-lang/rust.vim', ft = 'rust' },
+  { 'rust-lang/rust.vim',     ft = 'rust' },
 
   -- tagbar
   {
