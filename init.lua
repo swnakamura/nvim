@@ -1304,9 +1304,9 @@ vim.api.nvim_create_autocmd('FileType', {
   group = 'quick-fix-window'
 })
 
-vim.cmd([[
 
-" vimgrep
+-- [[vimgrep]]
+vim.cmd([[
 nnoremap <leader>vv :<C-u>vimgrep // %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
 
@@ -1334,7 +1334,7 @@ augroup file-type
   "  長い行がありそうな拡張子なら構文解析を途中でやめる
   au FileType csv,tsv,json                          setlocal synmaxcol=256
 
-  "  プログラムっぽいファイルならbreakindent
+  "  インデントの有りそうなファイルならbreakindent
   au FileType c,cpp,rust,go,python,lua,bash,vim,tex,markdown setlocal breakindent
 augroup END
 
@@ -1357,13 +1357,11 @@ augroup vimrc-incsearch-highlight
 augroup END
 
 " 選択した領域を自動でハイライトする
-if !exists("g:vscode")
-  augroup instant-visual-highlight
-    au!
-    autocmd ColorScheme * hi SearchWordMatch gui=reverse
-    autocmd CursorMoved,CursorHold * call Visualmatch()
-  augroup END
-endif
+augroup instant-visual-highlight
+  au!
+  autocmd ColorScheme * hi SearchWordMatch gui=reverse
+  autocmd CursorMoved,CursorHold * call Visualmatch()
+augroup END
 
 function! Visualmatch()
   if exists("w:visual_match_id")
