@@ -769,6 +769,27 @@ ${0:Hello, world!}
     priority = 1000,
     config = function()
       vim.cmd.colorscheme 'iceberg'
+      vim.cmd([[
+" Less bright search color
+hi clear Search
+hi Search                gui=bold,underline guisp=#e27878
+" Statusline color
+hi StatusLine            gui=NONE guibg=#0f1117 guifg=#9a9ca5
+hi StatusLineNC          gui=NONE guibg=#0f1117 guifg=#9a9ca5
+hi User1                 gui=NONE guibg=#0f1117 guifg=#9a9ca5
+" Do not show unnecessary separation colors
+hi LineNr                guibg=#161821
+hi CursorLineNr          guibg=#161821
+hi SignColumn            guibg=#161821
+hi GitGutterAdd          guibg=#161821
+hi GitGutterChange       guibg=#161821
+hi GitGutterChangeDelete guibg=#161821
+hi GitGutterDelete       guibg=#161821
+hi IndentBlanklineIndent guifg=#3c3c43 gui=nocombine
+" Visual mode match and Cursor word match
+hi link VisualMatch Search
+hi CursorWord guibg=#282d44
+  ]])
     end,
   },
 
@@ -1359,7 +1380,6 @@ augroup END
 " 選択した領域を自動でハイライトする
 augroup instant-visual-highlight
   au!
-  autocmd ColorScheme * hi SearchWordMatch gui=reverse
   autocmd CursorMoved,CursorHold * call Visualmatch()
 augroup END
 
@@ -1397,16 +1417,15 @@ function! Visualmatch()
   endif
 
   if mode() == 'v'
-    let w:visual_match_id = matchadd('SearchWordMatch', '\V' .. text)
+    let w:visual_match_id = matchadd('VisualMatch', '\V' .. text)
   else
-    let w:visual_match_id = matchadd('SearchWordMatch', '\V\<' .. text .. '\>')
+    let w:visual_match_id = matchadd('VisualMatch', '\V\<' .. text .. '\>')
   endif
 endfunction
 
 " 単語を自動でハイライトする
 augroup cursor-word-highlight
   au!
-  autocmd ColorScheme * hi CursorWord guibg=#282d44
   autocmd CursorHold * call Wordmatch()
   autocmd InsertEnter * call DelWordmatch()
 augroup END
