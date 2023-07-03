@@ -187,11 +187,11 @@ hi link agitDiffRemove diffRemoved
             vim.keymap.set('n', 'gF', vim.lsp.buf.format)
 
             nmap('<leader>i', function(_)
-              vim.lsp.buf.inlay_hint(0, true)
+              vim.lsp.inlay_hint(0, true)
               vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "InsertEnter" }, {
                 once = true,
                 callback = function()
-                  vim.lsp.buf.inlay_hint(0, false)
+                  vim.lsp.inlay_hint(0, false)
                 end
               })
             end, 'Toggle inlay hint')
