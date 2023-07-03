@@ -29,13 +29,8 @@ vim.g.is_macos = vim.fn.has('mac')
 
 -- [[ Plugin settings ]]
 
--- NOTE: Here is where you install your plugins.
---  You can configure plugins using the `config` key.
---
---  You can also configure plugins after the setup call,
---    as they will be available in your neovim runtime.
 require('lazy').setup({
-  -- NOTE: First, some plugins that don't require any configuration
+
 
   -- Git related plugins
   {
@@ -99,24 +94,15 @@ hi link agitDiffRemove diffRemoved
     end
   },
 
-  -- Detect tabstop and shiftwidth automatically
-  -- { 'tpope/vim-sleuth',  event = { 'BufRead', 'BufNewFile' } },
-
-  -- NOTE: This is where your plugins related to LSP can be installed.
-  --  The configuration is done below. Search for lspconfig to find it below.
   {
-    -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     event = { 'BufRead', 'BufNewFile' },
     dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
       { 'williamboman/mason.nvim', config = true },
       {
         'williamboman/mason-lspconfig.nvim',
         dependencies =
         {
-          -- Additional lua configuration, makes nvim stuff amazing!
-          -- needs to be loaded before lspconfig
           'folke/neodev.nvim',
           config = function()
             require("neodev").setup({
@@ -133,10 +119,8 @@ hi link agitDiffRemove diffRemoved
           local mason_lspconfig = require 'mason-lspconfig'
           local servers = {
             clangd = {},
-            -- gopls = {},
             pyright = {},
             rust_analyzer = {},
-            -- tsserver = {},
 
             lua_ls = {
               Lua = {
@@ -216,8 +200,6 @@ hi link agitDiffRemove diffRemoved
         end
       },
 
-      -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
 
     },
@@ -807,8 +789,6 @@ hi CursorWord guibg=#282d44
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
-    -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help indent_blankline.txt`
     opts = {
       char = '┊',
       show_trailing_blankline_indent = false,
@@ -1054,23 +1034,10 @@ hi CursorWord guibg=#282d44
     build = function() vim.fn['nvim_ghost#installer#install']() end
   },
 
-  -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
-  --       These are some example plugins that I've included in the kickstart repository.
-  --       Uncomment any of the lines below to enable them.
-  -- require 'kickstart.plugins.autoformat',
-  -- require 'kickstart.plugins.debug',
-
-  -- NOTE: The import below automatically adds your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
-  --    up-to-date with whatever is in the kickstart repo.
-  --
-  --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   { import = 'custom.plugins' },
 }, {})
 
 -- [[ Setting options ]]
--- See `:help vim.o`
--- NOTE: You can change these options as you wish!
 
 -- Set highlight on search
 vim.o.hlsearch = false
