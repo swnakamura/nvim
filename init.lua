@@ -180,6 +180,7 @@ hi link agitDiffRemove diffRemoved
             vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
               vim.lsp.buf.format()
             end, { desc = 'Format current buffer with LSP' })
+            vim.keymap.set('n', 'gF', vim.lsp.buf.format)
 
             nmap('<leader>i', function(_)
               vim.lsp.buf.inlay_hint(0, true)
