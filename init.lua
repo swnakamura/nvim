@@ -1333,7 +1333,9 @@ function! Preserve(command)
 endfunction
 augroup formatter
   autocmd!
-  " autocmd BufWritePre *.py call Preserve(':silent %!black -q - --target-version py310 2>/dev/null')
+  autocmd BufWritePre *.py if executable('black')
+  autocmd BufWritePre *.py   Preserve(':silent %!black -q - --target-version py310 2>/dev/null')
+  autocmd BufWritePre *.py endif
 augroup END
 
 " 検索中の領域をハイライトする
