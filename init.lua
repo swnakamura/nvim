@@ -944,7 +944,7 @@ ${0:Hello, world!}
     'woodyZootopia/gitsession.vim',
     init = function()
       vim.g.gitsession_autosave = 1
-      vim.g.gitsession_tmp_dir = vim.fn.stdpath('config') .. '/tmp/gitsession'
+      vim.g.gitsession_tmp_dir = vim.fn.stdpath('data') .. '/gitsession'
     end
   },
 
