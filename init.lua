@@ -1,3 +1,7 @@
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 vim.loader.enable()
 
 -- Do not load some of the default plugins
@@ -550,53 +554,43 @@ ${0:Hello, world!}
     end
   },
 
-  -- Fern (filer)
+  -- Neotree (filer)
   {
-    'lambdalisue/fern.vim',
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v2.x",
+    cmd = 'Neotree',
     init = function()
-      vim.g['fern#renderer'] = "nerdfont"
-      vim.keymap.set('n', "<leader>d", '<Cmd>Fern %:h<CR>')
-      vim.keymap.set('n', "<leader>n", '<Cmd>Fern . -reveal=% -drawer<CR>')
-      vim.keymap.set('n', "st", ':<C-u>tab sp<CR><Cmd>Fern %:h<CR>')
+      vim.g.neo_tree_remove_legacy_commands = 1
+
+      vim.keymap.set('n', "<leader>d", '<Cmd>Neotree<CR>')
+      vim.keymap.set('n', "<leader>n", '<Cmd>Neotree<CR>')
     end,
-    config = function()
-      local init_fern = function()
-        vim.cmd('silent! nunmap <buffer> s')
-        vim.cmd('silent! nunmap <buffer> N')
-        vim.keymap.set('n', 'o', '<Plug>(fern-action-open-or-expand)', { buffer = true })
-        vim.keymap.set('n', 'l', '<Plug>(fern-action-open-or-expand)', { buffer = true })
-        vim.keymap.set('n', 'p', '<Plug>(fern-action-open-or-expand)<C-w><C-w>', { buffer = true })
-        vim.keymap.set('n', '<', '<Plug>(fern-action-open:vsplit)', { buffer = true })
-        vim.keymap.set('n', '<', '<Plug>(fern-action-open:split)', { buffer = true })
-        vim.keymap.set('n', '<', '<Plug>(fern-action-open:tabedit)', { buffer = true })
-        vim.keymap.set('n', 'h', '<Plug>(fern-action-collapse)', { buffer = true })
-        vim.keymap.set('n', '<', '<Plug>(fern-action-tcd)<Plug>(fern-action-open-or-enter)', { buffer = true })
-        vim.keymap.set('n', '-', '<Plug>(fern-action-leave)<Plug>(fern-wait)<Plug>(fern-action-tcd:root)',
-          { buffer = true })
-        vim.keymap.set('n', 'L', '<Plug>(fern-action-new-file)', { buffer = true })
-        vim.keymap.set('n', 'd', '<Plug>(fern-action-trash)<CR>', { buffer = true })
-        vim.keymap.set('n', 'D', '<Plug>(fern-action-trash=)y<CR>', { buffer = true })
-        vim.keymap.set('n', '~', '<Cmd>Fern ~<CR>', { buffer = true })
-      end
-      vim.api.nvim_create_augroup('fern-custom', {})
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = 'fern',
-        callback = function()
-          init_fern()
-          vim.fn['glyph_palette#apply']()
-        end,
-        group = 'fern-custom'
-      })
-    end,
-    dependencies = { {
-      'lambdalisue/fern-renderer-nerdfont.vim',
-      dependencies = { 'lambdalisue/nerdfont.vim',
-        'nvim-tree/nvim-web-devicons' }
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
     },
-      'lambdalisue/glyph-palette.vim',
-      'lambdalisue/fern-git-status.vim',
-      'lambdalisue/fern-hijack.vim' },
-    cmd = 'Fern'
+    config = function()
+      require("neo-tree").setup({
+        filesystem = {
+          window = {
+            mappings = {
+              ["o"] = "open",
+              ["x"] = "system_open",
+            },
+          },
+          commands = {
+            system_open = function(state)
+              local node = state.tree:get_node()
+              local path = node:get_id()
+              -- macOs: open file in default application in the background.
+              -- Probably you need to adapt the Linux recipe for manage path with spaces. I don't have a mac to try.
+              vim.api.nvim_command("silent !open -g " .. path)
+            end,
+          },
+        },
+      })
+    end
   },
 
   -- mini.nvim for indentscope
