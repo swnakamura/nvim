@@ -36,40 +36,40 @@ require('lazy').setup({
   {
     'tpope/vim-fugitive',
     init = function()
-      vim.keymap.set("n", "<leader>gs", ":Git <CR><C-w>T")
-      vim.keymap.set("n", "<leader>ga", ":Gwrite<CR>")
-      vim.keymap.set("n", "<leader>gc", ":Git commit -v<CR>")
-      vim.keymap.set("n", "<leader>gb", ":Git blame<CR>")
-      vim.keymap.set("n", "<leader>gh", ":tab sp<CR>:0Gclog<CR>")
-      vim.keymap.set("n", "<leader>gp", "<Cmd>Dispatch! git push<CR>")
-      vim.keymap.set("n", "<leader>gf", "<Cmd>Dispatch! git fetch<CR>")
-      vim.keymap.set("n", "<leader>gd", ":vert :Gdiffsplit<CR>")
-      vim.keymap.set("n", "<leader>gr", ":Git rebase -i<CR>")
+      vim.keymap.set("n", "<leader>gs", ":Git <CR><C-w>T", { silent = true })
+      vim.keymap.set("n", "<leader>ga", ":Gwrite<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>gc", ":Git commit -v<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>gb", ":Git blame<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>gh", ":tab sp<CR>:0Gclog<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>gp", "<Cmd>Dispatch! git push<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>gf", "<Cmd>Dispatch! git fetch<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>gd", ":vert :Gdiffsplit<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>gr", ":Git rebase -i<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gg", ":Glgrep \"\"<Left>")
       vim.keymap.set("n", "<leader>gm", ":Git merge ")
 
-      vim.keymap.set("n", "<S-Up>", ":Gwrite<CR>")
-      vim.keymap.set("n", "<C-Up>", ":Git commit -v<CR>")
+      vim.keymap.set("n", "<S-Up>", ":Gwrite<CR>", { silent = true })
+      vim.keymap.set("n", "<C-Up>", ":Git commit -v<CR>", { silent = true })
       vim.keymap.set("n", "<Right>",
         function() return '<Cmd>' .. (vim.o.diff and 'only' or 'vert Gdiffsplit!') .. '<CR>' end,
-        { expr = true }
+        { expr = true, silent = true }
       )
       vim.keymap.set("n", "<Left>",
         function() return '<Cmd>' .. (vim.o.ft == 'fugitiveblame' and 'quit' or 'Git blame') .. '<CR>' end,
-        { expr = true }
+        { expr = true, silent = true }
       )
-      vim.keymap.set("n", "<Down>", "<Cmd>Dispatch! git fetch<CR>")
-      vim.keymap.set("n", "<C-Down>", "<Cmd>Dispatch! git pull<CR>")
+      vim.keymap.set("n", "<Down>", "<Cmd>Dispatch! git fetch<CR>", { silent = true })
+      vim.keymap.set("n", "<C-Down>", "<Cmd>Dispatch! git pull<CR>", { silent = true })
     end,
     cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep' },
     dependencies = { 'tpope/vim-dispatch', cmd = 'Dispatch' }
   },
-  { 'tpope/vim-rhubarb',  cmd = 'GBrowse' },
+  { 'tpope/vim-rhubarb',        cmd = 'GBrowse' },
   {
     'cohama/agit.vim',
     cmd = 'Agit',
     init = function()
-      vim.keymap.set('n', '<leader>gl', '<Cmd>Agit<CR>')
+      vim.keymap.set('n', '<leader>gl', '<Cmd>Agit<CR>', { silent = true })
     end,
     config = function()
       vim.cmd([[
@@ -88,9 +88,9 @@ hi link agitDiffRemove diffRemoved
     init = function()
       vim.g.floaterm_width = 0.9
       vim.g.floaterm_height = 0.9
-      vim.keymap.set('n', '<Plug>(my-win)z', '<Cmd>FloatermToggle<CR>')
-      vim.keymap.set('t', '<C-[>', '<C-\\><C-n>:FloatermHide<CR>')
-      vim.keymap.set('t', '<C-l>', '<C-\\><C-n>')
+      vim.keymap.set('n', '<Plug>(my-win)z', '<Cmd>FloatermToggle<CR>', { silent = true })
+      vim.keymap.set('t', '<C-[>', '<C-\\><C-n>:FloatermHide<CR>', { silent = true })
+      vim.keymap.set('t', '<C-l>', '<C-\\><C-n>', { silent = true })
     end
   },
 
