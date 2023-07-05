@@ -127,6 +127,17 @@ hi link agitDiffRemove diffRemoved
     end
   },
 
+  -- register preview
+  {
+    'tversteeg/registers.nvim',
+    config = true,
+    keys = {
+      { "\"",    mode = { "n", "v" } },
+      { "<C-R>", mode = "i" }
+    },
+    cmd = "Registers",
+  },
+
   {
     'neovim/nvim-lspconfig',
     event = { 'BufRead', 'BufNewFile' },
