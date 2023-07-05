@@ -66,7 +66,7 @@ require('lazy').setup({
     cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep' },
     dependencies = { 'tpope/vim-dispatch', cmd = 'Dispatch' }
   },
-  { 'tpope/vim-rhubarb',        cmd = 'GBrowse' },
+  { 'tpope/vim-rhubarb',  cmd = 'GBrowse' },
   {
     'cohama/agit.vim',
     cmd = 'Agit',
@@ -673,7 +673,7 @@ ${0:Hello, world!}
   },
 
   -- rust
-  { 'rust-lang/rust.vim',     ft = 'rust' },
+  { 'rust-lang/rust.vim', ft = 'rust' },
 
   -- tagbar
   {
@@ -863,7 +863,8 @@ hi CursorWord guibg=#282d44
     config = function()
       require('nvim-treesitter.configs').setup {
         -- Add languages to be installed here that you want installed for treesitter
-        ensure_installed = { 'c', 'cpp', 'go', 'lua', 'markdown', 'python', 'rust', 'tex', 'tsx', 'typescript', 'vimdoc', 'vim' },
+        ensure_installed = { 'bibtex', 'c', 'cpp', 'go', 'lua', 'markdown', 'python', 'rust', 'latex', 'tsx',
+          'typescript', 'vimdoc', 'vim' },
 
         -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
         auto_install = false,
