@@ -139,6 +139,14 @@ hi link agitDiffRemove diffRemoved
   },
 
   {
+    'mbbill/undotree',
+    init = function()
+      vim.keymap.set('n', 'U', ':UndotreeToggle<CR>')
+    end,
+    cmd = 'UndotreeToggle'
+  },
+
+  {
     'neovim/nvim-lspconfig',
     event = { 'BufRead', 'BufNewFile' },
     dependencies = {
