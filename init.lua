@@ -8,8 +8,10 @@ vim.loader.enable()
 vim.g.loaded_netrwPlugin = true
 
 -- Set <space> as the leader key
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.cmd([[
+let g:mapleader = "\<Space>"
+let g:maplocalleader = "\<C-space>"
+]])
 
 -- Install package manager
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -871,10 +873,10 @@ hi CursorWord guibg=#282d44
         incremental_selection = {
           enable = true,
           keymaps = {
-            init_selection = '<c-space>',
-            node_incremental = '<c-space>',
-            scope_incremental = '<c-s>',
-            node_decremental = '<M-space>',
+            init_selection = "M",
+            node_incremental = "M",
+            scope_incremental = "S",
+            node_decremental = "m",
           },
         },
         textobjects = {
@@ -1540,6 +1542,54 @@ function! Disable() abort
     call system('/Users/snakamura/im-select com.apple.keylayout.ABC')
   else
     call system('fcitx5-remote -c')
+  endif
+endfunction
+]])
+
+-- [[ switch settings with local leader ]]
+vim.cmd([[
+nnoremap <Plug>(my-switch) <Nop>
+nmap <localleader> <Plug>(my-switch)
+nnoremap <silent> <Plug>(my-switch)s <Cmd>setl spell! spell?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-s> <Cmd>setl spell! spell?<CR>
+nnoremap <silent> <Plug>(my-switch)l <Cmd>setl list! list?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-l> <Cmd>setl list! list?<CR>
+nnoremap <silent> <Plug>(my-switch)t <Cmd>setl expandtab! expandtab?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-t> <Cmd>setl expandtab! expandtab?<CR>
+nnoremap <silent> <Plug>(my-switch)w <Cmd>setl wrap! wrap?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-w> <Cmd>setl wrap! wrap?<CR>
+nnoremap <silent> <Plug>(my-switch)p <Cmd>setl paste! paste?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-p> <Cmd>setl paste! paste?<CR>
+nnoremap <silent> <Plug>(my-switch)b <Cmd>setl scrollbind! scrollbind?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-b> <Cmd>setl scrollbind! scrollbind?<CR>
+nnoremap <silent> <Plug>(my-switch)d <Cmd>if !&diff <Bar> diffthis <Bar> else <Bar> diffoff <Bar> endif <Bar> set diff?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-d> <Cmd>if !&diff <Bar> diffthis <Bar> else <Bar> diffoff <Bar> endif <Bar> set diff?<CR>
+nnoremap <silent> <Plug>(my-switch)y <Cmd>call Toggle_syntax()<CR>
+nnoremap <silent> <Plug>(my-switch)<C-y> <Cmd>call Toggle_syntax()<CR>
+nnoremap <silent> <Plug>(my-switch)n :call Toggle_noice()<CR>
+nnoremap <silent> <Plug>(my-switch)<C-n> :call Toggle_noice()<CR>
+function! Toggle_syntax() abort
+  if exists('g:syntax_on')
+    syntax off
+    redraw
+    echo 'syntax off'
+  else
+    syntax on
+    redraw
+    echo 'syntax on'
+  endif
+endfunction
+let g:is_noice_enabled = v:true
+function Toggle_noice() abort
+  if g:is_noice_enabled
+    let g:is_noice_enabled=v:false
+    Noice disable
+    set cmdheight=1
+    echomsg 'noice disabled'
+  else
+    let g:is_noice_enabled=v:true
+    Noice enable
+    echomsg 'noice enabled'
   endif
 endfunction
 ]])
