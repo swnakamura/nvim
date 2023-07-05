@@ -1532,7 +1532,7 @@ endfunction
 
 function! Enable() abort
   if g:is_macos
-    call system('/Users/snakamura/im-select com.justsystems.inputmethod.atok32.Japanese')
+    call system('/Users/snakamura/im-select com.justsystems.inputmethod.atok33.Japanese')
   else
     call system('fcitx5-remote -o')
   endif
