@@ -883,6 +883,7 @@ hi CursorWord guibg=#282d44
       vim.keymap.set('n', '<leader>gf', '<Cmd>Telescope git_files<CR>', { desc = 'Search [G]it [F]iles' })
       vim.keymap.set('n', '<leader>ff', '<Cmd>Telescope find_files<CR>', { desc = '[F]ind [F]iles' })
       vim.keymap.set('n', '<leader>fr', '<Cmd>Telescope oldfiles<CR>')
+      vim.keymap.set('n', '<leader>fb', '<Cmd>Telescope buffers<CR>')
       vim.keymap.set('n', '<leader>fh', '<Cmd>Telescope help_tags<CR>', { desc = '[F]ind [H]elp' })
       vim.keymap.set('n', '<leader>fw', '<Cmd>Telescope grep_string<CR>', { desc = '[F]ind current [W]ord' })
       vim.keymap.set('n', '<leader>fg', '<Cmd>Telescope live_grep<CR>', { desc = '[F]ind by [G]rep' })
