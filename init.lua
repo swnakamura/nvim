@@ -892,6 +892,11 @@ hi CursorWord guibg=#282d44
     cmd = 'Telescope',
   },
 
+  -- show image with kitty graphics protocol
+  {
+    'edluffy/hologram.nvim',
+    -- opts = { auto_display = true }
+  },
 
 
   {
