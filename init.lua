@@ -645,7 +645,7 @@ ${0:Hello, world!}
   },
 
   -- markdown
-  'preservim/vim-markdown',
+  { 'preservim/vim-markdown', ft = 'markdown' },
 
   -- buffer preview for markdown
   {
