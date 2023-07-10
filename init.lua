@@ -652,6 +652,7 @@ ${0:Hello, world!}
 
   -- buffer preview for markdown
   {
+    cond = false,
     'iamcco/markdown-preview.nvim',
     event = { 'BufRead', 'BufNewFile' },
     build = function() vim.fn["mkdp#util#install"]() end,
@@ -908,7 +909,9 @@ hi CursorWord guibg=#282d44
 
   -- show image with kitty graphics protocol
   {
+    cond = false,
     'edluffy/hologram.nvim',
+    ft = 'markdown',
     -- opts = { auto_display = true }
   },
 
@@ -1197,6 +1200,7 @@ hi CursorWord guibg=#282d44
 
   -- ghosttext
   {
+    cond = false,
     'https://github.com/subnut/nvim-ghost.nvim',
     init = function()
       vim.api.nvim_create_augroup('nvim-ghost-user-autocmd', {})
