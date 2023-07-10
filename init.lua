@@ -1,7 +1,3 @@
--- disable netrw at the very start of your init.lua
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
 vim.loader.enable()
 
 -- Do not load some of the default plugins
@@ -104,7 +100,7 @@ require('lazy').setup({
     cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep' },
     dependencies = { 'tpope/vim-dispatch', cmd = 'Dispatch' }
   },
-  { 'tpope/vim-rhubarb',  cmd = 'GBrowse' },
+  { 'tpope/vim-rhubarb',      cmd = 'GBrowse', dependencies = 'tpope/vim-fugitive' },
   {
     'cohama/agit.vim',
     cmd = 'Agit',
