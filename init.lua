@@ -613,6 +613,7 @@ ${0:Hello, world!}
     config = function()
       require("neo-tree").setup({
         filesystem = {
+          follow_current_file = true,
           window = {
             mappings = {
               ["o"] = "open",
