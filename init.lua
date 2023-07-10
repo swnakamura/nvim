@@ -65,6 +65,13 @@ require('lazy').setup({
     },
   },
 
+  {
+    'https://github.com/Bekaboo/dropbar.nvim',
+    config = function()
+      vim.keymap.set('n', "<leader>n", require('dropbar.api').pick)
+    end
+  },
+
   -- Git related plugins
   {
     'tpope/vim-fugitive',
@@ -597,7 +604,6 @@ ${0:Hello, world!}
       vim.g.neo_tree_remove_legacy_commands = 1
 
       vim.keymap.set('n', "<leader>d", '<Cmd>Neotree<CR>')
-      vim.keymap.set('n', "<leader>n", '<Cmd>Neotree<CR>')
     end,
     dependencies = {
       "nvim-lua/plenary.nvim",
