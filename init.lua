@@ -25,7 +25,11 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-vim.g.is_macos = fn.has('mac')
+if fn.has('mac') == 1 then
+  vim.g.is_macos = true
+else
+  vim.g.is_macos = false
+end
 
 -- [[ Plugin settings ]]
 
@@ -102,7 +106,7 @@ require('lazy').setup({
     cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep' },
     dependencies = { 'tpope/vim-dispatch', cmd = 'Dispatch' }
   },
-  { 'tpope/vim-rhubarb',      cmd = 'GBrowse', dependencies = 'tpope/vim-fugitive' },
+  { 'tpope/vim-rhubarb',       cmd = 'GBrowse', dependencies = 'tpope/vim-fugitive' },
   {
     'cohama/agit.vim',
     cmd = 'Agit',
@@ -1023,7 +1027,7 @@ hi CursorWord guibg=#282d44
       if vim.g.is_macos then
         opts.dir = '~/Dropbox/obsidian'
       else
-        opts.dir = "~/Dropbox/issues/research"
+        opts.dir = "~/Dropbox/research"
       end
       require("obsidian").setup(opts)
 
