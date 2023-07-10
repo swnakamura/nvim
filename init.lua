@@ -449,9 +449,8 @@ hi link agitDiffRemove diffRemoved
     dependencies = { 'L3MON4D3/LuaSnip' },
     ft = { 'markdown', 'tex', 'text' },
     event = 'InsertEnter',
-    config = function()
-      require 'luasnip-latex-snippets'.setup({ use_treesitter = true })
-    end
+    config = true,
+    opts = { use_treesitter = true }
   },
 
   {
@@ -1335,6 +1334,8 @@ vim.o.list = true
 vim.o.listchars = 'tab:»-,trail:~,extends:»,precedes:«,nbsp:%'
 
 vim.o.scrolloff = 5
+
+vim.o.laststatus = 3
 
 vim.o.showtabline = 2
 
