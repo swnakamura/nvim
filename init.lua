@@ -1,5 +1,7 @@
 vim.loader.enable()
 
+local fn = vim.fn
+
 -- Do not load some of the default plugins
 vim.g.loaded_netrwPlugin = true
 
@@ -10,9 +12,9 @@ let g:maplocalleader = "\<C-space>"
 ]])
 
 -- Install package manager
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+local lazypath = fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.uv.fs_stat(lazypath) then
-  vim.fn.system {
+  fn.system {
     'git',
     'clone',
     '--filter=blob:none',
@@ -23,7 +25,7 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-vim.g.is_macos = vim.fn.has('mac')
+vim.g.is_macos = fn.has('mac')
 
 -- [[ Plugin settings ]]
 
@@ -652,7 +654,7 @@ ${0:Hello, world!}
     cond = false,
     'iamcco/markdown-preview.nvim',
     event = { 'BufRead', 'BufNewFile' },
-    build = function() vim.fn["mkdp#util#install"]() end,
+    build = function() fn["mkdp#util#install"]() end,
     config = function()
       vim.api.nvim_create_augroup('markdown_bufpreview', {})
       vim.api.nvim_create_autocmd('FileType', {
@@ -782,8 +784,8 @@ ${0:Hello, world!}
         map('n', '<leader>hs', gs.stage_hunk)
         map('n', '<Up>', gs.stage_hunk)
         map('n', '<leader>hu', gs.reset_hunk)
-        map('v', '<leader>hs', function() gs.stage_hunk { vim.fn.line("."), vim.fn.line("v") } end)
-        map('v', '<leader>hu', function() gs.reset_hunk { vim.fn.line("."), vim.fn.line("v") } end)
+        map('v', '<leader>hs', function() gs.stage_hunk { fn.line("."), fn.line("v") } end)
+        map('v', '<leader>hu', function() gs.reset_hunk { fn.line("."), fn.line("v") } end)
         map('n', '<leader>hS', gs.stage_buffer)
         map('n', '<leader>hr', gs.undo_stage_hunk)
         map('n', '<leader>hR', gs.reset_buffer)
@@ -873,7 +875,7 @@ hi CursorWord guibg=#282d44
       --       refer to the README for telescope-fzf-native for more instructions.
       build = 'make',
       cond = function()
-        return vim.fn.executable 'make' == 1
+        return fn.executable 'make' == 1
       end,
     } },
     config = function()
@@ -999,9 +1001,9 @@ hi CursorWord guibg=#282d44
       follow_url_func = function(url)
         -- Open the URL in the default web browser.
         if vim.g.is_macos then
-          vim.fn.jobstart({ "open", url })     -- Mac OS
+          fn.jobstart({ "open", url })     -- Mac OS
         else
-          vim.fn.jobstart({ "xdg-open", url }) -- linux
+          fn.jobstart({ "xdg-open", url }) -- linux
         end
       end,
 
@@ -1123,7 +1125,7 @@ hi CursorWord guibg=#282d44
     'woodyZootopia/gitsession.vim',
     init = function()
       vim.g.gitsession_autosave = 1
-      vim.g.gitsession_tmp_dir = vim.fn.stdpath('data') .. '/gitsession'
+      vim.g.gitsession_tmp_dir = fn.stdpath('data') .. '/gitsession'
     end
   },
 
@@ -1216,7 +1218,7 @@ hi CursorWord guibg=#282d44
         vim.g.nvim_ghost_python_executable = '/usr/bin/python3'
       end
     end,
-    build = function() vim.fn['nvim_ghost#installer#install']() end
+    build = function() fn['nvim_ghost#installer#install']() end
   },
 
   { import = 'custom.plugins' },
@@ -1485,7 +1487,7 @@ vim.cmd([[
 nnoremap <leader>vv :<C-u>vimgrep // %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
 " abbreviation for substitution
-cnoreabbrev <expr> s getcmdtype() .. getcmdline() ==# ':s' ? [getchar(), ''][1] .. \"%s///g<Left><Left>\" : 's'
+cnoreabbrev <expr> s getcmdtype() .. getcmdline() ==# ':s' ? [getchar(), ''][1] .. "%s///g<Left><Left>" : 's'
 
 " visual modeで複数行を選択して'/'を押すと，その範囲内での検索を行う
 xnoremap <expr> / (line('.') == line('v')) ?
