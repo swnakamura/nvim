@@ -132,6 +132,10 @@ hi link agitDiffRemove diffRemoved
     end
   },
 
+  -- async run
+  { 'skywind3000/asyncrun.vim' },
+
+
   -- register preview
   {
     'tversteeg/registers.nvim',
