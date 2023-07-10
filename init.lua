@@ -1356,15 +1356,30 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 
--- [[vimgrep]]
+
+-- [[minor functionalities]]
 vim.cmd([[
+" abbreviation for vimgrep
 nnoremap <leader>vv :<C-u>vimgrep // %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
+" abbreviation for substitution
+cnoreabbrev <expr> s getcmdtype() .. getcmdline() ==# ':s' ? [getchar(), ''][1] .. \"%s///g<Left><Left>\" : 's'
 
 " visual modeで複数行を選択して'/'を押すと，その範囲内での検索を行う
 xnoremap <expr> / (line('.') == line('v')) ?
       \ '/' :
       \ ((line('.') < line('v')) ? '' : 'o') . "<ESC>" . '/\%>' . (min([line('v'), line('.')])-1) . 'l\%<' . (max([line('v'), line('.')])+1) . 'l'
+
+
+command! -range GHCopy  call GHCopy()
+
+function! GHCopy() abort
+  let text = getline("'<", "'>")->join("\n")
+
+  let text = substitute(text,'\$\([^$]\{-1,}\)\$','$`\1`$','ge')
+
+  call setreg('+', text, 'V')
+endfunction
 
 ]])
 
