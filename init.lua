@@ -1025,7 +1025,7 @@ hi CursorWord guibg=#282d44
       end,
 
       -- Optional, set to true if you don't want Obsidian to manage frontmatter.
-      disable_frontmatter = false,
+      disable_frontmatter = true,
 
       -- Optional, alternatively you can customize the frontmatter data.
       note_frontmatter_func = function(note)
@@ -1069,7 +1069,11 @@ hi CursorWord guibg=#282d44
     },
     config = function(_, opts)
       if vim.g.is_macos then
-        opts.dir = '~/Dropbox/obsidian'
+        if fn.getcwd():find('research') then
+          opts.dir = '~/Dropbox/research'
+        else
+          opts.dir = '~/Dropbox/obsidian'
+        end
       else
         opts.dir = "~/Dropbox/research"
       end
