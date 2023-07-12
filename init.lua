@@ -1743,19 +1743,19 @@ augroup END
 vim.cmd([[
 nnoremap <silent><expr> <F2> Fcitx_toggle()
 inoremap <silent><expr> <F2> Fcitx_toggle()
-nnoremap <silent> <Plug>(my-switch)j :call Toggle_fcitx_toggling()<CR>
-nnoremap <silent> <Plug>(my-switch)<C-j> :call Toggle_fcitx_toggling()<CR>
+nnoremap <silent> <Plug>(my-switch)j :call Toggle_fcitx_autotoggling()<CR>
+nnoremap <silent> <Plug>(my-switch)<C-j> :call Toggle_fcitx_autotoggling()<CR>
 
-let g:is_fcitx_toggling_enabled = v:false
-function! Toggle_fcitx_toggling() abort
-  if g:is_fcitx_toggling_enabled
-    let g:is_fcitx_toggling_enabled=v:false
+let g:is_fcitx_autotoggling_enabled = v:false
+function! Toggle_fcitx_autotoggling() abort
+  if g:is_fcitx_autotoggling_enabled
+    let g:is_fcitx_autotoggling_enabled=v:false
     augroup fcitx_autoenable
       autocmd!
     augroup END
     echomsg 'Fcitx toggling disabled'
   else
-    let g:is_fcitx_toggling_enabled=v:true
+    let g:is_fcitx_autotoggling_enabled=v:true
     augroup fcitx_autoenable
       autocmd!
       autocmd InsertEnter * if get(b:, 'fcitx_autoenable', '0') | call Enable() | endif
@@ -1767,12 +1767,13 @@ function! Toggle_fcitx_toggling() abort
     echomsg 'Fcitx toggling enabled'
   endif
 endfunction
+call Toggle_fcitx_autotoggling()
 
 function! Fcitx_toggle() abort
   let b:fcitx_autoenable = !get(b:, 'fcitx_autoenable', '0')
   if b:fcitx_autoenable ==# 1
-    if !g:is_fcitx_toggling_enabled
-      call Toggle_fcitx_toggling()
+    if !g:is_fcitx_autotoggling_enabled
+      call Toggle_fcitx_autotoggling()
     endif
     echomsg '日本語入力モードON'
     if index(['i'], mode()) != -1
