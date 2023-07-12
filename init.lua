@@ -1803,6 +1803,11 @@ function! Disable() abort
     call system('fcitx5-remote -c')
   endif
 endfunction
+
+augroup auto_ja
+  autocmd BufRead */novel/*/*.txt call Fcitx_toggle()
+  autocmd BufRead */obsidian/*/*.md call Fcitx_toggle()
+augroup END
 ]])
 
 -- [[ switch settings with local leader ]]
