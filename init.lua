@@ -628,6 +628,9 @@ ${0:Hello, world!}
             mappings = {
               ["o"] = "open",
               ["x"] = "system_open",
+              ["<C-s>"] = "open_split",
+              ["<C-v>"] = "open_vsplit",
+              ["s"] = "none",
             },
           },
           commands = {
