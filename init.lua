@@ -634,9 +634,12 @@ ${0:Hello, world!}
             system_open = function(state)
               local node = state.tree:get_node()
               local path = node:get_id()
-              -- macOs: open file in default application in the background.
-              -- Probably you need to adapt the Linux recipe for manage path with spaces. I don't have a mac to try.
-              vim.api.nvim_command("silent !open -g " .. path)
+              path = fn.fnameescape(path)
+              if vim.g.is_macos then
+                vim.api.nvim_command("silent !open -g " .. path)
+              else
+                vim.api.nvim_command("silent !xdg-open " .. path)
+              end
             end,
           },
         },
