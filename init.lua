@@ -778,6 +778,8 @@ ${0:Hello, world!}
 let g:tagbar_sort = 0
 let g:tagbar_autoclose = 0
 
+let g:tagbar_map_togglesort = "S"
+
 let g:tagbar_type_help = {
     \ 'ctagstype' : 'vimhelp',
     \ 'kinds'     : [
