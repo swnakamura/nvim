@@ -1,12 +1,13 @@
 setlocal conceallevel=2
 
-command! -range GHCopy call GitHubCopy()
+command -range GHCopy  call GHCopy()
 
-function! GitHubCopy() abort
-  normal! m x
-  '<,'>s/\$\([^$]\{-}\)\$/$`\1`$/ge
-  " '<,'>s/\$\$\(.[^$]\{-1,}\)\$\$/\r```math\r\1\r```/ge
-  '<,'>s/bm/mathbf/ge
-  '<,'>yank +
-  undo
+function GHCopy() abort
+  let text = getline("'<", "'>")->join("\n")
+
+  let text = text->substitute('\$\([^$]\{-1,}\)\$','$`\1`$','ge')
+  let text = text->substitute('!\[\[[^]]\+\]\]\n*\ze\s*!\[.\{-\}\](', '' ,'ge') " Remove obsidian internal links: [[somefile]], if it's followed by another link: ![linkname](URL).
+  let text = text->substitute('!\[\[\([^]]\+\)\]\]\n*', '\1' ,'ge') " Otherwise, only remove double square bracket.
+
+  call setreg('+', text, 'V')
 endfunction

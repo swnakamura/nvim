@@ -1589,17 +1589,6 @@ xnoremap <expr> / (line('.') == line('v')) ?
       \ '/' :
       \ ((line('.') < line('v')) ? '' : 'o') . "<ESC>" . '/\%>' . (min([line('v'), line('.')])-1) . 'l\%<' . (max([line('v'), line('.')])+1) . 'l'
 
-
-command! -range GHCopy  call GHCopy()
-
-function! GHCopy() abort
-  let text = getline("'<", "'>")->join("\n")
-
-  let text = substitute(text,'\$\([^$]\{-1,}\)\$','$`\1`$','ge')
-
-  call setreg('+', text, 'V')
-endfunction
-
 ]])
 
 
