@@ -775,7 +775,7 @@ ${0:Hello, world!}
     init = function()
       vim.keymap.set('n', '<leader>t', '<cmd>TagbarToggle<CR>')
       vim.cmd([[
-      let g:tagbar_sort = 0
+let g:tagbar_sort = 0
 let g:tagbar_autoclose = 0
 
 let g:tagbar_type_help = {
