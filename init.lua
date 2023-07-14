@@ -1851,24 +1851,25 @@ augroup END
 vim.cmd([[
 nnoremap <Plug>(my-switch) <Nop>
 nmap <localleader> <Plug>(my-switch)
-nnoremap <silent> <Plug>(my-switch)s <Cmd>setl spell! spell?<CR>
+nnoremap <silent> <Plug>(my-switch)s     <Cmd>setl spell! spell?<CR>
 nnoremap <silent> <Plug>(my-switch)<C-s> <Cmd>setl spell! spell?<CR>
-nnoremap <silent> <Plug>(my-switch)l <Cmd>setl list! list?<CR>
+nnoremap <silent> <Plug>(my-switch)l     <Cmd>setl list! list?<CR>
 nnoremap <silent> <Plug>(my-switch)<C-l> <Cmd>setl list! list?<CR>
-nnoremap <silent> <Plug>(my-switch)t <Cmd>setl expandtab! expandtab?<CR>
+nnoremap <silent> <Plug>(my-switch)t     <Cmd>setl expandtab! expandtab?<CR>
 nnoremap <silent> <Plug>(my-switch)<C-t> <Cmd>setl expandtab! expandtab?<CR>
-nnoremap <silent> <Plug>(my-switch)w <Cmd>setl wrap! wrap?<CR>
+nnoremap <silent> <Plug>(my-switch)w     <Cmd>setl wrap! wrap?<CR>
 nnoremap <silent> <Plug>(my-switch)<C-w> <Cmd>setl wrap! wrap?<CR>
-nnoremap <silent> <Plug>(my-switch)p <Cmd>setl paste! paste?<CR>
+nnoremap <silent> <Plug>(my-switch)p     <Cmd>setl paste! paste?<CR>
 nnoremap <silent> <Plug>(my-switch)<C-p> <Cmd>setl paste! paste?<CR>
-nnoremap <silent> <Plug>(my-switch)b <Cmd>setl scrollbind! scrollbind?<CR>
+nnoremap <silent> <Plug>(my-switch)b     <Cmd>setl scrollbind! scrollbind?<CR>
 nnoremap <silent> <Plug>(my-switch)<C-b> <Cmd>setl scrollbind! scrollbind?<CR>
-nnoremap <silent> <Plug>(my-switch)d <Cmd>if !&diff <Bar> diffthis <Bar> else <Bar> diffoff <Bar> endif <Bar> set diff?<CR>
-nnoremap <silent> <Plug>(my-switch)<C-d> <Cmd>if !&diff <Bar> diffthis <Bar> else <Bar> diffoff <Bar> endif <Bar> set diff?<CR>
-nnoremap <silent> <Plug>(my-switch)y <Cmd>call Toggle_syntax()<CR>
+nnoremap <silent> <Plug>(my-switch)d     <Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>
+nnoremap <silent> <Plug>(my-switch)<C-d> <Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>
+nnoremap <silent> <Plug>(my-switch)c     <Cmd>if &conceallevel > 0 \| set conceallevel=0 \| else \| set conceallevel=2 \| endif \| set conceallevel?<CR>
+nnoremap <silent> <Plug>(my-switch)y     <Cmd>call Toggle_syntax()<CR>
 nnoremap <silent> <Plug>(my-switch)<C-y> <Cmd>call Toggle_syntax()<CR>
-nnoremap <silent> <Plug>(my-switch)n :call Toggle_noice()<CR>
-nnoremap <silent> <Plug>(my-switch)<C-n> :call Toggle_noice()<CR>
+nnoremap <silent> <Plug>(my-switch)n     <Cmd>call Toggle_noice()<CR>
+nnoremap <silent> <Plug>(my-switch)<C-n> <Cmd>call Toggle_noice()<CR>
 function! Toggle_syntax() abort
   if exists('g:syntax_on')
     syntax off
