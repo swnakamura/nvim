@@ -763,6 +763,23 @@ ${0:Hello, world!}
     'majutsushi/tagbar',
     init = function()
       vim.keymap.set('n', '<leader>t', '<cmd>TagbarToggle<CR>')
+      vim.cmd([[
+      let g:tagbar_sort = 0
+let g:tagbar_autoclose = 0
+
+let g:tagbar_type_help = {
+    \ 'ctagstype' : 'vimhelp',
+    \ 'kinds'     : [
+        \ 's:Sections',
+        \ 'b:Subsections',
+    \ ],
+    \ 'kind2scope':{'s': 'section', 'b': 'subsection'},
+    \ 'scope2kind':{'section': 's'},
+    \ 'sro': ',',
+    \ 'sort'    : 0,
+    \ 'deffile' : $HOME . '.ctags.d/vim.ctags'
+\ }
+]])
     end,
     cmd = 'TagbarToggle'
   },
