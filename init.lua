@@ -639,10 +639,10 @@ ${0:Hello, world!}
     end
   },
 
-  -- mini.nvim for indentscope
+  -- mini.nvim for indentscope, alignment
   {
     'echasnovski/mini.nvim',
-    init = function()
+    config = function()
       require('mini.indentscope').setup {
         draw = {
           delay = 20,
@@ -650,6 +650,10 @@ ${0:Hello, world!}
         },
         symbol = '│',
       }
+      require('mini.align').setup()
+    end
+  },
+
     end
   },
 
