@@ -654,6 +654,22 @@ ${0:Hello, world!}
     end
   },
 
+  {
+    'petertriho/nvim-scrollbar',
+    config = function()
+      require('scrollbar').setup({
+        handle = {
+          highlight = "NormalFloat"
+        },
+        excluded_filetypes = {
+          "cmp_docs",
+          "cmp_menu",
+          "noice",
+          "prompt",
+          "TelescopePrompt",
+          "neo-tree",
+        },
+      })
     end
   },
 
