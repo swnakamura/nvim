@@ -71,6 +71,11 @@ require('lazy').setup({
     'https://github.com/Bekaboo/dropbar.nvim',
     config = function()
       vim.keymap.set('n', "<leader>n", require('dropbar.api').pick)
+      vim.cmd([[
+      augroup dropbar-keymap
+        autocmd FileType dropbar_menu nnoremap q <Cmd>q<CR>
+      augroup END
+      ]])
     end
   },
 
