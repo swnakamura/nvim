@@ -1809,7 +1809,7 @@ function! Toggle_fcitx_autotoggling() abort
     echomsg 'Fcitx toggling enabled'
   endif
 endfunction
-call Toggle_fcitx_autotoggling()
+silent call Toggle_fcitx_autotoggling()
 
 function! Fcitx_toggle() abort
   let b:fcitx_autoenable = !get(b:, 'fcitx_autoenable', '0')
