@@ -631,6 +631,9 @@ ${0:Hello, world!}
               ["<C-s>"] = "open_split",
               ["<C-v>"] = "open_vsplit",
               ["s"] = "none",
+              ["/"] = "none",
+              ["F"] = "fuzzy_finder",
+              ["P"] = "toggle_preview"
             },
           },
           commands = {
