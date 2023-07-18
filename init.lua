@@ -608,12 +608,12 @@ ${0:Hello, world!}
   -- Neotree (filer)
   {
     "nvim-neo-tree/neo-tree.nvim",
-    branch = "v2.x",
+    branch = "v3.x",
     cmd = 'Neotree',
     init = function()
       vim.g.neo_tree_remove_legacy_commands = 1
 
-      vim.keymap.set('n', "<leader>d", '<Cmd>Neotree<CR>')
+      vim.keymap.set('n', "<leader>d", '<Cmd>Neotree focus<CR>')
     end,
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -623,7 +623,9 @@ ${0:Hello, world!}
     config = function()
       require("neo-tree").setup({
         filesystem = {
-          follow_current_file = true,
+          follow_current_file = {
+            enabled = true,
+          },
           window = {
             mappings = {
               ["o"] = "open",
@@ -640,7 +642,7 @@ ${0:Hello, world!}
             system_open = function(state)
               local node = state.tree:get_node()
               local path = node:get_id()
-              path = fn.fnameescape(path)
+              path = fn.shellescape(path)
               if vim.g.is_macos then
                 vim.api.nvim_command("silent !open -g " .. path)
               else
