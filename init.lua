@@ -677,6 +677,7 @@ ${0:Hello, world!}
         handle = {
           highlight = "NormalFloat"
         },
+        hide_if_all_visible = true,
         excluded_filetypes = {
           "cmp_docs",
           "cmp_menu",
