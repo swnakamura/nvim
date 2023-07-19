@@ -1162,7 +1162,7 @@ hi CursorWord guibg=#282d44
       require('nvim-treesitter.configs').setup {
         -- Add languages to be installed here that you want installed for treesitter
         ensure_installed = { 'bibtex', 'c', 'cpp', 'go', 'lua', 'markdown', 'python', 'rust', 'latex', 'tsx',
-          'typescript', 'vimdoc', 'vim' },
+          'typescript', 'vimdoc', 'vim', 'yaml' },
 
         -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
         auto_install = false,
