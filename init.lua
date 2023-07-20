@@ -635,7 +635,8 @@ ${0:Hello, world!}
               ["s"] = "none",
               ["/"] = "none",
               ["F"] = "fuzzy_finder",
-              ["P"] = "toggle_preview"
+              ["P"] = "toggle_preview",
+              ["-"] = "navigate_up"
             },
           },
           commands = {
