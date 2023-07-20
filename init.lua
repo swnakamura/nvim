@@ -196,7 +196,7 @@ hi link agitDiffRemove diffRemoved
 
         config = function()
           local mason_lspconfig = require 'mason-lspconfig'
-          local servers = {
+          local server2setting = {
             clangd = {},
             pyright = {},
             rust_analyzer = {},
@@ -267,14 +267,14 @@ hi link agitDiffRemove diffRemoved
               require('lspconfig')[server_name].setup {
                 capabilities = capabilities,
                 on_attach = on_attach,
-                settings = servers[server_name],
+                settings = server2setting[server_name],
               }
             end
           }
 
           mason_lspconfig.setup({
             handlers = handlers,
-            ensure_installed = vim.tbl_keys(servers),
+            ensure_installed = vim.tbl_keys(server2setting),
           })
         end
       },
