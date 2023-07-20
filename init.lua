@@ -31,11 +31,20 @@ else
   vim.g.is_macos = false
 end
 
+if vim.g['neovide'] ~= nil or vim.g['goneovim'] ~= nil then
+  vim.g.is_gui = true
+  vim.opt.guicursor = 'n-v-c-sm:block,i-ci-ve:ver5,r-cr-o:hor20'
+  vim.opt.guifont = 'Fira_Code:h15'
+else
+  vim.g.is_gui = false
+end
+
 -- [[ Plugin settings ]]
 
 require('lazy').setup({
 
   {
+    cond = not vim.g.is_gui,
     "folke/noice.nvim",
     event = "VeryLazy",
     opts = {
@@ -672,6 +681,7 @@ ${0:Hello, world!}
   },
 
   {
+    cond = not vim.g.is_gui,
     'petertriho/nvim-scrollbar',
     config = function()
       require('scrollbar').setup({
