@@ -1604,7 +1604,7 @@ vim.cmd([[
 nnoremap <leader>vv :<C-u>vimgrep // %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
 " abbreviation for substitution
-cnoreabbrev <expr> ss getcmdtype() .. getcmdline() ==# ':s' ? [getchar(), ''][1] .. "%s///g<Left><Left>" : 's'
+cnoreabbrev <expr> ss getcmdtype() .. getcmdline() ==# ':ss' ? [getchar(), ''][1] .. "%s///g<Left><Left>" : 's'
 
 " visual modeで複数行を選択して'/'を押すと，その範囲内での検索を行う
 xnoremap <expr> / (line('.') == line('v')) ?
