@@ -645,7 +645,10 @@ ${0:Hello, world!}
               ["/"] = "none",
               ["F"] = "fuzzy_finder",
               ["P"] = "toggle_preview",
-              ["-"] = "navigate_up"
+              ["-"] = "navigate_up",
+              ["<F5>"] = "refresh",
+              ["z"] = "none",
+              ["<C-c>"] = "none"
             },
           },
           commands = {
