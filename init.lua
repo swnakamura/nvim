@@ -1281,8 +1281,8 @@ hi CursorWord guibg=#282d44
       vim.g.vimtex_quickfix_mode = 0
       vim.g.vimtex_fold_manual = 1
       -- Do below if using treesitter
-      -- vim.g.vimtex_syntax_enabled = 0
-      -- vim.g.vimtex_syntax_conceal_disable = 1
+      vim.g.vimtex_syntax_enabled = 0
+      vim.g.vimtex_syntax_conceal_disable = 1
     end
   },
 
