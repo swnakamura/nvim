@@ -689,7 +689,16 @@ ${0:Hello, world!}
   },
 
   {
-    cond = not vim.g.is_gui,
+    -- Add indentation guides even on blank lines
+    'lukas-reineke/indent-blankline.nvim',
+    opts = {
+      char = '┊',
+      show_trailing_blankline_indent = false,
+    },
+    event = { 'BufRead', 'BufNewFile' }
+  },
+
+  {
     'petertriho/nvim-scrollbar',
     config = function()
       require('scrollbar').setup({
@@ -969,16 +978,6 @@ hi CursorWord guibg=#282d44
         extensions = {}
       }
     end
-  },
-
-  {
-    -- Add indentation guides even on blank lines
-    'lukas-reineke/indent-blankline.nvim',
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-    },
-    event = { 'BufRead', 'BufNewFile' }
   },
 
   {
