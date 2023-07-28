@@ -117,6 +117,18 @@ require('lazy').setup({
       vim.keymap.set("n", "<Down>", "<Cmd>Dispatch! git fetch<CR>", { silent = true })
       vim.keymap.set("n", "<C-Down>", "<Cmd>Dispatch! git pull<CR>", { silent = true })
     end,
+    config = function()
+      vim.cmd([[
+      augroup fugitive-keymap
+        autocmd FileType fugitive nnoremap <buffer><nowait><expr> m '<Cmd>exe <SNR>' . g:fugitive_sid . '_NextFile(v:count1)<CR>'
+      augroup END
+      ]])
+      vim.schedule(function()
+        vim.cmd([[
+          let g:fugitive_sid = getscriptinfo(#{name:'autoload/fugitive.vim'})[0]['sid']
+        ]])
+      end)
+    end,
     cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep' },
     dependencies = { 'tpope/vim-dispatch', cmd = 'Dispatch' }
   },
