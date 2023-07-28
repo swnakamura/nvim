@@ -1,34 +1,36 @@
 "        compiler settings
-nnoremap <buffer> <F3>   :cd %:p:h<CR>:make    check<CR>
-nnoremap <buffer> <S-F3> :cd %:p:h<CR>:make    check<CR>:copen<CR>
-nnoremap <buffer> <F15>  :cd %:p:h<CR>:make    check<CR>:copen<CR>
+nnoremap <buffer> <F3>   <Cmd>cd %:p:h<CR><Cmd>make    check<CR>
+nnoremap <buffer> <S-F3> <Cmd>cd %:p:h<CR><Cmd>make    check<CR><Cmd>copen<CR>
+nnoremap <buffer> <F15>  <Cmd>cd %:p:h<CR><Cmd>make    check<CR><Cmd>copen<CR>
 
-nnoremap <buffer> <F4>   :cd %:p:h<CR>:make!   build<CR>
-nnoremap <buffer> <S-F4> :cd %:p:h<CR>:make    build<CR>
-nnoremap <buffer> <F16>  :cd %:p:h<CR>:make    build<CR>
+nnoremap <buffer> <F4>   <Cmd>cd %:p:h<CR><Cmd>make!   build<CR>
+nnoremap <buffer> <S-F4> <Cmd>cd %:p:h<CR><Cmd>make    build<CR>
+nnoremap <buffer> <F16>  <Cmd>cd %:p:h<CR><Cmd>make    build<CR>
 
-nnoremap <buffer> <F5>   :cd %:p:h<CR>:make!   run<CR>
-nnoremap <buffer> <S-F5> :cd %:p:h<CR>:make    run<CR>
-nnoremap <buffer> <F17>  :cd %:p:h<CR>:make    run<CR>
+nnoremap <buffer> <F5>   <Cmd>cd %:p:h<CR><Cmd>make!   run<CR>
+nnoremap <buffer> <S-F5> <Cmd>cd %:p:h<CR><Cmd>make    run<CR>
+nnoremap <buffer> <F17>  <Cmd>cd %:p:h<CR><Cmd>make    run<CR>
 
-nnoremap <buffer> <S-F6> :cd %:p:h<CR>:make!   clean<CR>
-nnoremap <buffer> <F18>  :cd %:p:h<CR>:make!   clean<CR>
+nnoremap <buffer> <S-F6> <Cmd>cd %:p:h<CR><Cmd>make!   clean<CR>
+nnoremap <buffer> <F18>  <Cmd>cd %:p:h<CR><Cmd>make!   clean<CR>
 
-nnoremap <buffer> <F7>   :cd %:p:h<CR>:make!   doc<CR>
-nnoremap <buffer> <S-F7> :cd %:p:h<CR>:make!   doc --open<CR>
-nnoremap <buffer> <F19>  :cd %:p:h<CR>:make!   doc --open<CR>
+nnoremap <buffer> <F7>   <Cmd>cd %:p:h<CR><Cmd>make!   doc<CR>
+nnoremap <buffer> <S-F7> <Cmd>cd %:p:h<CR><Cmd>make!   doc --open<CR>
+nnoremap <buffer> <F19>  <Cmd>cd %:p:h<CR><Cmd>make!   doc --open<CR>
 
-nnoremap <buffer> <F8>   :cd %:p:h<CR>:!rustup doc --std<CR>
-nnoremap <buffer> <S-F8> :cd %:p:h<CR>:!rustup doc --std<CR>
-nnoremap <buffer> <F20>  :cd %:p:h<CR>:!rustup doc --std<CR>
+nnoremap <buffer> <F8>   <Cmd>cd %:p:h<CR><Cmd>!rustup doc --std<CR>
+nnoremap <buffer> <S-F8> <Cmd>cd %:p:h<CR><Cmd>!rustup doc --std<CR>
+nnoremap <buffer> <F20>  <Cmd>cd %:p:h<CR><Cmd>!rustup doc --std<CR>
 
-nnoremap <buffer> <F9>   :cd %:p:h<CR>:make!   test<CR>
-nnoremap <buffer> <S-F9> :cd %:p:h<CR>:make    test<CR>
-nnoremap <buffer> <F21>  :cd %:p:h<CR>:make    test<CR>
+nnoremap <buffer> <F9>   <Cmd>cd %:p:h<CR><Cmd>make!   test<CR>
+nnoremap <buffer> <S-F9> <Cmd>cd %:p:h<CR><Cmd>make    test<CR>
+nnoremap <buffer> <F21>  <Cmd>cd %:p:h<CR><Cmd>make    test<CR>
 
 if expand('%:p') =~ 'kyopro'
-    nnoremap <buffer> <S-F5> :cd %:p:h<CR>:make build   --bin  %:t:r<CR>
-    nnoremap <buffer> <F9>   :cd %:p:h<CR>:make atcoder submit %:t:r<CR>
+    nnoremap <buffer> <S-F5> <Cmd>cd %:p:h<CR><Cmd>make build   --bin  %:t<Cmd>r<CR>
+    nnoremap <buffer> <F9>   <Cmd>cd %:p:h<CR><Cmd>make atcoder submit %:t<Cmd>r<CR>
 endif
 
 iab <buffer> arr =>
+
+set foldmethod=indent
