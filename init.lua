@@ -677,9 +677,14 @@ ${0:Hello, world!}
           delay = 20,
           animation = require('mini.indentscope').gen_animation.none()
         },
-        symbol = '│',
+        symbol = '┊',
       }
-      require('mini.align').setup()
+      require('mini.surround').setup(
+        {
+          mappings = {
+            highlight = '', -- disable highlight surrounding
+          },
+        })
     end
   },
 
