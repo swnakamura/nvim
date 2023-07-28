@@ -754,7 +754,6 @@ ${0:Hello, world!}
     init = function()
       vim.keymap.set('x', 'ga', '<Plug>(EasyAlign)')
     end,
-    keys = { 'ga', mode = 'x' }
   },
 
   -- close parenthesis automatically
