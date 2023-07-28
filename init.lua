@@ -1451,7 +1451,7 @@ vim.opt.wildignore:append({ '*.o', '*.obj', '*.pyc', '*.so', '*.dll' })
 vim.o.splitbelow = true
 vim.o.splitright = true
 
-vim.o.title = true
+vim.o.title = false
 
 vim.opt.matchpairs:append({ '「:」', '（:）', '『:』', '【:】', '〈:〉', '《:》', '〔:〕', '｛:｝', '<:>' })
 
