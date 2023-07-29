@@ -691,12 +691,6 @@ ${0:Hello, world!}
         },
         symbol = '┊',
       }
-      require('mini.surround').setup(
-        {
-          mappings = {
-            highlight = '', -- disable highlight surrounding
-          },
-        })
     end
   },
 
