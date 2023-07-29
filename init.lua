@@ -1459,7 +1459,11 @@ vim.opt.wildignore:append({ '*.o', '*.obj', '*.pyc', '*.so', '*.dll' })
 vim.o.splitbelow = true
 vim.o.splitright = true
 
-vim.o.title = false
+if vim.g.is_macos then
+  vim.o.title = false
+else
+  vim.o.title = true
+end
 
 vim.opt.matchpairs:append({ '「:」', '（:）', '『:』', '【:】', '〈:〉', '《:》', '〔:〕', '｛:｝', '<:>' })
 
