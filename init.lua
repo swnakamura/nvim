@@ -1280,7 +1280,11 @@ hi CursorWord guibg=#282d44
       vim.g.tex_flavor = 'latex'
       vim.g.tex_conceal = 'abdmg'
       vim.g.vimtex_fold_enabled = 1
-      vim.g.vimtex_view_method = 'zathura'
+      if vim.g.is_macos then
+        vim.g.vimtex_view_method = 'skim'
+      else
+        vim.g.vimtex_view_method = 'zathura'
+      end
       vim.g.vimtex_quickfix_enabled = 0
       vim.g.vimtex_quickfix_mode = 0
       vim.g.vimtex_fold_manual = 1
