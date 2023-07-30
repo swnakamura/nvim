@@ -1,9 +1,9 @@
 setlocal conceallevel=2
 
-command -range GHCopy  call GHCopy()
+command -range=% GHCopy call GHCopy(<line1>, <line2>)
 
-function GHCopy() abort
-  let text = getline("'<", "'>")->join("\n")
+function GHCopy(line1, line2) abort
+  let text = getline(a:line1, a:line2)->join("\n")
 
   let text = text->substitute('\$\([^$]\{-1,}\)\$','$`\1`$','ge')
   let text = text->substitute(' --- ',':','ge')
