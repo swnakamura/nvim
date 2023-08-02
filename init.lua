@@ -1408,6 +1408,8 @@ vim.opt.formatoptions:append({ 'm', 'M' })
 
 vim.o.inccommand = 'split'
 
+vim.o.colorcolumn = "+1"
+
 vim.o.foldlevel = 99
 vim.cmd([[
 set foldtext=MyFoldText()
