@@ -704,26 +704,6 @@ ${0:Hello, world!}
     event = { 'BufRead', 'BufNewFile' }
   },
 
-  {
-    'petertriho/nvim-scrollbar',
-    config = function()
-      require('scrollbar').setup({
-        handle = {
-          highlight = "NormalFloat"
-        },
-        hide_if_all_visible = true,
-        excluded_filetypes = {
-          "cmp_docs",
-          "cmp_menu",
-          "noice",
-          "prompt",
-          "TelescopePrompt",
-          "neo-tree",
-        },
-      })
-    end
-  },
-
   -- markdown
   { 'preservim/vim-markdown', ft = 'markdown' },
 
