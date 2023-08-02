@@ -680,6 +680,37 @@ ${0:Hello, world!}
     end
   },
 
+  {
+    'romgrk/barbar.nvim',
+    dependencies = {
+      'lewis6991/gitsigns.nvim',     -- OPTIONAL: for git status
+      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+    },
+    init = function()
+      vim.g.barbar_auto_setup = false
+      local opts = { noremap = true, silent = true }
+      local map = vim.keymap.set
+      map('n', '<C-p>', '<Cmd>BufferPrevious<CR>', opts)
+      map('n', '<C-n>', '<Cmd>BufferNext<CR>', opts)
+      map('n', '<C-,>', '<Cmd>BufferMovePrevious<CR>', opts)
+      map('n', '<C-.>', '<Cmd>BufferMoveNext<CR>', opts)
+      map('n', '<leader>q', '<Cmd>BufferClose<CR>', opts)
+      map('n', 'sp', '<Cmd>BufferPrevious<CR>', opts)
+      map('n', 'sn', '<Cmd>BufferNext<CR>', opts)
+      map('n', '<C-1>', '<Cmd>BufferGoto 1<CR>', opts)
+      map('n', '<C-2>', '<Cmd>BufferGoto 2<CR>', opts)
+      map('n', '<C-3>', '<Cmd>BufferGoto 3<CR>', opts)
+      map('n', '<C-4>', '<Cmd>BufferGoto 4<CR>', opts)
+      map('n', '<C-5>', '<Cmd>BufferGoto 5<CR>', opts)
+      map('n', '<C-6>', '<Cmd>BufferGoto 6<CR>', opts)
+      map('n', '<C-7>', '<Cmd>BufferGoto 7<CR>', opts)
+      map('n', '<C-8>', '<Cmd>BufferGoto 8<CR>', opts)
+      map('n', '<C-9>', '<Cmd>BufferGoto 9<CR>', opts)
+      map('n', '<C-0>', '<Cmd>BufferLast<CR>', opts)
+    end,
+    config = true,
+  },
+
   -- mini.nvim for indentscope, alignment
   {
     'echasnovski/mini.nvim',
@@ -1484,13 +1515,10 @@ vim.keymap.set('n', '<Plug>(my-win)J', '<C-w>J')
 vim.keymap.set('n', '<Plug>(my-win)K', '<C-w>K')
 vim.keymap.set('n', '<Plug>(my-win)L', '<C-w>L')
 vim.keymap.set('n', '<Plug>(my-win)H', '<C-w>H')
-vim.keymap.set('n', '<Plug>(my-win)n', 'gt')
-vim.keymap.set('n', '<Plug>(my-win)p', 'gT')
 vim.keymap.set('n', '<Plug>(my-win)r', '<C-w>r')
 vim.keymap.set('n', '<Plug>(my-win)=', '<C-w>=')
 vim.keymap.set('n', '<Plug>(my-win)O', '<C-w>=')
 vim.keymap.set('n', '<Plug>(my-win)o', '<C-w>_<C-w>|')
-vim.keymap.set('n', '<Plug>(my-win)q', '<Cmd>tabc<CR>')
 vim.keymap.set('n', '<Plug>(my-win)1', '<Cmd>1tabnext<CR>')
 vim.keymap.set('n', '<Plug>(my-win)2', '<Cmd>2tabnext<CR>')
 vim.keymap.set('n', '<Plug>(my-win)3', '<Cmd>3tabnext<CR>')
@@ -1509,7 +1537,8 @@ end
 -- save&exit
 vim.keymap.set('i', '<c-l>', '<cmd>update<cr>')
 vim.keymap.set('n', '<leader>s', '<cmd>update<cr>')
-vim.keymap.set('n', '<leader>q', '<Cmd>quit<CR>')
+vim.keymap.set('n', 'sq', '<Cmd>quit<CR>')
+vim.keymap.set('n', 'sQ', '<Cmd>tabc<CR>')
 vim.keymap.set('n', '<leader>wq', '<Cmd>quitall<CR>')
 
 -- On certain files, quit by deleting buffer
