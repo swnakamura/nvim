@@ -1510,6 +1510,18 @@ vim.keymap.set('n', '<leader>s', '<cmd>update<cr>')
 vim.keymap.set('n', '<leader>q', '<Cmd>quit<CR>')
 vim.keymap.set('n', '<leader>wq', '<Cmd>quitall<CR>')
 
+-- On certain files, quit by deleting buffer
+vim.api.nvim_create_augroup('bdel-quit', {})
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = {'gitcommit', 'help'},
+  callback = function()
+    vim.cmd([[
+      autocmd BufLeave * close
+    ]])
+  end,
+  group = 'bdel-quit'
+})
+
 -- always replace considering doublewidth
 vim.keymap.set('n', 'r', 'gr')
 vim.keymap.set('n', 'R', 'gR')
