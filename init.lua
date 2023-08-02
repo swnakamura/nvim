@@ -732,7 +732,6 @@ ${0:Hello, world!}
 
   -- buffer preview for markdown
   {
-    cond = false,
     'iamcco/markdown-preview.nvim',
     event = { 'BufRead', 'BufNewFile' },
     build = function() fn["mkdp#util#install"]() end,
