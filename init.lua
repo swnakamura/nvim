@@ -1600,6 +1600,10 @@ vim.keymap.set('n', 'gsc', '<Cmd>CleanUpSession<CR>')
 vim.keymap.set({ 'i', 'c' }, '<C-A>', '<Home>')
 vim.keymap.set({ 'i', 'c' }, '<C-E>', '<End>')
 
+-- v_CTRL-k/j to move the selected range
+vim.keymap.set("v", "<C-j>", ":m '>+1<CR>gv=gv", {silent=true})
+vim.keymap.set("v", "<C-k>", ":m '<-2<CR>gv=gv", {silent=true})
+
 -- Open quickfix window
 -- nnoremap Q <Cmd>copen<CR>
 -- autocmd for quickfix window
