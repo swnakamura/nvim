@@ -1541,17 +1541,23 @@ vim.keymap.set('n', 'sq', '<Cmd>quit<CR>')
 vim.keymap.set('n', 'sQ', '<Cmd>tabc<CR>')
 vim.keymap.set('n', '<leader>wq', '<Cmd>quitall<CR>')
 
--- On certain files, quit by deleting buffer
--- vim.api.nvim_create_augroup('bdel-quit', {})
--- vim.api.nvim_create_autocmd('FileType', {
---   pattern = {'gitcommit', 'help'},
---   callback = function()
---     vim.cmd([[
---       autocmd BufLeave * close
---     ]])
---   end,
---   group = 'bdel-quit'
--- })
+-- On certain files, quit by <leader>q
+vim.api.nvim_create_augroup('bdel-quit', {})
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'gitcommit', 'help' },
+  callback = function()
+    vim.keymap.set('n', '<leader>q', '<Cmd>q<CR>')
+  end,
+  group = 'bdel-quit'
+})
+
+-- On git commit message file, set colorcolumn at 51
+vim.api.nvim_create_augroup('gitcommit-colorcolumn', {})
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'gitcommit',
+  command = 'setlocal colorcolumn=51,+1',
+  group = 'gitcommit-colorcolumn'
+})
 
 -- always replace considering doublewidth
 vim.keymap.set('n', 'r', 'gr')
