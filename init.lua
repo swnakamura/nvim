@@ -1544,7 +1544,7 @@ vim.keymap.set('n', '<leader>wq', '<Cmd>quitall<CR>')
 -- On certain files, quit by <leader>q
 vim.api.nvim_create_augroup('bdel-quit', {})
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'gitcommit', 'help' },
+  pattern = { 'gitcommit', 'lazy', 'help' },
   callback = function()
     vim.keymap.set('n', '<leader>q', '<Cmd>q<CR>')
   end,
