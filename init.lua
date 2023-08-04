@@ -1770,7 +1770,7 @@ augroup cursor-word-highlight
 augroup END
 
 function! Wordmatch()
-  if &ft=='fern'
+  if index(['fern','neo-tree','floaterm'], &ft) != -1
     return
   endif
   call DelWordmatch()
