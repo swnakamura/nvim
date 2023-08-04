@@ -209,7 +209,7 @@ hi link agitDiffRemove diffRemoved
 
   {
     'neovim/nvim-lspconfig',
-    event = { 'BufRead', 'BufNewFile' },
+    event = 'VeryLazy',
     dependencies = {
       { 'williamboman/mason.nvim', config = true },
       {
@@ -354,7 +354,7 @@ hi link agitDiffRemove diffRemoved
   {
     'kana/vim-textobj-syntax',
     dependencies = { 'kana/vim-textobj-user' },
-    event = { 'BufRead', 'BufNewFile' }
+    event = 'VeryLazy',
   },
   {
     'thinca/vim-textobj-between',
@@ -761,7 +761,7 @@ ${0:Hello, world!}
       char = '┊',
       show_trailing_blankline_indent = false,
     },
-    event = { 'BufRead', 'BufNewFile' }
+    event = 'VeryLazy'
   },
 
   -- markdown
@@ -773,7 +773,7 @@ ${0:Hello, world!}
   -- buffer preview for markdown
   {
     'iamcco/markdown-preview.nvim',
-    event = { 'BufRead', 'BufNewFile' },
+    event = 'VeryLazy',
     build = function() fn["mkdp#util#install"]() end,
     config = function()
       vim.api.nvim_create_augroup('markdown_bufpreview', {})
@@ -883,6 +883,7 @@ let g:tagbar_type_help = {
   {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
+    event = 'VeryLazy',
     opts = {
       signcolumn = false,
       numhl      = true,
@@ -938,7 +939,6 @@ let g:tagbar_type_help = {
         map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
       end
     },
-    event = { 'BufRead', 'BufNewFile' }
   },
 
   -- colorscheme
@@ -1028,7 +1028,7 @@ hi CursorWord guibg=#282d44
 
   {
     'preservim/nerdcommenter',
-    event = { 'BufRead', 'BufNewFile' },
+    event = 'VeryLazy',
     init = function()
       vim.g.NERDSpaceDelims = 1
       vim.g.NERDDefaultAlign = 'left'
