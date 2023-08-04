@@ -1401,6 +1401,12 @@ hi CursorWord guibg=#282d44
 
 -- [[ Setting options ]]
 
+-- tab width settings
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.smartindent = true
+vim.o.expandtab = true
+
 -- Set highlight on search
 vim.o.hlsearch = false
 
