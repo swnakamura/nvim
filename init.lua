@@ -1308,7 +1308,6 @@ hi CursorWord guibg=#282d44
 
   {
     'lervag/vimtex',
-    ft = 'tex',
     init = function()
       vim.g.tex_flavor = 'latex'
       vim.g.tex_conceal = 'abdmg'
