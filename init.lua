@@ -1579,7 +1579,7 @@ vim.api.nvim_create_augroup('bdel-quit', {})
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'gitcommit', 'lazy', 'help', 'man', 'fugitive' },
   callback = function()
-    vim.keymap.set('n', '<leader>q', '<Cmd>q<CR>')
+    vim.keymap.set('n', '<leader>q', '<Cmd>q<CR>', { buffer = true })
   end,
   group = 'bdel-quit'
 })
