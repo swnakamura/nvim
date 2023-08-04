@@ -91,6 +91,7 @@ require('lazy').setup({
   -- Git related plugins
   {
     'tpope/vim-fugitive',
+    event = 'VeryLazy',
     init = function()
       vim.keymap.set("n", "<leader>gs", ":Git <CR><C-w>T", { silent = true })
       vim.keymap.set("n", "<leader>ga", ":Gwrite<CR>", { silent = true })
@@ -123,7 +124,7 @@ require('lazy').setup({
         autocmd FileType fugitive nnoremap <buffer><nowait><expr> m '<Cmd>exe <SNR>' . g:fugitive_sid . '_NextFile(v:count1)<CR>'
       augroup END
       ]])
-      vim.schedule(function()
+      vim.schedule_wrap(function()
         vim.cmd([[
           let g:fugitive_sid = getscriptinfo(#{name:'autoload/fugitive.vim'})[0]['sid']
         ]])
@@ -132,7 +133,7 @@ require('lazy').setup({
     cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep' },
     dependencies = { 'tpope/vim-dispatch', cmd = 'Dispatch' }
   },
-  { 'tpope/vim-rhubarb',       cmd = 'GBrowse', dependencies = 'tpope/vim-fugitive' },
+  { 'tpope/vim-rhubarb',      cmd = 'GBrowse', dependencies = 'tpope/vim-fugitive' },
   {
     'cohama/agit.vim',
     cmd = 'Agit',
@@ -163,11 +164,15 @@ hi link agitDiffRemove diffRemoved
   },
 
   -- async run
-  { 'skywind3000/asyncrun.vim' },
+  {
+    'skywind3000/asyncrun.vim',
+    event = 'VeryLazy',
+  },
 
   -- clever f/F/t/T
   {
     'rhysd/clever-f.vim',
+    event = 'VeryLazy',
     init = function()
       vim.keymap.set({ 'n', 'v' }, ';', ':')
     end
@@ -307,6 +312,7 @@ hi link agitDiffRemove diffRemoved
   -- operator augmentation
   {
     'rhysd/vim-operator-surround',
+    event = 'VeryLazy',
     dependencies = {
       'kana/vim-operator-user',
       config = function()
@@ -323,6 +329,7 @@ hi link agitDiffRemove diffRemoved
   },
   {
     'kana/vim-textobj-entire',
+    event = 'VeryLazy',
     dependencies = { 'kana/vim-textobj-user' },
     init = function()
       vim.g.textobj_entire_no_default_key_mappings = true
@@ -342,6 +349,7 @@ hi link agitDiffRemove diffRemoved
   },
   {
     'thinca/vim-textobj-between',
+    event = 'VeryLazy',
     init = function()
       vim.keymap.set('n', 'sdb', '<Plug>(operator-surround-delete)<Plug>(textobj-between-a)',
         { remap = true, silent = true })
@@ -353,6 +361,7 @@ hi link agitDiffRemove diffRemoved
   },
   {
     'osyo-manga/vim-textobj-multiblock',
+    event = 'VeryLazy',
     init = function()
       vim.keymap.set('n', 'sdd', '<Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)',
         { remap = true, silent = true })
@@ -489,6 +498,7 @@ hi link agitDiffRemove diffRemoved
 
   {
     'L3MON4D3/LuaSnip',
+    event = 'InsertEnter',
     config = function()
       vim.keymap.set("i", "<C-k>", function()
         if require('luasnip').expand_or_jumpable() then
@@ -690,6 +700,7 @@ ${0:Hello, world!}
 
   {
     'romgrk/barbar.nvim',
+    event = 'VeryLazy',
     dependencies = {
       'lewis6991/gitsigns.nvim',     -- OPTIONAL: for git status
       'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
@@ -722,6 +733,7 @@ ${0:Hello, world!}
   -- mini.nvim for indentscope, alignment
   {
     'echasnovski/mini.nvim',
+    event = 'VeryLazy',
     config = function()
       require('mini.indentscope').setup {
         draw = {
@@ -955,6 +967,7 @@ hi CursorWord guibg=#282d44
 
   {
     'nvim-lualine/lualine.nvim',
+    event = 'VeryLazy',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       local custom_color = require('lualine.themes.iceberg_dark')
@@ -1069,6 +1082,7 @@ hi CursorWord guibg=#282d44
   -- obsidian integration
   {
     'epwalsh/obsidian.nvim',
+    event = 'VeryLazy',
     dependencies = {
       -- Required.
       "nvim-lua/plenary.nvim",
@@ -1185,6 +1199,7 @@ hi CursorWord guibg=#282d44
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    event = 'VeryLazy',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
@@ -1258,6 +1273,7 @@ hi CursorWord guibg=#282d44
   },
   {
     'nvim-treesitter/nvim-treesitter-context',
+    event = 'VeryLazy',
     dependencies = 'nvim-treesitter/nvim-treesitter',
     config = function()
       require "treesitter-context".setup()
@@ -1336,6 +1352,7 @@ hi CursorWord guibg=#282d44
   -- Zen mode
   {
     "folke/zen-mode.nvim",
+    event = 'VeryLazy',
     config = function()
       vim.keymap.set('n', 'Z', function()
         require("zen-mode").toggle({
