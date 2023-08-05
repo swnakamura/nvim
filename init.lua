@@ -100,7 +100,6 @@ require('lazy').setup({
   -- Git related plugins
   {
     'tpope/vim-fugitive',
-    event = 'VeryLazy',
     init = function()
       vim.keymap.set("n", "<leader>gs", ":Git <CR><C-w>T", { silent = true })
       vim.keymap.set("n", "<leader>ga", ":Gwrite<CR>", { silent = true })
@@ -133,11 +132,11 @@ require('lazy').setup({
         autocmd FileType fugitive nnoremap <buffer><nowait><expr> m '<Cmd>exe <SNR>' . g:fugitive_sid . '_NextFile(v:count1)<CR>'
       augroup END
       ]])
-      vim.schedule_wrap(function()
+      vim.defer_fn(function()
         vim.cmd([[
           let g:fugitive_sid = getscriptinfo(#{name:'autoload/fugitive.vim'})[0]['sid']
         ]])
-      end)
+      end, 500)
     end,
     cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep' },
     dependencies = { 'tpope/vim-dispatch', cmd = 'Dispatch' }
