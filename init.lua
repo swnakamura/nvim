@@ -208,7 +208,8 @@ hi link agitDiffRemove diffRemoved
 
   {
     'neovim/nvim-lspconfig',
-    event = 'VeryLazy',
+    event = { "BufReadPost", "BufNewFile" },
+    cmd = { "LspInfo", "LspInstall", "LspUninstall" },
     dependencies = {
       { 'williamboman/mason.nvim', config = true },
       {
