@@ -1468,7 +1468,7 @@ vim.o.laststatus = 3
 
 vim.o.showtabline = 2
 
-vim.o.winblend = 25
+vim.o.winblend = 0
 vim.o.pumblend = 20
 
 vim.o.smartindent = true
