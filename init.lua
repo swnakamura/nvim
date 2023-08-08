@@ -1396,6 +1396,9 @@ hi CursorWord guibg=#282d44
     build = function() fn['nvim_ghost#installer#install']() end
   },
 
+  -- color picker
+  { 'uga-rosa/ccc.nvim',      event = 'VeryLazy' },
+
   { import = 'custom.plugins' },
 }, {})
 
