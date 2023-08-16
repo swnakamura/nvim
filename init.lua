@@ -694,7 +694,7 @@ ${0:Hello, world!}
             system_open = function(state)
               local node = state.tree:get_node()
               local path = node:get_id()
-              path = fn.shellescape(path)
+              path = fn.shellescape(path, 1)
               if vim.g.is_macos then
                 vim.api.nvim_command("silent !open -g " .. path)
               else
@@ -1586,7 +1586,7 @@ vim.keymap.set('n', '<leader>wq', '<Cmd>quitall<CR>')
 -- On certain files, quit by <leader>q
 vim.api.nvim_create_augroup('bdel-quit', {})
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'gitcommit', 'lazy', 'help', 'man', 'fugitive', 'noice' },
+  pattern = { 'gitcommit', 'lazy', 'help', 'man', 'fugitive', 'noice', 'lspinfo' },
   callback = function()
     vim.keymap.set('n', '<leader>q', '<Cmd>q<CR>', { buffer = true })
   end,
