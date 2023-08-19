@@ -421,7 +421,6 @@ hi link agitDiffRemove diffRemoved
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
       require('luasnip.loaders.from_vscode').lazy_load()
-      luasnip.config.setup({ enable_autosnippets = true })
 
       cmp.setup {
         snippet = {
@@ -511,17 +510,24 @@ hi link agitDiffRemove diffRemoved
   -- Adds latex snippets
   {
     'woodyZootopia/luasnip-latex-snippets.nvim',
-    dependencies = { 'L3MON4D3/LuaSnip' },
-    ft = { 'markdown', 'tex', 'text' },
-    event = 'InsertEnter',
-    config = true,
-    opts = { use_treesitter = true }
+    -- vimtex isn't required if using treesitter
+    dependencies = "L3MON4D3/LuaSnip",
+    config = function()
+      require 'luasnip-latex-snippets'.setup()
+      -- or setup({ use_treesitter = true })
+    end,
   },
 
   {
     'L3MON4D3/LuaSnip',
     event = 'InsertEnter',
+    build = "make install_jsregexp",
+    version = "2.*",
     config = function()
+      require('luasnip').config.setup({
+        enable_autosnippets = true,
+        delete_check_events = 'InsertLeave',
+      })
       vim.keymap.set("i", "<C-k>", function()
         if require('luasnip').expand_or_jumpable() then
           return '<Plug>luasnip-expand-or-jump'
