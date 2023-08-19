@@ -101,7 +101,7 @@ require('lazy').setup({
   {
     'tpope/vim-fugitive',
     init = function()
-      vim.keymap.set("n", "<leader>gs", ":Git <CR><C-w>T", { silent = true })
+      vim.keymap.set("n", "<leader>gs", ":Git <CR><Cmd>only<CR>", { silent = true })
       vim.keymap.set("n", "<leader>ga", ":Gwrite<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gc", ":Git commit -v<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gb", ":Git blame<CR>", { silent = true })
@@ -116,7 +116,20 @@ require('lazy').setup({
       vim.keymap.set("n", "<S-Up>", ":Gwrite<CR>", { silent = true })
       vim.keymap.set("n", "<C-Up>", ":Git commit -v<CR>", { silent = true })
       vim.keymap.set("n", "<Right>",
-        function() return '<Cmd>' .. (vim.o.diff and 'only' or 'vert Gdiffsplit!') .. '<CR>' end,
+        function()
+          if vim.o.diff then
+            return '<Cmd>tabclose<CR>'
+          else
+            return
+            '<Cmd>tab sp<CR>\
+            <Cmd>vert Gdiffsplit!<CR>\
+            <C-w><C-w>\
+            <Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>\
+            <C-w><C-w>\
+            zR\
+            <Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>'
+          end
+        end,
         { expr = true, silent = true }
       )
       vim.keymap.set("n", "<Left>",
@@ -1586,7 +1599,7 @@ vim.keymap.set('n', '<leader>wq', '<Cmd>quitall<CR>')
 -- On certain files, quit by <leader>q
 vim.api.nvim_create_augroup('bdel-quit', {})
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'gitcommit', 'lazy', 'help', 'man', 'fugitive', 'noice', 'lspinfo' },
+  pattern = { 'gitcommit', 'lazy', 'help', 'man', 'noice', 'lspinfo' },
   callback = function()
     vim.keymap.set('n', '<leader>q', '<Cmd>q<CR>', { buffer = true })
   end,
