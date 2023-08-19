@@ -1322,7 +1322,7 @@ hi CursorWord guibg=#282d44
   {
     'inkarkat/vim-SpellCheck',
     cmd = 'SpellCheck',
-    dependencies = 'vim-ingo-library'
+    dependencies = 'inkarkat/vim-ingo-library'
   },
 
   {
