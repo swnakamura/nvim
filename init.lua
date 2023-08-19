@@ -829,6 +829,19 @@ ${0:Hello, world!}
     end,
   },
 
+  -- Fix Neovim's broken visual star search
+  {
+    'thinca/vim-visualstar',
+    event = 'VeryLazy',
+    init = function()
+      vim.g.visualstar_no_default_key_mappings = false
+    end,
+    config = function()
+      vim.keymap.set('x', '*', '<Plug>(visualstar-g*)')
+      vim.keymap.set('x', '#', '<Plug>(visualstar-g#)')
+    end,
+  },
+
   -- close parenthesis automatically
   {
     'kana/vim-smartinput',
