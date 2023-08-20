@@ -118,19 +118,23 @@ require('lazy').setup({
       vim.keymap.set("n", "<Right>",
         function()
           if vim.o.diff then
-            return '<Cmd>tabclose<CR>'
+            if string.sub(vim.fn.bufname(), 1, 8) == 'fugitive' then
+              vim.cmd([[normal! <C-w>p]])
+            end
+            local pos = { unpack(vim.fn.getcurpos(), 2, 4) }
+            vim.cmd('tabclose')
+            vim.fn.cursor(pos)
           else
-            return
-            '<Cmd>tab sp<CR>\
-            <Cmd>vert Gdiffsplit!<CR>\
-            <C-w><C-w>\
-            <Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>\
-            <C-w><C-w>\
-            zR\
-            <Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>'
+            vim.cmd([[tab sp]])
+            vim.cmd([[vert Gdiffsplit!]])
+            vim.cmd([[normal! <C-w><C-w>]])
+            vim.cmd([[setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap]])
+            vim.cmd([[normal! <C-w><C-w>]])
+            vim.cmd([[normal! zR]])
+            vim.cmd([[setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap]])
           end
         end,
-        { expr = true, silent = true }
+        { silent = true }
       )
       vim.keymap.set("n", "<Left>",
         function() return '<Cmd>' .. (vim.o.ft == 'fugitiveblame' and 'quit' or 'Git blame') .. '<CR>' end,
@@ -152,7 +156,7 @@ require('lazy').setup({
       end, 500)
     end,
     cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep' },
-    dependencies = { 'tpope/vim-dispatch', cmd = 'Dispatch' }
+    dependencies = { 'tpope/vim-dispatch' }
   },
   { 'tpope/vim-rhubarb',      cmd = 'GBrowse', dependencies = 'tpope/vim-fugitive' },
   {
