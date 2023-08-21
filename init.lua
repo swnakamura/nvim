@@ -87,6 +87,7 @@ require('lazy').setup({
 
   {
     'https://github.com/Bekaboo/dropbar.nvim',
+    event = 'VeryLazy',
     config = function()
       vim.keymap.set('n', "<leader>n", require('dropbar.api').pick)
       vim.cmd([[
@@ -513,6 +514,7 @@ hi link agitDiffRemove diffRemoved
   -- Adds latex snippets
   {
     'woodyZootopia/luasnip-latex-snippets.nvim',
+    event = 'VeryLazy',
     -- vimtex isn't required if using treesitter
     dependencies = "L3MON4D3/LuaSnip",
     config = function()
