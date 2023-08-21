@@ -118,23 +118,22 @@ require('lazy').setup({
       vim.keymap.set("n", "<Right>",
         function()
           if vim.o.diff then
-            if string.sub(vim.fn.bufname(), 1, 8) == 'fugitive' then
-              vim.cmd([[normal! <C-w>p]])
-            end
-            local pos = { unpack(vim.fn.getcurpos(), 2, 4) }
-            vim.cmd('tabclose')
-            vim.fn.cursor(pos)
+            local cmd = '<Cmd>tabclose<CR>'
+            local pos = vim.fn.getcurpos()
+            cmd = cmd .. string.format('<Cmd>call cursor(%d, %d)<CR>', pos[2], pos[3])
+            return cmd
           else
-            vim.cmd([[tab sp]])
-            vim.cmd([[vert Gdiffsplit!]])
-            vim.cmd([[normal! <C-w><C-w>]])
-            vim.cmd([[setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap]])
-            vim.cmd([[normal! <C-w><C-w>]])
-            vim.cmd([[normal! zR]])
-            vim.cmd([[setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap]])
+            return
+                [[<Cmd>tab sp<CR>]] ..
+                [[<Cmd>vert Gdiffsplit!<CR>]] ..
+                [[<C-w><C-w>]] ..
+                [[<Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>]] ..
+                [[<C-w><C-w>]] ..
+                [[zR]] ..
+                [[<Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>]]
           end
         end,
-        { silent = true }
+        { expr = true, silent = true }
       )
       vim.keymap.set("n", "<Left>",
         function() return '<Cmd>' .. (vim.o.ft == 'fugitiveblame' and 'quit' or 'Git blame') .. '<CR>' end,
