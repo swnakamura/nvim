@@ -654,7 +654,7 @@ ${0:Hello, world!}
         ),
         ls.parser.parse_snippet("preview",
           [[
-\documentclass{jlreq}
+\documentclass{article}
 \usepackage[active,tightpage]{preview}
 % some packages
 \usepackage{graphicx}
