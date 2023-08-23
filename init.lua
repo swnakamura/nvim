@@ -606,14 +606,14 @@ $0
           [[
 \documentclass[12pt,a4paper,titlepage]{jlreq}
 % some packages
-% \usepackage{graphicx}
-% \usepackage{amsmath}
-% \usepackage{amssymb}
-% \usepackage{todonotes}
-% \usepackage{siunitx}
-% \usepackage{bm}
-% \usepackage{booktabs}
-% \usepackage{capt-of}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{todonotes}
+\usepackage{siunitx}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{capt-of}
 %
 % \usepackage{/home/snakamura/ghq/github.com/woodyZootopia/latex-macros/macros-maths}
 % \usepackage[
@@ -657,14 +657,14 @@ ${0:Hello, world!}
 \documentclass{jlreq}
 \usepackage[active,tightpage]{preview}
 % some packages
-% \usepackage{graphicx}
-% \usepackage{amsmath}
-% \usepackage{amssymb}
-% \usepackage{todonotes}
-% \usepackage{siunitx}
-% \usepackage{bm}
-% \usepackage{booktabs}
-% \usepackage{capt-of}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{todonotes}
+\usepackage{siunitx}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{capt-of}
 
 \begin{document}
 \begin{preview}
