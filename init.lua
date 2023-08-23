@@ -1400,11 +1400,7 @@ hi CursorWord guibg=#282d44
     event = 'VeryLazy',
     config = function()
       vim.keymap.set('n', 'Z', function()
-        require("zen-mode").toggle({
-          window = {
-            width = .65
-          }
-        })
+        require("zen-mode").toggle()
       end)
     end,
   },
