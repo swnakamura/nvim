@@ -1969,7 +1969,7 @@ function! Disable() abort
 endfunction
 
 augroup auto_ja
-  autocmd BufRead */text/*/*.txt call IME_toggle()
+  autocmd BufRead */my-text/*/*.txt call IME_toggle()
   autocmd BufRead */obsidian/*/*.md call IME_toggle()
 augroup END
 ]])
