@@ -44,7 +44,7 @@ end
 require('lazy').setup({
 
   {
-    cond = not vim.g.is_gui,
+    cond = false,
     "folke/noice.nvim",
     event = "VeryLazy",
     opts = {
