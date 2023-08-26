@@ -615,7 +615,7 @@ $0
 \usepackage{booktabs}
 \usepackage{capt-of}
 %
-% \usepackage{/home/snakamura/ghq/github.com/woodyZootopia/latex-macros/macros-maths}
+% \usepackage{/home/snakamura/ghq/github.com/swnakamura/latex-macros/macros-maths}
 % \usepackage[
 %     backend=biber,
 %     style=numeric,
@@ -985,7 +985,7 @@ let g:tagbar_type_help = {
 
   -- colorscheme
   {
-    'woodyZootopia/iceberg.vim',
+    'swnakamura/iceberg.vim',
     priority = 1000,
     config = function()
       vim.cmd.colorscheme 'iceberg'
@@ -1335,7 +1335,7 @@ hi CursorWord guibg=#282d44
   },
 
   {
-    'woodyZootopia/gitsession.vim',
+    'swnakamura/gitsession.vim',
     init = function()
       vim.g.gitsession_autosave = 1
       vim.g.gitsession_tmp_dir = fn.stdpath('data') .. '/gitsession'
@@ -1371,7 +1371,7 @@ hi CursorWord guibg=#282d44
   -- Japanese
 
   {
-    'woodyZootopia/jpmoveword.vim',
+    'swnakamura/jpmoveword.vim',
     init = function()
       vim.g.jpmoveword_separator = '，．、。・「」『』（）【】'
       vim.g.matchpairs_textobject = 1
@@ -1381,12 +1381,12 @@ hi CursorWord guibg=#282d44
 
   {
     cond = vim.g.is_macos,
-    dir = '~/ghq/github.com/woodyZootopia/novel_formatter'
+    dir = '~/ghq/github.com/swnakamura/novel_formatter'
   },
 
   {
     cond = vim.g.is_macos,
-    dir = '~/ghq/github.com/woodyZootopia/novel-preview.vim',
+    dir = '~/ghq/github.com/swnakamura/novel-preview.vim',
     ft = 'text',
     dependencies = 'vim-denops/denops.vim',
     init = function()
