@@ -513,7 +513,7 @@ hi link agitDiffRemove diffRemoved
 
   -- Adds latex snippets
   {
-    'woodyZootopia/luasnip-latex-snippets.nvim',
+    'iurimateus/luasnip-latex-snippets.nvim',
     event = 'VeryLazy',
     -- vimtex isn't required if using treesitter
     dependencies = "L3MON4D3/LuaSnip",
@@ -729,6 +729,11 @@ ${0:Hello, world!}
         },
       })
     end
+  },
+
+  {
+    'mattn/emmet-vim',
+    ft = { 'html', 'xml', 'vue', 'htmldjango', 'markdown' }
   },
 
   {
@@ -1689,10 +1694,10 @@ vim.keymap.set('n', '<', '<<')
 -- tagsジャンプの時に複数ある時は一覧表示
 vim.keymap.set('n', '<C-]>', 'g<C-]>')
 
-vim.keymap.set('i', '<C-b>', "<Cmd>exec 'normal! b'<CR>")
-vim.keymap.set('i', '<C-f>', "<Cmd>exec 'normal! w'<CR>")
-vim.keymap.set('i', '<C-p>', "<Cmd>exec 'normal! gk'<CR>")
-vim.keymap.set('i', '<C-n>', "<Cmd>exec 'normal! gj'<CR>")
+vim.keymap.set('i', '<C-b>', "<Cmd>normal! b<CR>")
+vim.keymap.set('i', '<C-f>', "<Cmd>normal! w<CR>")
+vim.keymap.set('i', '<C-p>', "<Cmd>normal! gk<CR>")
+vim.keymap.set('i', '<C-n>', "<Cmd>normal! gj<CR>")
 
 vim.keymap.set('n', 'gss', '<Cmd>SaveSession<CR>')
 vim.keymap.set('n', 'gsr', '<Cmd>StartRepeatedSave<CR>')
@@ -1916,42 +1921,23 @@ augroup lua-highlight
 augroup END
 ]])
 
--- [[  autocmd-fcitx ]]
+-- [[  autocmd-IME ]]
 vim.cmd([[
-nnoremap <silent><expr> <F2> Fcitx_toggle()
-inoremap <silent><expr> <F2> Fcitx_toggle()
-nnoremap <silent> <Plug>(my-switch)j :call Toggle_fcitx_autotoggling()<CR>
-nnoremap <silent> <Plug>(my-switch)<C-j> :call Toggle_fcitx_autotoggling()<CR>
+nnoremap <silent><expr> <F2> IME_toggle()
+inoremap <silent><expr> <F2> IME_toggle()
 
-let g:is_fcitx_autotoggling_enabled = v:false
-function! Toggle_fcitx_autotoggling() abort
-  if g:is_fcitx_autotoggling_enabled
-    let g:is_fcitx_autotoggling_enabled=v:false
-    augroup fcitx_autoenable
-      autocmd!
-    augroup END
-    echomsg 'Fcitx toggling disabled'
-  else
-    let g:is_fcitx_autotoggling_enabled=v:true
-    augroup fcitx_autoenable
-      autocmd!
-      autocmd InsertEnter * if get(b:, 'fcitx_autoenable', '0') | call Enable() | endif
-      autocmd CmdLineEnter /,\? if get(b:, 'fcitx_autoenable', '0') | call Enable() | endif
-      autocmd InsertLeave * call Disable()
-      autocmd CmdlineLeave /,\? call Disable()
-      " autocmd FileType markdown,pixiv nnoremap <buffer><silent><expr> <F2> <SID>fcitx_toggle()
-    augroup END
-    echomsg 'Fcitx toggling enabled'
-  endif
-endfunction
-silent call Toggle_fcitx_autotoggling()
+augroup IME_autotoggle
+  autocmd!
+  autocmd InsertEnter * if get(b:, 'IME_autoenable', '0') | call Enable() | endif
+  autocmd CmdLineEnter /,\? if get(b:, 'IME_autoenable', '0') | call Enable() | endif
+  autocmd InsertLeave * call Disable()
+  autocmd CmdlineLeave /,\? call Disable()
+  " autocmd FileType markdown,pixiv nnoremap <buffer><silent><expr> <F2> <SID>IME_toggle()
+augroup END
 
-function! Fcitx_toggle() abort
-  let b:fcitx_autoenable = !get(b:, 'fcitx_autoenable', '0')
-  if b:fcitx_autoenable ==# 1
-    if !g:is_fcitx_autotoggling_enabled
-      call Toggle_fcitx_autotoggling()
-    endif
+function! IME_toggle() abort
+  let b:IME_autoenable = !get(b:, 'IME_autoenable', '0')
+  if b:IME_autoenable ==# 1
     echomsg '日本語入力モードON'
     if index(['i'], mode()) != -1
       call Enable()
@@ -1983,8 +1969,8 @@ function! Disable() abort
 endfunction
 
 augroup auto_ja
-  autocmd BufRead */novel/*/*.txt call Fcitx_toggle()
-  autocmd BufRead */obsidian/*/*.md call Fcitx_toggle()
+  autocmd BufRead */novel/*/*.txt call IME_toggle()
+  autocmd BufRead */obsidian/*/*.md call IME_toggle()
 augroup END
 ]])
 
