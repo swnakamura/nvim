@@ -1935,20 +1935,20 @@ augroup IME_autotoggle
   autocmd!
   autocmd InsertEnter * if get(b:, 'IME_autoenable', v:false) | call Enable() | endif
   autocmd InsertLeave * call Disable()
-  autocmd CmdLineEnter /,\? if get(b:, 'IME_autoenable', v:false) | cnoremap <CR> <Plug>(kensaku-search-replace)<CR> | endif
+  autocmd CmdLineEnter /,\? if get(b:, 'IME_autoenable', v:false) | cnoremap <CR> <Plug>(kensaku-search-replace)<CR>| endif
   autocmd CmdLineEnter /,\? if !get(b:, 'IME_autoenable', v:false) | silent! cunmap <CR> | endif
 augroup END
 
 function! IME_toggle() abort
   let b:IME_autoenable = !get(b:, 'IME_autoenable', v:false)
   if b:IME_autoenable ==# v:true
-    echomsg '日本語入力モードON'
-    if index(['i'], mode()) != -1
+    echo '日本語入力モードON'
+    if mode() == 'i'
       call Enable()
     endif
   else
     echo '日本語入力モードOFF'
-    if index(['i'], mode()) != -1
+    if mode() == 'i'
       call Disable()
     endif
   endif
