@@ -1399,6 +1399,11 @@ hi CursorWord guibg=#282d44
     end
   },
 
+  {
+    'lambdalisue/kensaku.vim',
+    dependencies = { 'vim-denops/denops.vim', 'lambdalisue/kensaku-search.vim' },
+  },
+
   -- Zen mode
   {
     "folke/zen-mode.nvim",
@@ -1929,9 +1934,9 @@ inoremap <silent><expr> <F2> IME_toggle()
 augroup IME_autotoggle
   autocmd!
   autocmd InsertEnter * if get(b:, 'IME_autoenable', v:false) | call Enable() | endif
-  autocmd CmdLineEnter /,\? if get(b:, 'IME_autoenable', v:false) | call Enable() | endif
   autocmd InsertLeave * call Disable()
-  autocmd CmdlineLeave /,\? call Disable()
+  autocmd CmdLineEnter /,\? if get(b:, 'IME_autoenable', v:false) | cnoremap <CR> <Plug>(kensaku-search-replace)<CR> | endif
+  autocmd CmdLineEnter /,\? if !get(b:, 'IME_autoenable', v:false) | silent! cunmap <CR> | endif
   " autocmd FileType markdown,pixiv nnoremap <buffer><silent><expr> <F2> <SID>IME_toggle()
 augroup END
 
