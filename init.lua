@@ -1937,7 +1937,6 @@ augroup IME_autotoggle
   autocmd InsertLeave * call Disable()
   autocmd CmdLineEnter /,\? if get(b:, 'IME_autoenable', v:false) | cnoremap <CR> <Plug>(kensaku-search-replace)<CR> | endif
   autocmd CmdLineEnter /,\? if !get(b:, 'IME_autoenable', v:false) | silent! cunmap <CR> | endif
-  " autocmd FileType markdown,pixiv nnoremap <buffer><silent><expr> <F2> <SID>IME_toggle()
 augroup END
 
 function! IME_toggle() abort
