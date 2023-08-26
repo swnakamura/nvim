@@ -1928,16 +1928,16 @@ inoremap <silent><expr> <F2> IME_toggle()
 
 augroup IME_autotoggle
   autocmd!
-  autocmd InsertEnter * if get(b:, 'IME_autoenable', '0') | call Enable() | endif
-  autocmd CmdLineEnter /,\? if get(b:, 'IME_autoenable', '0') | call Enable() | endif
+  autocmd InsertEnter * if get(b:, 'IME_autoenable', v:false) | call Enable() | endif
+  autocmd CmdLineEnter /,\? if get(b:, 'IME_autoenable', v:false) | call Enable() | endif
   autocmd InsertLeave * call Disable()
   autocmd CmdlineLeave /,\? call Disable()
   " autocmd FileType markdown,pixiv nnoremap <buffer><silent><expr> <F2> <SID>IME_toggle()
 augroup END
 
 function! IME_toggle() abort
-  let b:IME_autoenable = !get(b:, 'IME_autoenable', '0')
-  if b:IME_autoenable ==# 1
+  let b:IME_autoenable = !get(b:, 'IME_autoenable', v:false)
+  if b:IME_autoenable ==# v:true
     echomsg '日本語入力モードON'
     if index(['i'], mode()) != -1
       call Enable()
