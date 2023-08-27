@@ -226,7 +226,7 @@ hi link agitDiffRemove diffRemoved
   {
     'neovim/nvim-lspconfig',
     event = { "BufReadPost", "BufNewFile" },
-    cmd = { "LspInfo", "LspInstall", "LspUninstall" },
+    cmd = { "LspInfo", "LspInstall", "LspUninstall", "Mason" },
     dependencies = {
       { 'williamboman/mason.nvim', config = true },
       {
@@ -243,8 +243,6 @@ hi link agitDiffRemove diffRemoved
             })
           end
         },
-
-
         config = function()
           local mason_lspconfig = require 'mason-lspconfig'
           local server2setting = {
@@ -260,9 +258,6 @@ hi link agitDiffRemove diffRemoved
               },
             },
           }
-
-
-
           local on_attach = function(_, bufnr)
             local nmap = function(keys, func, desc)
               if desc then
@@ -329,9 +324,7 @@ hi link agitDiffRemove diffRemoved
           })
         end
       },
-
       { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
-
     },
   },
 
