@@ -328,6 +328,22 @@ hi link agitDiffRemove diffRemoved
     },
   },
 
+  {
+    'mfussenegger/nvim-lint',
+    event = { "BufReadPost", "BufNewFile" },
+    config = function()
+      require('lint').linters_by_ft = {
+        markdown = { 'proselint' },
+        python = { 'cspell' }
+      }
+      vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+        callback = function()
+          require("lint").try_lint()
+        end,
+      })
+    end
+  },
+
   -- operator augmentation
   {
     'rhysd/vim-operator-surround',
