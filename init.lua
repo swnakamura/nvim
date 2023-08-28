@@ -819,9 +819,6 @@ ${0:Hello, world!}
   -- markdown
   { 'preservim/vim-markdown', ft = 'markdown' },
 
-  -- kitty.conf syntax
-  'fladson/vim-kitty',
-
   -- buffer preview for markdown
   {
     'iamcco/markdown-preview.nvim',
