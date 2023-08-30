@@ -31,6 +31,18 @@ else
   vim.g.is_macos = false
 end
 
+if vim.g.is_macos == false then
+  -- disable lsp watcher. Too slow on linux
+  local ok, wf = pcall(require, "vim.lsp._watchfiles")
+  if ok then
+    wf._watchfunc = function()
+      return function() end
+    end
+  end
+end
+
+
+
 if vim.g['neovide'] ~= nil or vim.g['goneovim'] ~= nil then
   vim.g.is_gui = true
   vim.opt.guicursor = 'n-v-c-sm:block,i-ci-ve:ver5,r-cr-o:hor20'
