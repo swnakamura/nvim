@@ -347,6 +347,7 @@ hi link agitDiffRemove diffRemoved
     config = function()
       require('lint').linters_by_ft = {
         markdown = { 'proselint' },
+        tex = { 'proselint' },
         python = { 'cspell' }
       }
       vim.api.nvim_create_autocmd({ "BufWritePost" }, {
