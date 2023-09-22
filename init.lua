@@ -32,12 +32,73 @@ else
 end
 
 if vim.g.is_macos == false then
-  -- disable lsp watcher. Too slow on linux
-  local ok, wf = pcall(require, "vim.lsp._watchfiles")
-  if ok then
-    wf._watchfunc = function()
-      return function() end
+  local FSWATCH_EVENTS = {
+    Created = 1,
+    Updated = 2,
+    Removed = 3,
+    -- Renamed
+    OwnerModified = 2,
+    AttributeModified = 2,
+    MovedFrom = 1,
+    MovedTo = 3
+    -- IsFile
+    -- IsDir
+    -- IsSymLink
+    -- Link
+    -- Overflow
+  }
+
+  --- @param data string
+  --- @param opts table
+  --- @param callback fun(path: string, event: integer)
+  local function fswatch_output_handler(data, opts, callback)
+    local d = vim.split(data, '%s+')
+    local cpath = d[1]
+
+    for i = 2, #d do
+      if d[i] == 'IsDir' or d[i] == 'IsSymLink' or d[i] == 'PlatformSpecific' then
+        return
+      end
     end
+
+    if opts.include_pattern and opts.include_pattern:match(cpath) == nil then
+      return
+    end
+
+    if opts.exclude_pattern and opts.exclude_pattern:match(cpath) ~= nil then
+      return
+    end
+
+    for i = 2, #d do
+      local e = FSWATCH_EVENTS[d[i]]
+      if e then
+        callback(cpath, e)
+      end
+    end
+  end
+
+  local function fswatch(path, opts, callback)
+    local obj = vim.system({
+      'fswatch',
+      '--recursive',
+      '--event-flags',
+      '--exclude', '/.git/',
+      path
+    }, {
+      stdout = function(_, data)
+        for line in vim.gsplit(data, '\n', { plain = true, trimempty = true }) do
+          fswatch_output_handler(line, opts, callback)
+        end
+      end
+    })
+
+    return function()
+      obj:kill(2)
+    end
+  end
+
+  if vim.fn.executable('fswatch') == 1 then
+    require('vim.lsp._watchfiles')._watchfunc = fswatch
   end
 end
 
@@ -132,7 +193,7 @@ require('lazy').setup({
         function()
           if vim.o.diff then
             local cmd = '<Cmd>tabclose<CR>'
-            local pos = vim.fn.getcurpos()
+            local pos = fn.getcurpos()
             cmd = cmd .. string.format('<Cmd>call cursor(%d, %d)<CR>', pos[2], pos[3])
             return cmd
           else
@@ -257,9 +318,23 @@ hi link agitDiffRemove diffRemoved
         },
         config = function()
           local mason_lspconfig = require 'mason-lspconfig'
+          local words = {}
+          for word in io.open(fn.stdpath("config") .. "/spell/en.utf-8.add", 'r'):lines() do
+            table.insert(words, word)
+          end
           local server2setting = {
             clangd = {},
-            pyright = {},
+            pyright = {
+              pyright = { autoImportCompletions = true, },
+              python = {
+                analysis = {
+                  autoSearchPaths = true,
+                  diagnosticMode = 'openFilesOnly',
+                  useLibraryCodeForTypes = true,
+                  typeCheckingMode = 'off'
+                }
+              }
+            },
             rust_analyzer = {},
 
             lua_ls = {
@@ -270,6 +345,13 @@ hi link agitDiffRemove diffRemoved
               },
             },
             texlab = {},
+            -- ltex = {
+            --   ltex = {
+            --     dictionary = {
+            --       ["en-US"] = words,
+            --     },
+            --   },
+            -- }
           }
           local on_attach = function(_, bufnr)
             local nmap = function(keys, func, desc)
@@ -348,7 +430,7 @@ hi link agitDiffRemove diffRemoved
       require('lint').linters_by_ft = {
         markdown = { 'proselint' },
         tex = { 'proselint' },
-        python = { 'cspell' }
+        -- python = { 'cspell' }
       }
       vim.api.nvim_create_autocmd({ "BufWritePost" }, {
         callback = function()
@@ -536,7 +618,7 @@ hi link agitDiffRemove diffRemoved
 
   -- Adds latex snippets
   {
-    'iurimateus/luasnip-latex-snippets.nvim',
+    dir = '~/ghq/github.com/iurimateus/luasnip-latex-snippets.nvim',
     event = 'VeryLazy',
     -- vimtex isn't required if using treesitter
     dependencies = "L3MON4D3/LuaSnip",
@@ -566,12 +648,16 @@ hi link agitDiffRemove diffRemoved
 
       local ls = require("luasnip")
 
+      ls.add_snippets("bash", {
+        ls.parser.parse_snippet('cdhere', 'cd "$(dirname "$0")"')
+      })
+
       ls.add_snippets("python", {
-        ls.parser.parse_snippet("pf", "print(f\"{$1}\")$0"),
-        ls.parser.parse_snippet("pdb", "__import__(\"pdb\").set_trace()"),
+        ls.parser.parse_snippet("pf", [[print(f"{$1}")$0]]),
+        ls.parser.parse_snippet("pdb", [[__import__("pdb").set_trace()]]),
         ls.parser.parse_snippet("todo", "# TODO: "),
         ls.parser.parse_snippet("pltimport", "import matplotlib.pyplot as plt"),
-        ls.parser.parse_snippet("ifmain", "if __name__ == \"__main__\":"),
+        ls.parser.parse_snippet("ifmain", [[if __name__ == "__main__":]]),
         ls.parser.parse_snippet({ trig = "plot_instantly", name = "plot_instantly" },
           [[
 from matplotlib.pyplot import plot,hist,imshow,scatter,show,savefig,legend,clf,figure,close
@@ -604,7 +690,7 @@ args = p.parse_args()
       ls.add_snippets("markdown", {
         ls.parser.parse_snippet("rb", "<ruby>$1<rp> (</rp><rt>$2</rt><rp>) </rp></ruby>$0"),
         ls.parser.parse_snippet("str", "<strong>$1</strong>$0"),
-        ls.parser.parse_snippet({ trig = ",,", snippetType = "autosnippet" }, "$$1$"),
+        ls.parser.parse_snippet({ trig = ",,", snippetType = "autosnippet" }, "$$1$$0"),
         ls.parser.parse_snippet("acd", [[
 <details>
 <summary>
@@ -628,7 +714,8 @@ $0
         ls.parser.parse_snippet("jbase",
           [[
 \documentclass[12pt,a4paper,titlepage]{jlreq}
-% some packages
+\usepackage{luatexja}
+%%%% some packages
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -637,8 +724,8 @@ $0
 \usepackage{bm}
 \usepackage{booktabs}
 \usepackage{capt-of}
-%
-% \usepackage{/home/snakamura/ghq/github.com/swnakamura/latex-macros/macros-maths}
+
+%%%% if you use citations...
 % \usepackage[
 %     backend=biber,
 %     style=numeric,
@@ -648,10 +735,22 @@ $0
 %     eprint=false
 % ]{biblatex}
 % \addbibresource{citations.bib}
+
+%%%% luatexja choices with fonts
+%% default 
+% \usepackage[haranoaji]{luatexja-preset}
+%% default with deluxe option (enables multi weight)
+\usepackage[haranoaji, deluxe]{luatexja-preset}
+%% source han
+% \usepackage[sourcehan, deluxe]{luatexja-preset}
+%% hiragino-pro
+% \usepackage[hiragino-pro, deluxe]{luatexja-preset}
+
+%%%% if you use ruby
 % \usepackage{luatexja-ruby}
 
-\title{${1:レポート}}
-\author{${2}}
+\title{report}
+\author{shu}
 %
 \begin{document}
 \maketitle
@@ -659,7 +758,8 @@ $0
 \setcounter{tocdepth}{5}
 % \tableofcontents
 
-${0:Hello, world!}
+日本語を勉強する
+\textbf{日本語を勉強する}
 
 % \printbibliography
 \end{document}
@@ -817,6 +917,7 @@ ${0:Hello, world!}
   },
 
   {
+    cond=false,
     'monaqa/dial.nvim',
     config = function()
       vim.keymap.set("n", "<C-a>", require("dial.map").inc_normal(), { noremap = true })
@@ -924,7 +1025,7 @@ ${0:Hello, world!}
   },
 
   -- rust
-  { 'rust-lang/rust.vim',     ft = 'rust' },
+  { 'rust-lang/rust.vim', ft = 'rust' },
 
   -- tagbar
   {
@@ -1116,13 +1217,12 @@ hi CursorWord guibg=#282d44
 
 
   -- Fuzzy Finder (files, lsp, etc)
+  --
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
     dependencies = { 'nvim-lua/plenary.nvim', {
       'nvim-telescope/telescope-fzf-native.nvim',
-      -- NOTE: If you are having trouble with this installation,
-      --       refer to the README for telescope-fzf-native for more instructions.
       build = 'make',
       cond = function()
         return fn.executable 'make' == 1
@@ -1141,7 +1241,7 @@ hi CursorWord guibg=#282d44
       }
 
       -- Enable telescope fzf native, if installed
-      pcall(require('telescope').load_extension, 'fzf')
+      require('telescope').load_extension('fzf')
     end,
     init = function()
       vim.keymap.set('n', '<leader>gf', '<Cmd>Telescope git_files<CR>', { desc = 'Search [G]it [F]iles' })
@@ -1198,7 +1298,7 @@ hi CursorWord guibg=#282d44
         -- If using nvim-cmp, otherwise set to false
         nvim_cmp = true,
         -- Trigger completion at 2 chars
-        min_chars = 2,
+        min_chars = 0,
         -- Where to put new notes created from completion. Valid options are
         --  * "current_dir" - put new notes in same directory as the current buffer.
         --  * "notes_subdir" - put new notes in the default notes subdirectory.
@@ -1292,11 +1392,11 @@ hi CursorWord guibg=#282d44
     config = function()
       require('nvim-treesitter.configs').setup {
         -- Add languages to be installed here that you want installed for treesitter
-        ensure_installed = { 'bibtex', 'c', 'cpp', 'go', 'lua', 'markdown', 'python', 'rust', 'latex', 'tsx',
+        ensure_installed = { 'bibtex', 'bash', 'c', 'cpp', 'go', 'lua', 'markdown', 'python', 'rust', 'latex', 'tsx',
           'typescript', 'vimdoc', 'vim', 'yaml' },
 
         -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-        auto_install = false,
+        auto_install = true,
 
         highlight = { enable = true },
         indent = { enable = true },
@@ -1421,7 +1521,7 @@ hi CursorWord guibg=#282d44
   {
     cond = vim.g.is_macos,
     dir = '~/ghq/github.com/swnakamura/novel-preview.vim',
-    ft = 'text',
+    -- ft = 'text',
     dependencies = 'vim-denops/denops.vim',
     init = function()
       if vim.g.is_macos then
@@ -1580,11 +1680,8 @@ vim.opt.wildignore:append({ '*.o', '*.obj', '*.pyc', '*.so', '*.dll' })
 vim.o.splitbelow = true
 vim.o.splitright = true
 
-if vim.g.is_macos then
-  vim.o.title = false
-else
-  vim.o.title = true
-end
+vim.o.title = true
+vim.o.titlestring='%f%M%R%H'
 
 vim.opt.matchpairs:append({ '「:」', '（:）', '『:』', '【:】', '〈:〉', '《:》', '〔:〕', '｛:｝', '<:>' })
 
@@ -1619,34 +1716,34 @@ vim.keymap.set('n', '<Plug>(my-win)', '<Nop>')
 vim.keymap.set('n', 's', '<Plug>(my-win)', { remap = true })
 vim.keymap.set('x', 's', '<Nop>')
 -- window control
-vim.keymap.set('n', '<Plug>(my-win)s', '<Cmd>split<CR>')
-vim.keymap.set('n', '<Plug>(my-win)v', '<Cmd>vsplit<CR>')
+-- vim.keymap.set('n', '<Plug>(my-win)s', '<Cmd>split<CR>')
+-- vim.keymap.set('n', '<Plug>(my-win)v', '<Cmd>vsplit<CR>')
 -- st is used by nvim-tree
-vim.keymap.set('n', '<Plug>(my-win)c', '<Cmd>tab sp<CR>')
-vim.keymap.set('n', '<C-w>c', '<Cmd>tab sp<CR>')
-vim.keymap.set('n', '<C-w><C-c>', '<Cmd>tab sp<CR>')
-vim.keymap.set('n', '<Plug>(my-win)C', '<Cmd>-tab sp<CR>')
-vim.keymap.set('n', '<Plug>(my-win)j', '<C-w>j')
-vim.keymap.set('n', '<Plug>(my-win)k', '<C-w>k')
-vim.keymap.set('n', '<Plug>(my-win)l', '<C-w>l')
-vim.keymap.set('n', '<Plug>(my-win)h', '<C-w>h')
-vim.keymap.set('n', '<Plug>(my-win)J', '<C-w>J')
-vim.keymap.set('n', '<Plug>(my-win)K', '<C-w>K')
-vim.keymap.set('n', '<Plug>(my-win)L', '<C-w>L')
-vim.keymap.set('n', '<Plug>(my-win)H', '<C-w>H')
-vim.keymap.set('n', '<Plug>(my-win)r', '<C-w>r')
-vim.keymap.set('n', '<Plug>(my-win)=', '<C-w>=')
-vim.keymap.set('n', '<Plug>(my-win)O', '<C-w>=')
-vim.keymap.set('n', '<Plug>(my-win)o', '<C-w>_<C-w>|')
-vim.keymap.set('n', '<Plug>(my-win)1', '<Cmd>1tabnext<CR>')
-vim.keymap.set('n', '<Plug>(my-win)2', '<Cmd>2tabnext<CR>')
-vim.keymap.set('n', '<Plug>(my-win)3', '<Cmd>3tabnext<CR>')
-vim.keymap.set('n', '<Plug>(my-win)4', '<Cmd>4tabnext<CR>')
-vim.keymap.set('n', '<Plug>(my-win)5', '<Cmd>5tabnext<CR>')
-vim.keymap.set('n', '<Plug>(my-win)6', '<Cmd>6tabnext<CR>')
-vim.keymap.set('n', '<Plug>(my-win)7', '<Cmd>7tabnext<CR>')
-vim.keymap.set('n', '<Plug>(my-win)8', '<Cmd>8tabnext<CR>')
-vim.keymap.set('n', '<Plug>(my-win)9', '<Cmd>9tabnext<CR>')
+-- vim.keymap.set('n', '<Plug>(my-win)c', '<Cmd>tab sp<CR>')
+-- vim.keymap.set('n', '<C-w>c', '<Cmd>tab sp<CR>')
+-- vim.keymap.set('n', '<C-w><C-c>', '<Cmd>tab sp<CR>')
+-- vim.keymap.set('n', '<Plug>(my-win)C', '<Cmd>-tab sp<CR>')
+-- vim.keymap.set('n', '<Plug>(my-win)j', '<C-w>j')
+-- vim.keymap.set('n', '<Plug>(my-win)k', '<C-w>k')
+-- vim.keymap.set('n', '<Plug>(my-win)l', '<C-w>l')
+-- vim.keymap.set('n', '<Plug>(my-win)h', '<C-w>h')
+-- vim.keymap.set('n', '<Plug>(my-win)J', '<C-w>J')
+-- vim.keymap.set('n', '<Plug>(my-win)K', '<C-w>K')
+-- vim.keymap.set('n', '<Plug>(my-win)L', '<C-w>L')
+-- vim.keymap.set('n', '<Plug>(my-win)H', '<C-w>H')
+-- vim.keymap.set('n', '<Plug>(my-win)r', '<C-w>r')
+-- vim.keymap.set('n', '<Plug>(my-win)=', '<C-w>=')
+-- vim.keymap.set('n', '<Plug>(my-win)O', '<C-w>=')
+-- vim.keymap.set('n', '<Plug>(my-win)o', '<C-w>_<C-w>|')
+-- vim.keymap.set('n', '<Plug>(my-win)1', '<Cmd>1tabnext<CR>')
+-- vim.keymap.set('n', '<Plug>(my-win)2', '<Cmd>2tabnext<CR>')
+-- vim.keymap.set('n', '<Plug>(my-win)3', '<Cmd>3tabnext<CR>')
+-- vim.keymap.set('n', '<Plug>(my-win)4', '<Cmd>4tabnext<CR>')
+-- vim.keymap.set('n', '<Plug>(my-win)5', '<Cmd>5tabnext<CR>')
+-- vim.keymap.set('n', '<Plug>(my-win)6', '<Cmd>6tabnext<CR>')
+-- vim.keymap.set('n', '<Plug>(my-win)7', '<Cmd>7tabnext<CR>')
+-- vim.keymap.set('n', '<Plug>(my-win)8', '<Cmd>8tabnext<CR>')
+-- vim.keymap.set('n', '<Plug>(my-win)9', '<Cmd>9tabnext<CR>')
 
 -- disable Fn in insert mode
 for i = 1, 12 do
@@ -1771,6 +1868,16 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.wrap = false
   end,
   group = 'quick-fix-window'
+})
+
+vim.api.nvim_create_augroup('markdown-mapping', {})
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'markdown',
+  callback = function()
+    vim.keymap.set('v', '<C-b>', '<Plug>(operator-surround-append)*l.', { buffer = true })
+    vim.keymap.set('v', '<C-i>', '<Plug>(operator-surround-append)*', { buffer = true })
+  end,
+  group = 'markdown-mapping'
 })
 
 
@@ -1933,6 +2040,7 @@ augroup END
 " augroup csv-tsv
 "   au!
 "   au BufReadPost,BufWritePost *.csv call Preserve('silent %!column -s, -o, -t -L')
+"  au BufReadPost,BufWritePost *.csv call Preserve('silent %!column -s, -t') " macOS
 "   au BufWritePre              *.csv call Preserve('silent %s/\s\+\ze,/,/ge')
 "   au BufReadPost,BufWritePost *.tsv call Preserve('silent %!column -s "$(printf ''\t'')" -o "$(printf ''\t'')" -t -L')
 "   au BufWritePre              *.tsv call Preserve('silent %s/ \+\ze	//ge')
@@ -1948,9 +2056,10 @@ endfu
 augroup jupyter-notebook
   au!
   au BufReadPost *.ipynb %!jupytext --from ipynb --to py:percent
+  au BufReadPost *.ipynb set filetype=python
   au BufWritePre *.ipynb let g:jupyter_previous_location = getpos('.')
-  au BufWritePre *.ipynb %!jupytext --from py:percent --to ipynb
-  au BufWritePost *.ipynb %!jupytext --from ipynb --to py:percent
+  au BufWritePre *.ipynb silent %!jupytext --from py:percent --to ipynb
+  au BufWritePost *.ipynb silent %!jupytext --from ipynb --to py:percent
   au BufWritePost *.ipynb if exists('g:jupyter_previous_location') | call setpos('.', g:jupyter_previous_location) | endif
 augroup END
 
@@ -2007,8 +2116,8 @@ function! Disable() abort
 endfunction
 
 augroup auto_ja
-  autocmd BufRead */my-text/*/*.txt call IME_toggle()
-  autocmd BufRead */obsidian/*/*.md call IME_toggle()
+  autocmd BufRead */my-text/**.txt call IME_toggle()
+  autocmd BufRead */obsidian/**.md call IME_toggle()
 augroup END
 ]])
 
