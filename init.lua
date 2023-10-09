@@ -86,6 +86,9 @@ if vim.g.is_macos == false then
       path
     }, {
       stdout = function(_, data)
+        if data == nil then
+            return
+        end
         for line in vim.gsplit(data, '\n', { plain = true, trimempty = true }) do
           fswatch_output_handler(line, opts, callback)
         end
@@ -1469,11 +1472,13 @@ hi CursorWord guibg=#282d44
   },
 
   {
-    'swnakamura/gitsession.vim',
-    init = function()
-      vim.g.gitsession_autosave = 1
-      vim.g.gitsession_tmp_dir = fn.stdpath('data') .. '/gitsession'
-    end
+  'rmagatti/auto-session',
+  config = function()
+    require("auto-session").setup {
+      log_level = "error",
+      auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/"},
+    }
+  end
   },
 
   {
@@ -1952,7 +1957,7 @@ function! Visualmatch()
 
   if line('.') == line('v')
     let colrange = charcol('.') < charcol('v') ? [charcol('.'), charcol('v')] : [charcol('v'), charcol('.')]
-    let text = getline('.')->strcharpart(colrange[0]-1, colrange[1]-colrange[0]+1)
+    let text = getline('.')->strcharpart(colrange[0]-1, colrange[1]-colrange[0]+1)->escape('\')
   elseif mode() == 'v' " multiline matchingはvisual modeのみ
     if line('.') > line('v')
       let linerange = ['v','.']
