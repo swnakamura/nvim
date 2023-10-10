@@ -651,7 +651,15 @@ hi link agitDiffRemove diffRemoved
 
       local ls = require("luasnip")
 
+      ls.add_snippets("sh", {
+        ls.parser.parse_snippet('cdhere', 'cd "$(dirname "$0")"')
+      })
+
       ls.add_snippets("bash", {
+        ls.parser.parse_snippet('cdhere', 'cd "$(dirname "$0")"')
+      })
+
+      ls.add_snippets("zsh", {
         ls.parser.parse_snippet('cdhere', 'cd "$(dirname "$0")"')
       })
 
@@ -913,18 +921,18 @@ $0
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
-    config=function()
+    config = function()
       local highlight = {
-          "CursorColumn",
-          "Whitespace",
+        "CursorColumn",
+        "Whitespace",
       }
       require("ibl").setup {
-          indent = { highlight = highlight, char = "" },
-          whitespace = {
-              highlight = highlight,
-              remove_blankline_trail = false,
-          },
-          scope = { enabled = false },
+        indent = { highlight = highlight, char = "" },
+        whitespace = {
+          highlight = highlight,
+          remove_blankline_trail = false,
+        },
+        scope = { enabled = false },
       }
     end
   },
@@ -1038,7 +1046,7 @@ $0
   },
 
   -- rust
-  { 'rust-lang/rust.vim', ft = 'rust' },
+  { 'rust-lang/rust.vim',     ft = 'rust' },
 
   -- tagbar
   {
@@ -1487,6 +1495,25 @@ hi CursorWord guibg=#282d44
       require("auto-session").setup {
         log_level = "error",
         auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+      }
+    end
+  },
+
+  {
+    'ojroques/nvim-osc52',
+    config = function()
+      local function copy(lines, _)
+        require('osc52').copy(table.concat(lines, '\n'))
+      end
+
+      local function paste()
+        return { vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('') }
+      end
+
+      vim.g.clipboard = {
+        name = 'osc52',
+        copy = { ['+'] = copy, ['*'] = copy },
+        paste = { ['+'] = paste, ['*'] = paste },
       }
     end
   },
