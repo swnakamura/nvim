@@ -1250,12 +1250,15 @@ hi CursorWord guibg=#282d44
       end,
     } },
     config = function()
+      local actions = require('telescope.actions')
       require('telescope').setup {
         defaults = {
           mappings = {
             i = {
               ['<C-u>'] = false,
               ['<C-d>'] = false,
+              ['<ScrollWheelUp>'] = actions.move_selection_previous,
+              ['<ScrollWheelDown>'] = actions.move_selection_next,
             },
           },
         },
@@ -1413,7 +1416,7 @@ hi CursorWord guibg=#282d44
     config = function()
       require('nvim-treesitter.configs').setup {
         -- Add languages to be installed here that you want installed for treesitter
-        ensure_installed = { 'bibtex', 'bash', 'c', 'cpp', 'go', 'lua', 'markdown', 'python', 'rust', 'latex', 'tsx',
+        ensure_installed = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'go', 'html', 'lua', 'markdown', 'python', 'rust', 'latex', 'tsx',
           'typescript', 'vimdoc', 'vim', 'yaml' },
 
         -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
@@ -1617,8 +1620,6 @@ hi CursorWord guibg=#282d44
 
   -- color picker
   { 'uga-rosa/ccc.nvim',      event = 'VeryLazy' },
-
-  { import = 'custom.plugins' },
 }, {})
 
 -- [[ Setting options ]]
