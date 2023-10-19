@@ -177,6 +177,8 @@ require('lazy').setup({
   -- Git related plugins
   {
     'tpope/vim-fugitive',
+    cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep' },
+    dependencies = { 'tpope/vim-dispatch' },
     init = function()
       vim.keymap.set("n", "<leader>gs", ":Git <CR><Cmd>only<CR>", { silent = true })
       vim.keymap.set("n", "<leader>ga", ":Gwrite<CR>", { silent = true })
@@ -231,8 +233,6 @@ require('lazy').setup({
         ]])
       end, 500)
     end,
-    cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep' },
-    dependencies = { 'tpope/vim-dispatch' }
   },
   { 'tpope/vim-rhubarb',      cmd = 'GBrowse', dependencies = 'tpope/vim-fugitive' },
   {
@@ -276,6 +276,10 @@ hi link agitDiffRemove diffRemoved
     event = 'VeryLazy',
     init = function()
       vim.keymap.set({ 'n', 'v' }, ';', ':')
+      vim.g.clever_f_smart_case=1
+      vim.g.clever_f_use_migemo=1
+      vim.g.clever_f_across_no_line=1
+      vim.g.clever_f_chars_match_any_signs=';'
     end
   },
 
