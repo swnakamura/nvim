@@ -1755,6 +1755,43 @@ vim.keymap.set('n', '<Plug>(g-mode)j', 'gj<Plug>(g-mode)')
 vim.keymap.set('n', '<Plug>(g-mode)k', 'gk<Plug>(g-mode)')
 vim.keymap.set('n', '<Plug>(g-mode)', '<Nop>', { remap = true })
 
+vim.cmd([[
+" カーソルがインデント内部ならtrue
+function! s:in_indent() abort
+  return col('.') <= indent('.')
+endfunction
+
+" カーソルがインデントとずれた位置ならtrue
+function! s:not_fit_indent() abort
+  return !!((col('.') - 1) % shiftwidth())
+endfunction
+
+function! s:quantized_h(cnt = 1) abort
+  if a:cnt > 1 || !&expandtab
+    execute printf('normal! %sh', a:cnt)
+    return
+  endif
+  normal! h
+  while s:in_indent() && s:not_fit_indent()
+    normal! h
+  endwhile
+endfunction
+
+function! s:quantized_l(cnt = 1) abort
+  if a:cnt > 1 || !&expandtab
+    execute printf('normal! %sl', a:cnt)
+    return
+  endif
+  normal! l
+  while s:in_indent() && s:not_fit_indent()
+    normal! l
+  endwhile
+endfunction
+
+noremap h <cmd>call <sid>quantized_h(v:count1)<cr>
+noremap l <cmd>call <sid>quantized_l(v:count1)<cr>
+]])
+
 -- do not copy when deleting by x
 vim.keymap.set({ 'n', 'x' }, 'x', '"_x')
 
@@ -2147,7 +2184,7 @@ endfunction
 
 function! Enable() abort
   if g:is_macos
-    call system('/Users/snakamura/im-select com.justsystems.inputmethod.atok33.Japanese')
+    call system('$HOME/im-select com.justsystems.inputmethod.atok33.Japanese')
     " call system('/Users/snakamura/im-select com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese')
   else
     call system('fcitx5-remote -o')
@@ -2156,7 +2193,7 @@ endfunction
 
 function! Disable() abort
   if g:is_macos
-    call system('/Users/snakamura/im-select com.apple.keylayout.ABC')
+    call system('$HOME/im-select com.apple.keylayout.ABC')
   else
     call system('fcitx5-remote -c')
   endif
