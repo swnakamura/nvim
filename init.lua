@@ -5,13 +5,12 @@ local fn = vim.fn
 -- Do not load some of the default plugins
 vim.g.loaded_netrwPlugin = true
 
--- Set <space> as the leader key
 vim.cmd([[
 let g:mapleader = "\<Space>"
 let g:maplocalleader = "\<C-space>"
 ]])
 
--- Install package manager
+-- Install lazy.nvim (package manager)
 local lazypath = fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.uv.fs_stat(lazypath) then
   fn.system {
@@ -19,11 +18,35 @@ if not vim.uv.fs_stat(lazypath) then
     'clone',
     '--filter=blob:none',
     'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable', -- latest stable release
+    '--branch=stable',
     lazypath,
   }
 end
 vim.opt.rtp:prepend(lazypath)
+
+if fn.has('wsl') == 1 then
+  vim.g.is_wsl = true
+else
+  vim.g.is_wsl = false
+end
+
+if vim.g.is_wsl then
+  vim.cmd([[
+let g:clipboard = {
+        \   'name': 'WslClipboard',
+        \   'copy': {
+        \      '+': ['sh', '-c', 'iconv -t sjis | clip.exe'],
+        \      '*': ['sh', '-c', 'iconv -t sjis | clip.exe'],
+        \    },
+        \   'paste': {
+        \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+        \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+        \   },
+        \   'cache_enabled': 0,
+        \ }
+  ]])
+end
+
 
 if fn.has('mac') == 1 then
   vim.g.is_macos = true
@@ -107,14 +130,6 @@ end
 
 
 
-if vim.g['neovide'] ~= nil or vim.g['goneovim'] ~= nil then
-  vim.g.is_gui = true
-  vim.opt.guicursor = 'n-v-c-sm:block,i-ci-ve:ver5,r-cr-o:hor20'
-  vim.opt.guifont = 'Fira_Code:h15'
-else
-  vim.g.is_gui = false
-end
-
 -- [[ Plugin settings ]]
 
 require('lazy').setup({
@@ -153,6 +168,7 @@ require('lazy').setup({
   },
 
   {
+    cond=false,
     'goolord/alpha-nvim',
     event = "VimEnter",
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -180,28 +196,23 @@ require('lazy').setup({
     cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep' },
     dependencies = { 'tpope/vim-dispatch' },
     init = function()
-      vim.keymap.set("n", "<leader>gs", ":Git <CR><Cmd>only<CR>", { silent = true })
-      vim.keymap.set("n", "<leader>ga", ":Gwrite<CR>", { silent = true })
-      vim.keymap.set("n", "<leader>gc", ":Git commit -v<CR>", { silent = true })
-      vim.keymap.set("n", "<leader>gb", ":Git blame<CR>", { silent = true })
-      vim.keymap.set("n", "<leader>gh", ":tab sp<CR>:0Gclog<CR>", { silent = true })
-      vim.keymap.set("n", "<leader>gp", "<Cmd>Dispatch! git push<CR>", { silent = true })
-      vim.keymap.set("n", "<leader>gf", "<Cmd>Dispatch! git fetch<CR>", { silent = true })
-      vim.keymap.set("n", "<leader>gd", ":vert :Gdiffsplit<CR>", { silent = true })
-      vim.keymap.set("n", "<leader>gr", ":Git rebase -i<CR>", { silent = true })
-      vim.keymap.set("n", "<leader>gg", ":Glgrep \"\"<Left>")
-      vim.keymap.set("n", "<leader>gm", ":Git merge ")
+      vim.keymap.set("n", "<leader>gs", "<cmd>Git <CR><Cmd>only<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>ga", "<cmd>Gwrite<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>gc", "<cmd>Git commit -v<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>gb", "<cmd>Git blame<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>gh", "<cmd>tab sp<CR>:0Gclog<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>gp", "<cmd>Dispatch! git push<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>gf", "<cmd>Dispatch! git fetch<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>gd", "<cmd>vert :Gdiffsplit<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>gr", "<cmd>Git rebase -i<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>gg", "<cmd>Glgrep \"\"<Left>")
+      vim.keymap.set("n", "<leader>gm", "<cmd>Git merge ")
 
       vim.keymap.set("n", "<S-Up>", ":Gwrite<CR>", { silent = true })
       vim.keymap.set("n", "<C-Up>", ":Git commit -v<CR>", { silent = true })
       vim.keymap.set("n", "<Right>",
         function()
-          if vim.o.diff then
-            local cmd = '<Cmd>tabclose<CR>'
-            local pos = fn.getcurpos()
-            cmd = cmd .. string.format('<Cmd>call cursor(%d, %d)<CR>', pos[2], pos[3])
-            return cmd
-          else
+          if not vim.o.diff then
             return
                 [[<Cmd>tab sp<CR>]] ..
                 [[<Cmd>vert Gdiffsplit!<CR>]] ..
@@ -276,10 +287,10 @@ hi link agitDiffRemove diffRemoved
     event = 'VeryLazy',
     init = function()
       vim.keymap.set({ 'n', 'v' }, ';', ':')
-      vim.g.clever_f_smart_case=1
-      vim.g.clever_f_use_migemo=1
-      vim.g.clever_f_across_no_line=1
-      vim.g.clever_f_chars_match_any_signs=';'
+      vim.g.clever_f_smart_case = 1
+      vim.g.clever_f_use_migemo = 1
+      vim.g.clever_f_across_no_line = 1
+      vim.g.clever_f_chars_match_any_signs = ';'
     end
   },
 
@@ -435,8 +446,8 @@ hi link agitDiffRemove diffRemoved
     event = { "BufReadPost", "BufNewFile" },
     config = function()
       require('lint').linters_by_ft = {
-        markdown = { 'proselint' },
-        tex = { 'proselint' },
+        -- markdown = { 'proselint' },
+        -- tex = { 'proselint' },
         -- python = { 'cspell' }
       }
       vim.api.nvim_create_autocmd({ "BufWritePost" }, {
@@ -630,7 +641,7 @@ hi link agitDiffRemove diffRemoved
     -- vimtex isn't required if using treesitter
     dependencies = "L3MON4D3/LuaSnip",
     config = function()
-      require 'luasnip-latex-snippets'.setup()
+      require 'luasnip-latex-snippets'.setup({ use_treesitter = true })
       -- or setup({ use_treesitter = true })
     end,
   },
@@ -656,7 +667,7 @@ hi link agitDiffRemove diffRemoved
       local ls = require("luasnip")
 
       ls.add_snippets("sh", {
-        ls.parser.parse_snippet('cdhere', 'cd "$(dirname "$0")"')
+        ls.parser.parse_snippet('cdhere', [[cd "$(dirname "\$0")"]])
       })
 
       ls.add_snippets("bash", {
@@ -669,16 +680,16 @@ hi link agitDiffRemove diffRemoved
 
       ls.add_snippets("python", {
         ls.parser.parse_snippet("pf", [[print(f"{$1}")$0]]),
-        ls.parser.parse_snippet("pdb", [[__import__("pdb").set_trace()]]),
+        ls.parser.parse_snippet("bp", [[breakpoint()]]),
         ls.parser.parse_snippet("todo", "# TODO: "),
         ls.parser.parse_snippet("pltimport", "import matplotlib.pyplot as plt"),
         ls.parser.parse_snippet("ifmain", [[if __name__ == "__main__":]]),
         ls.parser.parse_snippet({ trig = "plot_instantly", name = "plot_instantly" },
           [[
-from matplotlib.pyplot import plot,hist,imshow,scatter,show,savefig,legend,clf,figure,close
 import matplotlib.pyplot as plt
-imshow($1)
-show()
+ax, fig = plt.subplots()
+ax.imshow($1)
+ax.show()
 $0
 ]]
         ),
@@ -829,6 +840,17 @@ $0
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
+      {
+        's1n7ax/nvim-window-picker',
+        name = 'window-picker',
+        event = 'VeryLazy',
+        version = '2.*',
+        config = function()
+          require 'window-picker'.setup({
+            hint = 'floating-big-letter'
+          })
+        end,
+      },
     },
     config = function()
       require("neo-tree").setup({
@@ -844,6 +866,8 @@ $0
               ["<C-v>"] = "open_vsplit",
               ["s"] = "none",
               ["/"] = "none",
+              ["?"] = "none",
+              ["g?"] = "show_help",
               ["F"] = "fuzzy_finder",
               ["P"] = "toggle_preview",
               ["-"] = "navigate_up",
@@ -890,8 +914,8 @@ $0
       map('n', '<C-,>', '<Cmd>BufferMovePrevious<CR>', opts)
       map('n', '<C-.>', '<Cmd>BufferMoveNext<CR>', opts)
       map('n', '<leader>q', '<Cmd>BufferClose<CR>', opts)
-      map('n', 'sp', '<Cmd>BufferPrevious<CR>', opts)
-      map('n', 'sn', '<Cmd>BufferNext<CR>', opts)
+      -- map('n', '<backspace>', '<Cmd>BufferClose<CR>', opts)
+      -- map('n', '<C-w>', '<Cmd>BufferClose<CR>', opts)
       map('n', '<C-1>', '<Cmd>BufferGoto 1<CR>', opts)
       map('n', '<C-2>', '<Cmd>BufferGoto 2<CR>', opts)
       map('n', '<C-3>', '<Cmd>BufferGoto 3<CR>', opts)
@@ -926,11 +950,18 @@ $0
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     config = function()
+
       local highlight = {
-        "CursorColumn",
-        "Whitespace",
+        "IBL1",
+        "IBL2",
       }
+      vim.cmd([[
+      hi IBL1 guifg=#242940 guibg=#1e2132
+      hi IBL2 guifg=#242940 guibg=#161821
+      ]])
+
       require("ibl").setup {
+        -- indent = { highlight = highlight, char = "▏" },
         indent = { highlight = highlight, char = "" },
         whitespace = {
           highlight = highlight,
@@ -1050,7 +1081,7 @@ $0
   },
 
   -- rust
-  { 'rust-lang/rust.vim',     ft = 'rust' },
+  { 'rust-lang/rust.vim', ft = 'rust' },
 
   -- tagbar
   {
@@ -1153,13 +1184,15 @@ let g:tagbar_type_help = {
 " Less bright search color
 hi clear Search
 hi Search                gui=bold,underline guisp=#e27878
+" Less bright cursor line number
+hi clear CursorLineNr
+hi link CursorLineNr Conceal
 " Statusline color
 hi StatusLine            gui=NONE guibg=#0f1117 guifg=#9a9ca5
 hi StatusLineNC          gui=NONE guibg=#0f1117 guifg=#9a9ca5
 hi User1                 gui=NONE guibg=#0f1117 guifg=#9a9ca5
 " Do not show unnecessary separation colors
 hi LineNr                guibg=#161821
-hi CursorLineNr          guibg=#161821
 hi SignColumn            guibg=#161821
 hi GitGutterAdd          guibg=#161821
 hi GitGutterChange       guibg=#161821
@@ -1169,6 +1202,8 @@ hi IndentBlanklineIndent guifg=#3c3c43 gui=nocombine
 " Visual mode match and Cursor word match
 hi link VisualMatch Search
 hi CursorWord guibg=#282d44
+" More clear listchars
+hi! link Whitespace ModeMsg
   ]])
     end,
   },
@@ -1206,16 +1241,16 @@ hi CursorWord guibg=#282d44
         },
         sections = {
           lualine_a = { 'mode' },
-          lualine_b = { 'branch', 'diff', 'diagnostics' },
-          lualine_c = { 'encoding', 'fileformat', 'filetype', 'progress', 'location', 'filename' },
+          lualine_b = { 'encoding', 'fileformat', 'filetype', 'progress', 'location', 'filename' },
+          lualine_c = { 'branch', 'diff', 'diagnostics' },
           lualine_x = {},
           lualine_y = {},
           lualine_z = {}
         },
         inactive_sections = {
           lualine_a = {},
-          lualine_b = {},
-          lualine_c = { 'filename', 'location' },
+          lualine_b = { 'encoding', 'fileformat', 'filetype', 'progress', 'location', 'filename' },
+          lualine_c = {},
           lualine_x = {},
           lualine_y = {},
           lualine_z = {}
@@ -1267,6 +1302,15 @@ hi CursorWord guibg=#282d44
           },
         },
       }
+
+      -- To avoid entering insert mode after search
+      vim.api.nvim_create_autocmd("WinLeave", {
+        callback = function()
+          if vim.bo.ft == "TelescopePrompt" and vim.fn.mode() == "i" then
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "i", false)
+          end
+        end,
+      })
 
       -- Enable telescope fzf native, if installed
       require('telescope').load_extension('fzf')
@@ -1420,7 +1464,8 @@ hi CursorWord guibg=#282d44
     config = function()
       require('nvim-treesitter.configs').setup {
         -- Add languages to be installed here that you want installed for treesitter
-        ensure_installed = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'go', 'html', 'lua', 'markdown', 'python', 'rust', 'latex', 'tsx',
+        ensure_installed = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'go', 'html', 'lua', 'markdown', 'python', 'rust',
+          'latex', 'tsx',
           'typescript', 'vimdoc', 'vim', 'yaml' },
 
         -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
@@ -1489,8 +1534,8 @@ hi CursorWord guibg=#282d44
     event = 'VeryLazy',
     dependencies = 'nvim-treesitter/nvim-treesitter',
     config = function()
-      require "treesitter-context".setup()
-      vim.keymap.set("n", "[c", function()
+      require "treesitter-context".setup { max_lines = 7 }
+      vim.keymap.set({"n", "v"}, "[c", function()
         require("treesitter-context").go_to_context()
       end, { silent = true })
     end,
@@ -1507,6 +1552,12 @@ hi CursorWord guibg=#282d44
   },
 
   {
+    cond=false,
+    'swnakamura/gitsession.vim'
+  },
+
+  {
+    cond = false,
     'ojroques/nvim-osc52',
     config = function()
       local function copy(lines, _)
@@ -1542,9 +1593,9 @@ hi CursorWord guibg=#282d44
       else
         vim.g.vimtex_view_method = 'zathura'
       end
-      vim.g.vimtex_quickfix_enabled = 0
-      vim.g.vimtex_quickfix_mode = 0
-      vim.g.vimtex_fold_manual = 1
+      vim.g.vimtex_quickfix_enabled = 1
+      vim.g.vimtex_quickfix_mode = 2
+      -- vim.g.vimtex_fold_manual = 1
       -- Do below if using treesitter
       vim.g.vimtex_syntax_enabled = 0
       vim.g.vimtex_syntax_conceal_disable = 1
@@ -1623,7 +1674,10 @@ hi CursorWord guibg=#282d44
   },
 
   -- color picker
-  { 'uga-rosa/ccc.nvim',      event = 'VeryLazy' },
+  { 'uga-rosa/ccc.nvim',  event = 'VeryLazy' },
+
+  -- expl3
+  {'wtsnjp/vim-expl3', filetype = 'expl3'}
 }, {})
 
 -- [[ Setting options ]]
@@ -1676,9 +1730,29 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
+-- Use ripgrep if available
+if vim.fn.executable('rg') then
+  vim.o.grepprg = 'rg --vimgrep'
+  vim.o.grepformat = '%f:%l:%c:%m'
+  -- 引数がないならカーソルの単語を検索
+  vim.cmd([[
+  command -nargs=* -complete=file Rg :call g:Rg(<q-args>)
+  fun! g:Rg(txt)
+    if empty(a:txt)
+      exec 'grep' expand("<cword>")
+    else
+      exec 'grep' a:txt
+    endif
+  endfun
+  ]])
+end
+
+-- Open quickfix window after some commands
+vim.cmd("au QuickfixCmdPost make,grep,grepadd,vimgrep copen")
+
 vim.o.cursorline = true
 
-vim.o.shada = "!,'50,<1000,s100,h,%0"
+vim.o.shada = "!,'50,<1000,s100,h"
 
 vim.opt.sessionoptions:remove({ 'blank', 'buffers' })
 
@@ -1687,7 +1761,7 @@ vim.o.fileencodings = 'utf-8,ios-2022-jp,euc-jp,sjis,cp932'
 vim.o.previewheight = 999
 
 vim.o.list = true
-vim.o.listchars = 'tab:»-,trail:~,extends:»,precedes:«,nbsp:%'
+vim.o.listchars = 'tab:» ,trail:~,extends:»,precedes:«,nbsp:%'
 
 vim.o.scrolloff = 5
 
@@ -1800,34 +1874,36 @@ vim.keymap.set('n', '<Plug>(my-win)', '<Nop>')
 vim.keymap.set('n', 's', '<Plug>(my-win)', { remap = true })
 vim.keymap.set('x', 's', '<Nop>')
 -- window control
--- vim.keymap.set('n', '<Plug>(my-win)s', '<Cmd>split<CR>')
--- vim.keymap.set('n', '<Plug>(my-win)v', '<Cmd>vsplit<CR>')
+vim.keymap.set('n', '<Plug>(my-win)s', '<Cmd>split<CR>')
+vim.keymap.set('n', '<Plug>(my-win)v', '<Cmd>vsplit<CR>')
 -- st is used by nvim-tree
--- vim.keymap.set('n', '<Plug>(my-win)c', '<Cmd>tab sp<CR>')
+vim.keymap.set('n', '<Plug>(my-win)c', '<Cmd>tab sp<CR>')
 -- vim.keymap.set('n', '<C-w>c', '<Cmd>tab sp<CR>')
 -- vim.keymap.set('n', '<C-w><C-c>', '<Cmd>tab sp<CR>')
--- vim.keymap.set('n', '<Plug>(my-win)C', '<Cmd>-tab sp<CR>')
--- vim.keymap.set('n', '<Plug>(my-win)j', '<C-w>j')
--- vim.keymap.set('n', '<Plug>(my-win)k', '<C-w>k')
--- vim.keymap.set('n', '<Plug>(my-win)l', '<C-w>l')
--- vim.keymap.set('n', '<Plug>(my-win)h', '<C-w>h')
--- vim.keymap.set('n', '<Plug>(my-win)J', '<C-w>J')
--- vim.keymap.set('n', '<Plug>(my-win)K', '<C-w>K')
--- vim.keymap.set('n', '<Plug>(my-win)L', '<C-w>L')
--- vim.keymap.set('n', '<Plug>(my-win)H', '<C-w>H')
--- vim.keymap.set('n', '<Plug>(my-win)r', '<C-w>r')
--- vim.keymap.set('n', '<Plug>(my-win)=', '<C-w>=')
--- vim.keymap.set('n', '<Plug>(my-win)O', '<C-w>=')
--- vim.keymap.set('n', '<Plug>(my-win)o', '<C-w>_<C-w>|')
--- vim.keymap.set('n', '<Plug>(my-win)1', '<Cmd>1tabnext<CR>')
--- vim.keymap.set('n', '<Plug>(my-win)2', '<Cmd>2tabnext<CR>')
--- vim.keymap.set('n', '<Plug>(my-win)3', '<Cmd>3tabnext<CR>')
--- vim.keymap.set('n', '<Plug>(my-win)4', '<Cmd>4tabnext<CR>')
--- vim.keymap.set('n', '<Plug>(my-win)5', '<Cmd>5tabnext<CR>')
--- vim.keymap.set('n', '<Plug>(my-win)6', '<Cmd>6tabnext<CR>')
--- vim.keymap.set('n', '<Plug>(my-win)7', '<Cmd>7tabnext<CR>')
--- vim.keymap.set('n', '<Plug>(my-win)8', '<Cmd>8tabnext<CR>')
--- vim.keymap.set('n', '<Plug>(my-win)9', '<Cmd>9tabnext<CR>')
+vim.keymap.set('n', '<Plug>(my-win)C', '<Cmd>-tab sp<CR>')
+vim.keymap.set('n', '<Plug>(my-win)j', '<C-w>j')
+vim.keymap.set('n', '<Plug>(my-win)k', '<C-w>k')
+vim.keymap.set('n', '<Plug>(my-win)l', '<C-w>l')
+vim.keymap.set('n', '<Plug>(my-win)h', '<C-w>h')
+vim.keymap.set('n', '<Plug>(my-win)J', '<C-w>J')
+vim.keymap.set('n', '<Plug>(my-win)K', '<C-w>K')
+vim.keymap.set('n', '<Plug>(my-win)n', 'gt')
+vim.keymap.set('n', '<Plug>(my-win)p', 'gT')
+vim.keymap.set('n', '<Plug>(my-win)L', '<C-w>L')
+vim.keymap.set('n', '<Plug>(my-win)H', '<C-w>H')
+vim.keymap.set('n', '<Plug>(my-win)r', '<C-w>r')
+vim.keymap.set('n', '<Plug>(my-win)=', '<C-w>=')
+vim.keymap.set('n', '<Plug>(my-win)O', '<C-w>=')
+vim.keymap.set('n', '<Plug>(my-win)o', '<C-w>o')
+vim.keymap.set('n', '<Plug>(my-win)1', '<Cmd>1tabnext<CR>')
+vim.keymap.set('n', '<Plug>(my-win)2', '<Cmd>2tabnext<CR>')
+vim.keymap.set('n', '<Plug>(my-win)3', '<Cmd>3tabnext<CR>')
+vim.keymap.set('n', '<Plug>(my-win)4', '<Cmd>4tabnext<CR>')
+vim.keymap.set('n', '<Plug>(my-win)5', '<Cmd>5tabnext<CR>')
+vim.keymap.set('n', '<Plug>(my-win)6', '<Cmd>6tabnext<CR>')
+vim.keymap.set('n', '<Plug>(my-win)7', '<Cmd>7tabnext<CR>')
+vim.keymap.set('n', '<Plug>(my-win)8', '<Cmd>8tabnext<CR>')
+vim.keymap.set('n', '<Plug>(my-win)9', '<Cmd>9tabnext<CR>')
 
 -- disable Fn in insert mode
 for i = 1, 12 do
@@ -1838,6 +1914,7 @@ end
 vim.keymap.set('i', '<c-l>', '<cmd>update<cr>')
 vim.keymap.set('n', '<leader>s', '<cmd>update<cr>')
 vim.keymap.set('n', 'sq', '<Cmd>quit<CR>')
+vim.keymap.set('n', 'qo', '<cmd>%bd|e#|normal `"<cr>')
 vim.keymap.set('n', 'sQ', '<Cmd>tabc<CR>')
 vim.keymap.set('n', '<leader>wq', '<Cmd>quitall<CR>')
 
@@ -1919,11 +1996,6 @@ vim.keymap.set('i', '<C-f>', "<Cmd>normal! w<CR>")
 vim.keymap.set('i', '<C-p>', "<Cmd>normal! gk<CR>")
 vim.keymap.set('i', '<C-n>', "<Cmd>normal! gj<CR>")
 
-vim.keymap.set('n', 'gss', '<Cmd>SaveSession<CR>')
-vim.keymap.set('n', 'gsr', '<Cmd>StartRepeatedSave<CR>')
-vim.keymap.set('n', 'gsl', '<Cmd>LoadSession<CR>')
-vim.keymap.set('n', 'gsc', '<Cmd>CleanUpSession<CR>')
-
 -- 行頭/行末へ移動
 vim.keymap.set({ 'i', 'c' }, '<C-A>', '<Home>')
 vim.keymap.set({ 'i', 'c' }, '<C-E>', '<End>')
@@ -1949,6 +2021,9 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.keymap.set('n', 'k', 'k', { buffer = true })
     vim.keymap.set('n', 'J', 'jp', { buffer = true, remap = true })
     vim.keymap.set('n', 'K', 'kp', { buffer = true, remap = true })
+    vim.keymap.set('n', '<C-j>', 'jp', { buffer = true, remap = true })
+    vim.keymap.set('n', '<C-k>', 'kp', { buffer = true, remap = true })
+    vim.keymap.set('n', 'q', '<Cmd>quit<CR>', { buffer = true, remap = false })
     vim.opt_local.wrap = false
   end,
   group = 'quick-fix-window'
@@ -2011,11 +2086,16 @@ function! Preserve(command)
 endfunction
 
 " 検索中の領域をハイライトする
-" ヘルプドキュメント('incsearch')からコピーした
 augroup vimrc-incsearch-highlight
   au!
+  " 検索に入ったときにhlsearchをオン
   au CmdlineEnter /,\? set hlsearch
-  au CmdlineLeave /,\? set nohlsearch
+  nnoremap n n<Cmd>set hlsearch<CR><Cmd>autocmd CursorMoved * ++once set nohlsearch<CR>
+  nnoremap N N<Cmd>set hlsearch<CR><Cmd>autocmd CursorMoved * ++once set nohlsearch<CR>
+  " CmdlineLeave時に即座に消す代わりに、少し待って、更にカーソルが動いたときに消す
+  " カーソルが動いたときにすぐ消すようにすると、検索された単語に移動した瞬間に消えてしまうので意味がない。その防止
+  au CmdlineLeave /,\? autocmd CursorHold * ++once autocmd CursorMoved * ++once set nohlsearch
+  " au CmdlineLeave /,\? set nohlsearch
 augroup END
 
 " 選択した領域を自動でハイライトする
@@ -2076,6 +2156,10 @@ function! Wordmatch()
     return
   endif
   call DelWordmatch()
+  if &hlsearch
+    " avoid interfering with hlsearch
+    return
+  endif
 
   let w:cursorword = expand('<cword>')->escape('\')
   if w:cursorword != ''
@@ -2153,6 +2237,24 @@ augroup lua-highlight
 augroup END
 ]])
 
+vim.cmd([[
+function Float(key)
+  while (line(".") > 1 && line(".") < line("$"))
+    \ && !((strlen(getline(".")) < col(".") || getline(".")[col(".") - 1] =~ '\s'))
+    " 現在位置に文字がある間……
+    exec 'normal! ' a:key
+  endwhile
+  while (line(".") > 1
+    \ && line(".") < line("$")) && ((strlen(getline(".")) < col(".") || getline(".")[col(".") - 1] =~ '\s'))
+    " 現在位置が空白文字である間……
+    exec 'normal! ' a:key
+  endwhile
+endfunction
+]])
+
+vim.keymap.set({ 'n', 'v' }, '<leader>k', [[<Cmd>call Float('k')<CR>]])
+vim.keymap.set({ 'n', 'v' }, '<leader>j', [[<Cmd>call Float('j')<CR>]])
+
 -- [[  autocmd-IME ]]
 vim.cmd([[
 nnoremap <silent><expr> <F2> IME_toggle()
@@ -2185,7 +2287,6 @@ endfunction
 function! Enable() abort
   if g:is_macos
     call system('$HOME/im-select com.justsystems.inputmethod.atok33.Japanese')
-    " call system('/Users/snakamura/im-select com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese')
   else
     call system('fcitx5-remote -o')
   endif
@@ -2217,8 +2318,6 @@ nnoremap <silent> <Plug>(my-switch)t     <Cmd>setl expandtab! expandtab?<CR>
 nnoremap <silent> <Plug>(my-switch)<C-t> <Cmd>setl expandtab! expandtab?<CR>
 nnoremap <silent> <Plug>(my-switch)w     <Cmd>setl wrap! wrap?<CR>
 nnoremap <silent> <Plug>(my-switch)<C-w> <Cmd>setl wrap! wrap?<CR>
-nnoremap <silent> <Plug>(my-switch)p     <Cmd>setl paste! paste?<CR>
-nnoremap <silent> <Plug>(my-switch)<C-p> <Cmd>setl paste! paste?<CR>
 nnoremap <silent> <Plug>(my-switch)b     <Cmd>setl scrollbind! scrollbind?<CR>
 nnoremap <silent> <Plug>(my-switch)<C-b> <Cmd>setl scrollbind! scrollbind?<CR>
 nnoremap <silent> <Plug>(my-switch)d     <Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>
