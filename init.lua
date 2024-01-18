@@ -168,7 +168,7 @@ require('lazy').setup({
   },
 
   {
-    cond=false,
+    cond = false,
     'goolord/alpha-nvim',
     event = "VimEnter",
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -179,7 +179,6 @@ require('lazy').setup({
 
   {
     'https://github.com/Bekaboo/dropbar.nvim',
-    event = 'VeryLazy',
     config = function()
       vim.keymap.set('n', "<leader>n", require('dropbar.api').pick)
       vim.cmd([[
@@ -238,11 +237,11 @@ require('lazy').setup({
         autocmd FileType fugitive nnoremap <buffer><nowait><expr> m '<Cmd>exe <SNR>' . g:fugitive_sid . '_NextFile(v:count1)<CR>'
       augroup END
       ]])
-      vim.defer_fn(function()
+      vim.schedule(function()
         vim.cmd([[
           let g:fugitive_sid = getscriptinfo(#{name:'autoload/fugitive.vim'})[0]['sid']
         ]])
-      end, 500)
+      end)
     end,
   },
   { 'tpope/vim-rhubarb',      cmd = 'GBrowse', dependencies = 'tpope/vim-fugitive' },
@@ -341,6 +340,7 @@ hi link agitDiffRemove diffRemoved
             table.insert(words, word)
           end
           local server2setting = {
+            denols = {},
             clangd = {},
             pyright = {
               pyright = { autoImportCompletions = true, },
@@ -472,9 +472,22 @@ hi link agitDiffRemove diffRemoved
         vim.keymap.set('o', 'ib', '<Plug>(textobj-multiblock-i)', { remap = true })
         vim.keymap.set('v', 'ab', '<Plug>(textobj-multiblock-a)', { remap = true })
         vim.keymap.set('v', 'ib', '<Plug>(textobj-multiblock-i)', { remap = true })
+        vim.cmd([[
+              let g:operator#surround#blocks = {
+              \   'markdown' : [
+              \       { 'block' : ["```\n", "\n```"], 'motionwise' : ['line'], 'keys' : ['`'] },
+              \   ],
+              \   '-' : [
+              \       { 'block' : ['「', '」'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['j[', 'j]'] },
+              \       { 'block' : ['『', '』'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['j{', 'j}'] },
+              \       { 'block' : ['〝', '〟'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ["j'"] },
+              \       { 'block' : ['【', '】'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['j"'] },
+              \   ],
+              \ }
+
+        ]])
       end,
     },
-    -- keys = { { 'sa', mode = '' }, { 'sd', mode = '' }, { 'sr', mode = '' } }
   },
   {
     'kana/vim-textobj-entire',
@@ -740,8 +753,13 @@ $0
         ls.parser.parse_snippet("jbase",
           [[
 \documentclass[12pt,a4paper,titlepage]{jlreq}
+
+%%%% jlreq configurations
+% \jlreqsetup{caption_font=\normalfont}
+
 \usepackage{luatexja}
-%%%% some packages
+
+%%%% some other packages
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -756,21 +774,23 @@ $0
 %     backend=biber,
 %     style=numeric,
 %     sortlocale=en_US,
-%     url=true,
-%     doi=true,
+%     url=false,
+%     maxbibnames=99,
+%     doi=false,
 %     eprint=false
 % ]{biblatex}
+% \setlength{\biblabelsep}{0.5em} % ラベルと文献名の間隔を調整
 % \addbibresource{citations.bib}
 
 %%%% luatexja choices with fonts
 %% default
-% \usepackage[haranoaji]{luatexja-preset}
+% \usepackage[haranoaji, jfm_yoko=jlreq,jfm_tate=jlreqv]{luatexja-preset}
 %% default with deluxe option (enables multi weight)
-\usepackage[haranoaji, deluxe]{luatexja-preset}
+\usepackage[haranoaji, deluxe, jfm_yoko=jlreq,jfm_tate=jlreqv]{luatexja-preset}
 %% source han
-% \usepackage[sourcehan, deluxe]{luatexja-preset}
+% \usepackage[sourcehan, deluxe, jfm_yoko=jlreq,jfm_tate=jlreqv]{luatexja-preset}
 %% hiragino-pro
-% \usepackage[hiragino-pro, deluxe]{luatexja-preset}
+% \usepackage[hiragino-pro, deluxe, jfm_yoko=jlreq,jfm_tate=jlreqv]{luatexja-preset}
 
 %%%% if you use ruby
 % \usepackage{luatexja-ruby}
@@ -787,7 +807,7 @@ $0
 日本語を勉強する
 \textbf{日本語を勉強する}
 
-% \printbibliography
+% \printbibliography[title=参考文献]
 \end{document}
 ]]
         ),
@@ -893,6 +913,19 @@ $0
     end
   },
 
+  -- oil
+  {
+    'https://github.com/stevearc/oil.nvim',
+    config = function()
+      require('oil').setup({
+        keymaps = {
+          ["H"] = "actions.toggle_hidden",
+        }
+      })
+      vim.keymap.set("n", "<leader>o", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+    end
+  },
+
   {
     'mattn/emmet-vim',
     ft = { 'html', 'xml', 'vue', 'htmldjango', 'markdown' }
@@ -950,15 +983,20 @@ $0
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     config = function()
-
       local highlight = {
         "IBL1",
         "IBL2",
       }
+      -- iceberg
       vim.cmd([[
       hi IBL1 guifg=#242940 guibg=#1e2132
       hi IBL2 guifg=#242940 guibg=#161821
       ]])
+      -- nightfox
+      -- vim.cmd([[
+      -- hi IBL1 guibg=#192330
+      -- hi IBL2 guibg=#212e3f
+      -- ]])
 
       require("ibl").setup {
         -- indent = { highlight = highlight, char = "▏" },
@@ -1176,36 +1214,28 @@ let g:tagbar_type_help = {
 
   -- colorscheme
   {
-    'swnakamura/iceberg.vim',
+    'oahlen/iceberg.nvim',
     priority = 1000,
     config = function()
       vim.cmd.colorscheme 'iceberg'
       vim.cmd([[
 " Less bright search color
 hi clear Search
-hi Search                gui=bold,underline guisp=#e27878
+hi Search                guibg=NONE gui=bold,underline guisp=#e27878
 " Less bright cursor line number
 hi clear CursorLineNr
-hi link CursorLineNr Conceal
-" Statusline color
-hi StatusLine            gui=NONE guibg=#0f1117 guifg=#9a9ca5
-hi StatusLineNC          gui=NONE guibg=#0f1117 guifg=#9a9ca5
-hi User1                 gui=NONE guibg=#0f1117 guifg=#9a9ca5
+hi link CursorLineNr ModeMsg
 " Do not show unnecessary separation colors
-hi LineNr                guibg=#161821
-hi SignColumn            guibg=#161821
-hi GitGutterAdd          guibg=#161821
-hi GitGutterChange       guibg=#161821
-hi GitGutterChangeDelete guibg=#161821
-hi GitGutterDelete       guibg=#161821
-hi IndentBlanklineIndent guifg=#3c3c43 gui=nocombine
-" Visual mode match and Cursor word match
-hi link VisualMatch Search
-hi CursorWord guibg=#282d44
-" More clear listchars
-hi! link Whitespace ModeMsg
-  ]])
-    end,
+hi LineNr                guibg=NONE
+hi SignColumn            guibg=NONE
+hi GitGutterAdd          guibg=NONE
+hi GitGutterChange       guibg=NONE
+hi GitGutterChangeDelete guibg=NONE
+hi GitGutterDelete       guibg=NONE
+" Disable hl for winbar which is used by dropbar
+hi WinBar guibg=NONE
+      ]])
+    end
   },
 
   -- capture vim script output
@@ -1272,6 +1302,7 @@ hi! link Whitespace ModeMsg
       vim.g.NERDCustomDelimiters = { vim = { left = '"', right = '' } }
       vim.keymap.set({ "n", "x" }, "<C-_>", "<Plug>NERDCommenterToggle")
       vim.keymap.set({ "n", "x" }, "<C-/>", "<Plug>NERDCommenterToggle")
+      vim.keymap.set({ "n", "x" }, "<C-;>", "<Plug>NERDCommenterToggle")
     end
   },
 
@@ -1535,7 +1566,7 @@ hi! link Whitespace ModeMsg
     dependencies = 'nvim-treesitter/nvim-treesitter',
     config = function()
       require "treesitter-context".setup { max_lines = 7 }
-      vim.keymap.set({"n", "v"}, "[c", function()
+      vim.keymap.set({ "n", "v" }, "[c", function()
         require("treesitter-context").go_to_context()
       end, { silent = true })
     end,
@@ -1552,7 +1583,7 @@ hi! link Whitespace ModeMsg
   },
 
   {
-    cond=false,
+    cond = false,
     'swnakamura/gitsession.vim'
   },
 
@@ -1589,12 +1620,17 @@ hi! link Whitespace ModeMsg
       vim.g.tex_conceal = 'abdmg'
       vim.g.vimtex_fold_enabled = 1
       if vim.g.is_macos then
-        vim.g.vimtex_view_method = 'skim'
+        vim.g.vimtex_view_method = 'skim' -- skim
+        -- vim.g.vimtex_view_general_viewer = 'zathura' -- zathura
       else
         vim.g.vimtex_view_method = 'zathura'
       end
       vim.g.vimtex_quickfix_enabled = 1
       vim.g.vimtex_quickfix_mode = 2
+      vim.g.vimtex_quickfix_ignore_filters = {
+        'Japanese fonts will be scaled by 1',
+        [[\addjfontfeature(s) ignored]]
+      }
       -- vim.g.vimtex_fold_manual = 1
       -- Do below if using treesitter
       vim.g.vimtex_syntax_enabled = 0
@@ -1624,9 +1660,9 @@ hi! link Whitespace ModeMsg
     -- ft = 'text',
     dependencies = 'vim-denops/denops.vim',
     init = function()
-      if vim.g.is_macos then
-        vim.g['denops#deno'] = '/Users/snakamura/.deno/bin/deno'
-      end
+      -- if vim.g.is_macos then
+      --   vim.g['denops#deno'] = '/Users/snakamura/.deno/bin/deno'
+      -- end
     end,
     config = function()
       vim.keymap.set('n', '<F5>', '<Cmd>NovelPreviewStartServer<CR><Cmd>NovelPreviewAutoSend<CR>')
@@ -1677,7 +1713,18 @@ hi! link Whitespace ModeMsg
   { 'uga-rosa/ccc.nvim',  event = 'VeryLazy' },
 
   -- expl3
-  {'wtsnjp/vim-expl3', filetype = 'expl3'}
+  { 'wtsnjp/vim-expl3',   filetype = 'expl3' },
+
+  -- pgmnt
+  { 'cocopon/pgmnt.vim' },
+
+  -- window separation color
+  {
+    cond = false,
+    "nvim-zh/colorful-winsep.nvim",
+    config = true,
+    event = { "WinNew" },
+  }
 }, {})
 
 -- [[ Setting options ]]
@@ -1734,15 +1781,26 @@ vim.o.termguicolors = true
 if vim.fn.executable('rg') then
   vim.o.grepprg = 'rg --vimgrep'
   vim.o.grepformat = '%f:%l:%c:%m'
-  -- 引数がないならカーソルの単語を検索
+  -- Rgコマンド：引数がないなら選択領域を検索、選択されてもいないならカーソルの単語を検索
   vim.cmd([[
-  command -nargs=* -complete=file Rg :call g:Rg(<q-args>)
-  fun! g:Rg(txt)
-    if empty(a:txt)
-      exec 'grep' expand("<cword>")
+  command -range -nargs=* -complete=file Rg <line1>,<line2>call g:Rg(<q-args>, <range>)
+  fun! g:Rg(input, range) range
+    if a:range == 2 && a:firstline == a:lastline
+      " Assumes that the command is run with visual selection
+      " let colrange = charcol('.') < charcol('v') ? [charcol('.'), charcol('v')] : [charcol('v'), charcol('.')]
+      let colrange = [charcol("'<"), charcol("'>")]
+      let text = getline('.')->strcharpart(colrange[0]-1, colrange[1]-colrange[0]+1)->escape('\')
+    elseif empty(a:input)
+      let text = expand("<cword>")
+      echoerr text
     else
-      exec 'grep' a:txt
+      let text = a:input
     endif
+  if text == ''
+    echoerr 'search text is empty'
+    return
+  endif
+  exec 'grep' "'" . text . "'"
   endfun
   ]])
 end
@@ -1812,10 +1870,14 @@ vim.go.signcolumn = 'yes:1'
 
 -- [[ Basic Keymaps ]]
 
--- Keymaps for better default experience
--- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+vim.keymap.set({ 'n', 'v' }, '<Space><BS>', '<C-^>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<C-Space>', '<Nop>', { silent = true })
+vim.keymap.set({ 'n', 'v' }, '<cr>', '<Nop>', { silent = true })
+vim.keymap.set({ 'n', 'v' }, '<backspace>', '<Nop>', { silent = true })
+
+vim.keymap.set({ 'n', 'v', 'o' }, '<Tab>', '%', { silent = true, remap = true })
+vim.keymap.set({ 'n', 'v' }, '<C-i>', '<C-i>', { silent = true })
 
 -- Remap for dealing with word wrap
 -- H/L for ^/$
@@ -1914,7 +1976,7 @@ end
 vim.keymap.set('i', '<c-l>', '<cmd>update<cr>')
 vim.keymap.set('n', '<leader>s', '<cmd>update<cr>')
 vim.keymap.set('n', 'sq', '<Cmd>quit<CR>')
-vim.keymap.set('n', 'qo', '<cmd>%bd|e#|normal `"<cr>')
+vim.keymap.set('n', 'se', '<cmd>silent! %bdel|edit #|normal `"<C-n><leader>q<cr>')
 vim.keymap.set('n', 'sQ', '<Cmd>tabc<CR>')
 vim.keymap.set('n', '<leader>wq', '<Cmd>quitall<CR>')
 
@@ -2023,7 +2085,8 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.keymap.set('n', 'K', 'kp', { buffer = true, remap = true })
     vim.keymap.set('n', '<C-j>', 'jp', { buffer = true, remap = true })
     vim.keymap.set('n', '<C-k>', 'kp', { buffer = true, remap = true })
-    vim.keymap.set('n', 'q', '<Cmd>quit<CR>', { buffer = true, remap = false })
+    vim.keymap.set('n', 'q', '<Cmd>quit<CR>', { buffer = true })
+    vim.keymap.set('n', '<cr>', '<cr>', { buffer = true })
     vim.opt_local.wrap = false
   end,
   group = 'quick-fix-window'
@@ -2239,15 +2302,19 @@ augroup END
 
 vim.cmd([[
 function Float(key)
-  while (line(".") > 1 && line(".") < line("$"))
-    \ && !((strlen(getline(".")) < col(".") || getline(".")[col(".") - 1] =~ '\s'))
+  while v:true
     " 現在位置に文字がある間……
     exec 'normal! ' a:key
+    if line(".") <= 1 || line(".") >= line("$") || (strlen(getline(".")) < col(".") || getline(".")[col(".") - 1] =~ '\s')
+      break
+    endif
   endwhile
-  while (line(".") > 1
-    \ && line(".") < line("$")) && ((strlen(getline(".")) < col(".") || getline(".")[col(".") - 1] =~ '\s'))
+  while v:true
     " 現在位置が空白文字である間……
     exec 'normal! ' a:key
+    if line(".") <= 1 || line(".") >= line("$") || !(strlen(getline(".")) < col(".") || getline(".")[col(".") - 1] =~ '\s')
+      break
+    endif
   endwhile
 endfunction
 ]])
@@ -2255,7 +2322,7 @@ endfunction
 vim.keymap.set({ 'n', 'v' }, '<leader>k', [[<Cmd>call Float('k')<CR>]])
 vim.keymap.set({ 'n', 'v' }, '<leader>j', [[<Cmd>call Float('j')<CR>]])
 
--- [[  autocmd-IME ]]
+-- [[ autocmd-IME ]]
 vim.cmd([[
 nnoremap <silent><expr> <F2> IME_toggle()
 inoremap <silent><expr> <F2> IME_toggle()
@@ -2371,5 +2438,4 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnos
 -- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>l', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
--- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
