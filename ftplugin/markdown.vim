@@ -1,4 +1,4 @@
-setlocal conceallevel=0
+setlocal conceallevel=2
 
 command -range=% GHCopy call GHCopy(<line1>, <line2>)
 

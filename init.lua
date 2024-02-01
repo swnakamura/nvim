@@ -202,7 +202,7 @@ require('lazy').setup({
       vim.keymap.set("n", "<leader>gh", "<cmd>tab sp<CR>:0Gclog<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gp", "<cmd>Dispatch! git push<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gf", "<cmd>Dispatch! git fetch<CR>", { silent = true })
-      vim.keymap.set("n", "<leader>gd", "<cmd>vert :Gdiffsplit<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>gd", "<cmd>vert :Gdiffsplit!<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gr", "<cmd>Git rebase -i<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gg", "<cmd>Glgrep \"\"<Left>")
       vim.keymap.set("n", "<leader>gm", "<cmd>Git merge ")
@@ -272,12 +272,6 @@ hi link agitDiffRemove diffRemoved
       vim.keymap.set('t', '<C-[>', '<C-\\><C-n>:FloatermHide<CR>', { silent = true })
       vim.keymap.set('t', '<C-l>', '<C-\\><C-n>', { silent = true })
     end
-  },
-
-  -- async run
-  {
-    'skywind3000/asyncrun.vim',
-    event = 'VeryLazy',
   },
 
   -- clever f/F/t/T
@@ -650,7 +644,7 @@ hi link agitDiffRemove diffRemoved
   -- Adds latex snippets
   {
     dir = '~/ghq/github.com/iurimateus/luasnip-latex-snippets.nvim',
-    event = 'VeryLazy',
+    ft = { 'tex', 'markdown' },
     -- vimtex isn't required if using treesitter
     dependencies = "L3MON4D3/LuaSnip",
     config = function()
@@ -700,9 +694,9 @@ hi link agitDiffRemove diffRemoved
         ls.parser.parse_snippet({ trig = "plot_instantly", name = "plot_instantly" },
           [[
 import matplotlib.pyplot as plt
-ax, fig = plt.subplots()
-ax.imshow($1)
-ax.show()
+fig, ax = plt.subplots(layout='tight')
+ax.$1
+plt.show()
 $0
 ]]
         ),
@@ -766,7 +760,8 @@ $0
 \usepackage{todonotes}
 \usepackage{siunitx}
 \usepackage{bm}
-\usepackage{booktabs}
+\usepackage{tabularrary}
+\UseTblrLibrary{booktabs}
 \usepackage{capt-of}
 
 %%%% if you use citations...
@@ -821,6 +816,20 @@ $0
 \end{figure}$0
     ]]
         ),
+        ls.parser.parse_snippet("tblr",
+          [[
+\begin{table}[t]
+    \centering
+    \SetTblrInner{rowsep=2pt,colsep=6pt,stretch=1,abovesep=2pt}
+    \begin{tblr}{@{}llll@{}}
+        \toprule
+        \midrule
+        \bottomrule
+    \end{tblr}
+    \caption{${1:caption}}
+    \label{tab:$2}
+\end{table}$0
+]]),
         ls.parser.parse_snippet("preview",
           [[
 \documentclass{article}
@@ -1030,6 +1039,7 @@ $0
 
   -- buffer preview for markdown
   {
+    cond = false,
     'iamcco/markdown-preview.nvim',
     event = 'VeryLazy',
     build = function() fn["mkdp#util#install"]() end,
@@ -1243,7 +1253,7 @@ hi WinBar guibg=NONE
 
   {
     'nvim-lualine/lualine.nvim',
-    event = 'VeryLazy',
+    -- event = 'VeryLazy',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       local custom_color = require('lualine.themes.iceberg_dark')
@@ -1370,7 +1380,7 @@ hi WinBar guibg=NONE
   -- obsidian integration
   {
     'epwalsh/obsidian.nvim',
-    event = 'VeryLazy',
+    ft = 'markdown',
     dependencies = {
       -- Required.
       "nvim-lua/plenary.nvim",
@@ -1382,105 +1392,13 @@ hi WinBar guibg=NONE
       "nvim-telescope/telescope.nvim",
     },
     opts = {
-      -- Optional, if you keep notes in a specific subdirectory of your vault.
-      notes_subdir = "notes",
-
-      -- Optional, set the log level for Obsidian. This is an integer corresponding to one of the log
-      -- levels defined by "vim.log.levels.*" or nil, which is equivalent to DEBUG (1).
-      log_level = vim.log.levels.DEBUG,
-
-      daily_notes = {
-        -- Optional, if you keep daily notes in a separate directory.
-        folder = "notes/dailies",
-        -- Optional, if you want to change the date format for daily notes.
-        date_format = "%Y-%m-%d"
+      workspaces = {
+        {
+          name = "work",
+          path = "~/research_vault",
+        }
       },
-
-      -- Optional, completion.
-      completion = {
-        -- If using nvim-cmp, otherwise set to false
-        nvim_cmp = true,
-        -- Trigger completion at 2 chars
-        min_chars = 0,
-        -- Where to put new notes created from completion. Valid options are
-        --  * "current_dir" - put new notes in same directory as the current buffer.
-        --  * "notes_subdir" - put new notes in the default notes subdirectory.
-        new_notes_location = "current_dir"
-      },
-
-      -- Optional, customize how names/IDs for new notes are created.
-      note_id_func = function(title)
-        -- Create note IDs in a Zettelkasten format with a timestamp and a suffix.
-        -- In this case a note with the title 'My new note' will given an ID that looks
-        -- like '1657296016-my-new-note', and therefore the file name '1657296016-my-new-note.md'
-        local suffix = ""
-        if title ~= nil then
-          -- If title is given, transform it into valid file name.
-          suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
-        else
-          -- If title is nil, just add 4 random uppercase letters to the suffix.
-          for _ = 1, 4 do
-            suffix = suffix .. string.char(math.random(65, 90))
-          end
-        end
-        return tostring(os.time()) .. "-" .. suffix
-      end,
-
-      -- Optional, set to true if you don't want Obsidian to manage frontmatter.
-      disable_frontmatter = true,
-
-      -- Optional, alternatively you can customize the frontmatter data.
-      note_frontmatter_func = function(note)
-        -- This is equivalent to the default frontmatter function.
-        local out = { id = note.id, aliases = note.aliases, tags = note.tags }
-        -- `note.metadata` contains any manually added fields in the frontmatter.
-        -- So here we just make sure those fields are kept in the frontmatter.
-        if note.metadata ~= nil and require("obsidian").util.table_length(note.metadata) > 0 then
-          for k, v in pairs(note.metadata) do
-            out[k] = v
-          end
-        end
-        return out
-      end,
-
-      -- Optional, for templates (see below).
-      -- templates = {
-      --   subdir = "templates",
-      --   date_format = "%Y-%m-%d-%a",
-      --   time_format = "%H:%M",
-      -- },
-
-      -- Optional, by default when you use `:ObsidianFollowLink` on a link to an external
-      -- URL it will be ignored but you can customize this behavior here.
-      follow_url_func = function(url)
-        -- Open the URL in the default web browser.
-        if vim.g.is_macos then
-          fn.jobstart({ "open", url })     -- Mac OS
-        else
-          fn.jobstart({ "xdg-open", url }) -- linux
-        end
-      end,
-
-      -- Optional, set to true if you use the Obsidian Advanced URI plugin.
-      -- https://github.com/Vinzent03/obsidian-advanced-uri
-      use_advanced_uri = true,
-
-      -- Optional, set to true to force ':ObsidianOpen' to bring the app to the foreground.
-      open_app_foreground = false,
-
     },
-    config = function(_, opts)
-      if vim.g.is_macos then
-        if fn.getcwd():find('research') then
-          opts.dir = '~/Dropbox/research'
-        else
-          opts.dir = '~/Dropbox/obsidian'
-        end
-      else
-        opts.dir = "~/Dropbox/research"
-      end
-      require("obsidian").setup(opts)
-    end,
   },
 
 
@@ -1620,8 +1538,8 @@ hi WinBar guibg=NONE
       vim.g.tex_conceal = 'abdmg'
       vim.g.vimtex_fold_enabled = 1
       if vim.g.is_macos then
-        vim.g.vimtex_view_method = 'skim' -- skim
-        -- vim.g.vimtex_view_general_viewer = 'zathura' -- zathura
+        -- vim.g.vimtex_view_method = 'skim' -- skim
+        vim.g.vimtex_view_general_viewer = 'zathura' -- zathura
       else
         vim.g.vimtex_view_method = 'zathura'
       end
@@ -1629,7 +1547,9 @@ hi WinBar guibg=NONE
       vim.g.vimtex_quickfix_mode = 2
       vim.g.vimtex_quickfix_ignore_filters = {
         'Japanese fonts will be scaled by 1',
-        [[\addjfontfeature(s) ignored]]
+        [[\addjfontfeature(s) ignored]],
+        [["HOT-ReishoRkk" does not contain]],
+        [["851Gkktt" does not contain]]
       }
       -- vim.g.vimtex_fold_manual = 1
       -- Do below if using treesitter
@@ -1680,7 +1600,15 @@ hi WinBar guibg=NONE
     event = 'VeryLazy',
     config = function()
       vim.keymap.set('n', 'Z', function()
-        require("zen-mode").toggle()
+        require("zen-mode").toggle({
+          plugins = {
+            options = {
+              ruler = false,
+              showcmd = false,
+              laststatus = 0,
+            }
+          }
+        })
       end)
     end,
   },
@@ -1872,9 +1800,9 @@ vim.go.signcolumn = 'yes:1'
 
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<Space><BS>', '<C-^>', { silent = true })
+vim.keymap.set({ 'n', 'v' }, '<BS>', '<Cmd>BufferClose<CR>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<C-Space>', '<Nop>', { silent = true })
-vim.keymap.set({ 'n', 'v' }, '<cr>', '<Nop>', { silent = true })
-vim.keymap.set({ 'n', 'v' }, '<backspace>', '<Nop>', { silent = true })
+vim.keymap.set({ 'n', 'v', 'o' }, '<cr>', '<Plug>(clever-f-repeat-forward)', { silent = true })
 
 vim.keymap.set({ 'n', 'v', 'o' }, '<Tab>', '%', { silent = true, remap = true })
 vim.keymap.set({ 'n', 'v' }, '<C-i>', '<C-i>', { silent = true })
