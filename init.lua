@@ -1413,7 +1413,7 @@ hi WinBar guibg=NONE
     config = function()
       require('nvim-treesitter.configs').setup {
         -- Add languages to be installed here that you want installed for treesitter
-        ensure_installed = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'go', 'html', 'lua', 'markdown', 'python', 'rust',
+        ensure_installed = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'go', 'html', 'lua', 'markdown', 'org', 'python', 'rust',
           'latex', 'tsx',
           'typescript', 'vimdoc', 'vim', 'yaml' },
 
@@ -1652,6 +1652,33 @@ hi WinBar guibg=NONE
     "nvim-zh/colorful-winsep.nvim",
     config = true,
     event = { "WinNew" },
+  },
+
+  -- org mode
+  {
+    'nvim-orgmode/orgmode',
+    dependencies = {
+      { 'nvim-treesitter/nvim-treesitter' },
+    },
+    event = 'VeryLazy',
+    config = function()
+      -- Load treesitter grammar for org
+      require('orgmode').setup_ts_grammar()
+
+      -- Setup orgmode
+      require('orgmode').setup({
+        org_agenda_files = '~/orgfiles/**/*',
+        org_default_notes_file = '~/orgfiles/refile.org',
+        org_capture_templates = {
+          t = { description = 'Task', template = '* TODO %?\n  %u' },
+          p = { description = 'Paper', template = '* PLAN %?\n  %u' }
+        },
+      })
+    end,
+  },
+  {
+    'akinsho/org-bullets.nvim',
+    config = true,
   }
 }, {})
 
