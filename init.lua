@@ -470,12 +470,13 @@ hi link agitDiffRemove diffRemoved
               let g:operator#surround#blocks = {
               \   'markdown' : [
               \       { 'block' : ["```\n", "\n```"], 'motionwise' : ['line'], 'keys' : ['`'] },
+              \       { 'block' : ['**', '**'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ["d*"] },
               \   ],
               \   '-' : [
               \       { 'block' : ['「', '」'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['j[', 'j]'] },
               \       { 'block' : ['『', '』'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['j{', 'j}'] },
-              \       { 'block' : ['〝', '〟'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ["j'"] },
-              \       { 'block' : ['【', '】'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['j"'] },
+              \       { 'block' : ['〝', '〟'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['j"'] },
+              \       { 'block' : ['【', '】'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ["j'"] },
               \   ],
               \ }
 
@@ -931,7 +932,7 @@ $0
           ["H"] = "actions.toggle_hidden",
         }
       })
-      vim.keymap.set("n", "<leader>o", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+      vim.keymap.set("n", "<leader>v", "<CMD>Oil<CR>", { desc = "Open parent directory" })
     end
   },
 
@@ -1654,12 +1655,15 @@ hi WinBar guibg=NONE
     event = { "WinNew" },
   },
 
+  { 'kevinhwang91/nvim-bqf', ft = 'qf' },
+
   -- org mode
   {
     'nvim-orgmode/orgmode',
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter' },
     },
+    ft = 'org',
     event = 'VeryLazy',
     config = function()
       -- Load treesitter grammar for org
@@ -1667,19 +1671,41 @@ hi WinBar guibg=NONE
 
       -- Setup orgmode
       require('orgmode').setup({
-        org_agenda_files = '~/orgfiles/**/*',
-        org_default_notes_file = '~/orgfiles/refile.org',
+        org_agenda_files = '~/org/**/*',
+        org_default_notes_file = '~/org/refile.org',
+        org_todo_keywords ={'WAITING', 'TODO', '|', 'DONE'},
         org_capture_templates = {
-          t = { description = 'Task', template = '* TODO %?\n  %u' },
-          p = { description = 'Paper', template = '* PLAN %?\n  %u' }
+          t = { description = 'Task (issue)', template = '* TODO %? \n  %u', headline='Issue' },
+          c = { description = 'Chore', template = '* TODO %? \n  %u', headline='Chore' },
+          p = {
+            description = 'Paper',
+            template = '* TODO [[%x][%?]]\n  %u\n',
+            target = '~/org/papers.org'
+          },
+          m = { description = 'Maybe (personal)', template = '* TODO [[%x][%?]]\n  %u', target = '~/org/personal.org' },
         },
+        org_id_method = 'uuid',
+        org_agenda_span = 'day',
       })
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "org",
+        callback = function()
+          vim.keymap.set('i', "<C-CR>", function() require('orgmode').action('org_mappings.meta_return') end)
+        end
+      })
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "orgagenda",
+        callback = function()
+          vim.keymap.set('n', "q", '<cmd>q<cr>')
+        end
+      })
+      vim.keymap.set('n', '<leader>oo', '<cmd>e ~/org/refile.org<cr>zR')
     end,
   },
   {
     'akinsho/org-bullets.nvim',
     config = true,
-  }
+  },
 }, {})
 
 -- [[ Setting options ]]
@@ -1724,7 +1750,7 @@ vim.wo.signcolumn = 'yes'
 -- Decrease update time
 vim.o.updatetime = 250
 vim.o.timeout = true
-vim.o.timeoutlen = 300
+vim.o.timeoutlen = 1000
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -1826,6 +1852,7 @@ vim.go.signcolumn = 'yes:1'
 -- [[ Basic Keymaps ]]
 
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+vim.keymap.set({ 'n', 'v' }, '<Space>o', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<Space><BS>', '<C-^>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<BS>', '<Cmd>BufferClose<CR>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<C-Space>', '<Nop>', { silent = true })
@@ -2051,8 +2078,9 @@ vim.api.nvim_create_augroup('markdown-mapping', {})
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'markdown',
   callback = function()
-    vim.keymap.set('v', '<C-b>', '<Plug>(operator-surround-append)*l.', { buffer = true })
-    vim.keymap.set('v', '<C-i>', '<Plug>(operator-surround-append)*', { buffer = true })
+    vim.keymap.set('v', '<C-b>', '<Plug>(operator-surround-append)d*', { buffer = true, silent = true })
+    vim.keymap.set('v', '<C-i>', '<Plug>(operator-surround-append)*', { buffer = true, silent = true })
+    vim.keymap.set('v', '<Tab>', '%', { buffer = true, silent = true, remap = true })
   end,
   group = 'markdown-mapping'
 })
@@ -2062,7 +2090,7 @@ vim.api.nvim_create_autocmd('FileType', {
 -- [[minor functionalities]]
 vim.cmd([[
 " abbreviation for vimgrep
-nnoremap <leader>vv :<C-u>vimgrep // %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left>
+" nnoremap <leader>vv :<C-u>vimgrep // %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
 " abbreviation for substitution
 cnoreabbrev <expr> ss getcmdtype() .. getcmdline() ==# ':ss' ? [getchar(), ''][1] .. "%s///g<Left><Left>" : 'ss'
@@ -2308,7 +2336,7 @@ endfunction
 
 function! Enable() abort
   if g:is_macos
-    call system('$HOME/im-select com.justsystems.inputmethod.atok33.Japanese')
+    call system('im-select com.justsystems.inputmethod.atok33.Japanese')
   else
     call system('fcitx5-remote -o')
   endif
@@ -2316,7 +2344,7 @@ endfunction
 
 function! Disable() abort
   if g:is_macos
-    call system('$HOME/im-select com.apple.keylayout.ABC')
+    call system('im-select com.apple.keylayout.ABC')
   else
     call system('fcitx5-remote -c')
   endif
