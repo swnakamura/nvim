@@ -348,6 +348,7 @@ hi link agitDiffRemove diffRemoved
               }
             },
             rust_analyzer = {},
+            ruff_lsp = {},
 
             lua_ls = {
               Lua = {
@@ -707,6 +708,26 @@ import argparse
 p = argparse.ArgumentParser()
 p.add_argument('${1:foo}')
 args = p.parse_args()
+]]
+        ),
+        ls.parser.parse_snippet({ trig = "read_movie_using_cv2", name = "read movie using cv2" },
+          [[
+cap = cv2.VideoCapture(movie_path)
+FPS = round(cap.get(cv2.CAP_PROP_FPS), 2)
+NUM_FRAMES = int(round(cap.get(cv2.CAP_PROP_FRAME_COUNT), 2))
+WIDTH, HEIGHT = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+ret, frame = cap.read()
+]]
+        ),
+        ls.parser.parse_snippet({ trig = "write_movie_using_cv2", name = "write movie using cv2" },
+          [[
+out = cv2.VideoWriter(
+    f"out.mp4",
+    cv2.VideoWriter_fourcc("m", "p", "4", "v"),
+    FPS,
+    (WIDTH, HEIGHT),
+    )
+out.write((image * 255).astype(np.uint8))
 ]]
         ),
       })
@@ -1160,6 +1181,22 @@ let g:tagbar_type_help = {
     cmd = 'TagbarToggle'
   },
 
+  {
+    'stevearc/aerial.nvim',
+    config = function()
+      require("aerial").setup({
+        -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+        on_attach = function(bufnr)
+          -- Jump forwards/backwards with '{' and '}'
+          -- vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr })
+          -- vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
+        end,
+      })
+      -- You probably also want to set a keymap to toggle aerial
+      vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>")
+    end
+  },
+
   -- Useful plugin to show you pending keybinds.
   -- { 'folke/which-key.nvim',                                opts = {}, event = 'BufEnter' },
   {
@@ -1358,14 +1395,16 @@ hi WinBar guibg=NONE
       require('telescope').load_extension('fzf')
     end,
     init = function()
-      vim.keymap.set('n', '<leader>gf', '<Cmd>Telescope git_files<CR>', { desc = 'Search [G]it [F]iles' })
-      vim.keymap.set('n', '<leader>ff', '<Cmd>Telescope find_files<CR>', { desc = '[F]ind [F]iles' })
-      vim.keymap.set('n', '<leader>fr', '<Cmd>Telescope oldfiles<CR>')
-      vim.keymap.set('n', '<leader>fb', '<Cmd>Telescope buffers<CR>')
-      vim.keymap.set('n', '<leader>fh', '<Cmd>Telescope help_tags<CR>', { desc = '[F]ind [H]elp' })
-      vim.keymap.set('n', '<leader>fw', '<Cmd>Telescope grep_string<CR>', { desc = '[F]ind current [W]ord' })
-      vim.keymap.set('n', '<leader>fg', '<Cmd>Telescope live_grep<CR>', { desc = '[F]ind by [G]rep' })
-      vim.keymap.set('n', '<leader>fd', '<Cmd>Telescope diagnostics<CR>', { desc = '[F]ind [D]iagnostics' })
+      vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
+      vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[F]ind [F]iles' })
+      vim.keymap.set('n', '<leader>fr', require('telescope.builtin').oldfiles)
+      vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers)
+      vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[F]ind [H]elp' })
+      vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = '[F]ind current [W]ord' })
+      vim.keymap.set('n', '<leader>fm', require('telescope.builtin').man_pages, { desc = '[F]ind [M]anpages' })
+      vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = '[F]ind [K]eymaps' })
+      vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = '[F]ind by [G]rep' })
+      vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = '[F]ind [D]iagnostics' })
     end,
     cmd = 'Telescope',
   },
@@ -1381,6 +1420,7 @@ hi WinBar guibg=NONE
   -- obsidian integration
   {
     'epwalsh/obsidian.nvim',
+    cond=vim.g.is_macos,
     ft = 'markdown',
     dependencies = {
       -- Required.
@@ -1672,20 +1712,19 @@ hi WinBar guibg=NONE
       -- Setup orgmode
       require('orgmode').setup({
         org_agenda_files = '~/org/**/*',
-        org_default_notes_file = '~/org/refile.org',
-        org_todo_keywords ={'WAITING', 'TODO', '|', 'DONE'},
+        org_default_notes_file = '~/org/inbox.org',
+        org_todo_keywords = {'TODO', 'WAITING', '|', 'DONE' },
         org_capture_templates = {
-          t = { description = 'Task (issue)', template = '* TODO %? \n  %u', headline='Issue' },
-          c = { description = 'Chore', template = '* TODO %? \n  %u', headline='Chore' },
+          t = { description = 'Task', template = '* TODO %? \n  %u' },
           p = {
             description = 'Paper',
             template = '* TODO [[%x][%?]]\n  %u\n',
             target = '~/org/papers.org'
           },
-          m = { description = 'Maybe (personal)', template = '* TODO [[%x][%?]]\n  %u', target = '~/org/personal.org' },
+          m = { description = 'Maybe (personal)', template = '* TODO [[%x]] %?\n  %u', target = '~/org/personal.org' },
         },
         org_id_method = 'uuid',
-        org_agenda_span = 'day',
+        org_agenda_span = 'week',
       })
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "org",
@@ -1699,7 +1738,8 @@ hi WinBar guibg=NONE
           vim.keymap.set('n', "q", '<cmd>q<cr>')
         end
       })
-      vim.keymap.set('n', '<leader>oo', '<cmd>e ~/org/refile.org<cr>zR')
+      vim.keymap.set('n', '<leader>oo', '<cmd>e ~/org/inbox.org<cr>zR')
+      vim.keymap.set('n', '<leader>oi', '<cmd>e ~/org/issue.org<cr>zR')
     end,
   },
   {
@@ -1711,7 +1751,8 @@ hi WinBar guibg=NONE
 -- [[ Setting options ]]
 
 -- tab width settings
-vim.o.tabstop = 4
+vim.o.tabstop = 8
+vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
 vim.o.smartindent = true
 vim.o.expandtab = true
@@ -2105,6 +2146,7 @@ xnoremap <expr> / (line('.') == line('v')) ?
 
 -- [[autocmd]]
 vim.cmd([[
+" ファイルタイプごとの設定。複数のファイルタイプで共通することの多い設定をここに書き出しているが、ファイルライプごとの特異性が高いものはftplugin/filetype.vimに書いていく
 augroup file-type
   au!
   au FileType go                                    setlocal tabstop=4 shiftwidth=4 noexpandtab formatoptions+=r
@@ -2113,6 +2155,7 @@ augroup file-type
   au FileType gitcommit                             setlocal spell
   "  テキストについて-もkeywordとする
   au FileType text,tex,markdown,gitcommit,help      setlocal isk+=-
+  "  texについて@もkeywordとする
   au FileType tex                                   setlocal isk+=@-@
   au FileType log                                   setlocal nowrap
 
@@ -2352,6 +2395,7 @@ endfunction
 
 augroup auto_ja
   autocmd BufRead */my-text/**.txt call IME_toggle()
+  autocmd BufRead */my-text/**.md call IME_toggle()
   autocmd BufRead */obsidian/**.md call IME_toggle()
 augroup END
 ]])
