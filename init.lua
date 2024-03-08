@@ -1029,6 +1029,7 @@ $0
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
+    event='VeryLazy',
     config = function()
       local highlight = {
         "IBL1",
@@ -1036,8 +1037,8 @@ $0
       }
       -- iceberg
       vim.cmd([[
-      hi IBL1 guifg=#242940 guibg=#1e2132
-      hi IBL2 guifg=#242940 guibg=#161821
+      hi link IBL2 LineNr
+      hi link IBL1 Normal
       ]])
       -- nightfox
       -- vim.cmd([[
@@ -1229,6 +1230,35 @@ let g:tagbar_type_help = {
 
   -- colorscheme
   {
+    'swnakamura/iceberg.vim',
+    config = function()
+      vim.cmd.colorscheme 'iceberg'
+      vim.cmd([[
+" Less bright search color
+hi clear Search
+hi Search                gui=bold,underline guisp=#e27878
+" Statusline color
+hi StatusLine            gui=NONE guibg=#0f1117 guifg=#9a9ca5
+hi StatusLineNC          gui=NONE guibg=#0f1117 guifg=#9a9ca5
+hi User1                 gui=NONE guibg=#0f1117 guifg=#9a9ca5
+" Do not show unnecessary separation colors
+hi LineNr                guibg=#161821
+hi CursorLineNr          guibg=#161821
+hi SignColumn            guibg=#161821
+hi GitGutterAdd          guibg=#161821
+hi GitGutterChange       guibg=#161821
+hi GitGutterChangeDelete guibg=#161821
+hi GitGutterDelete       guibg=#161821
+hi IndentBlanklineIndent guifg=#3c3c43 gui=nocombine
+" Visual mode match and Cursor word match
+hi link VisualMatch Search
+hi CursorWord guibg=#282d44
+  ]])
+    end,
+  },
+
+  {
+    cond = false,
     'oahlen/iceberg.nvim',
     priority = 1000,
     config = function()
@@ -1257,10 +1287,13 @@ hi WinBar guibg=NONE
 
   {
     'nvim-lualine/lualine.nvim',
-    -- event = 'VeryLazy',
+    event = 'VeryLazy',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      local custom_color = require('lualine.themes.iceberg_dark')
+      local custom_color = require('lualine.themes.iceberg_light')
+      if vim.o.bg == 'dark' then
+        custom_color = require('lualine.themes.iceberg_dark')
+      end
       custom_color.normal.c.fg = '#6b7089'
       require('lualine').setup {
         options = {
@@ -1545,8 +1578,8 @@ hi WinBar guibg=NONE
       vim.g.tex_conceal = 'abdmg'
       vim.g.vimtex_fold_enabled = 1
       if vim.g.is_macos then
-        -- vim.g.vimtex_view_method = 'skim' -- skim
-        vim.g.vimtex_view_general_viewer = 'zathura' -- zathura
+        vim.g.vimtex_view_method = 'skim' -- skim
+        -- vim.g.vimtex_view_general_viewer = 'zathura' -- zathura
       else
         vim.g.vimtex_view_method = 'zathura'
       end
@@ -1677,7 +1710,7 @@ hi WinBar guibg=NONE
       require('orgmode').setup({
         org_agenda_files = '~/org/**/*',
         org_default_notes_file = '~/org/inbox.org',
-        org_todo_keywords = { 'TODO', 'WAITING', '|', 'DONE' },
+        org_todo_keywords = { 'TODO', 'WAIT', '|', 'DONE' },
         org_capture_templates = {
           t = { description = 'Task', template = '* TODO %? \n  %u' },
           p = {
@@ -1685,7 +1718,7 @@ hi WinBar guibg=NONE
             template = '* TODO [[%x][%?]]\n  %u\n',
             target = '~/org/papers.org'
           },
-          m = { description = 'Maybe (personal)', template = '* TODO [[%x]] %?\n  %u', target = '~/org/personal.org' },
+          m = { description = 'Maybe (personal)', template = '* TODO %?\n  %u', target = '~/org/personal.org' },
         },
         org_id_method = 'uuid',
         org_agenda_span = 'week',
@@ -1694,6 +1727,16 @@ hi WinBar guibg=NONE
         pattern = "org",
         callback = function()
           vim.keymap.set('i', "<C-CR>", function() require('orgmode').action('org_mappings.meta_return') end)
+          vim.keymap.set('i', "<C-t>",
+            function()
+              require('orgmode').action('org_mappings.do_demote')
+              vim.cmd('normal! l')
+            end)
+          vim.keymap.set('i', "<C-d>",
+            function()
+              require('orgmode').action('org_mappings.do_promote')
+              vim.cmd('normal! h')
+            end)
         end
       })
       vim.api.nvim_create_autocmd("FileType", {
@@ -1702,8 +1745,6 @@ hi WinBar guibg=NONE
           vim.keymap.set('n', "q", '<cmd>q<cr>')
         end
       })
-      vim.keymap.set('n', '<leader>oo', '<cmd>e ~/org/inbox.org<cr>zR')
-      vim.keymap.set('n', '<leader>oi', '<cmd>e ~/org/issue.org<cr>zR')
     end,
   },
   {
@@ -2099,6 +2140,11 @@ vim.api.nvim_create_autocmd('FileType', {
   group = 'markdown-mapping'
 })
 
+-- [[ frequenly used files ]]
+vim.keymap.set('n', '<leader>oo', '<cmd>e ~/org/inbox.org<cr>zR')
+vim.keymap.set('n', '<leader>on', '<cmd>e ~/research_vault/note.md<cr>G')
+vim.keymap.set('n', '<leader>oi', '<cmd>e ~/research_vault/weekly-issues/issue.md<cr>')
+
 
 
 -- [[minor functionalities]]
@@ -2352,7 +2398,7 @@ endfunction
 
 function! Enable() abort
   if g:is_macos
-    call system('im-select com.justsystems.inputmethod.atok33.Japanese')
+    call system('macism com.justsystems.inputmethod.atok33.Japanese')
   else
     call system('fcitx5-remote -o')
   endif
@@ -2360,7 +2406,7 @@ endfunction
 
 function! Disable() abort
   if g:is_macos
-    call system('im-select com.apple.keylayout.ABC')
+    call system('macism com.apple.keylayout.ABC')
   else
     call system('fcitx5-remote -c')
   endif
