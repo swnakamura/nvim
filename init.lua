@@ -168,16 +168,6 @@ require('lazy').setup({
   },
 
   {
-    cond = false,
-    'goolord/alpha-nvim',
-    event = "VimEnter",
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function()
-      require 'alpha'.setup(require 'alpha.themes.startify'.config)
-    end
-  },
-
-  {
     'https://github.com/Bekaboo/dropbar.nvim',
     config = function()
       vim.keymap.set('n', "<leader>n", require('dropbar.api').pick)
@@ -716,7 +706,11 @@ cap = cv2.VideoCapture(movie_path)
 FPS = round(cap.get(cv2.CAP_PROP_FPS), 2)
 NUM_FRAMES = int(round(cap.get(cv2.CAP_PROP_FRAME_COUNT), 2))
 WIDTH, HEIGHT = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-ret, frame = cap.read()
+while True:
+    ret, frame = cap.read()
+    if ret is False:
+        break
+cap.release()
 ]]
         ),
         ls.parser.parse_snippet({ trig = "write_movie_using_cv2", name = "write movie using cv2" },
@@ -728,6 +722,28 @@ out = cv2.VideoWriter(
     (WIDTH, HEIGHT),
     )
 out.write((image * 255).astype(np.uint8))
+out.release()
+]]
+        ),
+        ls.parser.parse_snippet({ trig = "read_write_movie_using_cv2", name = "read and write movie using cv2" },
+          [[
+cap = cv2.VideoCapture(movie_path)
+FPS = round(cap.get(cv2.CAP_PROP_FPS), 2)
+NUM_FRAMES = int(round(cap.get(cv2.CAP_PROP_FRAME_COUNT), 2))
+WIDTH, HEIGHT = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+out = cv2.VideoWriter(
+    f"out.mp4",
+    cv2.VideoWriter_fourcc("m", "p", "4", "v"),
+    FPS,
+    (WIDTH, HEIGHT),
+    )
+while True:
+    ret, frame = cap.read()
+    if ret is False:
+        break
+    out.write(frame)
+cap.release()
+out.release()
 ]]
         ),
       })
@@ -1041,57 +1057,8 @@ $0
     end
   },
 
-  {
-    cond = false,
-    'monaqa/dial.nvim',
-    config = function()
-      vim.keymap.set("n", "<C-a>", require("dial.map").inc_normal(), { noremap = true })
-      vim.keymap.set("n", "<C-x>", require("dial.map").dec_normal(), { noremap = true })
-      vim.keymap.set("n", "g<C-a>", require("dial.map").inc_gnormal(), { noremap = true })
-      vim.keymap.set("n", "g<C-x>", require("dial.map").dec_gnormal(), { noremap = true })
-      vim.keymap.set("v", "<C-a>", require("dial.map").inc_visual(), { noremap = true })
-      vim.keymap.set("v", "<C-x>", require("dial.map").dec_visual(), { noremap = true })
-      vim.keymap.set("v", "g<C-a>", require("dial.map").inc_gvisual(), { noremap = true })
-      vim.keymap.set("v", "g<C-x>", require("dial.map").dec_gvisual(), { noremap = true })
-    end
-  },
-
   -- markdown
   { 'preservim/vim-markdown', ft = 'markdown' },
-
-  -- buffer preview for markdown
-  {
-    cond = false,
-    'iamcco/markdown-preview.nvim',
-    event = 'VeryLazy',
-    build = function() fn["mkdp#util#install"]() end,
-    config = function()
-      vim.api.nvim_create_augroup('markdown_bufpreview', {})
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = 'markdown',
-        callback = function()
-          vim.keymap.set({ 'n', 'i' }, '<F5>', '<Cmd>MarkdownPreview<CR>', { buffer = true })
-        end,
-        group = 'markdown_bufpreview',
-      })
-    end
-  },
-
-  {
-    cond = false,
-    'kat0h/bufpreview.vim',
-    build = 'deno task prepare',
-    dependencies = 'vim-denops/denops.vim',
-    config = function()
-      vim.cmd([[
-    augroup markdown_bufpreview
-    autocmd!
-    autocmd FileType markdown nnoremap <buffer> <F5> <Cmd>PreviewMarkdown<CR>
-    autocmd FileType markdown inoremap <buffer> <F5> <Cmd>PreviewMarkdown<CR>
-    augroup END
-    ]])
-    end
-  },
 
   {
     'junegunn/vim-easy-align',
@@ -1271,8 +1238,7 @@ let g:tagbar_type_help = {
 hi clear Search
 hi Search                guibg=NONE gui=bold,underline guisp=#e27878
 " Less bright cursor line number
-hi clear CursorLineNr
-hi link CursorLineNr ModeMsg
+hi CursorLineNr guibg=NONE guifg=#abaeba
 " Do not show unnecessary separation colors
 hi LineNr                guibg=NONE
 hi SignColumn            guibg=NONE
@@ -1420,7 +1386,7 @@ hi WinBar guibg=NONE
   -- obsidian integration
   {
     'epwalsh/obsidian.nvim',
-    cond=vim.g.is_macos,
+    cond = vim.g.is_macos,
     ft = 'markdown',
     dependencies = {
       -- Required.
@@ -1506,15 +1472,15 @@ hi WinBar guibg=NONE
               ['[]'] = '@class.outer',
             },
           },
-          swap = {
-            enable = true,
-            swap_next = {
-              ['<leader>a'] = '@parameter.inner',
-            },
-            swap_previous = {
-              ['<leader>A'] = '@parameter.inner',
-            },
-          },
+          -- swap = {
+          --   enable = true,
+          --   swap_next = {
+          --     ['<leader>a'] = '@parameter.inner',
+          --   },
+          --   swap_previous = {
+          --     ['<leader>A'] = '@parameter.inner',
+          --   },
+          -- },
         },
       }
     end
@@ -1679,7 +1645,7 @@ hi WinBar guibg=NONE
   },
 
   -- color picker
-  { 'uga-rosa/ccc.nvim',  event = 'VeryLazy' },
+  { 'uga-rosa/ccc.nvim',  event = 'VeryLazy', config = true },
 
   -- expl3
   { 'wtsnjp/vim-expl3',   filetype = 'expl3' },
@@ -1703,8 +1669,6 @@ hi WinBar guibg=NONE
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter' },
     },
-    ft = 'org',
-    event = 'VeryLazy',
     config = function()
       -- Load treesitter grammar for org
       require('orgmode').setup_ts_grammar()
@@ -1713,7 +1677,7 @@ hi WinBar guibg=NONE
       require('orgmode').setup({
         org_agenda_files = '~/org/**/*',
         org_default_notes_file = '~/org/inbox.org',
-        org_todo_keywords = {'TODO', 'WAITING', '|', 'DONE' },
+        org_todo_keywords = { 'TODO', 'WAITING', '|', 'DONE' },
         org_capture_templates = {
           t = { description = 'Task', template = '* TODO %? \n  %u' },
           p = {
@@ -1746,6 +1710,15 @@ hi WinBar guibg=NONE
     'akinsho/org-bullets.nvim',
     config = true,
   },
+  {
+    'https://github.com/chentoast/marks.nvim',
+    config = function()
+      require('marks').setup({})
+      vim.api.nvim_set_hl(0, 'MarkSignHL', { link = "CursorLineNr" })
+      vim.api.nvim_set_hl(0, 'MarkSignNumHL', { link = "LineNr" })
+    end
+  },
+
 }, {})
 
 -- [[ Setting options ]]
@@ -2037,8 +2010,8 @@ vim.keymap.set('x', 'g+', 'g<c-a>')
 vim.keymap.set('x', 'g-', 'g<c-x>')
 
 -- I can remember only one mark anyway
-vim.keymap.set('n', 'm', 'ma')
-vim.keymap.set('n', "'", '`a')
+-- vim.keymap.set('n', 'm', 'ma')
+-- vim.keymap.set('n', "'", '`a')
 
 -- select pasted text
 vim.keymap.set('n', 'gp', '`[v`]')
