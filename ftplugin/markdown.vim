@@ -9,6 +9,8 @@ function GHCopy(line1, line2) abort
 
   let text = text->join("\n")
 
+  let text = text->substitute('%%.\{-1,}%%', '' ,'ge') " Remove obsidian comments
+
   let text = text->substitute('\$\([^$]\{-1,}\)\$','$`\1`$','ge')
   let text = text->substitute(' --- ',':','ge')
   let text = text->substitute('	','    ','ge')

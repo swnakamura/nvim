@@ -32,18 +32,18 @@ end
 
 if vim.g.is_wsl then
   vim.cmd([[
-let g:clipboard = {
-        \   'name': 'WslClipboard',
-        \   'copy': {
-        \      '+': ['sh', '-c', 'iconv -t sjis | clip.exe'],
-        \      '*': ['sh', '-c', 'iconv -t sjis | clip.exe'],
-        \    },
-        \   'paste': {
-        \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-        \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-        \   },
-        \   'cache_enabled': 0,
-        \ }
+  let g:clipboard = {
+  \   'name': 'WslClipboard',
+  \   'copy': {
+  \      '+': ['sh', '-c', 'iconv -t sjis | clip.exe'],
+  \      '*': ['sh', '-c', 'iconv -t sjis | clip.exe'],
+  \    },
+  \   'paste': {
+  \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+  \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+  \   },
+  \   'cache_enabled': 0,
+  \ }
   ]])
 end
 
@@ -128,8 +128,6 @@ if vim.g.is_macos == false then
   end
 end
 
-
-
 -- [[ Plugin settings ]]
 
 require('lazy').setup({
@@ -168,12 +166,13 @@ require('lazy').setup({
   },
 
   {
+    cond = false,
     'https://github.com/Bekaboo/dropbar.nvim',
     config = function()
       vim.keymap.set('n', "<leader>n", require('dropbar.api').pick)
       vim.cmd([[
       augroup dropbar-keymap
-        autocmd FileType dropbar_menu nnoremap q <Cmd>q<CR>
+      autocmd FileType dropbar_menu nnoremap q <Cmd>q<CR>
       augroup END
       ]])
     end
@@ -224,13 +223,13 @@ require('lazy').setup({
     config = function()
       vim.cmd([[
       augroup fugitive-keymap
-        autocmd FileType fugitive nnoremap <buffer><nowait><expr> m '<Cmd>exe <SNR>' . g:fugitive_sid . '_NextFile(v:count1)<CR>'
+      autocmd FileType fugitive nnoremap <buffer><nowait><expr> m '<Cmd>exe <SNR>' . g:fugitive_sid . '_NextFile(v:count1)<CR>'
       augroup END
       ]])
       vim.schedule(function()
         vim.cmd([[
           let g:fugitive_sid = getscriptinfo(#{name:'autoload/fugitive.vim'})[0]['sid']
-        ]])
+          ]])
       end)
     end,
   },
@@ -243,10 +242,10 @@ require('lazy').setup({
     end,
     config = function()
       vim.cmd([[
-hi link agitStatAdded diffAdded
-hi link agitStatRemoved diffRemoved
-hi link agitDiffAdd diffAdded
-hi link agitDiffRemove diffRemoved
+      hi link agitStatAdded diffAdded
+      hi link agitStatRemoved diffRemoved
+      hi link agitDiffAdd diffAdded
+      hi link agitDiffRemove diffRemoved
       ]])
     end
   },
@@ -365,13 +364,13 @@ hi link agitDiffRemove diffRemoved
               vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
             end
 
-            nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-            nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+            nmap('<leader>ln', vim.lsp.buf.rename, '[R]e[n]ame')
+            nmap('<leader>la', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-            nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-            nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-            nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-            nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+            nmap('<leader>ld', "<cmd>Lspsaga peek_definition<CR>", '[G]oto [D]efinition')
+            nmap('<leader>lr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+            nmap('<leader>li', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+            -- nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
             -- nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
             -- nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
@@ -386,6 +385,14 @@ hi link agitDiffRemove diffRemoved
             nmap('<leader>wl', function()
               print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
             end, '[W]orkspace [L]ist Folders')
+
+            -- Diagnostic keymaps
+            nmap('[d', vim.diagnostic.goto_prev, 'Go to previous diagnostic message')
+            nmap(']d', vim.diagnostic.goto_next, 'Go to next diagnostic message')
+            nmap('<leader>e', vim.diagnostic.open_float, 'Open floating diagnostic message')
+            nmap('<leader>ll', vim.diagnostic.setloclist, 'Open diagnostics list')
+
+            -- nmap('<leader>a', '<cmd>Lspsaga outline<cr>', 'Open outline')
 
             -- Create a command `:Format` local to the LSP buffer
             vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
@@ -427,6 +434,74 @@ hi link agitDiffRemove diffRemoved
   },
 
   {
+    'nvimdev/lspsaga.nvim',
+    event = 'LspAttach',
+    config = function()
+      require('lspsaga').setup({
+        lightbulb = {
+          enable = false
+        }
+      })
+    end,
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-tree/nvim-web-devicons'
+    }
+  },
+
+
+  -- DAP
+  {
+    'https://github.com/mfussenegger/nvim-dap',
+    ft = { 'python', 'c', 'cpp', 'rust' },
+    dependencies = {
+      'nvim-dap-ui',
+      'nvim-dap-python',
+    },
+    config = function()
+      local nmap = function(keys, func, desc)
+        if desc then
+          desc = 'DAP: ' .. desc
+        end
+
+        vim.keymap.set('n', keys, func, { buffer = 0, desc = desc })
+      end
+      vim.api.nvim_set_keymap('n', '<leader>lu', '<cmd>lua require("dapui").toggle()<CR>', {})
+
+      -- https://zenn.dev/kawat/articles/51f9cc1f0f0aa9 を参考
+      vim.api.nvim_set_keymap('n', '<F6>', '<cmd>DapContinue<CR>', { silent = true })
+      vim.api.nvim_set_keymap('n', '<F10>', '<cmd>DapStepOver<CR>', { silent = true })
+      vim.api.nvim_set_keymap('n', '<F11>', '<cmd>DapStepInto<CR>', { silent = true })
+      vim.api.nvim_set_keymap('n', '<F12>', '<cmd>DapStepOut<CR>', { silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>b', '<cmd>DapToggleBreakpoint<CR>', { silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>B',
+        '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Breakpoint condition: "))<CR>', { silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>lp',
+        '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>le',
+        '<cmd>lua require("dapui").eval()<CR>', { silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>Dr', '<cmd>lua require("dap").repl.open()<CR>', { silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>Dl', '<cmd>lua require("dap").run_last()<CR>', { silent = true })
+    end
+
+  },
+  {
+    'https://github.com/rcarriga/nvim-dap-ui',
+    config = function()
+      require('dapui').setup()
+    end
+  },
+  {
+    'https://github.com/mfussenegger/nvim-dap-python',
+    config = function()
+      local venv = os.getenv('VIRTUAL_ENV')
+      local command = string.format('%s/bin/python', venv)
+
+      require('dap-python').setup(command)
+    end
+  },
+
+  {
     'mfussenegger/nvim-lint',
     event = { "BufReadPost", "BufNewFile" },
     config = function()
@@ -465,13 +540,14 @@ hi link agitDiffRemove diffRemoved
               \   ],
               \   '-' : [
               \       { 'block' : ['「', '」'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['j[', 'j]'] },
+              \       { 'block' : ['（', '）'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['j(', 'j)'] },
               \       { 'block' : ['『', '』'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['j{', 'j}'] },
               \       { 'block' : ['〝', '〟'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['j"'] },
               \       { 'block' : ['【', '】'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ["j'"] },
               \   ],
               \ }
 
-        ]])
+              ]])
       end,
     },
   },
@@ -850,7 +926,7 @@ $0
     \centering
     \includegraphics[width=\linewidth]{${1:path}}
     \caption{${2:caption}}
-	\label{fig:${5:${1/[\W]+/_/g}}}
+  \label{fig:${5:${1/[\W]+/_/g}}}
 \end{figure}$0
     ]]
         ),
@@ -1029,7 +1105,7 @@ $0
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
-    event='VeryLazy',
+    event = 'VeryLazy',
     config = function()
       local highlight = {
         "IBL1",
@@ -1060,6 +1136,19 @@ $0
 
   -- markdown
   { 'preservim/vim-markdown', ft = 'markdown' },
+  {
+    'dhruvasagar/vim-table-mode',
+    ft = 'markdown',
+    config = function()
+      vim.api.nvim_create_autocmd({ "FileType" }, {
+        pattern = "markdown",
+        callback = function()
+          vim.keymap.set('n', 'gqgq', '<cmd>TableModeToggle<cr>', { buffer = 0 })
+        end
+      }
+      )
+    end
+  },
 
   {
     'junegunn/vim-easy-align',
@@ -1088,32 +1177,32 @@ $0
     config = function()
       vim.cmd([[
       call smartinput#map_to_trigger('i', '<Bar>', '<Bar>', '<Bar>')
-  " argument of lambda function
-  call smartinput#define_rule({
-  \   'at': '(\s*\%#',
-  \   'char': '<Bar>',
-  \   'input': '<Bar><Bar><Left>',
-  \   'filetype': ['rust'],
-  \ })
-  call smartinput#define_rule({
-  \   'at': '\%#\_s*|',
-  \   'char': '<Bar>',
-  \   'input': '<C-r>=smartinput#_leave_block(''|'')<Enter><Right>',
-  \   'filetype': ['rust'],
-  \ })
-  " lifetime specifier
-  call smartinput#define_rule({
-  \   'at': '<\%#',
-  \   'char': "'",
-  \   'input': "'",
-  \   'filetype': ['rust'],
-  \ })
-  call smartinput#define_rule({
-  \   'at': '''\%#',
-  \   'char': "'",
-  \   'input': "'",
-  \   'filetype': ['tex'],
-  \ })
+      " argument of lambda function
+      call smartinput#define_rule({
+      \   'at': '(\s*\%#',
+      \   'char': '<Bar>',
+      \   'input': '<Bar><Bar><Left>',
+      \   'filetype': ['rust'],
+      \ })
+      call smartinput#define_rule({
+      \   'at': '\%#\_s*|',
+      \   'char': '<Bar>',
+      \   'input': '<C-r>=smartinput#_leave_block(''|'')<Enter><Right>',
+      \   'filetype': ['rust'],
+      \ })
+      " lifetime specifier
+      call smartinput#define_rule({
+      \   'at': '<\%#',
+      \   'char': "'",
+      \   'input': "'",
+      \   'filetype': ['rust'],
+      \ })
+      call smartinput#define_rule({
+      \   'at': '''\%#',
+      \   'char': "'",
+      \   'input': "'",
+      \   'filetype': ['tex'],
+      \ })
       ]])
     end
   },
@@ -1127,24 +1216,24 @@ $0
     init = function()
       vim.keymap.set('n', '<leader>t', '<cmd>TagbarToggle<CR>')
       vim.cmd([[
-let g:tagbar_sort = 0
-let g:tagbar_autoclose = 0
+        let g:tagbar_sort = 0
+        let g:tagbar_autoclose = 0
 
-let g:tagbar_map_togglesort = "S"
+        let g:tagbar_map_togglesort = "S"
 
-let g:tagbar_type_help = {
-    \ 'ctagstype' : 'vimhelp',
-    \ 'kinds'     : [
+        let g:tagbar_type_help = {
+        \ 'ctagstype' : 'vimhelp',
+        \ 'kinds'     : [
         \ 's:Sections',
         \ 'b:Subsections',
-    \ ],
-    \ 'kind2scope':{'s': 'section', 'b': 'subsection'},
-    \ 'scope2kind':{'section': 's'},
-    \ 'sro': ',',
-    \ 'sort'    : 0,
-    \ 'deffile' : $HOME . '.ctags.d/vim.ctags'
-\ }
-]])
+        \ ],
+        \ 'kind2scope':{'s': 'section', 'b': 'subsection'},
+        \ 'scope2kind':{'section': 's'},
+        \ 'sro': ',',
+        \ 'sort'    : 0,
+        \ 'deffile' : $HOME . '.ctags.d/vim.ctags'
+        \ }
+        ]])
     end,
     cmd = 'TagbarToggle'
   },
@@ -1231,54 +1320,79 @@ let g:tagbar_type_help = {
   -- colorscheme
   {
     'swnakamura/iceberg.vim',
-    config = function()
-      vim.cmd.colorscheme 'iceberg'
-      vim.cmd([[
-" Less bright search color
-hi clear Search
-hi Search                gui=bold,underline guisp=#e27878
-" Statusline color
-hi StatusLine            gui=NONE guibg=#0f1117 guifg=#9a9ca5
-hi StatusLineNC          gui=NONE guibg=#0f1117 guifg=#9a9ca5
-hi User1                 gui=NONE guibg=#0f1117 guifg=#9a9ca5
-" Do not show unnecessary separation colors
-hi LineNr                guibg=#161821
-hi CursorLineNr          guibg=#161821
-hi SignColumn            guibg=#161821
-hi GitGutterAdd          guibg=#161821
-hi GitGutterChange       guibg=#161821
-hi GitGutterChangeDelete guibg=#161821
-hi GitGutterDelete       guibg=#161821
-hi IndentBlanklineIndent guifg=#3c3c43 gui=nocombine
-" Visual mode match and Cursor word match
-hi link VisualMatch Search
-hi CursorWord guibg=#282d44
-  ]])
-    end,
-  },
-
-  {
-    cond = false,
-    'oahlen/iceberg.nvim',
+    lazy = false,
     priority = 1000,
     config = function()
       vim.cmd.colorscheme 'iceberg'
       vim.cmd([[
-" Less bright search color
-hi clear Search
-hi Search                guibg=NONE gui=bold,underline guisp=#e27878
-" Less bright cursor line number
-hi CursorLineNr guibg=NONE guifg=#abaeba
-" Do not show unnecessary separation colors
-hi LineNr                guibg=NONE
-hi SignColumn            guibg=NONE
-hi GitGutterAdd          guibg=NONE
-hi GitGutterChange       guibg=NONE
-hi GitGutterChangeDelete guibg=NONE
-hi GitGutterDelete       guibg=NONE
-" Disable hl for winbar which is used by dropbar
-hi WinBar guibg=NONE
-      ]])
+        " Less bright search color
+        hi clear Search
+        hi Search                gui=bold,underline guisp=#e27878
+        " Statusline color
+        hi StatusLine            gui=NONE guibg=#0f1117 guifg=#9a9ca5
+        hi StatusLineNC          gui=NONE guibg=#0f1117 guifg=#9a9ca5
+        hi User1                 gui=NONE guibg=#0f1117 guifg=#9a9ca5
+        " Do not show unnecessary separation colors
+        hi LineNr                guibg=#161821
+        hi CursorLineNr          guibg=#161821
+        hi SignColumn            guibg=#161821
+        hi GitGutterAdd          guibg=#161821
+        hi GitGutterChange       guibg=#161821
+        hi GitGutterChangeDelete guibg=#161821
+        hi GitGutterDelete       guibg=#161821
+        hi IndentBlanklineIndent guifg=#3c3c43 gui=nocombine
+        " Visual mode match and Cursor word match
+        hi link VisualMatch Search
+        hi CursorWord guibg=#282d44
+        ]])
+    end,
+  },
+  {
+    cond = false,
+    'https://github.com/catppuccin/nvim',
+    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
+    config = function()
+      -- load the colorscheme here
+      vim.cmd([[colorscheme catppuccin]])
+    end,
+  },
+  {
+    cond = false,
+    "folke/tokyonight.nvim",
+    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
+    config = function()
+      -- load the colorscheme here
+      vim.cmd([[colorscheme tokyonight-moon]])
+    end,
+  },
+  {
+    cond = false,
+    dir = '~/ghq/github.com/oahlen/iceberg.nvim',
+    event = 'VimEnter',
+    config = function()
+      if vim.o.bg == 'light' then
+        vim.cmd.colorscheme 'iceberg-light'
+      else
+        vim.cmd.colorscheme 'iceberg'
+      end
+      vim.cmd([[
+        " Less bright search color
+        hi clear Search
+        hi Search                guibg=NONE gui=bold,underline guisp=#e27878
+        " Less bright cursor line number
+        hi CursorLineNr guibg=NONE guifg=#abaeba
+        " Do not show unnecessary separation colors
+        hi LineNr                guibg=NONE
+        hi SignColumn            guibg=NONE
+        hi GitGutterAdd          guibg=NONE
+        hi GitGutterChange       guibg=NONE
+        hi GitGutterChangeDelete guibg=NONE
+        hi GitGutterDelete       guibg=NONE
+        " Disable hl for winbar which is used by dropbar
+        hi WinBar guibg=NONE
+        ]])
     end
   },
 
@@ -1432,6 +1546,7 @@ hi WinBar guibg=NONE
       "nvim-telescope/telescope.nvim",
     },
     opts = {
+      disable_frontmatter = true,
       workspaces = {
         {
           name = "work",
@@ -1531,6 +1646,7 @@ hi WinBar guibg=NONE
   },
 
   {
+    cond = false,
     'rmagatti/auto-session',
     config = function()
       require("auto-session").setup {
@@ -1541,8 +1657,19 @@ hi WinBar guibg=NONE
   },
 
   {
-    cond = false,
-    'swnakamura/gitsession.vim'
+    'swnakamura/gitsession.vim',
+    config = function()
+      vim.cmd([[
+      " Change the temporary file location.
+      let g:gitsession_tmp_dir = $HOME . "/.tmp/gitsession"
+
+      " mappings
+      nmap gss <Cmd>SaveSession<CR>
+      nmap gsl <Cmd>LoadSession<CR>
+      nmap gsr <Cmd>StartRepeatedSave<CR>
+      nmap gsc <Cmd>CleanUpSession<CR>
+      ]])
+    end
   },
 
   {
@@ -1698,7 +1825,8 @@ hi WinBar guibg=NONE
 
   -- org mode
   {
-    'nvim-orgmode/orgmode',
+    -- timeがマージされていないのでまだ
+    dir = '~/syncthing_config/nvim-orgmode',
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter' },
     },
@@ -1710,7 +1838,7 @@ hi WinBar guibg=NONE
       require('orgmode').setup({
         org_agenda_files = '~/org/**/*',
         org_default_notes_file = '~/org/inbox.org',
-        org_todo_keywords = { 'TODO', 'WAIT', '|', 'DONE' },
+        org_todo_keywords = { 'TODO', '|', 'DONE' },
         org_capture_templates = {
           t = { description = 'Task', template = '* TODO %? \n  %u' },
           p = {
@@ -1727,6 +1855,7 @@ hi WinBar guibg=NONE
         pattern = "org",
         callback = function()
           vim.keymap.set('i', "<C-CR>", function() require('orgmode').action('org_mappings.meta_return') end)
+          vim.keymap.set('i', "<S-CR>", function() require('orgmode').action('org_mappings.insert_todo_heading') end)
           vim.keymap.set('i', "<C-t>",
             function()
               require('orgmode').action('org_mappings.do_demote')
@@ -1770,6 +1899,9 @@ vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
 vim.o.smartindent = true
 vim.o.expandtab = true
+
+-- conceal level
+vim.go.conceallevel = 2
 
 -- Set highlight on search
 vim.o.hlsearch = false
@@ -1821,20 +1953,20 @@ if vim.fn.executable('rg') then
   vim.cmd([[
   command -range -nargs=* -complete=file Rg <line1>,<line2>call g:Rg(<q-args>, <range>)
   fun! g:Rg(input, range) range
-    if a:range == 2 && a:firstline == a:lastline
-      " Assumes that the command is run with visual selection
-      " let colrange = charcol('.') < charcol('v') ? [charcol('.'), charcol('v')] : [charcol('v'), charcol('.')]
-      let colrange = [charcol("'<"), charcol("'>")]
-      let text = getline('.')->strcharpart(colrange[0]-1, colrange[1]-colrange[0]+1)->escape('\')
-    elseif empty(a:input)
-      let text = expand("<cword>")
-      echoerr text
-    else
-      let text = a:input
-    endif
+  if a:range == 2 && a:firstline == a:lastline
+  " Assumes that the command is run with visual selection
+  " let colrange = charcol('.') < charcol('v') ? [charcol('.'), charcol('v')] : [charcol('v'), charcol('.')]
+  let colrange = [charcol("'<"), charcol("'>")]
+  let text = getline('.')->strcharpart(colrange[0]-1, colrange[1]-colrange[0]+1)->escape('\')
+  elseif empty(a:input)
+  let text = expand("<cword>")
+  echoerr text
+  else
+  let text = a:input
+  endif
   if text == ''
-    echoerr 'search text is empty'
-    return
+  echoerr 'search text is empty'
+  return
   endif
   exec 'grep' "'" . text . "'"
   endfun
@@ -1879,10 +2011,10 @@ vim.o.foldlevel = 99
 vim.cmd([[
 set foldtext=MyFoldText()
 function! MyFoldText()
-  let line = getline(v:foldstart)
-  let sub = substitute(line, '/\*\|\*/\|{{{\d\=', '', 'g')
-  let nline = v:foldend - v:foldstart
-  return sub . ' <' . nline  . ' lines>' . v:folddashes
+let line = getline(v:foldstart)
+let sub = substitute(line, '/\*\|\*/\|{{{\d\=', '', 'g')
+let nline = v:foldend - v:foldstart
+return sub . ' <' . nline  . ' lines>' . v:folddashes
 endfunction
 ]])
 
@@ -1931,34 +2063,34 @@ vim.keymap.set('n', '<Plug>(g-mode)', '<Nop>', { remap = true })
 vim.cmd([[
 " カーソルがインデント内部ならtrue
 function! s:in_indent() abort
-  return col('.') <= indent('.')
+return col('.') <= indent('.')
 endfunction
 
 " カーソルがインデントとずれた位置ならtrue
 function! s:not_fit_indent() abort
-  return !!((col('.') - 1) % shiftwidth())
+return !!((col('.') - 1) % shiftwidth())
 endfunction
 
 function! s:quantized_h(cnt = 1) abort
-  if a:cnt > 1 || !&expandtab
-    execute printf('normal! %sh', a:cnt)
-    return
-  endif
-  normal! h
-  while s:in_indent() && s:not_fit_indent()
-    normal! h
-  endwhile
+if a:cnt > 1 || !&expandtab
+execute printf('normal! %sh', a:cnt)
+return
+endif
+normal! h
+while s:in_indent() && s:not_fit_indent()
+normal! h
+endwhile
 endfunction
 
 function! s:quantized_l(cnt = 1) abort
-  if a:cnt > 1 || !&expandtab
-    execute printf('normal! %sl', a:cnt)
-    return
-  endif
-  normal! l
-  while s:in_indent() && s:not_fit_indent()
-    normal! l
-  endwhile
+if a:cnt > 1 || !&expandtab
+execute printf('normal! %sl', a:cnt)
+return
+endif
+normal! l
+while s:in_indent() && s:not_fit_indent()
+normal! l
+endwhile
 endfunction
 
 noremap h <cmd>call <sid>quantized_h(v:count1)<cr>
@@ -2142,7 +2274,7 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -- [[ frequenly used files ]]
 vim.keymap.set('n', '<leader>oo', '<cmd>e ~/org/inbox.org<cr>zR')
-vim.keymap.set('n', '<leader>on', '<cmd>e ~/research_vault/note.md<cr>G')
+vim.keymap.set('n', '<leader>on', '<cmd>e ~/research_vault/notes/note.md<cr>G')
 vim.keymap.set('n', '<leader>oi', '<cmd>e ~/research_vault/weekly-issues/issue.md<cr>')
 
 
@@ -2157,8 +2289,8 @@ cnoreabbrev <expr> ss getcmdtype() .. getcmdline() ==# ':ss' ? [getchar(), ''][1
 
 " visual modeで複数行を選択して'/'を押すと，その範囲内での検索を行う
 xnoremap <expr> / (line('.') == line('v')) ?
-      \ '/' :
-      \ ((line('.') < line('v')) ? '' : 'o') . "<ESC>" . '/\%>' . (min([line('v'), line('.')])-1) . 'l\%<' . (max([line('v'), line('.')])+1) . 'l'
+\ '/' :
+\ ((line('.') < line('v')) ? '' : 'o') . "<ESC>" . '/\%>' . (min([line('v'), line('.')])-1) . 'l\%<' . (max([line('v'), line('.')])+1) . 'l'
 
 ]])
 
@@ -2167,150 +2299,150 @@ xnoremap <expr> / (line('.') == line('v')) ?
 vim.cmd([[
 " ファイルタイプごとの設定。複数のファイルタイプで共通することの多い設定をここに書き出しているが、ファイルライプごとの特異性が高いものはftplugin/filetype.vimに書いていく
 augroup file-type
-  au!
-  au FileType go                                    setlocal tabstop=4 shiftwidth=4 noexpandtab formatoptions+=r
-  au FileType html,csv,tsv                          setlocal nowrap
-  au FileType text,mail,markdown,help               setlocal noet      spell
-  au FileType gitcommit                             setlocal spell
-  "  テキストについて-もkeywordとする
-  au FileType text,tex,markdown,gitcommit,help      setlocal isk+=-
-  "  texについて@もkeywordとする
-  au FileType tex                                   setlocal isk+=@-@
-  au FileType log                                   setlocal nowrap
+au!
+au FileType go                                    setlocal tabstop=4 shiftwidth=4 noexpandtab formatoptions+=r
+au FileType html,csv,tsv                          setlocal nowrap
+au FileType text,mail,markdown,help               setlocal noet      spell
+au FileType gitcommit                             setlocal spell
+"  テキストについて-もkeywordとする
+au FileType text,tex,markdown,gitcommit,help      setlocal isk+=-
+"  texについて@もkeywordとする
+au FileType tex                                   setlocal isk+=@-@
+au FileType log                                   setlocal nowrap
 
-  "  長い行がありそうな拡張子なら構文解析を途中でやめる
-  au FileType csv,tsv,json                          setlocal synmaxcol=256
+"  長い行がありそうな拡張子なら構文解析を途中でやめる
+au FileType csv,tsv,json                          setlocal synmaxcol=256
 
-  "  インデントの有りそうなファイルならbreakindent
-  au FileType c,cpp,rust,go,python,lua,bash,vim,tex,markdown setlocal breakindent
+"  インデントの有りそうなファイルならbreakindent
+au FileType c,cpp,rust,go,python,lua,bash,vim,tex,markdown setlocal breakindent
 augroup END
 
 " used in 'ftplugin/python.vim' etc
 function! Preserve(command)
-  let l:curw = winsaveview()
-  execute a:command
-  call winrestview(l:curw)
-  return ''
+let l:curw = winsaveview()
+execute a:command
+call winrestview(l:curw)
+return ''
 endfunction
 
 " 検索中の領域をハイライトする
 augroup vimrc-incsearch-highlight
-  au!
-  " 検索に入ったときにhlsearchをオン
-  au CmdlineEnter /,\? set hlsearch
-  nnoremap n n<Cmd>set hlsearch<CR><Cmd>autocmd CursorMoved * ++once set nohlsearch<CR>
-  nnoremap N N<Cmd>set hlsearch<CR><Cmd>autocmd CursorMoved * ++once set nohlsearch<CR>
-  " CmdlineLeave時に即座に消す代わりに、少し待って、更にカーソルが動いたときに消す
-  " カーソルが動いたときにすぐ消すようにすると、検索された単語に移動した瞬間に消えてしまうので意味がない。その防止
-  au CmdlineLeave /,\? autocmd CursorHold * ++once autocmd CursorMoved * ++once set nohlsearch
-  " au CmdlineLeave /,\? set nohlsearch
+au!
+" 検索に入ったときにhlsearchをオン
+au CmdlineEnter /,\? set hlsearch
+nnoremap n n<Cmd>set hlsearch<CR><Cmd>autocmd CursorMoved * ++once set nohlsearch<CR>
+nnoremap N N<Cmd>set hlsearch<CR><Cmd>autocmd CursorMoved * ++once set nohlsearch<CR>
+" CmdlineLeave時に即座に消す代わりに、少し待って、更にカーソルが動いたときに消す
+" カーソルが動いたときにすぐ消すようにすると、検索された単語に移動した瞬間に消えてしまうので意味がない。その防止
+au CmdlineLeave /,\? autocmd CursorHold * ++once autocmd CursorMoved * ++once set nohlsearch
+" au CmdlineLeave /,\? set nohlsearch
 augroup END
 
 " 選択した領域を自動でハイライトする
 augroup instant-visual-highlight
-  au!
-  autocmd CursorMoved,CursorHold * call Visualmatch()
+au!
+autocmd CursorMoved,CursorHold * call Visualmatch()
 augroup END
 
 function! Visualmatch()
-  if exists("w:visual_match_id")
-    call matchdelete(w:visual_match_id)
-    unlet w:visual_match_id
-  endif
+if exists("w:visual_match_id")
+call matchdelete(w:visual_match_id)
+unlet w:visual_match_id
+endif
 
-  if index(['v', "\<C-v>"], mode()) == -1
-    return
-  endif
+if index(['v', "\<C-v>"], mode()) == -1
+return
+endif
 
-  if line('.') == line('v')
-    let colrange = charcol('.') < charcol('v') ? [charcol('.'), charcol('v')] : [charcol('v'), charcol('.')]
-    let text = getline('.')->strcharpart(colrange[0]-1, colrange[1]-colrange[0]+1)->escape('\')
-  elseif mode() == 'v' " multiline matchingはvisual modeのみ
-    if line('.') > line('v')
-      let linerange = ['v','.']
-    else
-      let linerange = ['.','v']
-    endif
-    let lines=getline(linerange[0], linerange[1])
-    let lines[0] = lines[0]->strcharpart(charcol(linerange[0])-1)
-    let lines[-1] = lines[-1]->strcharpart(0,charcol(linerange[1]))
-    let text = lines->map({key, line -> line->escape('\')})->join('\n')
-  else
-    let text = ''
-  endif
+if line('.') == line('v')
+let colrange = charcol('.') < charcol('v') ? [charcol('.'), charcol('v')] : [charcol('v'), charcol('.')]
+let text = getline('.')->strcharpart(colrange[0]-1, colrange[1]-colrange[0]+1)->escape('\')
+elseif mode() == 'v' " multiline matchingはvisual modeのみ
+if line('.') > line('v')
+let linerange = ['v','.']
+else
+let linerange = ['.','v']
+endif
+let lines=getline(linerange[0], linerange[1])
+let lines[0] = lines[0]->strcharpart(charcol(linerange[0])-1)
+let lines[-1] = lines[-1]->strcharpart(0,charcol(linerange[1]))
+let text = lines->map({key, line -> line->escape('\')})->join('\n')
+else
+let text = ''
+endif
 
-  " virtualeditの都合でempty textが選択されることがある．
-  " この場合全部がハイライトされてしまうので除く
-  if text == ''
-    return
-  endif
+" virtualeditの都合でempty textが選択されることがある．
+" この場合全部がハイライトされてしまうので除く
+if text == ''
+return
+endif
 
-  if mode() == 'v'
-    let w:visual_match_id = matchadd('VisualMatch', '\V' .. text)
-  else
-    let w:visual_match_id = matchadd('VisualMatch', '\V\<' .. text .. '\>')
-  endif
+if mode() == 'v'
+let w:visual_match_id = matchadd('VisualMatch', '\V' .. text)
+else
+let w:visual_match_id = matchadd('VisualMatch', '\V\<' .. text .. '\>')
+endif
 endfunction
 
 " 単語を自動でハイライトする
 augroup cursor-word-highlight
-  au!
-  autocmd CursorHold * call Wordmatch()
-  autocmd InsertEnter * call DelWordmatch()
+au!
+autocmd CursorHold * call Wordmatch()
+autocmd InsertEnter * call DelWordmatch()
 augroup END
 
 function! Wordmatch()
-  if index(['fern','neo-tree','floaterm'], &ft) != -1
-    return
-  endif
-  call DelWordmatch()
-  if &hlsearch
-    " avoid interfering with hlsearch
-    return
-  endif
+if index(['fern','neo-tree','floaterm'], &ft) != -1
+return
+endif
+call DelWordmatch()
+if &hlsearch
+" avoid interfering with hlsearch
+return
+endif
 
-  let w:cursorword = expand('<cword>')->escape('\')
-  if w:cursorword != ''
-    let w:wordmatch_id =  matchadd('CursorWord','\V\<' .. w:cursorword .. '\>')
-  endif
+let w:cursorword = expand('<cword>')->escape('\')
+if w:cursorword != ''
+let w:wordmatch_id =  matchadd('CursorWord','\V\<' .. w:cursorword .. '\>')
+endif
 
-  " if exists('w:wordmatch_tid')
-  "     call timer_stop(w:wordmatch_tid)
-  "     unlet w:wordmatch_tid
-  " endif
-  " let w:wordmatch_tid = timer_start(200, 'DelWordmatch')
+" if exists('w:wordmatch_tid')
+"     call timer_stop(w:wordmatch_tid)
+"     unlet w:wordmatch_tid
+" endif
+" let w:wordmatch_tid = timer_start(200, 'DelWordmatch')
 endfunction
 
 function! DelWordmatch(...)
-  if exists('w:wordmatch_id')
-    call matchdelete(w:wordmatch_id)
-    unlet w:wordmatch_id
-  endif
+if exists('w:wordmatch_id')
+call matchdelete(w:wordmatch_id)
+unlet w:wordmatch_id
+endif
 endfunction
 
 augroup numbertoggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
-  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
+autocmd!
+autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
+autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
 augroup END
 
 augroup if-binary-then-xxd
-  au!
-  au BufReadPre *.bin     let b:bin_xxd=1
-  au BufReadPre *.img     let b:bin_xxd=1
-  au BufReadPre *.sys     let b:bin_xxd=1
-  au BufReadPre *.torrent let b:bin_xxd=1
-  au BufReadPre *.out     let b:bin_xxd=1
-  au BufReadPre *.a       let b:bin_xxd=1
+au!
+au BufReadPre *.bin     let b:bin_xxd=1
+au BufReadPre *.img     let b:bin_xxd=1
+au BufReadPre *.sys     let b:bin_xxd=1
+au BufReadPre *.torrent let b:bin_xxd=1
+au BufReadPre *.out     let b:bin_xxd=1
+au BufReadPre *.a       let b:bin_xxd=1
 
-  au BufReadPost * if exists('b:bin_xxd') | %!xxd
-  au BufReadPost * setlocal ft=xxd | endif
+au BufReadPost * if exists('b:bin_xxd') | %!xxd
+au BufReadPost * setlocal ft=xxd | endif
 
-  au BufWritePre * if exists('b:bin_xxd') | %!xxd -r
-  au BufWritePre * endif
+au BufWritePre * if exists('b:bin_xxd') | %!xxd -r
+au BufWritePre * endif
 
-  au BufWritePost * if exists('b:bin_xxd') | %!xxd
-  au BufWritePost * set nomod | endif
+au BufWritePost * if exists('b:bin_xxd') | %!xxd
+au BufWritePost * set nomod | endif
 augroup END
 
 " augroup csv-tsv
@@ -2324,43 +2456,43 @@ augroup END
 " augroup END
 
 fu! s:isdir(dir) abort
-  return !empty(a:dir) && (isdirectory(a:dir) ||
-        \ (!empty($SYSTEMDRIVE) && isdirectory('/'.tolower($SYSTEMDRIVE[0]).a:dir)))
+return !empty(a:dir) && (isdirectory(a:dir) ||
+\ (!empty($SYSTEMDRIVE) && isdirectory('/'.tolower($SYSTEMDRIVE[0]).a:dir)))
 endfu
 
 
 augroup jupyter-notebook
-  au!
-  au BufReadPost *.ipynb %!jupytext --from ipynb --to py:percent
-  au BufReadPost *.ipynb set filetype=python
-  au BufWritePre *.ipynb let g:jupyter_previous_location = getpos('.')
-  au BufWritePre *.ipynb silent %!jupytext --from py:percent --to ipynb
-  au BufWritePost *.ipynb silent %!jupytext --from ipynb --to py:percent
-  au BufWritePost *.ipynb if exists('g:jupyter_previous_location') | call setpos('.', g:jupyter_previous_location) | endif
+au!
+au BufReadPost *.ipynb %!jupytext --from ipynb --to py:percent
+au BufReadPost *.ipynb set filetype=python
+au BufWritePre *.ipynb let g:jupyter_previous_location = getpos('.')
+au BufWritePre *.ipynb silent %!jupytext --from py:percent --to ipynb
+au BufWritePost *.ipynb silent %!jupytext --from ipynb --to py:percent
+au BufWritePost *.ipynb if exists('g:jupyter_previous_location') | call setpos('.', g:jupyter_previous_location) | endif
 augroup END
 
 augroup lua-highlight
-  autocmd!
-  autocmd TextYankPost * silent! lua vim.highlight.on_yank({higroup='Pmenu', timeout=200})
+autocmd!
+autocmd TextYankPost * silent! lua vim.highlight.on_yank({higroup='Pmenu', timeout=200})
 augroup END
 ]])
 
 vim.cmd([[
 function Float(key)
-  while v:true
-    " 現在位置に文字がある間……
-    exec 'normal! ' a:key
-    if line(".") <= 1 || line(".") >= line("$") || (strlen(getline(".")) < col(".") || getline(".")[col(".") - 1] =~ '\s')
-      break
-    endif
-  endwhile
-  while v:true
-    " 現在位置が空白文字である間……
-    exec 'normal! ' a:key
-    if line(".") <= 1 || line(".") >= line("$") || !(strlen(getline(".")) < col(".") || getline(".")[col(".") - 1] =~ '\s')
-      break
-    endif
-  endwhile
+while v:true
+" 現在位置に文字がある間……
+exec 'normal! ' a:key
+if line(".") <= 1 || line(".") >= line("$") || (strlen(getline(".")) < col(".") || getline(".")[col(".") - 1] =~ '\s')
+break
+endif
+endwhile
+while v:true
+" 現在位置が空白文字である間……
+exec 'normal! ' a:key
+if line(".") <= 1 || line(".") >= line("$") || !(strlen(getline(".")) < col(".") || getline(".")[col(".") - 1] =~ '\s')
+break
+endif
+endwhile
 endfunction
 ]])
 
@@ -2373,97 +2505,97 @@ nnoremap <silent><expr> <F2> IME_toggle()
 inoremap <silent><expr> <F2> IME_toggle()
 
 augroup IME_autotoggle
-  autocmd!
-  autocmd InsertEnter * if get(b:, 'IME_autoenable', v:false) | call Enable() | endif
-  autocmd InsertLeave * call Disable()
-  autocmd CmdLineEnter /,\? if get(b:, 'IME_autoenable', v:false) | cnoremap <CR> <Plug>(kensaku-search-replace)<CR>| endif
-  autocmd CmdLineEnter /,\? if !get(b:, 'IME_autoenable', v:false) | silent! cunmap <CR> | endif
+autocmd!
+autocmd InsertEnter * if get(b:, 'IME_autoenable', v:false) | call Enable() | endif
+autocmd InsertLeave * call Disable()
+autocmd CmdLineEnter /,\? if get(b:, 'IME_autoenable', v:false) | cnoremap <CR> <Plug>(kensaku-search-replace)<CR>| endif
+autocmd CmdLineEnter /,\? if !get(b:, 'IME_autoenable', v:false) | silent! cunmap <CR> | endif
 augroup END
 
 function! IME_toggle() abort
-  let b:IME_autoenable = !get(b:, 'IME_autoenable', v:false)
-  if b:IME_autoenable ==# v:true
-    echo '日本語入力モードON'
-    if mode() == 'i'
-      call Enable()
-    endif
-  else
-    echo '日本語入力モードOFF'
-    if mode() == 'i'
-      call Disable()
-    endif
-  endif
-  return ''
+let b:IME_autoenable = !get(b:, 'IME_autoenable', v:false)
+if b:IME_autoenable ==# v:true
+echo '日本語入力モードON'
+if mode() == 'i'
+call Enable()
+endif
+else
+echo '日本語入力モードOFF'
+if mode() == 'i'
+call Disable()
+endif
+endif
+return ''
 endfunction
 
 function! Enable() abort
-  if g:is_macos
-    call system('macism com.justsystems.inputmethod.atok33.Japanese')
-  else
-    call system('fcitx5-remote -o')
-  endif
+if g:is_macos
+call system('macism com.justsystems.inputmethod.atok33.Japanese')
+else
+call system('fcitx5-remote -o')
+endif
 endfunction
 
 function! Disable() abort
-  if g:is_macos
-    call system('macism com.apple.keylayout.ABC')
-  else
-    call system('fcitx5-remote -c')
-  endif
+if g:is_macos
+call system('macism com.apple.keylayout.ABC')
+else
+call system('fcitx5-remote -c')
+endif
 endfunction
 
 augroup auto_ja
-  autocmd BufRead */my-text/**.txt call IME_toggle()
-  autocmd BufRead */my-text/**.md call IME_toggle()
-  autocmd BufRead */obsidian/**.md call IME_toggle()
+autocmd BufRead */my-text/**.txt call IME_toggle()
+autocmd BufRead */my-text/**.md call IME_toggle()
+autocmd BufRead */obsidian/**.md call IME_toggle()
 augroup END
 ]])
 
 -- [[ switch settings with local leader ]]
 vim.cmd([[
-nnoremap <Plug>(my-switch) <Nop>
-nmap <localleader> <Plug>(my-switch)
-nnoremap <silent> <Plug>(my-switch)s     <Cmd>setl spell! spell?<CR>
-nnoremap <silent> <Plug>(my-switch)<C-s> <Cmd>setl spell! spell?<CR>
-nnoremap <silent> <Plug>(my-switch)l     <Cmd>setl list! list?<CR>
-nnoremap <silent> <Plug>(my-switch)<C-l> <Cmd>setl list! list?<CR>
-nnoremap <silent> <Plug>(my-switch)t     <Cmd>setl expandtab! expandtab?<CR>
-nnoremap <silent> <Plug>(my-switch)<C-t> <Cmd>setl expandtab! expandtab?<CR>
-nnoremap <silent> <Plug>(my-switch)w     <Cmd>setl wrap! wrap?<CR>
-nnoremap <silent> <Plug>(my-switch)<C-w> <Cmd>setl wrap! wrap?<CR>
-nnoremap <silent> <Plug>(my-switch)b     <Cmd>setl scrollbind! scrollbind?<CR>
-nnoremap <silent> <Plug>(my-switch)<C-b> <Cmd>setl scrollbind! scrollbind?<CR>
-nnoremap <silent> <Plug>(my-switch)d     <Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>
-nnoremap <silent> <Plug>(my-switch)<C-d> <Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>
-nnoremap <silent> <Plug>(my-switch)c     <Cmd>if &conceallevel > 0 \| set conceallevel=0 \| else \| set conceallevel=2 \| endif \| set conceallevel?<CR>
-nnoremap <silent> <Plug>(my-switch)y     <Cmd>call Toggle_syntax()<CR>
-nnoremap <silent> <Plug>(my-switch)<C-y> <Cmd>call Toggle_syntax()<CR>
-nnoremap <silent> <Plug>(my-switch)n     <Cmd>call Toggle_noice()<CR>
-nnoremap <silent> <Plug>(my-switch)<C-n> <Cmd>call Toggle_noice()<CR>
-function! Toggle_syntax() abort
+  nnoremap <Plug>(my-switch) <Nop>
+  nmap <localleader> <Plug>(my-switch)
+  nnoremap <silent> <Plug>(my-switch)s     <Cmd>setl spell! spell?<CR>
+  nnoremap <silent> <Plug>(my-switch)<C-s> <Cmd>setl spell! spell?<CR>
+  nnoremap <silent> <Plug>(my-switch)l     <Cmd>setl list! list?<CR>
+  nnoremap <silent> <Plug>(my-switch)<C-l> <Cmd>setl list! list?<CR>
+  nnoremap <silent> <Plug>(my-switch)t     <Cmd>setl expandtab! expandtab?<CR>
+  nnoremap <silent> <Plug>(my-switch)<C-t> <Cmd>setl expandtab! expandtab?<CR>
+  nnoremap <silent> <Plug>(my-switch)w     <Cmd>setl wrap! wrap?<CR>
+  nnoremap <silent> <Plug>(my-switch)<C-w> <Cmd>setl wrap! wrap?<CR>
+  nnoremap <silent> <Plug>(my-switch)b     <Cmd>setl scrollbind! scrollbind?<CR>
+  nnoremap <silent> <Plug>(my-switch)<C-b> <Cmd>setl scrollbind! scrollbind?<CR>
+  nnoremap <silent> <Plug>(my-switch)d     <Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>
+  nnoremap <silent> <Plug>(my-switch)<C-d> <Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>
+  nnoremap <silent> <Plug>(my-switch)c     <Cmd>if &conceallevel > 0 \| set conceallevel=0 \| else \| set conceallevel=2 \| endif \| set conceallevel?<CR>
+  nnoremap <silent> <Plug>(my-switch)y     <Cmd>call Toggle_syntax()<CR>
+  nnoremap <silent> <Plug>(my-switch)<C-y> <Cmd>call Toggle_syntax()<CR>
+  nnoremap <silent> <Plug>(my-switch)n     <Cmd>call Toggle_noice()<CR>
+  nnoremap <silent> <Plug>(my-switch)<C-n> <Cmd>call Toggle_noice()<CR>
+  function! Toggle_syntax() abort
   if exists('g:syntax_on')
-    syntax off
-    redraw
-    echo 'syntax off'
+  syntax off
+  redraw
+  echo 'syntax off'
   else
-    syntax on
-    redraw
-    echo 'syntax on'
+  syntax on
+  redraw
+  echo 'syntax on'
   endif
-endfunction
-let g:is_noice_enabled = v:true
-function Toggle_noice() abort
+  endfunction
+  let g:is_noice_enabled = v:true
+  function Toggle_noice() abort
   if g:is_noice_enabled
-    let g:is_noice_enabled=v:false
-    Noice disable
-    set cmdheight=1
-    echomsg 'noice disabled'
+  let g:is_noice_enabled=v:false
+  Noice disable
+  set cmdheight=1
+  echomsg 'noice disabled'
   else
-    let g:is_noice_enabled=v:true
-    Noice enable
-    echomsg 'noice enabled'
+  let g:is_noice_enabled=v:true
+  Noice enable
+  echomsg 'noice enabled'
   endif
-endfunction
+  endfunction
 ]])
 
 
@@ -2477,11 +2609,5 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
-
--- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
--- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-vim.keymap.set('n', '<leader>l', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 -- vim: ts=2 sts=2 sw=2 et
