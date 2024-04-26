@@ -30,6 +30,13 @@ else
   vim.g.is_wsl = false
 end
 
+if fn.has('mac') == 1 then
+  vim.g.is_macos = true
+else
+  vim.g.is_macos = false
+end
+
+
 if vim.g.is_wsl then
   vim.cmd([[
   let g:clipboard = {
@@ -47,12 +54,6 @@ if vim.g.is_wsl then
   ]])
 end
 
-
-if fn.has('mac') == 1 then
-  vim.g.is_macos = true
-else
-  vim.g.is_macos = false
-end
 
 if vim.g.is_macos == false then
   local FSWATCH_EVENTS = {
@@ -193,8 +194,8 @@ require('lazy').setup({
       vim.keymap.set("n", "<leader>gf", "<cmd>Dispatch! git fetch<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gd", "<cmd>vert :Gdiffsplit!<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gr", "<cmd>Git rebase -i<CR>", { silent = true })
-      vim.keymap.set("n", "<leader>gg", "<cmd>Glgrep \"\"<Left>")
-      vim.keymap.set("n", "<leader>gm", "<cmd>Git merge ")
+      vim.keymap.set("n", "<leader>gg", [[:<C-u>Glgrep ""<Left>]])
+      vim.keymap.set("n", "<leader>gm", ":<C-u>Git merge ")
 
       vim.keymap.set("n", "<S-Up>", ":Gwrite<CR>", { silent = true })
       vim.keymap.set("n", "<C-Up>", ":Git commit -v<CR>", { silent = true })
@@ -209,6 +210,8 @@ require('lazy').setup({
                 [[<C-w><C-w>]] ..
                 [[zR]] ..
                 [[<Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>]]
+            else
+              return [[<Cmd>tabclose<CR>]]
           end
         end,
         { expr = true, silent = true }
@@ -252,14 +255,15 @@ require('lazy').setup({
 
   -- floating terminal
   {
+    cond = false,
     'voldikss/vim-floaterm',
     cmd = 'FloatermToggle',
     init = function()
       vim.g.floaterm_width = 0.9
       vim.g.floaterm_height = 0.9
-      vim.keymap.set('n', '<Plug>(my-win)z', '<Cmd>FloatermToggle<CR>', { silent = true })
-      vim.keymap.set('t', '<C-[>', '<C-\\><C-n>:FloatermHide<CR>', { silent = true })
-      vim.keymap.set('t', '<C-l>', '<C-\\><C-n>', { silent = true })
+      vim.keymap.set('n', 'sz', '<Cmd>FloatermToggle<CR>', { silent = true })
+      vim.keymap.set('t', '<C-[>', [[<C-\><C-n>:FloatermHide<CR>]], { silent = true })
+      vim.keymap.set('t', '<C-l>', [[<C-\><C-n>]], { silent = true })
     end
   },
 
@@ -276,13 +280,60 @@ require('lazy').setup({
     end
   },
 
+  -- clever s
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    ---@type Flash.Config
+    opts = {
+      modes = {
+        search = {
+          enabled = false,
+        }
+      }
+    },
+    -- stylua: ignore
+    keys = {
+      -- capital is for range selection
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+      { "r", mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
+      { "R", mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      -- { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+    },
+  },
+
+  {
+    'github/copilot.vim',
+    -- programming filetypes
+    ft = { 'c', 'cpp', 'lua', 'python', 'rust', 'sh', 'bash', 'zsh', 'typescript', 'javascript', 'vim', 'yaml', 'css' },
+    init = function()
+      -- the same filetypes
+      vim.g.copilot_filetypes = {
+        ['*'] = false,
+        ['c'] = true,
+        ['cpp'] = true,
+        ['lua'] = true,
+        ['python'] = true,
+        ['rust'] = true,
+        ['sh'] = true,
+        ['bash'] = true,
+        ['zsh'] = true,
+        ['typescript'] = true,
+        ['javascript'] = true,
+        ['vim'] = true,
+        ['yaml'] = true,
+        ['css'] = true
+      }
+    end
+  },
 
   -- register preview
   {
     'tversteeg/registers.nvim',
     config = true,
     keys = {
-      { "\"",    mode = { "n", "v" } },
+      { [["]],    mode = { "n", "v" } },
       { "<C-R>", mode = "i" }
     },
     cmd = "Registers",
@@ -306,6 +357,7 @@ require('lazy').setup({
         'williamboman/mason-lspconfig.nvim',
         dependencies =
         {
+          ft = { 'lua' },
           'folke/neodev.nvim',
           config = function()
             require("neodev").setup({
@@ -353,7 +405,8 @@ require('lazy').setup({
             --       ["en-US"] = words,
             --     },
             --   },
-            -- }
+            -- },
+            grammarly = {},
           }
           local on_attach = function(_, bufnr)
             local nmap = function(keys, func, desc)
@@ -420,7 +473,19 @@ require('lazy').setup({
                 on_attach = on_attach,
                 settings = server2setting[server_name],
               }
-            end
+            end,
+            -- special configuration for grammarly
+            ["grammarly"] = function()
+              require 'lspconfig'.grammarly.setup {
+                filetypes = { "bibtex", "gitcommit", "markdown", "org", "tex", "restructuredtext", "rsweave", "latex", "quarto", "rmd", "context", "html", "xhtml" },
+                -- This is necessary as grammary language server does not support newer versions of nodejs
+                -- https://github.com/znck/grammarly/issues/334
+                cmd = { "n", "run", "16", os.getenv("HOME") .. "/.local/share/nvim/mason/bin/grammarly-languageserver", "--stdio" },
+                root_dir = function(fname)
+                  return require 'lspconfig'.util.find_git_ancestor(fname) or vim.loop.os_homedir()
+                end,
+              }
+            end,
           }
 
           mason_lspconfig.setup({
@@ -487,6 +552,7 @@ require('lazy').setup({
   },
   {
     'https://github.com/rcarriga/nvim-dap-ui',
+    dependencies = 'https://github.com/nvim-neotest/nvim-nio',
     config = function()
       require('dapui').setup()
     end
@@ -839,14 +905,12 @@ out.release()
         ls.parser.parse_snippet("str", "<strong>$1</strong>$0"),
         ls.parser.parse_snippet({ trig = ",,", snippetType = "autosnippet" }, "$$1$$0"),
         ls.parser.parse_snippet("acd", [[
-<details>
-<summary>
+\<details>
+\<summary>
 $1
-</summary>
-
+\</summary>
 $2
-
-</details>
+\</details>
 $0
 ]]),
       })
@@ -974,6 +1038,7 @@ $0
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     cmd = 'Neotree',
+    lazy = vim.fn.argc() == 0,
     init = function()
       vim.g.neo_tree_remove_legacy_commands = 1
 
@@ -997,11 +1062,18 @@ $0
     },
     config = function()
       require("neo-tree").setup({
+        default_component_configs = {
+          file_size = { enabled = false },
+          type = { enabled = false },
+          last_modified = { enabled = false },
+        },
         filesystem = {
           follow_current_file = {
             enabled = true,
           },
           window = {
+            width = '60',
+            max_width = '30%',
             mappings = {
               ["o"] = "open",
               ["x"] = "system_open",
@@ -1033,6 +1105,13 @@ $0
           },
         },
       })
+
+      -- if vim is opened with an argument, open neo-tree
+      vim.schedule(function()
+        if vim.fn.argc() > 0 then
+          vim.cmd([[Neotree show]])
+        end
+      end)
     end
   },
 
@@ -1069,8 +1148,8 @@ $0
       map('n', '<C-n>', '<Cmd>BufferNext<CR>', opts)
       map('n', '<C-,>', '<Cmd>BufferMovePrevious<CR>', opts)
       map('n', '<C-.>', '<Cmd>BufferMoveNext<CR>', opts)
-      map('n', '<leader>q', '<Cmd>BufferClose<CR>', opts)
-      -- map('n', '<backspace>', '<Cmd>BufferClose<CR>', opts)
+      map('n', '<leader>q', '<Cmd>quit<CR>', opts)
+      map({ 'n', 'v' }, '<backspace>', '<Cmd>BufferClose<CR>', opts)
       -- map('n', '<C-w>', '<Cmd>BufferClose<CR>', opts)
       map('n', '<C-1>', '<Cmd>BufferGoto 1<CR>', opts)
       map('n', '<C-2>', '<Cmd>BufferGoto 2<CR>', opts)
@@ -1107,29 +1186,10 @@ $0
     'lukas-reineke/indent-blankline.nvim',
     event = 'VeryLazy',
     config = function()
-      local highlight = {
-        "IBL1",
-        "IBL2",
-      }
-      -- iceberg
-      vim.cmd([[
-      hi link IBL2 LineNr
-      hi link IBL1 Normal
-      ]])
-      -- nightfox
-      -- vim.cmd([[
-      -- hi IBL1 guibg=#192330
-      -- hi IBL2 guibg=#212e3f
-      -- ]])
-
       require("ibl").setup {
-        -- indent = { highlight = highlight, char = "▏" },
-        indent = { highlight = highlight, char = "" },
-        whitespace = {
-          highlight = highlight,
-          remove_blankline_trail = false,
-        },
-        scope = { enabled = false },
+        indent = { char = "▏" },
+        -- scope with wider character
+        scope = { show_exact_scope = true, char = "▎" },
       }
     end
   },
@@ -1204,6 +1264,8 @@ $0
       \   'filetype': ['tex'],
       \ })
       ]])
+      -- TODO rewrite above with lua
+      -- TODO tex rule is not sufficient
     end
   },
 
@@ -1319,6 +1381,7 @@ $0
 
   -- colorscheme
   {
+    cond = false,
     'swnakamura/iceberg.vim',
     lazy = false,
     priority = 1000,
@@ -1349,24 +1412,31 @@ $0
   },
   {
     cond = false,
-    'https://github.com/catppuccin/nvim',
-    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000, -- make sure to load this before all the other start plugins
-    config = function()
-      -- load the colorscheme here
-      vim.cmd([[colorscheme catppuccin]])
-    end,
+    'https://github.com/Mofiqul/vscode.nvim'
   },
   {
     cond = false,
-    "folke/tokyonight.nvim",
-    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000, -- make sure to load this before all the other start plugins
+    'navarasu/onedark.nvim',
     config = function()
-      -- load the colorscheme here
-      vim.cmd([[colorscheme tokyonight-moon]])
-    end,
+      require('onedark').setup {
+        style = 'light'
+      }
+      require('onedark').load()
+    end
   },
+  {
+    "rose-pine/neovim",
+    name = "rose-pine",
+    config = function()
+      if vim.o.bg == 'light' then
+        require('rose-pine').setup({ variant = 'dawn' })
+      else
+        require('rose-pine').setup({ variant = 'night' })
+      end
+      vim.cmd([[colorscheme rose-pine]])
+    end
+  }
+  ,
   {
     cond = false,
     dir = '~/ghq/github.com/oahlen/iceberg.nvim',
@@ -1404,11 +1474,12 @@ $0
     event = 'VeryLazy',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      local custom_color = require('lualine.themes.iceberg_light')
-      if vim.o.bg == 'dark' then
-        custom_color = require('lualine.themes.iceberg_dark')
-      end
-      custom_color.normal.c.fg = '#6b7089'
+      -- local custom_color = require('lualine.themes.iceberg_light')
+      -- if vim.o.bg == 'dark' then
+      --   custom_color = require('lualine.themes.iceberg_dark')
+      -- end
+      -- custom_color.normal.c.fg = '#6b7089'
+      local custom_color = 'auto'
       require('lualine').setup {
         options = {
           icons_enabled = true,
@@ -1572,10 +1643,13 @@ $0
           'latex', 'tsx',
           'typescript', 'vimdoc', 'vim', 'yaml' },
 
+        -- List of parsers to ignore installing (for "all")
+        ignore_install = { "json" },
+
         -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
         auto_install = true,
 
-        highlight = { enable = true },
+        highlight = { enable = true, disable = { "json" } },
         indent = { enable = true },
         incremental_selection = {
           enable = true,
@@ -1646,7 +1720,7 @@ $0
   },
 
   {
-    cond = false,
+    -- cond = false,
     'rmagatti/auto-session',
     config = function()
       require("auto-session").setup {
@@ -1657,6 +1731,7 @@ $0
   },
 
   {
+    cond = false,
     'swnakamura/gitsession.vim',
     config = function()
       vim.cmd([[
@@ -1840,10 +1915,10 @@ $0
         org_default_notes_file = '~/org/inbox.org',
         org_todo_keywords = { 'TODO', '|', 'DONE' },
         org_capture_templates = {
-          t = { description = 'Task', template = '* TODO %? \n  %u' },
+          t = { description = 'Task', template = '* TODO %?\n  SCHEDULED: %t\n  %u' },
           p = {
             description = 'Paper',
-            template = '* TODO [[%x][%?]]\n  %u\n',
+            template = '* TODO [[%x][%?]]\n  SCHEDULED: %t\n  %u\n',
             target = '~/org/papers.org'
           },
           m = { description = 'Maybe (personal)', template = '* TODO %?\n  %u', target = '~/org/personal.org' },
@@ -1886,6 +1961,52 @@ $0
       require('marks').setup({})
       vim.api.nvim_set_hl(0, 'MarkSignHL', { link = "CursorLineNr" })
       vim.api.nvim_set_hl(0, 'MarkSignNumHL', { link = "LineNr" })
+    end
+  },
+
+  -- ollama
+  {
+    "nomnivore/ollama.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+
+    -- All the user commands added by the plugin
+    cmd = { "Ollama", "OllamaModel", "OllamaServe", "OllamaServeStop" },
+
+    keys = {
+      -- Sample keybind for prompt menu. Note that the <c-u> is important for selections to work properly.
+      {
+        "<leader>op",
+        "<cmd>lua require('ollama').prompt()<cr>",
+        desc = "ollama prompt",
+        mode = { "n", "v" },
+      },
+
+      -- Sample keybind for direct prompting. Note that the <c-u> is important for selections to work properly.
+      {
+        "<leader>oG",
+        "<cmd>lua require('ollama').prompt('Generate_Code')<cr>",
+        desc = "ollama Generate Code",
+        mode = { "n", "v" },
+      },
+    },
+
+    opts = {
+      -- your configuration overrides
+      model = "llama3"
+    }
+  },
+
+  -- firenvim
+  {
+    cond=false,
+    'glacambre/firenvim',
+    -- Lazy load firenvim
+    -- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
+    lazy = not vim.g.started_by_firenvim,
+    build = function()
+      vim.fn["firenvim#install"](0)
     end
   },
 
@@ -1991,7 +2112,7 @@ vim.o.listchars = 'tab:» ,trail:~,extends:»,precedes:«,nbsp:%'
 
 vim.o.scrolloff = 5
 
-vim.o.laststatus = 3
+vim.go.laststatus = 3
 
 vim.o.showtabline = 2
 
@@ -2041,7 +2162,6 @@ vim.go.signcolumn = 'yes:1'
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<Space>o', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<Space><BS>', '<C-^>', { silent = true })
-vim.keymap.set({ 'n', 'v' }, '<BS>', '<Cmd>BufferClose<CR>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<C-Space>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v', 'o' }, '<cr>', '<Plug>(clever-f-repeat-forward)', { silent = true })
 
@@ -2059,6 +2179,22 @@ vim.keymap.set('n', 'gk', 'gk<Plug>(g-mode)', { remap = true })
 vim.keymap.set('n', '<Plug>(g-mode)j', 'gj<Plug>(g-mode)')
 vim.keymap.set('n', '<Plug>(g-mode)k', 'gk<Plug>(g-mode)')
 vim.keymap.set('n', '<Plug>(g-mode)', '<Nop>', { remap = true })
+
+-- terminal
+-- open terminal in new split with height 15
+vim.keymap.set('n', '<C-z>', '<Cmd>15split term://zsh<CR><cmd>set nobuflisted<CR>', { silent = true })
+-- In terminal, use <C-[> to go back to the buffer above
+vim.keymap.set('t', '<C-[>', [[<C-\><C-n><C-w><C-k>]], { silent = true })
+vim.keymap.set('t', '<C-l>', [[<C-\><C-n>]], { silent = true })
+-- enter insert mode when entering terminal buffer
+vim.api.nvim_create_autocmd("BufEnter", {
+  callback = function()
+    -- if entered to termianl buffer, enter insert mode
+    if vim.bo.buftype == 'terminal' then
+      vim.cmd('startinsert')
+    end
+  end
+})
 
 vim.cmd([[
 " カーソルがインデント内部ならtrue
@@ -2101,9 +2237,10 @@ noremap l <cmd>call <sid>quantized_l(v:count1)<cr>
 vim.keymap.set({ 'n', 'x' }, 'x', '"_x')
 
 -- window control by s
-vim.keymap.set('n', '<Plug>(my-win)', '<Nop>')
-vim.keymap.set('n', 's', '<Plug>(my-win)', { remap = true })
-vim.keymap.set('x', 's', '<Nop>')
+-- disabled
+-- vim.keymap.set('n', '<Plug>(my-win)', '<Nop>')
+-- vim.keymap.set('n', 's', '<Plug>(my-win)', { remap = true })
+-- vim.keymap.set('x', 's', '<Nop>')
 -- window control
 vim.keymap.set('n', '<Plug>(my-win)s', '<Cmd>split<CR>')
 vim.keymap.set('n', '<Plug>(my-win)v', '<Cmd>vsplit<CR>')
@@ -2144,9 +2281,9 @@ end
 -- save&exit
 vim.keymap.set('i', '<c-l>', '<cmd>update<cr>')
 vim.keymap.set('n', '<leader>s', '<cmd>update<cr>')
-vim.keymap.set('n', 'sq', '<Cmd>quit<CR>')
-vim.keymap.set('n', 'se', '<cmd>silent! %bdel|edit #|normal `"<C-n><leader>q<cr>')
-vim.keymap.set('n', 'sQ', '<Cmd>tabc<CR>')
+-- vim.keymap.set('n', 'sq', '<Cmd>quit<CR>')
+-- vim.keymap.set('n', 'se', '<cmd>silent! %bdel|edit #|normal `"<C-n><leader>q<cr>')
+-- vim.keymap.set('n', 'sQ', '<Cmd>tabc<CR>')
 vim.keymap.set('n', '<leader>wq', '<Cmd>quitall<CR>')
 
 -- On certain files, quit by <leader>q
@@ -2339,49 +2476,51 @@ au CmdlineLeave /,\? autocmd CursorHold * ++once autocmd CursorMoved * ++once se
 augroup END
 
 " 選択した領域を自動でハイライトする
-augroup instant-visual-highlight
-au!
-autocmd CursorMoved,CursorHold * call Visualmatch()
-augroup END
+" treesitterを使っているときは使えない？ のでdisable
+" augroup instant-visual-highlight
+" au!
+" autocmd CursorMoved,CursorHold * call Visualmatch()
+" augroup END
 
 function! Visualmatch()
-if exists("w:visual_match_id")
-call matchdelete(w:visual_match_id)
-unlet w:visual_match_id
-endif
+  if exists("w:visual_match_id")
+    call matchdelete(w:visual_match_id)
+    unlet w:visual_match_id
+  endif
 
-if index(['v', "\<C-v>"], mode()) == -1
-return
-endif
+  if index(['v', "\<C-v>"], mode()) == -1
+    return
+  endif
 
-if line('.') == line('v')
-let colrange = charcol('.') < charcol('v') ? [charcol('.'), charcol('v')] : [charcol('v'), charcol('.')]
-let text = getline('.')->strcharpart(colrange[0]-1, colrange[1]-colrange[0]+1)->escape('\')
-elseif mode() == 'v' " multiline matchingはvisual modeのみ
-if line('.') > line('v')
-let linerange = ['v','.']
-else
-let linerange = ['.','v']
-endif
-let lines=getline(linerange[0], linerange[1])
-let lines[0] = lines[0]->strcharpart(charcol(linerange[0])-1)
-let lines[-1] = lines[-1]->strcharpart(0,charcol(linerange[1]))
-let text = lines->map({key, line -> line->escape('\')})->join('\n')
-else
-let text = ''
-endif
 
-" virtualeditの都合でempty textが選択されることがある．
-" この場合全部がハイライトされてしまうので除く
-if text == ''
-return
-endif
+  if line('.') == line('v')
+  let colrange = charcol('.') < charcol('v') ? [charcol('.'), charcol('v')] : [charcol('v'), charcol('.')]
+  let text = getline('.')->strcharpart(colrange[0]-1, colrange[1]-colrange[0]+1)->escape('\')
+  elseif mode() == 'v' " multiline matchingはvisual modeのみ
+  if line('.') > line('v')
+  let linerange = ['v','.']
+  else
+  let linerange = ['.','v']
+  endif
+  let lines=getline(linerange[0], linerange[1])
+  let lines[0] = lines[0]->strcharpart(charcol(linerange[0])-1)
+  let lines[-1] = lines[-1]->strcharpart(0,charcol(linerange[1]))
+  let text = lines->map({key, line -> line->escape('\')})->join('\n')
+  else
+  let text = ''
+  endif
 
-if mode() == 'v'
-let w:visual_match_id = matchadd('VisualMatch', '\V' .. text)
-else
-let w:visual_match_id = matchadd('VisualMatch', '\V\<' .. text .. '\>')
-endif
+  " virtualeditの都合でempty textが選択されることがある．
+  " この場合全部がハイライトされてしまうので除く
+  if text == ''
+  return
+  endif
+
+  if mode() == 'v'
+  let w:visual_match_id = matchadd('VisualMatch', '\V' .. text)
+  else
+  let w:visual_match_id = matchadd('VisualMatch', '\V\<' .. text .. '\>')
+  endif
 endfunction
 
 " 単語を自動でハイライトする
@@ -2392,7 +2531,7 @@ autocmd InsertEnter * call DelWordmatch()
 augroup END
 
 function! Wordmatch()
-if index(['fern','neo-tree','floaterm'], &ft) != -1
+if index(['fern','neo-tree','floaterm','oil','org'], &ft) != -1
 return
 endif
 call DelWordmatch()
@@ -2568,6 +2707,7 @@ vim.cmd([[
   nnoremap <silent> <Plug>(my-switch)d     <Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>
   nnoremap <silent> <Plug>(my-switch)<C-d> <Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>
   nnoremap <silent> <Plug>(my-switch)c     <Cmd>if &conceallevel > 0 \| set conceallevel=0 \| else \| set conceallevel=2 \| endif \| set conceallevel?<CR>
+  nnoremap <silent> <Plug>(my-switch)<C-c> <Cmd>if &conceallevel > 0 \| set conceallevel=0 \| else \| set conceallevel=2 \| endif \| set conceallevel?<CR>
   nnoremap <silent> <Plug>(my-switch)y     <Cmd>call Toggle_syntax()<CR>
   nnoremap <silent> <Plug>(my-switch)<C-y> <Cmd>call Toggle_syntax()<CR>
   nnoremap <silent> <Plug>(my-switch)n     <Cmd>call Toggle_noice()<CR>
