@@ -5,7 +5,7 @@ command -range=% GHCopy call GHCopy(<line1>, <line2>)
 function GHCopy(line1, line2) abort
   let text = getline(a:line1, a:line2)
 
-  let text = text->filter('v:val !~ ''\[\[[^\]]*\.\(png\|jpg\)\]\]'' ') " Remove lines with internal links to image files: [[*.png]] or [[*.jpg]]
+  let text = text->filter('v:val !~ ''\[\[[^\]]*\.\(png\|jpg\|jpeg\)\]\]'' ') " Remove lines with internal links to image files: [[*.png]] or [[*.jpg]]
 
   let text = text->join("\n")
 

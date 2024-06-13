@@ -36,6 +36,13 @@ else
   vim.g.is_macos = false
 end
 
+-- check if the window is wide enough and vim is open with an argument to open the neotree explorer
+if vim.o.columns > 150 and fn.argc() > 0 then
+  vim.g.open_neotree = true
+else
+  vim.g.open_neotree = false
+end
+
 
 if vim.g.is_wsl then
   vim.cmd([[
@@ -124,7 +131,7 @@ if vim.g.is_macos == false then
     end
   end
 
-  if vim.fn.executable('fswatch') == 1 then
+  if fn.executable('fswatch') == 1 then
     require('vim.lsp._watchfiles')._watchfunc = fswatch
   end
 end
@@ -166,8 +173,15 @@ require('lazy').setup({
     },
   },
 
+  -- startup
   {
-    cond = false,
+    'mhinz/vim-startify',
+    init = function()
+      vim.g.startify_custom_header = [[startify#pad(split(system('shuf -n 1 ~/syncthing_config/fortune.txt'), '\n'))]]
+    end
+  },
+
+  {
     'https://github.com/Bekaboo/dropbar.nvim',
     config = function()
       vim.keymap.set('n', "<leader>n", require('dropbar.api').pick)
@@ -210,8 +224,8 @@ require('lazy').setup({
                 [[<C-w><C-w>]] ..
                 [[zR]] ..
                 [[<Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>]]
-            else
-              return [[<Cmd>tabclose<CR>]]
+          else
+            return [[<Cmd>tabclose<CR>]]
           end
         end,
         { expr = true, silent = true }
@@ -236,7 +250,7 @@ require('lazy').setup({
       end)
     end,
   },
-  { 'tpope/vim-rhubarb',      cmd = 'GBrowse', dependencies = 'tpope/vim-fugitive' },
+  { 'tpope/vim-rhubarb',                         cmd = 'GBrowse', dependencies = 'tpope/vim-fugitive' },
   {
     'cohama/agit.vim',
     cmd = 'Agit',
@@ -255,13 +269,12 @@ require('lazy').setup({
 
   -- floating terminal
   {
-    cond = false,
     'voldikss/vim-floaterm',
     cmd = 'FloatermToggle',
     init = function()
       vim.g.floaterm_width = 0.9
       vim.g.floaterm_height = 0.9
-      vim.keymap.set('n', 'sz', '<Cmd>FloatermToggle<CR>', { silent = true })
+      vim.keymap.set('n', '<C-z>', '<Cmd>FloatermToggle<CR>', { silent = true })
       vim.keymap.set('t', '<C-[>', [[<C-\><C-n>:FloatermHide<CR>]], { silent = true })
       vim.keymap.set('t', '<C-l>', [[<C-\><C-n>]], { silent = true })
     end
@@ -280,11 +293,20 @@ require('lazy').setup({
     end
   },
 
+
   -- clever s
   {
+    cond = false,
+    'https://github.com/ggandor/leap.nvim',
+    config = function()
+      require('leap').create_default_mappings()
+    end
+  },
+
+  {
+    cond = false,
     "folke/flash.nvim",
     event = "VeryLazy",
-    ---@type Flash.Config
     opts = {
       modes = {
         search = {
@@ -303,16 +325,31 @@ require('lazy').setup({
     },
   },
 
+  -- performance (faster macro execution)
+  { "https://github.com/pteroctopus/faster.nvim" },
+
+  -- dmacro
+  {
+    cond = false,
+    'https://github.com/tani/dmacro.nvim',
+    config = function()
+      require('dmacro').setup({
+        dmacro_key = '<C-e>' --  you need to set the dmacro_key
+      })
+    end
+  },
+
   {
     'github/copilot.vim',
     -- programming filetypes
-    ft = { 'c', 'cpp', 'lua', 'python', 'rust', 'sh', 'bash', 'zsh', 'typescript', 'javascript', 'vim', 'yaml', 'css' },
+    ft = { 'c', 'cpp', 'lisp', 'lua', 'python', 'rust', 'sh', 'bash', 'zsh', 'typescript', 'javascript', 'vim', 'yaml', 'css', 'tex' },
     init = function()
       -- the same filetypes
       vim.g.copilot_filetypes = {
         ['*'] = false,
         ['c'] = true,
         ['cpp'] = true,
+        ['lisp'] = true,
         ['lua'] = true,
         ['python'] = true,
         ['rust'] = true,
@@ -323,8 +360,12 @@ require('lazy').setup({
         ['javascript'] = true,
         ['vim'] = true,
         ['yaml'] = true,
-        ['css'] = true
+        ['css'] = true,
+        ['tex'] = true,
       }
+
+      -- vim.g.copilot_proxy = 'http://localhost:11435'
+      -- vim.g.copilot_proxy_strict_ssl = false
     end
   },
 
@@ -333,7 +374,7 @@ require('lazy').setup({
     'tversteeg/registers.nvim',
     config = true,
     keys = {
-      { [["]],    mode = { "n", "v" } },
+      { [["]],   mode = { "n", "v" } },
       { "<C-R>", mode = "i" }
     },
     cmd = "Registers",
@@ -440,8 +481,8 @@ require('lazy').setup({
             end, '[W]orkspace [L]ist Folders')
 
             -- Diagnostic keymaps
-            nmap('[d', vim.diagnostic.goto_prev, 'Go to previous diagnostic message')
-            nmap(']d', vim.diagnostic.goto_next, 'Go to next diagnostic message')
+            nmap('[d', function() vim.diagnostic.jump({ count = -1 }) end, 'Go to previous diagnostic message')
+            nmap(']d', function() vim.diagnostic.jump({ count = 1 }) end, 'Go to next diagnostic message')
             nmap('<leader>e', vim.diagnostic.open_float, 'Open floating diagnostic message')
             nmap('<leader>ll', vim.diagnostic.setloclist, 'Open diagnostics list')
 
@@ -454,11 +495,11 @@ require('lazy').setup({
             vim.keymap.set('n', 'gF', vim.lsp.buf.format)
 
             nmap('<leader>i', function(_)
-              vim.lsp.inlay_hint(0, true)
+              vim.lsp.inlay_hint.enable()
               vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "InsertEnter" }, {
                 once = true,
                 callback = function()
-                  vim.lsp.inlay_hint(0, false)
+                  vim.lsp.inlay_hint.enable(false)
                 end
               })
             end, 'Toggle inlay hint')
@@ -524,13 +565,6 @@ require('lazy').setup({
       'nvim-dap-python',
     },
     config = function()
-      local nmap = function(keys, func, desc)
-        if desc then
-          desc = 'DAP: ' .. desc
-        end
-
-        vim.keymap.set('n', keys, func, { buffer = 0, desc = desc })
-      end
       vim.api.nvim_set_keymap('n', '<leader>lu', '<cmd>lua require("dapui").toggle()<CR>', {})
 
       -- https://zenn.dev/kawat/articles/51f9cc1f0f0aa9 を参考
@@ -904,13 +938,13 @@ out.release()
         ls.parser.parse_snippet("rb", "<ruby>$1<rp> (</rp><rt>$2</rt><rp>) </rp></ruby>$0"),
         ls.parser.parse_snippet("str", "<strong>$1</strong>$0"),
         ls.parser.parse_snippet({ trig = ",,", snippetType = "autosnippet" }, "$$1$$0"),
-        ls.parser.parse_snippet("acd", [[
-\<details>
-\<summary>
+        ls.parser.parse_snippet("details", [[
+<details>
+<summary>
 $1
-\</summary>
+</summary>
 $2
-\</details>
+</details>
 $0
 ]]),
       })
@@ -1038,7 +1072,7 @@ $0
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     cmd = 'Neotree',
-    lazy = vim.fn.argc() == 0,
+    lazy = not vim.g.open_neotree,
     init = function()
       vim.g.neo_tree_remove_legacy_commands = 1
 
@@ -1104,11 +1138,24 @@ $0
             end,
           },
         },
+        event_handlers = {
+          {
+            event = "neo_tree_buffer_enter",
+            handler = function(arg)
+              vim.opt.relativenumber = true
+            end,
+          }
+        }
       })
 
-      -- if vim is opened with an argument, open neo-tree
+      -- schedule to
       vim.schedule(function()
-        if vim.fn.argc() > 0 then
+        -- set background color of neotree
+        -- vim.cmd([[
+        --   highlight NeoTreeNormal guibg=#e9cfb1
+        --   highlight NeoTreeNormalNC guibg=#e9cfb1
+        -- ]])
+        if vim.g.open_neotree then
           vim.cmd([[Neotree show]])
         end
       end)
@@ -1162,7 +1209,47 @@ $0
       map('n', '<C-9>', '<Cmd>BufferGoto 9<CR>', opts)
       map('n', '<C-0>', '<Cmd>BufferLast<CR>', opts)
     end,
-    config = true,
+    config = function()
+      vim.g.barbar_auto_setup = false -- disable auto-setup
+
+      vim.cmd [[highlight! link BufferCurrent DiagnosticVirtualTextInfo]]
+
+      require 'barbar'.setup {
+        icons = {
+          -- Configure the base icons on the bufferline.
+          -- Valid options to display the buffer index and -number are `true`, 'superscript' and 'subscript'
+          buffer_index = false,
+          buffer_number = false,
+          button = '',
+          -- Enables / disables diagnostic symbols
+          -- diagnostics = {
+          --   [vim.diagnostic.severity.ERROR] = { enabled = true, icon = 'ﬀ' },
+          --   [vim.diagnostic.severity.WARN] = { enabled = false },
+          --   [vim.diagnostic.severity.INFO] = { enabled = false },
+          --   [vim.diagnostic.severity.HINT] = { enabled = true },
+          -- },
+          -- gitsigns = {
+          --   added = { enabled = true, icon = '+' },
+          --   changed = { enabled = true, icon = '~' },
+          --   deleted = { enabled = true, icon = '-' },
+          -- },
+          separator = { left = '', right = '' },
+          separator_at_end = false,
+
+          -- Configure the icons on the bufferline when modified or pinned.
+          -- Supports all the base icon options.
+          modified = { button = '●' },
+          pinned = { button = '', filename = true },
+
+          -- Configure the icons on the bufferline based on the visibility of a buffer.
+          -- Supports all the base icon options, plus `modified` and `pinned`.
+          alternate = { separator = { left = '', right = '' } },
+          current = { separator = { left = '', right = '' } },
+          inactive = { separator = { left = '', right = '' } },
+          visible = { separator = { left = '', right = '' } },
+        },
+      }
+    end,
   },
 
   -- mini.nvim for indentscope, alignment
@@ -1182,6 +1269,7 @@ $0
   },
 
   {
+    cond = false,
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     event = 'VeryLazy',
@@ -1194,8 +1282,28 @@ $0
     end
   },
 
+  {
+    "shellRaining/hlchunk.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require("hlchunk").setup({
+        chunk = {
+          enable = true,
+          style = {
+            { fg = "#62c1b9" },
+          },
+        },
+        indent = { enable = true, style = { "#35314d" } },
+      })
+    end
+  },
+
   -- markdown
-  { 'preservim/vim-markdown', ft = 'markdown' },
+  {
+    cond = false,
+    'preservim/vim-markdown',
+    ft = 'markdown'
+  },
   {
     'dhruvasagar/vim-table-mode',
     ft = 'markdown',
@@ -1203,7 +1311,7 @@ $0
       vim.api.nvim_create_autocmd({ "FileType" }, {
         pattern = "markdown",
         callback = function()
-          vim.keymap.set('n', 'gqgq', '<cmd>TableModeToggle<cr>', { buffer = 0 })
+          vim.keymap.set('n', '<C-t>', '<cmd>TableModeToggle<cr>', { buffer = 0 })
         end
       }
       )
@@ -1412,33 +1520,6 @@ $0
   },
   {
     cond = false,
-    'https://github.com/Mofiqul/vscode.nvim'
-  },
-  {
-    cond = false,
-    'navarasu/onedark.nvim',
-    config = function()
-      require('onedark').setup {
-        style = 'light'
-      }
-      require('onedark').load()
-    end
-  },
-  {
-    "rose-pine/neovim",
-    name = "rose-pine",
-    config = function()
-      if vim.o.bg == 'light' then
-        require('rose-pine').setup({ variant = 'dawn' })
-      else
-        require('rose-pine').setup({ variant = 'night' })
-      end
-      vim.cmd([[colorscheme rose-pine]])
-    end
-  }
-  ,
-  {
-    cond = false,
     dir = '~/ghq/github.com/oahlen/iceberg.nvim',
     event = 'VimEnter',
     config = function()
@@ -1466,6 +1547,41 @@ $0
     end
   },
 
+  -- rosepine colorscheme
+  {
+    "rose-pine/neovim",
+    name = "rose-pine",
+    config = function()
+      if vim.o.bg == 'light' then
+        require('rose-pine').setup({
+          variant = 'dawn', dim_inactive_windows = true,
+        })
+      else
+        require('rose-pine').setup({
+          variant = 'night', dim_inactive_windows = true,
+        })
+      end
+      vim.cmd([[colorscheme rose-pine]])
+    end
+  },
+
+  -- Show modes with the current line color instead of the statusline
+  {
+    'mvllow/modes.nvim',
+    config = function()
+      require('modes').setup({
+        colors = {
+          copy = "#f5c359",
+          delete = "#c75c6a",
+          insert = "#78ccc5",
+          visual = "#e8b7ff",
+        },
+        -- set_number = false,
+      })
+      vim.o.showmode = false
+    end
+
+  },
   -- capture vim script output
   'https://github.com/tyru/capture.vim',
 
@@ -1502,7 +1618,7 @@ $0
           }
         },
         sections = {
-          lualine_a = { 'mode' },
+          lualine_a = {},
           lualine_b = { 'encoding', 'fileformat', 'filetype', 'progress', 'location', 'filename' },
           lualine_c = { 'branch', 'diff', 'diagnostics' },
           lualine_x = {},
@@ -1522,10 +1638,12 @@ $0
         inactive_winbar = {},
         extensions = {}
       }
+      vim.go.laststatus = 3
     end
   },
 
   {
+    cond = false,
     'preservim/nerdcommenter',
     event = 'VeryLazy',
     init = function()
@@ -1569,7 +1687,7 @@ $0
       -- To avoid entering insert mode after search
       vim.api.nvim_create_autocmd("WinLeave", {
         callback = function()
-          if vim.bo.ft == "TelescopePrompt" and vim.fn.mode() == "i" then
+          if vim.bo.ft == "TelescopePrompt" and fn.mode() == "i" then
             vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "i", false)
           end
         end,
@@ -1639,7 +1757,7 @@ $0
     config = function()
       require('nvim-treesitter.configs').setup {
         -- Add languages to be installed here that you want installed for treesitter
-        ensure_installed = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'go', 'html', 'lua', 'markdown', 'org', 'python', 'rust',
+        ensure_installed = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'go', 'html', 'lua', 'markdown', 'markdown_inline', 'org', 'python', 'rust',
           'latex', 'tsx',
           'typescript', 'vimdoc', 'vim', 'yaml' },
 
@@ -1720,7 +1838,7 @@ $0
   },
 
   {
-    -- cond = false,
+    cond = false,
     'rmagatti/auto-session',
     config = function()
       require("auto-session").setup {
@@ -1756,7 +1874,7 @@ $0
       end
 
       local function paste()
-        return { vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('') }
+        return { fn.split(fn.getreg(''), '\n'), fn.getregtype('') }
       end
 
       vim.g.clipboard = {
@@ -1775,6 +1893,7 @@ $0
 
   {
     'lervag/vimtex',
+    -- lazy loading not allowed
     init = function()
       vim.g.tex_flavor = 'latex'
       vim.g.tex_conceal = 'abdmg'
@@ -1900,7 +2019,7 @@ $0
 
   -- org mode
   {
-    -- timeがマージされていないのでまだ
+    -- timeがマージされていないので
     dir = '~/syncthing_config/nvim-orgmode',
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter' },
@@ -1911,9 +2030,10 @@ $0
 
       -- Setup orgmode
       require('orgmode').setup({
+        calendar_week_start_day = 0,
         org_agenda_files = '~/org/**/*',
         org_default_notes_file = '~/org/inbox.org',
-        org_todo_keywords = { 'TODO', '|', 'DONE' },
+        org_todo_keywords = { 'TODO', '|', 'DONE', 'CANCELLED' },
         org_capture_templates = {
           t = { description = 'Task', template = '* TODO %?\n  SCHEDULED: %t\n  %u' },
           p = {
@@ -1926,11 +2046,16 @@ $0
         org_id_method = 'uuid',
         org_agenda_span = 'week',
       })
+      -- settings for org files
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "org",
         callback = function()
-          vim.keymap.set('i', "<C-CR>", function() require('orgmode').action('org_mappings.meta_return') end)
-          vim.keymap.set('i', "<S-CR>", function() require('orgmode').action('org_mappings.insert_todo_heading') end)
+          vim.keymap.set('i', "<C-CR>",
+            function() require('orgmode').action('org_mappings.insert_heading_respect_content') end)
+          vim.keymap.set('i', "<S-CR>",
+            function() require('orgmode').action('org_mappings.insert_todo_heading_respect_content') end)
+
+          -- key mappings for promoting/demoting headings
           vim.keymap.set('i', "<C-t>",
             function()
               require('orgmode').action('org_mappings.do_demote')
@@ -1941,12 +2066,31 @@ $0
               require('orgmode').action('org_mappings.do_promote')
               vim.cmd('normal! h')
             end)
+
+          vim.bo.formatlistpat = [=[^\s*[\*-]*[ \t]\s*]=]
         end
       })
+      -- q to quit in org agenda
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "orgagenda",
         callback = function()
-          vim.keymap.set('n', "q", '<cmd>q<cr>')
+          vim.keymap.set('n', "q", '<cmd>q<cr>', { buffer = true })
+        end
+      })
+      -- highlight settings for org agenda
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = { '*' },
+        callback = function()
+          -- Define own colors
+          -- colors for day separation
+          vim.api.nvim_set_hl(0, '@org.agenda.day', { link = 'DiffAdd' })
+          -- colors for deadline and scheduled
+          vim.api.nvim_set_hl(0, '@org.agenda.deadline', { link = 'ErrorMsg' })
+          vim.api.nvim_set_hl(0, '@org.agenda.scheduled', { link = 'SpecialKey' })
+          -- colors for done (by default it is white and hard to read)
+          vim.api.nvim_set_hl(0, '@org.keyword.done', { link = 'SpecialKey' })
+          -- Link to another highlight group
+          -- vim.api.nvim_set_hl(0, '@org.agenda.scheduled_past', { link = 'Statement' })
         end
       })
     end,
@@ -1955,8 +2099,11 @@ $0
     'akinsho/org-bullets.nvim',
     config = true,
   },
+
+  -- marks
   {
-    'https://github.com/chentoast/marks.nvim',
+    cond = false,
+    'chentoast/marks.nvim',
     config = function()
       require('marks').setup({})
       vim.api.nvim_set_hl(0, 'MarkSignHL', { link = "CursorLineNr" })
@@ -2000,13 +2147,13 @@ $0
 
   -- firenvim
   {
-    cond=false,
+    cond = false,
     'glacambre/firenvim',
     -- Lazy load firenvim
     -- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
     lazy = not vim.g.started_by_firenvim,
     build = function()
-      vim.fn["firenvim#install"](0)
+      fn["firenvim#install"](0)
     end
   },
 
@@ -2067,7 +2214,7 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
 -- Use ripgrep if available
-if vim.fn.executable('rg') then
+if fn.executable('rg') then
   vim.o.grepprg = 'rg --vimgrep'
   vim.o.grepformat = '%f:%l:%c:%m'
   -- Rgコマンド：引数がないなら選択領域を検索、選択されてもいないならカーソルの単語を検索
@@ -2182,9 +2329,9 @@ vim.keymap.set('n', '<Plug>(g-mode)', '<Nop>', { remap = true })
 
 -- terminal
 -- open terminal in new split with height 15
-vim.keymap.set('n', '<C-z>', '<Cmd>15split term://zsh<CR><cmd>set nobuflisted<CR>', { silent = true })
+-- vim.keymap.set('n', '<C-z>', '<Cmd>15split term://zsh<CR><cmd>set nobuflisted<CR>', { silent = true })
 -- In terminal, use <C-[> to go back to the buffer above
-vim.keymap.set('t', '<C-[>', [[<C-\><C-n><C-w><C-k>]], { silent = true })
+-- vim.keymap.set('t', '<C-[>', [[<C-\><C-n><C-w><C-k>]], { silent = true })
 vim.keymap.set('t', '<C-l>', [[<C-\><C-n>]], { silent = true })
 -- enter insert mode when entering terminal buffer
 vim.api.nvim_create_autocmd("BufEnter", {
@@ -2235,6 +2382,15 @@ noremap l <cmd>call <sid>quantized_l(v:count1)<cr>
 
 -- do not copy when deleting by x
 vim.keymap.set({ 'n', 'x' }, 'x', '"_x')
+
+-- commenting using <C-;> and <C-/>
+vim.keymap.set({ "n" }, "<C-/>", "gcc", { remap = true })
+vim.keymap.set({ "n" }, "<C-;>", "gcc", { remap = true })
+vim.keymap.set({ "v" }, "<C-/>", "gc", { remap = true })
+vim.keymap.set({ "v" }, "<C-;>", "gc", { remap = true })
+-- comment after copying
+vim.keymap.set({ "n" }, "<leader>cy", "yygcc", { remap = true })
+vim.keymap.set({ "v" }, "<leader>cy", "ygvgc", { remap = true })
 
 -- window control by s
 -- disabled
@@ -2438,11 +2594,15 @@ vim.cmd([[
 augroup file-type
 au!
 au FileType go                                    setlocal tabstop=4 shiftwidth=4 noexpandtab formatoptions+=r
+au FileType yaml                                  setlocal tabstop=4 shiftwidth=4
 au FileType html,csv,tsv                          setlocal nowrap
 au FileType text,mail,markdown,help               setlocal noet      spell
+au FileType markdown,org                          setlocal breakindentopt=list:-1
 au FileType gitcommit                             setlocal spell
+
 "  テキストについて-もkeywordとする
-au FileType text,tex,markdown,gitcommit,help      setlocal isk+=-
+au FileType text,tex,markdown,gitcommit,help,yaml setlocal isk+=-
+
 "  texについて@もkeywordとする
 au FileType tex                                   setlocal isk+=@-@
 au FileType log                                   setlocal nowrap
@@ -2476,19 +2636,19 @@ au CmdlineLeave /,\? autocmd CursorHold * ++once autocmd CursorMoved * ++once se
 augroup END
 
 " 選択した領域を自動でハイライトする
-" treesitterを使っているときは使えない？ のでdisable
-" augroup instant-visual-highlight
-" au!
-" autocmd CursorMoved,CursorHold * call Visualmatch()
-" augroup END
+ augroup instant-visual-highlight
+ au!
+ autocmd CursorMoved,CursorHold * call Visualmatch()
+ augroup END
 
+hi link VisualMatch Search
 function! Visualmatch()
   if exists("w:visual_match_id")
     call matchdelete(w:visual_match_id)
     unlet w:visual_match_id
   endif
 
-  if index(['v', "\<C-v>"], mode()) == -1
+  if index(["\<C-v>"], mode()) == -1
     return
   endif
 
@@ -2517,9 +2677,9 @@ function! Visualmatch()
   endif
 
   if mode() == 'v'
-  let w:visual_match_id = matchadd('VisualMatch', '\V' .. text)
+  let w:visual_match_id = matchadd('VisualMatch', '\V' .. text, -999)
   else
-  let w:visual_match_id = matchadd('VisualMatch', '\V\<' .. text .. '\>')
+  let w:visual_match_id = matchadd('VisualMatch', '\V\<' .. text .. '\>', -999)
   endif
 endfunction
 
@@ -2570,7 +2730,6 @@ au!
 au BufReadPre *.bin     let b:bin_xxd=1
 au BufReadPre *.img     let b:bin_xxd=1
 au BufReadPre *.sys     let b:bin_xxd=1
-au BufReadPre *.torrent let b:bin_xxd=1
 au BufReadPre *.out     let b:bin_xxd=1
 au BufReadPre *.a       let b:bin_xxd=1
 
@@ -2610,7 +2769,7 @@ au BufWritePost *.ipynb silent %!jupytext --from ipynb --to py:percent
 au BufWritePost *.ipynb if exists('g:jupyter_previous_location') | call setpos('.', g:jupyter_previous_location) | endif
 augroup END
 
-augroup lua-highlight
+augroup yank-highlight
 autocmd!
 autocmd TextYankPost * silent! lua vim.highlight.on_yank({higroup='Pmenu', timeout=200})
 augroup END
