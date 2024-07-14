@@ -37,7 +37,7 @@ else
 end
 
 -- check if the window is wide enough and vim is open with an argument to open the neotree explorer
-if vim.o.columns > 150 and fn.argc() > 0 then
+if vim.o.columns > 200 and fn.argc() > 0 then
   vim.g.open_neotree = true
 else
   vim.g.open_neotree = false
@@ -175,6 +175,7 @@ require('lazy').setup({
 
   -- startup
   {
+    cond = false,
     'mhinz/vim-startify',
     init = function()
       vim.g.startify_custom_header = [[startify#pad(split(system('shuf -n 1 ~/syncthing_config/fortune.txt'), '\n'))]]
@@ -193,13 +194,61 @@ require('lazy').setup({
     end
   },
 
+  -- smart increment/decrement
+  {
+    'monaqa/dial.nvim',
+    event = 'VeryLazy',
+    config = function()
+      local augend = require("dial.augend")
+      require("dial.config").augends:register_group {
+        default = {
+          augend.integer.alias.decimal_int,
+          augend.integer.alias.hex,
+          augend.integer.alias.octal,
+          augend.date.alias["%Y/%m/%d"],
+          augend.date.alias["%Y-%m-%d"],
+          augend.date.alias["%m/%d"],
+          augend.date.alias["%H:%M"],
+          augend.date.alias["%H:%M:%S"],
+          augend.constant.alias.ja_weekday_full,
+          augend.constant.alias.ja_weekday,
+        },
+      }
+
+      vim.keymap.set("n", "<C-a>", function()
+        require("dial.map").manipulate("increment", "normal")
+      end)
+      vim.keymap.set("n", "<C-x>", function()
+        require("dial.map").manipulate("decrement", "normal")
+      end)
+      vim.keymap.set("n", "g<C-a>", function()
+        require("dial.map").manipulate("increment", "gnormal")
+      end)
+      vim.keymap.set("n", "g<C-x>", function()
+        require("dial.map").manipulate("decrement", "gnormal")
+      end)
+      vim.keymap.set("v", "<C-a>", function()
+        require("dial.map").manipulate("increment", "visual")
+      end)
+      vim.keymap.set("v", "<C-x>", function()
+        require("dial.map").manipulate("decrement", "visual")
+      end)
+      vim.keymap.set("v", "g<C-a>", function()
+        require("dial.map").manipulate("increment", "gvisual")
+      end)
+      vim.keymap.set("v", "g<C-x>", function()
+        require("dial.map").manipulate("decrement", "gvisual")
+      end)
+    end
+  },
+
   -- Git related plugins
   {
     'tpope/vim-fugitive',
-    cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep' },
-    dependencies = { 'tpope/vim-dispatch' },
+    cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep', 'GBrowse' },
+    dependencies = { 'tpope/vim-dispatch', 'tpope/vim-rhubarb', 'tyru/open-browser.vim' },
     init = function()
-      vim.keymap.set("n", "<leader>gs", "<cmd>Git <CR><Cmd>only<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>gs", "<cmd>tabnew<cr><cmd>Git <CR><Cmd>only<CR>", { silent = true })
       vim.keymap.set("n", "<leader>ga", "<cmd>Gwrite<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gc", "<cmd>Git commit -v<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gb", "<cmd>Git blame<CR>", { silent = true })
@@ -236,6 +285,9 @@ require('lazy').setup({
       )
       vim.keymap.set("n", "<Down>", "<Cmd>Dispatch! git fetch<CR>", { silent = true })
       vim.keymap.set("n", "<C-Down>", "<Cmd>Dispatch! git pull<CR>", { silent = true })
+
+      -- With the help of rhubarb and open-browser.vim, you can open the current line in the browser with `:GBrowse`
+      vim.cmd([[command! -nargs=1 Browse OpenBrowser <args>]])
     end,
     config = function()
       vim.cmd([[
@@ -250,7 +302,6 @@ require('lazy').setup({
       end)
     end,
   },
-  { 'tpope/vim-rhubarb',                         cmd = 'GBrowse', dependencies = 'tpope/vim-fugitive' },
   {
     'cohama/agit.vim',
     cmd = 'Agit',
@@ -275,13 +326,14 @@ require('lazy').setup({
       vim.g.floaterm_width = 0.9
       vim.g.floaterm_height = 0.9
       vim.keymap.set('n', '<C-z>', '<Cmd>FloatermToggle<CR>', { silent = true })
-      vim.keymap.set('t', '<C-[>', [[<C-\><C-n>:FloatermHide<CR>]], { silent = true })
+      vim.keymap.set('t', [[<C-;>]], [[<C-\><C-n>:FloatermHide<CR>]], { silent = true })
       vim.keymap.set('t', '<C-l>', [[<C-\><C-n>]], { silent = true })
     end
   },
 
   -- clever f/F/t/T
   {
+    cond = false,
     'rhysd/clever-f.vim',
     event = 'VeryLazy',
     init = function()
@@ -342,7 +394,7 @@ require('lazy').setup({
   {
     'github/copilot.vim',
     -- programming filetypes
-    ft = { 'c', 'cpp', 'lisp', 'lua', 'python', 'rust', 'sh', 'bash', 'zsh', 'typescript', 'javascript', 'vim', 'yaml', 'css', 'tex' },
+    ft = { 'c', 'cpp', 'lisp', 'lua', 'python', 'rust', 'sh', 'bash', 'zsh', 'html', 'xhtml', 'typescript', 'javascript', 'vim', 'yaml', 'css', 'tex' },
     init = function()
       -- the same filetypes
       vim.g.copilot_filetypes = {
@@ -356,6 +408,8 @@ require('lazy').setup({
         ['sh'] = true,
         ['bash'] = true,
         ['zsh'] = true,
+        ['html'] = true,
+        ['xhtml'] = true,
         ['typescript'] = true,
         ['javascript'] = true,
         ['vim'] = true,
@@ -367,6 +421,23 @@ require('lazy').setup({
       -- vim.g.copilot_proxy = 'http://localhost:11435'
       -- vim.g.copilot_proxy_strict_ssl = false
     end
+  },
+
+  {
+    cond = false,
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = {
+          auto_trigger = true,
+          keymap = {
+            accept = "<Tab>"
+          }
+        }
+      })
+    end,
   },
 
   -- register preview
@@ -470,7 +541,7 @@ require('lazy').setup({
 
             -- See `:help K` for why this keymap
             nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-            nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+            -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
             -- Lesser used LSP functionality
             nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -518,7 +589,7 @@ require('lazy').setup({
             -- special configuration for grammarly
             ["grammarly"] = function()
               require 'lspconfig'.grammarly.setup {
-                filetypes = { "bibtex", "gitcommit", "markdown", "org", "tex", "restructuredtext", "rsweave", "latex", "quarto", "rmd", "context", "html", "xhtml" },
+                filetypes = { "bibtex", "gitcommit", "org", "tex", "restructuredtext", "rsweave", "latex", "quarto", "rmd", "context", "html" },
                 -- This is necessary as grammary language server does not support newer versions of nodejs
                 -- https://github.com/znck/grammarly/issues/334
                 cmd = { "n", "run", "16", os.getenv("HOME") .. "/.local/share/nvim/mason/bin/grammarly-languageserver", "--stdio" },
@@ -717,7 +788,7 @@ require('lazy').setup({
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
       'onsails/lspkind.nvim',
-      'hrsh7th/cmp-nvim-lsp-signature-help',
+      -- 'hrsh7th/cmp-nvim-lsp-signature-help',
     },
     config = function()
       local cmp = require 'cmp'
@@ -754,7 +825,7 @@ require('lazy').setup({
           { name = 'luasnip' },
           { name = 'buffer' },
           { name = 'path' },
-          { name = 'nvim_lsp_signature_help' }
+          -- { name = 'nvim_lsp_signature_help' }
         }, {
           { name = 'look' }
         }),
@@ -806,6 +877,27 @@ require('lazy').setup({
         })
       })
     end,
+  },
+
+  -- lsp signature help
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "VeryLazy",
+    opts = {},
+    config = function(_, opts)
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          local bufnr = args.buf
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if vim.tbl_contains({ 'null-ls' }, client.name) then -- blacklist lsp
+            return
+          end
+          require("lsp_signature").on_attach({
+            -- ... setup options here ...
+          }, bufnr)
+        end,
+      })
+    end
   },
 
 
@@ -868,12 +960,70 @@ plt.show()
 $0
 ]]
         ),
+        ls.parser.parse_snippet({ trig = "set_axes_equal", name = "set x y z axes equal for same aspect ratio." },
+          [[
+def set_axes_equal(ax):
+    """
+    Make axes of 3D plot have equal scale so that spheres appear as spheres,
+    cubes as cubes, etc.
+
+    Input
+      ax: a matplotlib axis, e.g., as output from plt.gca().
+    """
+
+    x_limits = ax.get_xlim3d()
+    y_limits = ax.get_ylim3d()
+    z_limits = ax.get_zlim3d()
+
+    x_range = abs(x_limits[1] - x_limits[0])
+    x_middle = np.mean(x_limits)
+    y_range = abs(y_limits[1] - y_limits[0])
+    y_middle = np.mean(y_limits)
+    z_range = abs(z_limits[1] - z_limits[0])
+    z_middle = np.mean(z_limits)
+
+    # The plot bounding box is a sphere in the sense of the infinity
+    # norm, hence I call half the max range the plot radius.
+    plot_radius = 0.5*max([x_range, y_range, z_range])
+
+    ax.set_xlim3d([x_middle - plot_radius, x_middle + plot_radius])
+    ax.set_ylim3d([y_middle - plot_radius, y_middle + plot_radius])
+    ax.set_zlim3d([z_middle - plot_radius, z_middle + plot_radius])
+
+]]
+        ),
         ls.parser.parse_snippet({ trig = "argument_parser", name = "argument_parser" },
           [[
 import argparse
 p = argparse.ArgumentParser()
 p.add_argument('${1:foo}')
 args = p.parse_args()
+]]
+        ),
+        ls.parser.parse_snippet({ trig = "tyro_argument_parser", name = "tyro_argument_parser" },
+          [[
+import dataclasses
+
+import tyro
+
+
+@dataclasses.dataclass
+class Args:
+    """$1.
+    $2"""
+
+    field1: str
+    """A string field."""
+
+    field2: int = 3
+    """A numeric field, with a default value."""
+
+    $3
+
+if __name__ == "__main__":
+    args = tyro.cli(Args)
+    print(args)
+    $0
 ]]
         ),
         ls.parser.parse_snippet({ trig = "read_movie_using_cv2", name = "read movie using cv2" },
@@ -1055,10 +1205,14 @@ $0
 \usepackage{bm}
 \usepackage{booktabs}
 \usepackage{capt-of}
+\usepackage{geometry}
+\geometry{paperwidth=2cm} % とりあえず小さくしておけば問題ない
 
 \begin{document}
 \begin{preview}
-    ${0}
+    \begin{align*}
+      ${0}
+    \end{align*}
 \end{preview}
 \end{document}
     ]]
@@ -1148,13 +1302,9 @@ $0
         }
       })
 
-      -- schedule to
+      -- delay the opening of neotree
+      -- somehow don't work with auto-session
       vim.schedule(function()
-        -- set background color of neotree
-        -- vim.cmd([[
-        --   highlight NeoTreeNormal guibg=#e9cfb1
-        --   highlight NeoTreeNormalNC guibg=#e9cfb1
-        -- ]])
         if vim.g.open_neotree then
           vim.cmd([[Neotree show]])
         end
@@ -1292,9 +1442,17 @@ $0
           style = {
             { fg = "#62c1b9" },
           },
+          delay = 2, -- animation
+          duration = 100,
+          exclude_filetypes = {
+            floaterm = true,
+          }
+
         },
         indent = { enable = true, style = { "#35314d" } },
       })
+      -- remove leadmultispace from listchars
+      vim.o.listchars = 'tab:» ,trail:~,extends:»,precedes:«,nbsp:%'
     end
   },
 
@@ -1378,7 +1536,7 @@ $0
   },
 
   -- rust
-  { 'rust-lang/rust.vim', ft = 'rust' },
+  { 'rust-lang/rust.vim',                        ft = 'rust' },
 
   -- tagbar
   {
@@ -1489,7 +1647,6 @@ $0
 
   -- colorscheme
   {
-    cond = false,
     'swnakamura/iceberg.vim',
     lazy = false,
     priority = 1000,
@@ -1519,9 +1676,9 @@ $0
     end,
   },
   {
-    cond = false,
-    dir = '~/ghq/github.com/oahlen/iceberg.nvim',
-    event = 'VimEnter',
+    -- cond = false,
+    dir = 'oahlen/iceberg.nvim',
+    -- event = 'VimEnter',
     config = function()
       if vim.o.bg == 'light' then
         vim.cmd.colorscheme 'iceberg-light'
@@ -1549,16 +1706,21 @@ $0
 
   -- rosepine colorscheme
   {
+    cond = false,
     "rose-pine/neovim",
     name = "rose-pine",
     config = function()
       if vim.o.bg == 'light' then
         require('rose-pine').setup({
-          variant = 'dawn', dim_inactive_windows = true,
+          variant = 'dawn',
+          dim_inactive_windows = true,
+          styles = { italic = false },
         })
       else
         require('rose-pine').setup({
-          variant = 'night', dim_inactive_windows = true,
+          variant = 'night',
+          dim_inactive_windows = true,
+          styles = { italic = false },
         })
       end
       vim.cmd([[colorscheme rose-pine]])
@@ -1830,7 +1992,7 @@ $0
     event = 'VeryLazy',
     dependencies = 'nvim-treesitter/nvim-treesitter',
     config = function()
-      require "treesitter-context".setup { max_lines = 7 }
+      require "treesitter-context".setup {}
       vim.keymap.set({ "n", "v" }, "[c", function()
         require("treesitter-context").go_to_context()
       end, { silent = true })
@@ -1838,12 +2000,11 @@ $0
   },
 
   {
-    cond = false,
     'rmagatti/auto-session',
     config = function()
       require("auto-session").setup {
         log_level = "error",
-        auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+        -- auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
       }
     end
   },
@@ -1960,7 +2121,7 @@ $0
     "folke/zen-mode.nvim",
     event = 'VeryLazy',
     config = function()
-      vim.keymap.set('n', 'Z', function()
+      vim.keymap.set('n', 'ZN', function()
         require("zen-mode").toggle({
           plugins = {
             options = {
@@ -1999,10 +2160,10 @@ $0
   },
 
   -- color picker
-  { 'uga-rosa/ccc.nvim',  event = 'VeryLazy', config = true },
+  { 'uga-rosa/ccc.nvim', event = 'VeryLazy', config = true },
 
   -- expl3
-  { 'wtsnjp/vim-expl3',   filetype = 'expl3' },
+  { 'wtsnjp/vim-expl3',  filetype = 'expl3' },
 
   -- pgmnt
   { 'cocopon/pgmnt.vim' },
@@ -2187,7 +2348,7 @@ vim.o.mouse = 'a'
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.o.clipboard = 'unnamedplus'
+-- vim.o.clipboard = 'unnamedplus'
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -2255,9 +2416,11 @@ vim.o.fileencodings = 'utf-8,ios-2022-jp,euc-jp,sjis,cp932'
 vim.o.previewheight = 999
 
 vim.o.list = true
-vim.o.listchars = 'tab:» ,trail:~,extends:»,precedes:«,nbsp:%'
+vim.o.listchars = 'leadmultispace:---|,tab:» ,trail:~,extends:»,precedes:«,nbsp:%'
 
 vim.o.scrolloff = 5
+
+vim.o.clipboard = 'unnamedplus'
 
 vim.go.laststatus = 3
 
@@ -2326,6 +2489,25 @@ vim.keymap.set('n', 'gk', 'gk<Plug>(g-mode)', { remap = true })
 vim.keymap.set('n', '<Plug>(g-mode)j', 'gj<Plug>(g-mode)')
 vim.keymap.set('n', '<Plug>(g-mode)k', 'gk<Plug>(g-mode)')
 vim.keymap.set('n', '<Plug>(g-mode)', '<Nop>', { remap = true })
+
+-- normally, ; is used for :
+vim.keymap.set({ 'n', 'v' }, ';', ':')
+
+-- f and F submode to move to the next/previous character by ; and , after f/F temporaily
+vim.cmd([[
+function! F_AND_FMODE(mode) abort
+  if a:mode ==# 'f'
+      return 'f' .. nr2char(getchar()) .. '<Plug>(f-mode)'
+  elseif a:mode ==# 'F'
+      return 'F' .. nr2char(getchar()) .. '<Plug>(f-mode)'
+  endif
+endfunction
+]])
+vim.keymap.set('n', 'f', 'F_AND_FMODE("f")', { silent = true, expr = true, remap = true })
+vim.keymap.set('n', 'F', 'F_AND_FMODE("F")', { silent = true, expr = true, remap = true })
+vim.keymap.set('n', '<Plug>(f-mode);', ';<Plug>(f-mode)')
+vim.keymap.set('n', '<Plug>(f-mode),', ',<Plug>(f-mode)')
+vim.keymap.set('n', '<Plug>(f-mode)', '<Nop>', { remap = true })
 
 -- terminal
 -- open terminal in new split with height 15
@@ -2775,27 +2957,29 @@ autocmd TextYankPost * silent! lua vim.highlight.on_yank({higroup='Pmenu', timeo
 augroup END
 ]])
 
-vim.cmd([[
-function Float(key)
-while v:true
-" 現在位置に文字がある間……
-exec 'normal! ' a:key
-if line(".") <= 1 || line(".") >= line("$") || (strlen(getline(".")) < col(".") || getline(".")[col(".") - 1] =~ '\s')
-break
-endif
-endwhile
-while v:true
-" 現在位置が空白文字である間……
-exec 'normal! ' a:key
-if line(".") <= 1 || line(".") >= line("$") || !(strlen(getline(".")) < col(".") || getline(".")[col(".") - 1] =~ '\s')
-break
-endif
-endwhile
-endfunction
-]])
+-- rewrite Float function in lua
+Float = function(up)
+  local curpos = fn.getcurpos()
+  -- 現在位置に文字がある間……
+  while true do
+    curpos[2] = curpos[2] + up
+    fn.cursor(curpos[2], curpos[3])
+    if fn.line('.') <= 1 or fn.line('.') >= fn.line('$') or (fn.strlen(fn.getline('.')) < fn.col('.') or fn.getline("."):sub(fn.col('.'), fn.col('.')) == ' ') then
+      break
+    end
+  end
+  -- 現在位置が空白文字である間……
+  while true do
+    curpos[2] = curpos[2] + up
+    fn.cursor(curpos[2], curpos[3])
+    if fn.line('.') <= 1 or fn.line('.') >= fn.line('$') or not (fn.strlen(fn.getline('.')) < fn.col('.') or fn.getline("."):sub(fn.col('.'), fn.col('.')) == ' ') then
+      break
+    end
+  end
+end
 
-vim.keymap.set({ 'n', 'v' }, '<leader>k', [[<Cmd>call Float('k')<CR>]])
-vim.keymap.set({ 'n', 'v' }, '<leader>j', [[<Cmd>call Float('j')<CR>]])
+vim.keymap.set({ 'n', 'v' }, '<leader>k', [[<Cmd>lua Float(-1)<CR>]])
+vim.keymap.set({ 'n', 'v' }, '<leader>j', [[<Cmd>lua Float(1)<CR>]])
 
 -- [[ autocmd-IME ]]
 vim.cmd([[
@@ -2849,38 +3033,40 @@ autocmd BufRead */obsidian/**.md call IME_toggle()
 augroup END
 ]])
 
--- [[ switch settings with local leader ]]
+-- [[ toggle/switch settings with local leader ]]
 vim.cmd([[
-  nnoremap <Plug>(my-switch) <Nop>
-  nmap <localleader> <Plug>(my-switch)
-  nnoremap <silent> <Plug>(my-switch)s     <Cmd>setl spell! spell?<CR>
-  nnoremap <silent> <Plug>(my-switch)<C-s> <Cmd>setl spell! spell?<CR>
-  nnoremap <silent> <Plug>(my-switch)l     <Cmd>setl list! list?<CR>
-  nnoremap <silent> <Plug>(my-switch)<C-l> <Cmd>setl list! list?<CR>
-  nnoremap <silent> <Plug>(my-switch)t     <Cmd>setl expandtab! expandtab?<CR>
-  nnoremap <silent> <Plug>(my-switch)<C-t> <Cmd>setl expandtab! expandtab?<CR>
-  nnoremap <silent> <Plug>(my-switch)w     <Cmd>setl wrap! wrap?<CR>
-  nnoremap <silent> <Plug>(my-switch)<C-w> <Cmd>setl wrap! wrap?<CR>
-  nnoremap <silent> <Plug>(my-switch)b     <Cmd>setl scrollbind! scrollbind?<CR>
-  nnoremap <silent> <Plug>(my-switch)<C-b> <Cmd>setl scrollbind! scrollbind?<CR>
-  nnoremap <silent> <Plug>(my-switch)d     <Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>
-  nnoremap <silent> <Plug>(my-switch)<C-d> <Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>
-  nnoremap <silent> <Plug>(my-switch)c     <Cmd>if &conceallevel > 0 \| set conceallevel=0 \| else \| set conceallevel=2 \| endif \| set conceallevel?<CR>
-  nnoremap <silent> <Plug>(my-switch)<C-c> <Cmd>if &conceallevel > 0 \| set conceallevel=0 \| else \| set conceallevel=2 \| endif \| set conceallevel?<CR>
-  nnoremap <silent> <Plug>(my-switch)y     <Cmd>call Toggle_syntax()<CR>
-  nnoremap <silent> <Plug>(my-switch)<C-y> <Cmd>call Toggle_syntax()<CR>
-  nnoremap <silent> <Plug>(my-switch)n     <Cmd>call Toggle_noice()<CR>
-  nnoremap <silent> <Plug>(my-switch)<C-n> <Cmd>call Toggle_noice()<CR>
+  nnoremap <Plug>(my-toggle) <Nop>
+  nmap <localleader> <Plug>(my-toggle)
+  nnoremap <silent> <Plug>(my-toggle)s     <Cmd>setl spell! spell?<CR>
+  nnoremap <silent> <Plug>(my-toggle)<C-s> <Cmd>setl spell! spell?<CR>
+  nnoremap <silent> <Plug>(my-toggle)l     <Cmd>setl list! list?<CR>
+  nnoremap <silent> <Plug>(my-toggle)<C-l> <Cmd>setl list! list?<CR>
+  nnoremap <silent> <Plug>(my-toggle)t     <Cmd>setl expandtab! expandtab?<CR>
+  nnoremap <silent> <Plug>(my-toggle)<C-t> <Cmd>setl expandtab! expandtab?<CR>
+  nnoremap <silent> <Plug>(my-toggle)w     <Cmd>setl wrap! wrap?<CR>
+  nnoremap <silent> <Plug>(my-toggle)<C-w> <Cmd>setl wrap! wrap?<CR>
+  nnoremap <silent> <Plug>(my-toggle)b     <Cmd>setl scrollbind! scrollbind?<CR>
+  nnoremap <silent> <Plug>(my-toggle)<C-b> <Cmd>setl scrollbind! scrollbind?<CR>
+  nnoremap <silent> <Plug>(my-toggle)d     <Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>
+  nnoremap <silent> <Plug>(my-toggle)<C-d> <Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>
+  nnoremap <silent> <Plug>(my-toggle)c     <Cmd>if &conceallevel > 0 \| set conceallevel=0 \| else \| set conceallevel=2 \| endif \| set conceallevel?<CR>
+  nnoremap <silent> <Plug>(my-toggle)<C-c> <Cmd>if &conceallevel > 0 \| set conceallevel=0 \| else \| set conceallevel=2 \| endif \| set conceallevel?<CR>
+  nnoremap <silent> <Plug>(my-toggle)y     <Cmd>if &clipboard == 'unnamedplus' \| set clipboard=\| else \| set clipboard=unnamedplus \| endif \| set clipboard?<CR>
+  nnoremap <silent> <Plug>(my-toggle)<C-y> <Cmd>if &clipboard == 'unnamedplus' \| set clipboard=\| else \| set clipboard=unnamedplus \| endif \| set clipboard?<CR>
+  nnoremap <silent> <Plug>(my-toggle)n     <Cmd>call Toggle_syntax()<CR>
+  nnoremap <silent> <Plug>(my-toggle)<C-n> <Cmd>call Toggle_syntax()<CR>
+  "nnoremap <silent> <Plug>(my-toggle)n     <Cmd>call Toggle_noice()<CR>
+  "nnoremap <silent> <Plug>(my-toggle)<C-n> <Cmd>call Toggle_noice()<CR>
   function! Toggle_syntax() abort
-  if exists('g:syntax_on')
-  syntax off
-  redraw
-  echo 'syntax off'
-  else
-  syntax on
-  redraw
-  echo 'syntax on'
-  endif
+    if exists('g:syntax_on')
+      syntax off
+      redraw
+      echo 'syntax off'
+      else
+      syntax on
+      redraw
+      echo 'syntax on'
+    endif
   endfunction
   let g:is_noice_enabled = v:true
   function Toggle_noice() abort

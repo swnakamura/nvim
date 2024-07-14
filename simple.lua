@@ -103,7 +103,7 @@ vim.o.fileencodings = 'utf-8,ios-2022-jp,euc-jp,sjis,cp932'
 vim.o.previewheight = 999
 
 vim.o.list = true
-vim.o.listchars = 'tab:» ,trail:~,extends:»,precedes:«,nbsp:%'
+vim.o.listchars = 'leadmultispace:|   ,tab:» ,trail:~,extends:»,precedes:«,nbsp:%'
 
 vim.o.scrolloff = 5
 
