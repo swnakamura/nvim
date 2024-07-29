@@ -153,6 +153,9 @@ require('lazy').setup({
           ["vim.lsp.util.stylize_markdown"] = true,
           ["cmp.entry.get_documentation"] = true,
         },
+        signature = {
+          enabled=false,
+        }
       },
       -- you can enable a preset for easier configuration
       presets = {
@@ -1012,7 +1015,7 @@ class Args:
     """$1.
     $2"""
 
-    field1: str
+    field1: tyro.conf.Positional[str]
     """A string field."""
 
     field2: int = 3
@@ -2263,7 +2266,6 @@ $0
 
   -- marks
   {
-    cond = false,
     'chentoast/marks.nvim',
     config = function()
       require('marks').setup({})
@@ -2804,6 +2806,13 @@ call winrestview(l:curw)
 return ''
 endfunction
 
+" / as file completion when in <c-x><c-f> completion
+" https://zenn.dev/kawarimidoll/articles/54e38aa7f55aff
+inoremap <expr> /
+      \ complete_info(['mode']).mode == 'files' && complete_info(['selected']).selected >= 0
+      \   ? '<c-x><c-f>'
+      \   : '/'
+
 " 検索中の領域をハイライトする
 augroup vimrc-incsearch-highlight
 au!
@@ -2957,7 +2966,6 @@ autocmd TextYankPost * silent! lua vim.highlight.on_yank({higroup='Pmenu', timeo
 augroup END
 ]])
 
--- rewrite Float function in lua
 Float = function(up)
   local curpos = fn.getcurpos()
   -- 現在位置に文字がある間……
