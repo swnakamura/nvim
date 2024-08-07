@@ -36,6 +36,14 @@ else
   vim.g.is_macos = false
 end
 
+vim.cmd([[
+if exists('g:vscode')
+    let g:is_vscode = v:true
+else
+    let g:is_vscode = v:false
+endif
+]])
+
 -- check if the window is wide enough and vim is open with an argument to open the neotree explorer
 if vim.o.columns > 200 and fn.argc() > 0 then
   vim.g.open_neotree = true
@@ -154,7 +162,7 @@ require('lazy').setup({
           ["cmp.entry.get_documentation"] = true,
         },
         signature = {
-          enabled=false,
+          enabled = false,
         }
       },
       -- you can enable a preset for easier configuration
@@ -418,7 +426,7 @@ require('lazy').setup({
         ['vim'] = true,
         ['yaml'] = true,
         ['css'] = true,
-        ['tex'] = true,
+        -- ['tex'] = true,
       }
 
       -- vim.g.copilot_proxy = 'http://localhost:11435'
@@ -1328,6 +1336,45 @@ $0
     end
   },
 
+  -- yazi
+  {
+    "mikavilpas/yazi.nvim",
+    event = "VeryLazy",
+    keys = {
+      {
+        "<C-y>",
+        function()
+          -- require("yazi").yazi()
+          require("yazi").yazi(nil, vim.fn.getcwd())
+        end,
+        desc = "Open the file manager",
+      },
+      -- {
+      --   "<C-y>",
+      --   function()
+      --     -- NOTE: requires a version of yazi that includes
+      --     -- https://github.com/sxyazi/yazi/pull/1305 from 2024-07-18
+      --     require('yazi').toggle()
+      --   end,
+      --   desc = "Resume the last yazi session",
+      -- },
+    },
+    ---@type YaziConfig
+    opts = {
+      -- if you want to open yazi instead of netrw, see below for more info
+      open_for_directories = false,
+
+      -- enable these if you are using the latest version of yazi
+      -- use_ya_for_events_reading = true,
+      -- use_yazi_client_id_flag = true,
+
+      keymaps = {
+        show_help = '<f1>',
+      },
+    },
+  },
+
+
   {
     'mattn/emmet-vim',
     ft = { 'html', 'xml', 'vue', 'htmldjango', 'markdown' }
@@ -1405,24 +1452,8 @@ $0
     end,
   },
 
-  -- mini.nvim for indentscope, alignment
   {
-    cond = false,
-    'echasnovski/mini.nvim',
-    event = 'VeryLazy',
-    config = function()
-      require('mini.indentscope').setup {
-        draw = {
-          delay = 20,
-          animation = require('mini.indentscope').gen_animation.none()
-        },
-        symbol = '┊',
-      }
-    end
-  },
-
-  {
-    cond = false,
+    -- cond = false,
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     event = 'VeryLazy',
@@ -1432,10 +1463,13 @@ $0
         -- scope with wider character
         scope = { show_exact_scope = true, char = "▎" },
       }
-    end
+      vim.cmd([[set listchars-=leadmultispace:---\|]])
+    end,
   },
 
   {
+    -- cond=not vim.g.is_vscode,
+    cond = false,
     "shellRaining/hlchunk.nvim",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
@@ -1455,7 +1489,7 @@ $0
         indent = { enable = true, style = { "#35314d" } },
       })
       -- remove leadmultispace from listchars
-      vim.o.listchars = 'tab:» ,trail:~,extends:»,precedes:«,nbsp:%'
+      vim.cmd([[set listchars-=leadmultispace:---\|]])
     end
   },
 
@@ -1739,7 +1773,7 @@ $0
           copy = "#f5c359",
           delete = "#c75c6a",
           insert = "#78ccc5",
-          visual = "#e8b7ff",
+          visual = "#ff9837",
         },
         -- set_number = false,
       })
@@ -1888,7 +1922,6 @@ $0
   {
     'epwalsh/obsidian.nvim',
     cond = vim.g.is_macos,
-    ft = 'markdown',
     dependencies = {
       -- Required.
       "nvim-lua/plenary.nvim",
@@ -1899,15 +1932,20 @@ $0
       -- Optional, for search and quick-switch functionality.
       "nvim-telescope/telescope.nvim",
     },
-    opts = {
-      disable_frontmatter = true,
-      workspaces = {
+    config = function()
+      vim.keymap.set('n', '<leader>fo', function() vim.cmd([[ObsidianQuickSwitch]]) end)
+      require('obsidian').setup(
         {
-          name = "work",
-          path = "~/research_vault",
+          disable_frontmatter = true,
+          workspaces = {
+            {
+              name = "work",
+              path = "~/research_vault",
+            }
+          },
         }
-      },
-    },
+      )
+    end
   },
 
 
@@ -1991,6 +2029,7 @@ $0
     end
   },
   {
+    cond = not vim.g.is_vscode,
     'nvim-treesitter/nvim-treesitter-context',
     event = 'VeryLazy',
     dependencies = 'nvim-treesitter/nvim-treesitter',
@@ -2332,7 +2371,7 @@ vim.o.smartindent = true
 vim.o.expandtab = true
 
 -- conceal level
-vim.go.conceallevel = 2
+vim.go.conceallevel = 1
 
 -- Set highlight on search
 vim.o.hlsearch = false
