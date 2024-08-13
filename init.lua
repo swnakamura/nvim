@@ -2034,7 +2034,10 @@ $0
     event = 'VeryLazy',
     dependencies = 'nvim-treesitter/nvim-treesitter',
     config = function()
-      require "treesitter-context".setup {}
+      require "treesitter-context".setup {
+        max_lines=1,
+        multiline_threshold = 1, -- Maximum number of lines to show for a single context
+      }
       vim.keymap.set({ "n", "v" }, "[c", function()
         require("treesitter-context").go_to_context()
       end, { silent = true })
