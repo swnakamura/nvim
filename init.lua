@@ -1773,9 +1773,10 @@ $0
           copy = "#f5c359",
           delete = "#c75c6a",
           insert = "#78ccc5",
-          visual = "#ff9837",
+          visual = "#c0f36e",
         },
         -- set_number = false,
+        line_opacity = 0.3,
       })
       vim.o.showmode = false
     end
@@ -1817,7 +1818,7 @@ $0
           }
         },
         sections = {
-          lualine_a = {},
+          lualine_a = {'mode'},
           lualine_b = { 'encoding', 'fileformat', 'filetype', 'progress', 'location', 'filename' },
           lualine_c = { 'branch', 'diff', 'diagnostics' },
           lualine_x = {},
@@ -3004,7 +3005,7 @@ augroup END
 
 augroup yank-highlight
 autocmd!
-autocmd TextYankPost * silent! lua vim.highlight.on_yank({higroup='Pmenu', timeout=200})
+autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup='DiffText', timeout=300}
 augroup END
 ]])
 
@@ -3132,17 +3133,5 @@ vim.cmd([[
   endif
   endfunction
 ]])
-
-
--- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
-vim.api.nvim_create_autocmd('TextYankPost', {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-  group = highlight_group,
-  pattern = '*',
-})
 
 -- vim: ts=2 sts=2 sw=2 et
