@@ -338,6 +338,7 @@ require('lazy').setup({
       vim.g.floaterm_height = 0.9
       vim.keymap.set('n', '<C-z>', '<Cmd>FloatermToggle<CR>', { silent = true })
       vim.keymap.set('t', [[<C-;>]], [[<C-\><C-n>:FloatermHide<CR>]], { silent = true })
+      vim.keymap.set('t', [[<C-/>]], [[<C-\><C-n>:FloatermHide<CR>]], { silent = true })
       vim.keymap.set('t', '<C-l>', [[<C-\><C-n>]], { silent = true })
     end
   },
@@ -405,7 +406,7 @@ require('lazy').setup({
   {
     'github/copilot.vim',
     -- programming filetypes
-    ft = { 'c', 'cpp', 'lisp', 'lua', 'python', 'rust', 'sh', 'bash', 'zsh', 'html', 'xhtml', 'typescript', 'javascript', 'vim', 'yaml', 'css', 'tex' },
+    ft = { 'c', 'cpp', 'lisp', 'lua', 'python', 'rust', 'sh', 'bash', 'zsh', 'html', 'xhtml', 'typescript', 'javascript', 'vim', 'yaml', 'css', 'tex', 'lisp' },
     init = function()
       -- the same filetypes
       vim.g.copilot_filetypes = {
@@ -529,7 +530,7 @@ require('lazy').setup({
             --     },
             --   },
             -- },
-            grammarly = {},
+            -- grammarly = {},
           }
           local on_attach = function(_, bufnr)
             local nmap = function(keys, func, desc)
@@ -598,17 +599,17 @@ require('lazy').setup({
               }
             end,
             -- special configuration for grammarly
-            ["grammarly"] = function()
-              require 'lspconfig'.grammarly.setup {
-                filetypes = { "bibtex", "gitcommit", "org", "tex", "restructuredtext", "rsweave", "latex", "quarto", "rmd", "context", "html" },
-                -- This is necessary as grammary language server does not support newer versions of nodejs
-                -- https://github.com/znck/grammarly/issues/334
-                cmd = { "n", "run", "16", os.getenv("HOME") .. "/.local/share/nvim/mason/bin/grammarly-languageserver", "--stdio" },
-                root_dir = function(fname)
-                  return require 'lspconfig'.util.find_git_ancestor(fname) or vim.loop.os_homedir()
-                end,
-              }
-            end,
+            -- ["grammarly"] = function()
+            --   require 'lspconfig'.grammarly.setup {
+            --     filetypes = { "bibtex", "gitcommit", "org", "tex", "restructuredtext", "rsweave", "latex", "quarto", "rmd", "context", "html" },
+            --     -- This is necessary as grammary language server does not support newer versions of nodejs
+            --     -- https://github.com/znck/grammarly/issues/334
+            --     cmd = { "n", "run", "16", os.getenv("HOME") .. "/.local/share/nvim/mason/bin/grammarly-languageserver", "--stdio" },
+            --     root_dir = function(fname)
+            --       return require 'lspconfig'.util.find_git_ancestor(fname) or vim.loop.os_homedir()
+            --     end,
+            --   }
+            -- end,
           }
 
           mason_lspconfig.setup({
@@ -1332,7 +1333,7 @@ $0
           ["H"] = "actions.toggle_hidden",
         }
       })
-      vim.keymap.set("n", "<leader>v", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+      vim.keymap.set("n", "<leader>fj", "<CMD>Oil<CR>", { desc = "Open parent directory" })
     end
   },
 
@@ -1395,8 +1396,9 @@ $0
       map('n', '<C-n>', '<Cmd>BufferNext<CR>', opts)
       map('n', '<C-,>', '<Cmd>BufferMovePrevious<CR>', opts)
       map('n', '<C-.>', '<Cmd>BufferMoveNext<CR>', opts)
-      map('n', '<leader>q', '<Cmd>quit<CR>', opts)
+      map('n', '<leader>wd', '<Cmd>quit<CR>', opts)
       map({ 'n', 'v' }, '<backspace>', '<Cmd>BufferClose<CR>', opts)
+      map({ 'n', 'v' }, '<leader>bd', '<Cmd>BufferClose<CR>', opts)
       -- map('n', '<C-w>', '<Cmd>BufferClose<CR>', opts)
       map('n', '<C-1>', '<Cmd>BufferGoto 1<CR>', opts)
       map('n', '<C-2>', '<Cmd>BufferGoto 2<CR>', opts)
@@ -1613,9 +1615,11 @@ $0
           -- vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr })
           -- vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
         end,
+        close_on_select = true,
+        autojump = true,
       })
       -- You probably also want to set a keymap to toggle aerial
-      vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>")
+      vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle<CR>")
     end
   },
 
@@ -2038,6 +2042,7 @@ $0
       require "treesitter-context".setup {
         max_lines=1,
         multiline_threshold = 1, -- Maximum number of lines to show for a single context
+        trim_scope = 'inner',
       }
       vim.keymap.set({ "n", "v" }, "[c", function()
         require("treesitter-context").go_to_context()
@@ -2167,7 +2172,7 @@ $0
     "folke/zen-mode.nvim",
     event = 'VeryLazy',
     config = function()
-      vim.keymap.set('n', 'ZN', function()
+      vim.keymap.set('n', '<leader>wcc', function()
         require("zen-mode").toggle({
           plugins = {
             options = {
@@ -2518,7 +2523,7 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<Space>o', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<Space><BS>', '<C-^>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<C-Space>', '<Nop>', { silent = true })
-vim.keymap.set({ 'n', 'v', 'o' }, '<cr>', '<Plug>(clever-f-repeat-forward)', { silent = true })
+-- vim.keymap.set({ 'n', 'v', 'o' }, '<cr>', '<Plug>(clever-f-repeat-forward)', { silent = true })
 
 vim.keymap.set({ 'n', 'v', 'o' }, '<Tab>', '%', { silent = true, remap = true })
 vim.keymap.set({ 'n', 'v' }, '<C-i>', '<C-i>', { silent = true })
@@ -2536,23 +2541,24 @@ vim.keymap.set('n', '<Plug>(g-mode)k', 'gk<Plug>(g-mode)')
 vim.keymap.set('n', '<Plug>(g-mode)', '<Nop>', { remap = true })
 
 -- normally, ; is used for :
-vim.keymap.set({ 'n', 'v' }, ';', ':')
+-- vim.keymap.set({ 'n', 'v' }, ';', ':')
+vim.keymap.set({ 'n', 'v' }, '<leader><leader>', ':')
 
 -- f and F submode to move to the next/previous character by ; and , after f/F temporaily
-vim.cmd([[
-function! F_AND_FMODE(mode) abort
-  if a:mode ==# 'f'
-      return 'f' .. nr2char(getchar()) .. '<Plug>(f-mode)'
-  elseif a:mode ==# 'F'
-      return 'F' .. nr2char(getchar()) .. '<Plug>(f-mode)'
-  endif
-endfunction
-]])
-vim.keymap.set('n', 'f', 'F_AND_FMODE("f")', { silent = true, expr = true, remap = true })
-vim.keymap.set('n', 'F', 'F_AND_FMODE("F")', { silent = true, expr = true, remap = true })
-vim.keymap.set('n', '<Plug>(f-mode);', ';<Plug>(f-mode)')
-vim.keymap.set('n', '<Plug>(f-mode),', ',<Plug>(f-mode)')
-vim.keymap.set('n', '<Plug>(f-mode)', '<Nop>', { remap = true })
+-- vim.cmd([[
+-- function! F_AND_FMODE(mode) abort
+--   if a:mode ==# 'f'
+--       return 'f' .. nr2char(getchar()) .. '<Plug>(f-mode)'
+--   elseif a:mode ==# 'F'
+--       return 'F' .. nr2char(getchar()) .. '<Plug>(f-mode)'
+--   endif
+-- endfunction
+-- ]])
+-- vim.keymap.set('n', 'f', 'F_AND_FMODE("f")', { silent = true, expr = true, remap = true })
+-- vim.keymap.set('n', 'F', 'F_AND_FMODE("F")', { silent = true, expr = true, remap = true })
+-- vim.keymap.set('n', '<Plug>(f-mode);', ';<Plug>(f-mode)')
+-- vim.keymap.set('n', '<Plug>(f-mode),', ',<Plug>(f-mode)')
+-- vim.keymap.set('n', '<Plug>(f-mode)', '<Nop>', { remap = true })
 
 -- terminal
 -- open terminal in new split with height 15
@@ -2623,7 +2629,7 @@ vim.keymap.set({ "v" }, "<leader>cy", "ygvgc", { remap = true })
 -- disabled
 -- vim.keymap.set('n', '<Plug>(my-win)', '<Nop>')
 -- vim.keymap.set('n', 's', '<Plug>(my-win)', { remap = true })
--- vim.keymap.set('x', 's', '<Nop>')
+vim.keymap.set({'n', 'x'}, 's', '<Nop>')
 -- window control
 vim.keymap.set('n', '<Plug>(my-win)s', '<Cmd>split<CR>')
 vim.keymap.set('n', '<Plug>(my-win)v', '<Cmd>vsplit<CR>')
@@ -2663,11 +2669,14 @@ end
 
 -- save&exit
 vim.keymap.set('i', '<c-l>', '<cmd>update<cr>')
-vim.keymap.set('n', '<leader>s', '<cmd>update<cr>')
+vim.keymap.set('n', '<leader>fs', '<cmd>update<cr>')
+vim.keymap.set('n', '<leader>fS', '<cmd>wall<cr>')
 -- vim.keymap.set('n', 'sq', '<Cmd>quit<CR>')
 -- vim.keymap.set('n', 'se', '<cmd>silent! %bdel|edit #|normal `"<C-n><leader>q<cr>')
 -- vim.keymap.set('n', 'sQ', '<Cmd>tabc<CR>')
-vim.keymap.set('n', '<leader>wq', '<Cmd>quitall<CR>')
+vim.keymap.set('n', '<leader>qq', '<Cmd>quitall<CR>')
+vim.keymap.set('n', '<leader>qs', '<Cmd>update<cr><cmd>quit<CR>')
+vim.keymap.set('n', '<leader>qQ', '<Cmd>quitall!<CR>')
 
 -- On certain files, quit by <leader>q
 vim.api.nvim_create_augroup('bdel-quit', {})
