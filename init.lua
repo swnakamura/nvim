@@ -255,12 +255,29 @@ require('lazy').setup({
 
   -- Git related plugins
   {
+  "NeogitOrg/neogit",
+  dependencies = {
+    "nvim-lua/plenary.nvim",         -- required
+    "sindrets/diffview.nvim",        -- optional - Diff integration
+
+    -- Only one of these is needed.
+    "nvim-telescope/telescope.nvim", -- optional
+    "ibhagwan/fzf-lua",              -- optional
+    "echasnovski/mini.pick",         -- optional
+  },
+  config = function()
+    vim.keymap.set("n", "<leader>gs", require('neogit').open)
+    vim.keymap.set("n", "<leader>ga", '<cmd>silent !git add %<CR>', {silent = true})
+  end
+},
+
+  {
     'tpope/vim-fugitive',
     cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep', 'GBrowse' },
     dependencies = { 'tpope/vim-dispatch', 'tpope/vim-rhubarb', 'tyru/open-browser.vim' },
     init = function()
-      vim.keymap.set("n", "<leader>gs", "<cmd>tabnew<cr><cmd>Git <CR><Cmd>only<CR>", { silent = true })
-      vim.keymap.set("n", "<leader>ga", "<cmd>Gwrite<CR>", { silent = true })
+      -- vim.keymap.set("n", "<leader>gs", "<cmd>Git <CR><Cmd>only<CR>", { silent = true })
+      -- vim.keymap.set("n", "<leader>ga", "<cmd>Gwrite<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gc", "<cmd>Git commit -v<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gb", "<cmd>Git blame<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gh", "<cmd>tab sp<CR>:0Gclog<CR>", { silent = true })
@@ -271,8 +288,6 @@ require('lazy').setup({
       vim.keymap.set("n", "<leader>gg", [[:<C-u>Glgrep ""<Left>]])
       vim.keymap.set("n", "<leader>gm", ":<C-u>Git merge ")
 
-      vim.keymap.set("n", "<S-Up>", ":Gwrite<CR>", { silent = true })
-      vim.keymap.set("n", "<C-Up>", ":Git commit -v<CR>", { silent = true })
       vim.keymap.set("n", "<Right>",
         function()
           if not vim.o.diff then
@@ -294,8 +309,6 @@ require('lazy').setup({
         function() return '<Cmd>' .. (vim.o.ft == 'fugitiveblame' and 'quit' or 'Git blame') .. '<CR>' end,
         { expr = true, silent = true }
       )
-      vim.keymap.set("n", "<Down>", "<Cmd>Dispatch! git fetch<CR>", { silent = true })
-      vim.keymap.set("n", "<C-Down>", "<Cmd>Dispatch! git pull<CR>", { silent = true })
 
       -- With the help of rhubarb and open-browser.vim, you can open the current line in the browser with `:GBrowse`
       vim.cmd([[command! -nargs=1 Browse OpenBrowser <args>]])
@@ -326,6 +339,14 @@ require('lazy').setup({
       hi link agitDiffAdd diffAdded
       hi link agitDiffRemove diffRemoved
       ]])
+    end
+  },
+
+  -- dmacro for recording automatically
+  {
+    'https://github.com/tani/dmacro.vim',
+    config = function()
+      vim.keymap.set({ "i", "n" }, '<C-m>', '<Plug>(dmacro-play-macro)')
     end
   },
 
@@ -406,7 +427,7 @@ require('lazy').setup({
   {
     'github/copilot.vim',
     -- programming filetypes
-    ft = { 'c', 'cpp', 'lisp', 'lua', 'python', 'rust', 'sh', 'bash', 'zsh', 'html', 'xhtml', 'typescript', 'javascript', 'vim', 'yaml', 'css', 'tex', 'lisp' },
+    ft = { 'c', 'cpp', 'lisp', 'lua', 'python', 'rust', 'sh', 'bash', 'zsh', 'html', 'xhtml', 'typescript', 'javascript', 'vim', 'yaml', 'css', 'tex', 'lisp', 'make', 'gitcommit' },
     init = function()
       -- the same filetypes
       vim.g.copilot_filetypes = {
@@ -513,7 +534,7 @@ require('lazy').setup({
               }
             },
             rust_analyzer = {},
-            ruff_lsp = {},
+            -- ruff_lsp = {},
 
             lua_ls = {
               Lua = {
@@ -564,8 +585,10 @@ require('lazy').setup({
             end, '[W]orkspace [L]ist Folders')
 
             -- Diagnostic keymaps
-            nmap('[d', function() vim.diagnostic.jump({ count = -1 }) end, 'Go to previous diagnostic message')
-            nmap(']d', function() vim.diagnostic.jump({ count = 1 }) end, 'Go to next diagnostic message')
+            -- nmap('[d', function() vim.diagnostic.jump({ count = -1 }) end, 'Go to previous diagnostic message')
+            -- nmap(']d', function() vim.diagnostic.jump({ count = 1 }) end, 'Go to next diagnostic message')
+            nmap('[d', function() vim.diagnostic.goto_prev() end, 'Go to previous diagnostic message')
+            nmap(']d', function() vim.diagnostic.goto_next() end, 'Go to next diagnostic message')
             nmap('<leader>e', vim.diagnostic.open_float, 'Open floating diagnostic message')
             nmap('<leader>ll', vim.diagnostic.setloclist, 'Open diagnostics list')
 
@@ -575,7 +598,7 @@ require('lazy').setup({
             vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
               vim.lsp.buf.format()
             end, { desc = 'Format current buffer with LSP' })
-            vim.keymap.set('n', 'gF', vim.lsp.buf.format)
+            -- vim.keymap.set('n', 'gF', vim.lsp.buf.format)
 
             nmap('<leader>i', function(_)
               vim.lsp.inlay_hint.enable()
@@ -656,12 +679,9 @@ require('lazy').setup({
       vim.api.nvim_set_keymap('n', '<F11>', '<cmd>DapStepInto<CR>', { silent = true })
       vim.api.nvim_set_keymap('n', '<F12>', '<cmd>DapStepOut<CR>', { silent = true })
       vim.api.nvim_set_keymap('n', '<leader>b', '<cmd>DapToggleBreakpoint<CR>', { silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>B',
-        '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Breakpoint condition: "))<CR>', { silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>lp',
-        '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>le',
-        '<cmd>lua require("dapui").eval()<CR>', { silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>B', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Breakpoint condition: "))<CR>', { silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>lp', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>le', '<cmd>lua require("dapui").eval()<CR>', { silent = true })
       vim.api.nvim_set_keymap('n', '<leader>Dr', '<cmd>lua require("dap").repl.open()<CR>', { silent = true })
       vim.api.nvim_set_keymap('n', '<leader>Dl', '<cmd>lua require("dap").run_last()<CR>', { silent = true })
     end
@@ -1084,6 +1104,13 @@ cap.release()
 out.release()
 ]]
         ),
+        ls.parser.parse_snippet({ trig = "loguru_debugonly", name = "loguru_debugonly" },
+          [[
+if not args.debug:
+    logger.remove()
+    logger.add(sys.stderr, level="ERROR")
+]]
+        )
       })
 
       ls.add_snippets("html", {
@@ -1377,6 +1404,7 @@ $0
 
 
   {
+    cond=false, -- not to occupy <C-y> mapping
     'mattn/emmet-vim',
     ft = { 'html', 'xml', 'vue', 'htmldjango', 'markdown' }
   },
@@ -1460,12 +1488,12 @@ $0
     'lukas-reineke/indent-blankline.nvim',
     event = 'VeryLazy',
     config = function()
+      vim.cmd([[set listchars-=leadmultispace:---\|]])
       require("ibl").setup {
         indent = { char = "▏" },
         -- scope with wider character
         scope = { show_exact_scope = true, char = "▎" },
       }
-      vim.cmd([[set listchars-=leadmultispace:---\|]])
     end,
   },
 
@@ -1630,6 +1658,7 @@ $0
     'lewis6991/gitsigns.nvim',
     event = 'VeryLazy',
     opts = {
+      signs_staged_enable = false,
       signcolumn = false,
       numhl      = true,
       on_attach  = function(bufnr)
@@ -1642,6 +1671,7 @@ $0
         end
 
         -- Navigation
+        -- pagedown, ]h, <Down> does the same thing
         map('n', '<PageDown>', function()
           if vim.wo.diff then return ']c' end
           vim.schedule(function() gs.next_hunk({ preview = true }) end)
@@ -1652,7 +1682,13 @@ $0
           vim.schedule(function() gs.next_hunk({ preview = true }) end)
           return '<Ignore>'
         end, { expr = true })
+        map('n', '<Down>', function()
+          if vim.wo.diff then return ']c' end
+          vim.schedule(function() gs.next_hunk({ preview = true }) end)
+          return '<Ignore>'
+        end, { expr = true })
 
+        -- pageup, [h, <Up> does the same thing
         map('n', '<PageUp>', function()
           if vim.wo.diff then return '[c' end
           vim.schedule(function() gs.prev_hunk({ preview = true }) end)
@@ -1663,10 +1699,15 @@ $0
           vim.schedule(function() gs.prev_hunk({ preview = true }) end)
           return '<Ignore>'
         end, { expr = true })
+        map('n', '<Up>', function()
+          if vim.wo.diff then return '[c' end
+          vim.schedule(function() gs.prev_hunk({ preview = true }) end)
+          return '<Ignore>'
+        end, { expr = true })
 
         -- Actions
         map('n', '<leader>hs', gs.stage_hunk)
-        map('n', '<Up>', gs.stage_hunk)
+        map('n', '<C-Up>', gs.stage_hunk)
         map('n', '<leader>hu', gs.reset_hunk)
         map('v', '<leader>hs', function() gs.stage_hunk { fn.line("."), fn.line("v") } end)
         map('v', '<leader>hu', function() gs.reset_hunk { fn.line("."), fn.line("v") } end)
@@ -1717,7 +1758,7 @@ $0
     end,
   },
   {
-    -- cond = false,
+    cond = false,
     dir = 'oahlen/iceberg.nvim',
     -- event = 'VimEnter',
     config = function()
@@ -1770,6 +1811,7 @@ $0
 
   -- Show modes with the current line color instead of the statusline
   {
+    cond=false,
     'mvllow/modes.nvim',
     config = function()
       require('modes').setup({
@@ -1847,7 +1889,6 @@ $0
   },
 
   {
-    cond = false,
     'preservim/nerdcommenter',
     event = 'VeryLazy',
     init = function()
@@ -1857,6 +1898,7 @@ $0
       vim.keymap.set({ "n", "x" }, "<C-_>", "<Plug>NERDCommenterToggle")
       vim.keymap.set({ "n", "x" }, "<C-/>", "<Plug>NERDCommenterToggle")
       vim.keymap.set({ "n", "x" }, "<C-;>", "<Plug>NERDCommenterToggle")
+      vim.keymap.set({ "n", "x" }, "<leader>cc", "<Plug>NERDCommenterToggle")
     end
   },
 
@@ -1926,7 +1968,6 @@ $0
   -- obsidian integration
   {
     'epwalsh/obsidian.nvim',
-    cond = vim.g.is_macos,
     dependencies = {
       -- Required.
       "nvim-lua/plenary.nvim",
@@ -2040,8 +2081,8 @@ $0
     dependencies = 'nvim-treesitter/nvim-treesitter',
     config = function()
       require "treesitter-context".setup {
-        max_lines=1,
-        multiline_threshold = 1, -- Maximum number of lines to show for a single context
+        -- max_lines=1,
+        -- multiline_threshold = 1, -- Maximum number of lines to show for a single context
         trim_scope = 'inner',
       }
       vim.keymap.set({ "n", "v" }, "[c", function()
@@ -2052,6 +2093,7 @@ $0
 
   {
     'rmagatti/auto-session',
+    cond = false,
     config = function()
       require("auto-session").setup {
         log_level = "error",
@@ -2232,17 +2274,20 @@ $0
   -- org mode
   {
     -- timeがマージされていないので
-    dir = '~/syncthing_config/nvim-orgmode',
+    -- dir = '~/syncthing_config/nvim-orgmode',
+    cond=false,
+    'nvim-orgmode/orgmode',
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter' },
     },
     config = function()
       -- Load treesitter grammar for org
-      require('orgmode').setup_ts_grammar()
-
       -- Setup orgmode
       require('orgmode').setup({
         calendar_week_start_day = 0,
+        -- org_startup_indented = true,
+        org_startup_folded = 'showeverything',
+        org_adapt_indentation = false,
         org_agenda_files = '~/org/**/*',
         org_default_notes_file = '~/org/inbox.org',
         org_todo_keywords = { 'TODO', '|', 'DONE', 'CANCELLED' },
@@ -2619,17 +2664,18 @@ vim.keymap.set({ 'n', 'x' }, 'x', '"_x')
 -- commenting using <C-;> and <C-/>
 vim.keymap.set({ "n" }, "<C-/>", "gcc", { remap = true })
 vim.keymap.set({ "n" }, "<C-;>", "gcc", { remap = true })
+vim.keymap.set({ "n" }, "<leader>cc", "gcc", { remap = true })
 vim.keymap.set({ "v" }, "<C-/>", "gc", { remap = true })
 vim.keymap.set({ "v" }, "<C-;>", "gc", { remap = true })
+vim.keymap.set({ "v" }, "<leader>cc", "gc", { remap = true })
 -- comment after copying
 vim.keymap.set({ "n" }, "<leader>cy", "yygcc", { remap = true })
 vim.keymap.set({ "v" }, "<leader>cy", "ygvgc", { remap = true })
 
 -- window control by s
 -- disabled
--- vim.keymap.set('n', '<Plug>(my-win)', '<Nop>')
--- vim.keymap.set('n', 's', '<Plug>(my-win)', { remap = true })
-vim.keymap.set({'n', 'x'}, 's', '<Nop>')
+vim.keymap.set('n', '<Plug>(my-win)', '<Nop>')
+vim.keymap.set('n', 's', '<Plug>(my-win)', { remap = true })
 -- window control
 vim.keymap.set('n', '<Plug>(my-win)s', '<Cmd>split<CR>')
 vim.keymap.set('n', '<Plug>(my-win)v', '<Cmd>vsplit<CR>')
@@ -2986,15 +3032,18 @@ au BufWritePost * if exists('b:bin_xxd') | %!xxd
 au BufWritePost * set nomod | endif
 augroup END
 
-" augroup csv-tsv
-"   au!
-"   au BufReadPost,BufWritePost *.csv call Preserve('silent %!column -s, -o, -t -L')
-"  au BufReadPost,BufWritePost *.csv call Preserve('silent %!column -s, -t') " macOS
-"   au BufWritePre              *.csv call Preserve('silent %s/\s\+\ze,/,/ge')
-"   au BufReadPost,BufWritePost *.tsv call Preserve('silent %!column -s "$(printf ''\t'')" -o "$(printf ''\t'')" -t -L')
-"   au BufWritePre              *.tsv call Preserve('silent %s/ \+\ze	//ge')
-"   au BufWritePre              *.tsv call Preserve('silent %s/\s\+$//ge')
-" augroup END
+augroup csv-tsv
+  au!
+  if has('unix')
+    au BufReadPost,BufWritePost *.csv call Preserve('silent %!column -s, -o, -t -L')
+  else
+    au BufReadPost,BufWritePost *.csv call Preserve('silent %!column -s, -t') " macOS
+  endif
+  au BufWritePre              *.csv call Preserve('silent %s/\s\+\ze,/,/ge')
+  au BufReadPost,BufWritePost *.tsv call Preserve('silent %!column -s "$(printf ''\t'')" -o "$(printf ''\t'')" -t -L')
+  au BufWritePre              *.tsv call Preserve('silent %s/ \+\ze	//ge')
+  au BufWritePre              *.tsv call Preserve('silent %s/\s\+$//ge')
+augroup END
 
 fu! s:isdir(dir) abort
 return !empty(a:dir) && (isdirectory(a:dir) ||
