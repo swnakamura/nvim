@@ -194,6 +194,7 @@ require('lazy').setup({
   },
 
   {
+    cond = not vim.g.is_vscode,
     'https://github.com/Bekaboo/dropbar.nvim',
     config = function()
       vim.keymap.set('n', "<leader>n", require('dropbar.api').pick)
@@ -352,6 +353,7 @@ require('lazy').setup({
 
   -- floating terminal
   {
+    cond = not vim.g.is_vscode,
     'voldikss/vim-floaterm',
     cmd = 'FloatermToggle',
     init = function()
@@ -457,7 +459,7 @@ require('lazy').setup({
   },
 
   {
-    cond = false,
+    cond = not vim.g.is_vscode,
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",
@@ -475,6 +477,7 @@ require('lazy').setup({
 
   -- register preview
   {
+    cond = not vim.g.is_vscode,
     'tversteeg/registers.nvim',
     config = true,
     keys = {
@@ -485,6 +488,7 @@ require('lazy').setup({
   },
 
   {
+    cond = not vim.g.is_vscode,
     'mbbill/undotree',
     init = function()
       vim.keymap.set('n', 'U', ':UndotreeToggle<CR>')
@@ -493,6 +497,7 @@ require('lazy').setup({
   },
 
   {
+    cond = not vim.g.is_vscode,
     'neovim/nvim-lspconfig',
     event = { "BufReadPost", "BufNewFile" },
     cmd = { "LspInfo", "LspInstall", "LspUninstall", "Mason" },
@@ -646,6 +651,7 @@ require('lazy').setup({
   },
 
   {
+    cond = not vim.g.is_vscode,
     'nvimdev/lspsaga.nvim',
     event = 'LspAttach',
     config = function()
@@ -664,6 +670,7 @@ require('lazy').setup({
 
   -- DAP
   {
+    cond = not vim.g.is_vscode,
     'https://github.com/mfussenegger/nvim-dap',
     ft = { 'python', 'c', 'cpp', 'rust' },
     dependencies = {
@@ -688,6 +695,7 @@ require('lazy').setup({
 
   },
   {
+    cond = not vim.g.is_vscode,
     'https://github.com/rcarriga/nvim-dap-ui',
     dependencies = 'https://github.com/nvim-neotest/nvim-nio',
     config = function()
@@ -695,6 +703,7 @@ require('lazy').setup({
     end
   },
   {
+    cond = not vim.g.is_vscode,
     'https://github.com/mfussenegger/nvim-dap-python',
     config = function()
       local venv = os.getenv('VIRTUAL_ENV')
@@ -705,6 +714,7 @@ require('lazy').setup({
   },
 
   {
+    cond = not vim.g.is_vscode,
     'mfussenegger/nvim-lint',
     event = { "BufReadPost", "BufNewFile" },
     config = function()
@@ -800,6 +810,7 @@ require('lazy').setup({
   },
 
   {
+    cond = not vim.g.is_vscode,
     -- Autocompletion
     'hrsh7th/nvim-cmp',
     event = { 'InsertEnter', 'CmdlineEnter' },
@@ -913,6 +924,7 @@ require('lazy').setup({
 
   -- lsp signature help
   {
+    cond = not vim.g.is_vscode,
     "ray-x/lsp_signature.nvim",
     event = "VeryLazy",
     opts = {},
@@ -1262,6 +1274,7 @@ $0
 
   -- Neotree (filer)
   {
+    cond = not vim.g.is_vscode,
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     cmd = 'Neotree',
@@ -1366,6 +1379,7 @@ $0
 
   -- yazi
   {
+    cond = not vim.g.is_vscode,
     "mikavilpas/yazi.nvim",
     event = "VeryLazy",
     keys = {
@@ -1410,6 +1424,7 @@ $0
   },
 
   {
+    cond = not vim.g.is_vscode,
     'romgrk/barbar.nvim',
     event = 'VeryLazy',
     dependencies = {
@@ -1485,6 +1500,7 @@ $0
   {
     -- cond = false,
     -- Add indentation guides even on blank lines
+    cond = not vim.g.is_vscode,
     'lukas-reineke/indent-blankline.nvim',
     event = 'VeryLazy',
     config = function()
@@ -1607,6 +1623,7 @@ $0
 
   -- tagbar
   {
+    cond = not vim.g.is_vscode,
     'majutsushi/tagbar',
     init = function()
       vim.keymap.set('n', '<leader>t', '<cmd>TagbarToggle<CR>')
@@ -1729,6 +1746,7 @@ $0
 
   -- colorscheme
   {
+    cond = not vim.g.is_vscode,
     'swnakamura/iceberg.vim',
     lazy = false,
     priority = 1000,
@@ -1832,6 +1850,7 @@ $0
   'https://github.com/tyru/capture.vim',
 
   {
+    cond = not vim.g.is_vscode,
     'nvim-lualine/lualine.nvim',
     event = 'VeryLazy',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -1967,6 +1986,7 @@ $0
 
   -- obsidian integration
   {
+    cond = not vim.g.is_vscode,
     'epwalsh/obsidian.nvim',
     dependencies = {
       -- Required.
@@ -1996,6 +2016,7 @@ $0
 
 
   {
+    cond = not vim.g.is_vscode,
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     event = 'VeryLazy',
@@ -2211,6 +2232,7 @@ $0
 
   -- Zen mode
   {
+    cond = not vim.g.is_vscode,
     "folke/zen-mode.nvim",
     event = 'VeryLazy',
     config = function()
@@ -2353,6 +2375,7 @@ $0
     end,
   },
   {
+    cond = not vim.g.is_vscode,
     'akinsho/org-bullets.nvim',
     config = true,
   },
