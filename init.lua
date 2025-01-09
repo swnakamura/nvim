@@ -475,6 +475,31 @@ require('lazy').setup({
     end,
   },
 
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    dependencies = {
+      { "zbirenbaum/copilot.lua" }, -- or zbirenbaum/copilot.lua
+      { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
+    },
+    build = "make tiktoken", -- Only on MacOS or Linux
+    opts = {
+      -- See Configuration section for options
+      prompts = {
+        CommitStaged = {
+          prompt = '> #git:staged\n\nWrite commit message for the change with commitizen convention. Make sure the title has maximum 50 characters and message is wrapped at 72 characters. Wrap the whole message in code block with language gitcommit.',
+          selection = false,
+          callback = function(response, _)
+            local commit_message = response:match("```gitcommit\n(.-)```")
+            if commit_message then
+              vim.fn.setreg('+', commit_message , 'c')
+            end
+          end,
+        }
+      }
+    },
+    -- See Commands section for default commands if you want to lazy load on them
+  },
+
   -- register preview
   {
     cond = not vim.g.is_vscode,
