@@ -422,17 +422,6 @@ require('lazy').setup({
   -- performance (faster macro execution)
   { "https://github.com/pteroctopus/faster.nvim" },
 
-  -- dmacro
-  {
-    cond = false,
-    'https://github.com/tani/dmacro.nvim',
-    config = function()
-      require('dmacro').setup({
-        dmacro_key = '<C-e>' --  you need to set the dmacro_key
-      })
-    end
-  },
-
   {
     cond=false,
     'github/copilot.vim',
