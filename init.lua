@@ -2870,15 +2870,6 @@ vim.keymap.set('i', '<C-n>', "<Cmd>normal! gj<CR>")
 vim.keymap.set({ 'i', 'c' }, '<C-A>', '<Home>')
 vim.keymap.set({ 'i', 'c' }, '<C-E>', '<End>')
 
--- v_CTRL-k/j to move the selected range
-vim.keymap.set("x", "<Plug>(my-move-range)", "<Nop>", { silent = true })
-vim.keymap.set("x", "<C-j>", ":m '>+1<CR>gv=gv<Plug>(my-move-range)", { silent = true, remap = true })
-vim.keymap.set("x", "<C-k>", ":m '<-2<CR>gv=gv<Plug>(my-move-range)", { silent = true, remap = true })
-vim.keymap.set("x", "<Plug>(my-move-range)<C-k>", "<Cmd>undojoin | '<,'>m '<-2<CR>gv=gv<Plug>(move-range)",
-  { silent = true })
-vim.keymap.set("x", "<Plug>(my-move-range)<C-j>", "<Cmd>undojoin | '<,'>m '>+1<CR>gv=gv<Plug>(move-range)",
-  { silent = true })
-
 -- Open quickfix window
 -- nnoremap Q <Cmd>copen<CR>
 -- autocmd for quickfix window
