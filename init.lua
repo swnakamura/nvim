@@ -38,9 +38,9 @@ end
 
 vim.cmd([[
 if exists('g:vscode')
-    let g:is_vscode = v:true
+let g:is_vscode = v:true
 else
-    let g:is_vscode = v:false
+let g:is_vscode = v:false
 endif
 ]])
 
@@ -124,15 +124,15 @@ if vim.g.is_macos == false then
       '--exclude', '/.git/',
       path
     }, {
-      stdout = function(_, data)
-        if data == nil then
-          return
+        stdout = function(_, data)
+          if data == nil then
+            return
+          end
+          for line in vim.gsplit(data, '\n', { plain = true, trimempty = true }) do
+            fswatch_output_handler(line, opts, callback)
+          end
         end
-        for line in vim.gsplit(data, '\n', { plain = true, trimempty = true }) do
-          fswatch_output_handler(line, opts, callback)
-        end
-      end
-    })
+      })
 
     return function()
       obj:kill(2)
@@ -256,26 +256,26 @@ require('lazy').setup({
 
   -- Git related plugins
   {
-  "NeogitOrg/neogit",
-  dependencies = {
-    "nvim-lua/plenary.nvim",         -- required
-    "sindrets/diffview.nvim",        -- optional - Diff integration
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",         -- required
+      "sindrets/diffview.nvim",        -- optional - Diff integration
 
-    -- Only one of these is needed.
-    "nvim-telescope/telescope.nvim", -- optional
-    "ibhagwan/fzf-lua",              -- optional
-    "echasnovski/mini.pick",         -- optional
-  },
-  config = function()
-    vim.keymap.set("n", "<leader>gs", require('neogit').open)
-    vim.keymap.set("n", "<leader>ga", '<cmd>silent !git add %<CR>', {silent = true})
-    require('neogit').setup {
-      status = {
+      -- Only one of these is needed.
+      "nvim-telescope/telescope.nvim", -- optional
+      "ibhagwan/fzf-lua",              -- optional
+      "echasnovski/mini.pick",         -- optional
+    },
+    config = function()
+      vim.keymap.set("n", "<leader>gs", require('neogit').open)
+      vim.keymap.set("n", "<leader>ga", '<cmd>silent !git add %<CR>', {silent = true})
+      require('neogit').setup {
+        status = {
           recent_commit_count = 30
+        }
       }
-    }
-  end
-},
+    end
+  },
 
   {
     'tpope/vim-fugitive',
@@ -286,13 +286,13 @@ require('lazy').setup({
       -- vim.keymap.set("n", "<leader>ga", "<cmd>Gwrite<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gc", "<cmd>Git commit -v<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gm", 
-      function()
-        vim.cmd("Git commit -v")
-        -- wait for 0.2 seconds to wait for the commit message to be written
-        vim.defer_fn(function()
-          vim.cmd("CopilotChatCommitStaged")
-        end, 200)
-      end, { silent = true })
+        function()
+          vim.cmd("Git commit -v")
+          -- wait for 0.2 seconds to wait for the commit message to be written
+          vim.defer_fn(function()
+            vim.cmd("CopilotChatCommitStaged")
+          end, 200)
+        end, { silent = true })
       vim.keymap.set("n", "<leader>gb", "<cmd>Git blame<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gh", "<cmd>tab sp<CR>:0Gclog<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gp", "<cmd>Dispatch! git push<CR>", { silent = true })
@@ -305,13 +305,13 @@ require('lazy').setup({
         function()
           if not vim.o.diff then
             return
-                [[<Cmd>tab sp<CR>]] ..
-                [[<Cmd>vert Gdiffsplit!<CR>]] ..
-                [[<C-w><C-w>]] ..
-                [[<Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>]] ..
-                [[<C-w><C-w>]] ..
-                [[zR]] ..
-                [[<Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>]]
+              [[<Cmd>tab sp<CR>]] ..
+              [[<Cmd>vert Gdiffsplit!<CR>]] ..
+              [[<C-w><C-w>]] ..
+              [[<Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>]] ..
+              [[<C-w><C-w>]] ..
+              [[zR]] ..
+              [[<Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>]]
           else
             return [[<Cmd>tabclose<CR>]]
           end
@@ -558,18 +558,18 @@ require('lazy').setup({
       {
         'williamboman/mason-lspconfig.nvim',
         dependencies =
-        {
-          ft = { 'lua' },
-          'folke/neodev.nvim',
-          config = function()
-            require("neodev").setup({
-              override = function(root_dir, library)
-                library.enabled = true
-                library.plugins = true
-              end,
-            })
-          end
-        },
+          {
+            ft = { 'lua' },
+            'folke/neodev.nvim',
+            config = function()
+              require("neodev").setup({
+                override = function(root_dir, library)
+                  library.enabled = true
+                  library.plugins = true
+                end,
+              })
+            end
+          },
         config = function()
           local mason_lspconfig = require 'mason-lspconfig'
           local words = {}
@@ -923,8 +923,8 @@ require('lazy').setup({
           -- { name = 'nvim_lsp_signature_help' }
           -- { name = 'copilot' },
         }, {
-          { name = 'look' },
-        }),
+            { name = 'look' },
+          }),
       }
 
       -- For gitcommit, only complete from local buffer and dictionary
@@ -948,11 +948,11 @@ require('lazy').setup({
           { name = 'buffer' },
           { name = 'path' }
         }, {
-          {
-            name = 'look',
-            keyword_length = 5,
-          },
-        })
+            {
+              name = 'look',
+              keyword_length = 5,
+            },
+          })
       })
 
       -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
@@ -969,8 +969,8 @@ require('lazy').setup({
         sources = cmp.config.sources({
           { name = 'path' }
         }, {
-          { name = 'cmdline' }
-        })
+            { name = 'cmdline' }
+          })
       })
     end,
   },
@@ -2977,9 +2977,9 @@ endfunction
 " / as file completion when in <c-x><c-f> completion
 " https://zenn.dev/kawarimidoll/articles/54e38aa7f55aff
 inoremap <expr> /
-      \ complete_info(['mode']).mode == 'files' && complete_info(['selected']).selected >= 0
-      \   ? '<c-x><c-f>'
-      \   : '/'
+\ complete_info(['mode']).mode == 'files' && complete_info(['selected']).selected >= 0
+\   ? '<c-x><c-f>'
+\   : '/'
 
 " 検索中の領域をハイライトする
 augroup vimrc-incsearch-highlight
@@ -2995,52 +2995,52 @@ au CmdlineLeave /,\? autocmd CursorHold * ++once autocmd CursorMoved * ++once se
 augroup END
 
 " 選択した領域を自動でハイライトする
- augroup instant-visual-highlight
- au!
- autocmd CursorMoved,CursorHold * call Visualmatch()
- augroup END
+augroup instant-visual-highlight
+au!
+autocmd CursorMoved,CursorHold * call Visualmatch()
+augroup END
 
 hi link VisualMatch Search
 function! Visualmatch()
-  if exists("w:visual_match_id")
-    call matchdelete(w:visual_match_id)
-    unlet w:visual_match_id
-  endif
+if exists("w:visual_match_id")
+call matchdelete(w:visual_match_id)
+unlet w:visual_match_id
+endif
 
-  " Don't run for visual block mode
-  if index(["\<C-v>"], mode()) == -1
-    return
-  endif
+" Don't run for visual block mode
+if index(["\<C-v>"], mode()) == -1
+return
+endif
 
 
-  if line('.') == line('v')
-  let colrange = charcol('.') < charcol('v') ? [charcol('.'), charcol('v')] : [charcol('v'), charcol('.')]
-  let text = getline('.')->strcharpart(colrange[0]-1, colrange[1]-colrange[0]+1)->escape('\')
-  elseif mode() == 'v' " multiline matchingはvisual modeのみ
-  if line('.') > line('v')
-  let linerange = ['v','.']
-  else
-  let linerange = ['.','v']
-  endif
-  let lines=getline(linerange[0], linerange[1])
-  let lines[0] = lines[0]->strcharpart(charcol(linerange[0])-1)
-  let lines[-1] = lines[-1]->strcharpart(0,charcol(linerange[1]))
-  let text = lines->map({key, line -> line->escape('\')})->join('\n')
-  else
-  let text = ''
-  endif
+if line('.') == line('v')
+let colrange = charcol('.') < charcol('v') ? [charcol('.'), charcol('v')] : [charcol('v'), charcol('.')]
+let text = getline('.')->strcharpart(colrange[0]-1, colrange[1]-colrange[0]+1)->escape('\')
+elseif mode() == 'v' " multiline matchingはvisual modeのみ
+if line('.') > line('v')
+let linerange = ['v','.']
+else
+let linerange = ['.','v']
+endif
+let lines=getline(linerange[0], linerange[1])
+let lines[0] = lines[0]->strcharpart(charcol(linerange[0])-1)
+let lines[-1] = lines[-1]->strcharpart(0,charcol(linerange[1]))
+let text = lines->map({key, line -> line->escape('\')})->join('\n')
+else
+let text = ''
+endif
 
-  " virtualeditの都合でempty textが選択されることがある．
-  " この場合全部がハイライトされてしまうので除く
-  if text == ''
-  return
-  endif
+" virtualeditの都合でempty textが選択されることがある．
+" この場合全部がハイライトされてしまうので除く
+if text == ''
+return
+endif
 
-  if mode() == 'v'
-  let w:visual_match_id = matchadd('VisualMatch', '\V' .. text, -999)
-  else
-  let w:visual_match_id = matchadd('VisualMatch', '\V\<' .. text .. '\>', -999)
-  endif
+if mode() == 'v'
+let w:visual_match_id = matchadd('VisualMatch', '\V' .. text, -999)
+else
+let w:visual_match_id = matchadd('VisualMatch', '\V\<' .. text .. '\>', -999)
+endif
 endfunction
 
 " 単語を自動でハイライトする
@@ -3104,16 +3104,16 @@ au BufWritePost * set nomod | endif
 augroup END
 
 augroup csv-tsv
-  au!
-  if has('unix')
-    au BufReadPost,BufWritePost *.csv call Preserve('silent %!column -s, -o, -t -L')
-  else
-    au BufReadPost,BufWritePost *.csv call Preserve('silent %!column -s, -t') " macOS
-  endif
-  au BufWritePre              *.csv call Preserve('silent %s/\s\+\ze,/,/ge')
-  au BufReadPost,BufWritePost *.tsv call Preserve('silent %!column -s "$(printf ''\t'')" -o "$(printf ''\t'')" -t -L')
-  au BufWritePre              *.tsv call Preserve('silent %s/ \+\ze	//ge')
-  au BufWritePre              *.tsv call Preserve('silent %s/\s\+$//ge')
+au!
+if has('unix')
+au BufReadPost,BufWritePost *.csv call Preserve('silent %!column -s, -o, -t -L')
+else
+au BufReadPost,BufWritePost *.csv call Preserve('silent %!column -s, -t') " macOS
+endif
+au BufWritePre              *.csv call Preserve('silent %s/\s\+\ze,/,/ge')
+au BufReadPost,BufWritePost *.tsv call Preserve('silent %!column -s "$(printf ''\t'')" -o "$(printf ''\t'')" -t -L')
+au BufWritePre              *.tsv call Preserve('silent %s/ \+\ze	//ge')
+au BufWritePre              *.tsv call Preserve('silent %s/\s\+$//ge')
 augroup END
 
 fu! s:isdir(dir) abort
@@ -3238,15 +3238,15 @@ vim.cmd([[
   "nnoremap <silent> <Plug>(my-toggle)n     <Cmd>call Toggle_noice()<CR>
   "nnoremap <silent> <Plug>(my-toggle)<C-n> <Cmd>call Toggle_noice()<CR>
   function! Toggle_syntax() abort
-    if exists('g:syntax_on')
-      syntax off
-      redraw
-      echo 'syntax off'
-      else
-      syntax on
-      redraw
-      echo 'syntax on'
-    endif
+  if exists('g:syntax_on')
+  syntax off
+  redraw
+  echo 'syntax off'
+  else
+  syntax on
+  redraw
+  echo 'syntax on'
+  endif
   endfunction
   let g:is_noice_enabled = v:true
   function Toggle_noice() abort
