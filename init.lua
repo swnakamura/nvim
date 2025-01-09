@@ -280,6 +280,14 @@ require('lazy').setup({
       -- vim.keymap.set("n", "<leader>gs", "<cmd>Git <CR><Cmd>only<CR>", { silent = true })
       -- vim.keymap.set("n", "<leader>ga", "<cmd>Gwrite<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gc", "<cmd>Git commit -v<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>gm", 
+      function()
+        vim.cmd("Git commit -v")
+        -- wait for 0.2 seconds to wait for the commit message to be written
+        vim.defer_fn(function()
+          vim.cmd("CopilotChatCommitStaged")
+        end, 200)
+      end, { silent = true })
       vim.keymap.set("n", "<leader>gb", "<cmd>Git blame<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gh", "<cmd>tab sp<CR>:0Gclog<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gp", "<cmd>Dispatch! git push<CR>", { silent = true })
@@ -287,7 +295,6 @@ require('lazy').setup({
       vim.keymap.set("n", "<leader>gd", "<cmd>vert :Gdiffsplit!<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gr", "<cmd>Git rebase -i<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gg", [[:<C-u>Glgrep ""<Left>]])
-      vim.keymap.set("n", "<leader>gm", ":<C-u>Git merge ")
 
       vim.keymap.set("n", "<Right>",
         function()
