@@ -269,6 +269,11 @@ require('lazy').setup({
   config = function()
     vim.keymap.set("n", "<leader>gs", require('neogit').open)
     vim.keymap.set("n", "<leader>ga", '<cmd>silent !git add %<CR>', {silent = true})
+    require('neogit').setup {
+      status = {
+          recent_commit_count = 30
+      }
+    }
   end
 },
 
@@ -910,8 +915,9 @@ require('lazy').setup({
           { name = 'buffer' },
           { name = 'path' },
           -- { name = 'nvim_lsp_signature_help' }
+          -- { name = 'copilot' },
         }, {
-          { name = 'look' }
+          { name = 'look' },
         }),
       }
 
@@ -2247,12 +2253,12 @@ $0
   },
 
   {
-    cond = vim.g.is_macos,
+    cond = vim.g.is_macos and fn.isdirectory(vim.fn.expand('~/ghq/github.com/swnakamura/novel_formatter')) == 1,
     dir = '~/ghq/github.com/swnakamura/novel_formatter'
   },
 
   {
-    cond = vim.g.is_macos,
+    cond = vim.g.is_macos and fn.isdirectory(vim.fn.expand('~/ghq/github.com/swnakamura/novel-preview.vim')) == 1,
     dir = '~/ghq/github.com/swnakamura/novel-preview.vim',
     -- ft = 'text',
     dependencies = 'vim-denops/denops.vim',
@@ -2992,6 +2998,7 @@ function! Visualmatch()
     unlet w:visual_match_id
   endif
 
+  " Don't run for visual block mode
   if index(["\<C-v>"], mode()) == -1
     return
   endif
@@ -3035,7 +3042,7 @@ autocmd InsertEnter * call DelWordmatch()
 augroup END
 
 function! Wordmatch()
-if index(['fern','neo-tree','floaterm','oil','org'], &ft) != -1
+if index(['fern','neo-tree','floaterm','oil','org','NeogitStatus'], &ft) != -1
 return
 endif
 call DelWordmatch()
