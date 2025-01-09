@@ -427,6 +427,7 @@ require('lazy').setup({
   },
 
   {
+    cond=false,
     'github/copilot.vim',
     -- programming filetypes
     ft = { 'c', 'cpp', 'lisp', 'lua', 'python', 'rust', 'sh', 'bash', 'zsh', 'html', 'xhtml', 'typescript', 'javascript', 'vim', 'yaml', 'css', 'tex', 'lisp', 'make', 'gitcommit' },
@@ -457,6 +458,13 @@ require('lazy').setup({
       -- vim.g.copilot_proxy_strict_ssl = false
     end
   },
+  {
+    cond=false,
+    "zbirenbaum/copilot-cmp",
+    config = function ()
+      require("copilot_cmp").setup()
+    end
+  },
 
   {
     cond = not vim.g.is_vscode,
@@ -470,7 +478,19 @@ require('lazy').setup({
           keymap = {
             accept = "<Tab>"
           }
-        }
+        },
+        filetypes = {
+          -- yaml = false,
+          text = false,
+          markdown = false,
+          help = false,
+          gitcommit = true,
+          gitrebase = false,
+          hgcommit = false,
+          svn = false,
+          cvs = false,
+          ["."] = false,
+        },
       })
     end,
   },
