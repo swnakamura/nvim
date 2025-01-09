@@ -503,21 +503,27 @@ require('lazy').setup({
       { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
     },
     build = "make tiktoken", -- Only on MacOS or Linux
-    opts = {
-      -- See Configuration section for options
-      prompts = {
-        CommitStaged = {
-          prompt = '> #git:staged\n\nWrite commit message for the change with commitizen convention. Make sure the title has maximum 50 characters and message is wrapped at 72 characters. Wrap the whole message in code block with language gitcommit.',
-          selection = false,
-          callback = function(response, _)
-            local commit_message = response:match("```gitcommit\n(.-)```")
-            if commit_message then
-              vim.fn.setreg('+', commit_message , 'c')
-            end
-          end,
+    config = function()
+      vim.keymap.set("n", "<C-k>", "<Cmd>CopilotChat <CR>i#buffer<CR><CR>/COPILOT_GENERATE<CR><CR>", { silent = true })
+      require("CopilotChat").setup(
+        {
+          -- See Configuration section for options
+          model = 'claude-3.5-sonnet',
+          prompts = {
+            CommitStaged = {
+              prompt = '> #git:staged\n\nWrite commit message for the change with commitizen convention. Make sure the title has maximum 50 characters and message is wrapped at 72 characters. Wrap the whole message in code block with language gitcommit.',
+              selection = false,
+              callback = function(response, _)
+                local commit_message = response:match("```gitcommit\n(.-)```")
+                if commit_message then
+                  vim.fn.setreg('+', commit_message , 'c')
+                end
+              end,
+            }
+          }
         }
-      }
-    },
+      )
+    end,
     -- See Commands section for default commands if you want to lazy load on them
   },
 
@@ -2654,6 +2660,9 @@ vim.keymap.set('n', 'gk', 'gk<Plug>(g-mode)', { remap = true })
 vim.keymap.set('n', '<Plug>(g-mode)j', 'gj<Plug>(g-mode)')
 vim.keymap.set('n', '<Plug>(g-mode)k', 'gk<Plug>(g-mode)')
 vim.keymap.set('n', '<Plug>(g-mode)', '<Nop>', { remap = true })
+
+-- <leader>fed to open init.lua
+vim.keymap.set('n', '<leader>fed', '<Cmd>edit $MYVIMRC<CR>')
 
 -- normally, ; is used for :
 -- vim.keymap.set({ 'n', 'v' }, ';', ':')
