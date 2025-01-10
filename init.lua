@@ -289,6 +289,7 @@ require('lazy').setup({
       -- vim.keymap.set("n", "<leader>gs", "<cmd>Git <CR><Cmd>only<CR>", { silent = true })
       -- vim.keymap.set("n", "<leader>ga", "<cmd>Gwrite<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gc", "<cmd>Git commit -v<CR>", { silent = true })
+      -- Generate commit message with copilot and commit with `q`
       vim.keymap.set("n", "<leader>gm",
         function()
           vim.cmd("Git commit -v")
@@ -296,8 +297,24 @@ require('lazy').setup({
           vim.defer_fn(function()
             vim.cmd("CopilotChatReset")
             vim.cmd("CopilotChatCommitStaged")
-            -- make mapping to close the window and paste the copied commit message with `q`
-            vim.keymap.set("n", "q", "<Cmd>q<CR>p", { buffer = 0, silent = true })
+            -- make mapping to use the commit message with `q`
+            vim.keymap.set("n", "q",
+              function()
+                vim.cmd('quit') -- quit the copilotchat window
+                vim.cmd('normal p')
+                vim.cmd('write') -- write the commit message
+                vim.cmd('quit') -- quit the commit message window
+              end
+              , { buffer = 0, silent = true }
+            )
+            -- Abort the commit message with `Q`
+            vim.keymap.set("n", "Q",
+              function()
+                vim.cmd('quit') -- quit the copilotchat window
+                vim.cmd('quit') -- quit the commit message window
+              end
+              , { buffer = 0, silent = true }
+            )
           end, 200)
         end, { silent = true })
       vim.keymap.set("n", "<leader>gb", "<cmd>Git blame<CR>", { silent = true })
