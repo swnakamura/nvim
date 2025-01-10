@@ -1455,13 +1455,13 @@ $0
         }
       })
 
-      -- delay the opening of neotree
+      -- Open neotree delayed
       -- somehow don't work with auto-session
-      vim.schedule(function()
-        if vim.g.open_neotree then
-          vim.cmd([[Neotree show]])
-        end
-      end)
+      -- vim.schedule(function()
+      --   if vim.g.open_neotree then
+      --     vim.cmd([[Neotree show]])
+      --   end
+      -- end)
     end
   },
 
@@ -2216,7 +2216,6 @@ $0
 
   {
     'rmagatti/auto-session',
-    cond = false,
     config = function()
       require("auto-session").setup {
         log_level = "error",
