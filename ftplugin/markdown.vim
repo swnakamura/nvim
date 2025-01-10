@@ -3,11 +3,11 @@ setlocal conceallevel=1
 command -range=% GHCopy call GHCopy(<line1>, <line2>)
 
 function GHCopy(line1, line2) abort
-  let text = getline(a:line1, a:line2)
+  let text_lst = getline(a:line1, a:line2)
 
-  let text = text->filter('v:val !~ ''\[\[[^\]]*\.\(png\|jpg\|jpeg\)\]\]'' ') " Remove lines with internal links to image files: [[*.png]] or [[*.jpg]]
+  let text_lst = text_lst->filter('v:val !~ ''\[\[[^\]]*\.\(png\|jpg\|jpeg\)\]\]'' ') " Remove lines with internal links to image files: [[*.png]] or [[*.jpg]]
 
-  let text = text->join("\n")
+  let text = text_lst->join("\n")
 
   let text = text->substitute('%%.\{-1,}%%', '' ,'ge') " Remove contents of obsidian comments
 
