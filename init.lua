@@ -296,6 +296,8 @@ require('lazy').setup({
           vim.defer_fn(function()
             vim.cmd("CopilotChatReset")
             vim.cmd("CopilotChatCommitStaged")
+            -- make mapping to close the window and paste the copied commit message with `q`
+            vim.keymap.set("n", "q", "<Cmd>q<CR>p", { buffer = 0, silent = true })
           end, 200)
         end, { silent = true })
       vim.keymap.set("n", "<leader>gb", "<cmd>Git blame<CR>", { silent = true })
