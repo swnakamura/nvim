@@ -302,6 +302,7 @@ require('lazy').setup({
             -- make mapping to use the commit message with `q`
             vim.keymap.set("n", "q",
               function()
+                vim.keymap.set("n", "q", require('CopilotChat').close, { buffer = 0, silent = true }) -- Remove this mapping itself 
                 vim.cmd('quit') -- quit the copilotchat window
                 vim.cmd('normal p')
                 vim.cmd('write') -- write the commit message
