@@ -304,7 +304,7 @@ require('lazy').setup({
               function()
                 -- Remove the mapping for closing the copilotchat window
                 vim.keymap.set("n", "q", require('CopilotChat').close, { buffer = 0, silent = true })
-                vim.keymap.del("n", "Q")
+                vim.keymap.del("n", "Q", { buffer = 0, silent = true })
                 vim.cmd('quit') -- quit the copilotchat window
                 vim.cmd('normal p')
                 vim.cmd('write') -- write the commit message
@@ -317,7 +317,7 @@ require('lazy').setup({
               function()
                 -- Remove the mapping for closing the copilotchat window
                 vim.keymap.set("n", "q", require('CopilotChat').close, { buffer = 0, silent = true })
-                vim.keymap.del("n", "Q")
+                vim.keymap.del("n", "Q", { buffer = 0, silent = true })
                 vim.cmd('quit') -- quit the copilotchat window
                 vim.cmd('quit') -- quit the commit message window
               end
