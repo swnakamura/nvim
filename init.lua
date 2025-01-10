@@ -144,6 +144,10 @@ if vim.g.is_macos == false then
   end
 end
 
+-- [[ Neovide settings ]]
+vim.g.neovide_cursor_animation_length = 0.10 -- default 0.13
+vim.g.neovide_cursor_trail_size = 0.2 -- default 0.8
+
 -- [[ Plugin settings ]]
 
 require('lazy').setup({
