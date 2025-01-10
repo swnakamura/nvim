@@ -301,11 +301,10 @@ require('lazy').setup({
       vim.keymap.set("n", "<leader>gh", "<cmd>tab sp<CR>:0Gclog<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gp", "<cmd>Dispatch! git push<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gf", "<cmd>Dispatch! git fetch<CR>", { silent = true })
-      vim.keymap.set("n", "<leader>gd", "<cmd>vert :Gdiffsplit!<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gr", "<cmd>Git rebase -i<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gg", [[:<C-u>Glgrep ""<Left>]])
 
-      vim.keymap.set("n", "<Right>",
+      vim.keymap.set("n", "<leader>gd",
         function()
           if not vim.o.diff then
             return
@@ -314,7 +313,6 @@ require('lazy').setup({
               [[<C-w><C-w>]] ..
               [[<Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>]] ..
               [[<C-w><C-w>]] ..
-              [[zR]] ..
               [[<Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>]]
           else
             return [[<Cmd>tabclose<CR>]]
@@ -509,6 +507,7 @@ require('lazy').setup({
     build = "make tiktoken", -- Only on MacOS or Linux
     config = function()
       vim.keymap.set("n", "<C-k>", "<Cmd>CopilotChat <CR>i#buffer<CR><CR>/COPILOT_GENERATE<CR><CR>", { silent = true })
+      vim.keymap.set("v", "<C-k>", "<Cmd>CopilotChat <CR>i/COPILOT_GENERATE<CR><CR>", { silent = true })
       vim.keymap.set({"n", "v"}, "<leader>-",
         function()
           local actions = require("CopilotChat.actions")
@@ -531,7 +530,7 @@ require('lazy').setup({
 
           prompts = {
             DocString = {
-              prompt = '/COPILOT_GENERATE\n\nWrite docstring for the selected function or class. Wrap the whole message in code block with language markdown. Generate docstring only.',
+              prompt = '/COPILOT_GENERATE\n\nWrite docstring for the selected function or class. Wrap the whole message in code block with language markdown. If the selected text already contains docstring, generate a new one and specify the range of the code to replace. Generate only docstring.',
               callback = function(response, _)
                 local commit_message = response:match("```python\n(.-)```")
                 if commit_message then
@@ -1807,6 +1806,7 @@ $0
         -- Actions
         map('n', '<leader>hs', gs.stage_hunk)
         map('n', '<C-Up>', gs.stage_hunk)
+        map('n', '<Right>', gs.stage_hunk)
         map('n', '<leader>hu', gs.reset_hunk)
         map('v', '<leader>hs', function() gs.stage_hunk { fn.line("."), fn.line("v") } end)
         map('v', '<leader>hu', function() gs.reset_hunk { fn.line("."), fn.line("v") } end)
