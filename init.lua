@@ -512,6 +512,7 @@ require('lazy').setup({
         end,
         {desc = "CopilotChat - Prompt actions"}
       )
+      vim.keymap.set({"n", "v"}, "<leader>9", require("CopilotChat").open)
       require("CopilotChat").setup(
         {
           -- See Configuration section for options
@@ -525,6 +526,15 @@ require('lazy').setup({
           },
 
           prompts = {
+            DocString = {
+              prompt = '/COPILOT_GENERATE\n\nWrite docstring for the selected function or class. Wrap the whole message in code block with language markdown. Generate docstring only.',
+              callback = function(response, _)
+                local commit_message = response:match("```python\n(.-)```")
+                if commit_message then
+                  vim.fn.setreg('+', commit_message , 'c')
+                end
+              end,
+            },
             CommitStaged = {
               prompt = '> #git:staged\n\nWrite commit message for the change with commitizen convention. Make sure the title has maximum 50 characters and message is wrapped at 72 characters. Wrap the whole message in code block with language gitcommit.',
               selection = false,
@@ -534,7 +544,7 @@ require('lazy').setup({
                   vim.fn.setreg('+', commit_message , 'c')
                 end
               end,
-            }
+            },
           }
         }
       )
