@@ -295,14 +295,16 @@ require('lazy').setup({
       vim.keymap.set("n", "<leader>gm",
         function()
           vim.cmd("Git commit -v")
-          -- wait for 0.2 seconds to wait for the commit message to be written
+          -- wait for 0.2 seconds to wait for the commit window to open
           vim.defer_fn(function()
             vim.cmd("CopilotChatReset")
             vim.cmd("CopilotChatCommitStaged")
             -- make mapping to use the commit message with `q`
             vim.keymap.set("n", "q",
               function()
-                vim.keymap.set("n", "q", require('CopilotChat').close, { buffer = 0, silent = true }) -- Remove this mapping itself 
+                -- Remove the mapping for closing the copilotchat window
+                vim.keymap.set("n", "q", require('CopilotChat').close, { buffer = 0, silent = true })
+                vim.keymap.del("n", "Q")
                 vim.cmd('quit') -- quit the copilotchat window
                 vim.cmd('normal p')
                 vim.cmd('write') -- write the commit message
@@ -313,6 +315,9 @@ require('lazy').setup({
             -- Abort the commit message with `Q`
             vim.keymap.set("n", "Q",
               function()
+                -- Remove the mapping for closing the copilotchat window
+                vim.keymap.set("n", "q", require('CopilotChat').close, { buffer = 0, silent = true })
+                vim.keymap.del("n", "Q")
                 vim.cmd('quit') -- quit the copilotchat window
                 vim.cmd('quit') -- quit the commit message window
               end
@@ -541,6 +546,10 @@ require('lazy').setup({
       vim.keymap.set({"n", "v"}, "<leader>9", require("CopilotChat").open)
       require("CopilotChat").setup(
         {
+          -- Since I use rendermarkdown, default fancy features are disabled
+          highlight_headers = false,
+          separator = '---',
+          error_header = '> [!ERROR] Error',
           -- See Configuration section for options
           model = 'claude-3.5-sonnet',
           window = {
