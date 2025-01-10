@@ -1659,6 +1659,15 @@ $0
     ft = 'markdown'
   },
   {
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    config = function()
+      require('render-markdown').setup({
+        file_types = { 'markdown', 'copilot-chat' }, -- Registers copilot-chat filetype for markdown rendering
+      })
+    end
+  },
+  {
     'dhruvasagar/vim-table-mode',
     ft = 'markdown',
     config = function()
