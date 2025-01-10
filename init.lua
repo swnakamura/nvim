@@ -289,11 +289,12 @@ require('lazy').setup({
       -- vim.keymap.set("n", "<leader>gs", "<cmd>Git <CR><Cmd>only<CR>", { silent = true })
       -- vim.keymap.set("n", "<leader>ga", "<cmd>Gwrite<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gc", "<cmd>Git commit -v<CR>", { silent = true })
-      vim.keymap.set("n", "<leader>gm", 
+      vim.keymap.set("n", "<leader>gm",
         function()
           vim.cmd("Git commit -v")
           -- wait for 0.2 seconds to wait for the commit message to be written
           vim.defer_fn(function()
+            vim.cmd("CopilotChatReset")
             vim.cmd("CopilotChatCommitStaged")
           end, 200)
         end, { silent = true })
