@@ -1613,7 +1613,7 @@ $0
   {
     -- cond = false,
     -- Add indentation guides even on blank lines
-    cond = not vim.g.is_vscode,
+    cond = not vim.g.is_vscode and not vim.g.is_macos, -- somehow emits error on macos neovim v11
     'lukas-reineke/indent-blankline.nvim',
     event = 'VeryLazy',
     config = function()
