@@ -562,7 +562,7 @@ require('lazy').setup({
 
           prompts = {
             DocString = {
-              prompt = '/COPILOT_GENERATE\n\nWrite docstring for the selected function or class. Wrap the whole message in code block with language markdown. If the selected text already contains docstring, generate a new one and specify the range of the code to replace. Generate only docstring.',
+              prompt = '/COPILOT_GENERATE\n\nWrite docstring for the selected function or class in Google style. Wrap the whole message in code block with language markdown and specify the line to insert. If the selected text already contains docstring, generate a new one and specify the range of the code to replace. Generate only docstring.',
               callback = function(response, _)
                 local commit_message = response:match("```python\n(.-)```")
                 if commit_message then
