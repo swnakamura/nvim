@@ -561,6 +561,15 @@ require('lazy').setup({
           },
 
           prompts = {
+            ArgTypeAnnot = {
+              prompt = '/COPILOT_GENERATE\n\nDo type annotation for the selected function arguments. Generate only the function declaration. Wrap the whole message in code block with language markdown and specify the range of the code to replace.',
+              callback = function(response, _)
+                local commit_message = response:match("```python\n(.-)```")
+                if commit_message then
+                  vim.fn.setreg('+', commit_message , 'c')
+                end
+              end,
+            },
             DocString = {
               prompt = '/COPILOT_GENERATE\n\nWrite docstring for the selected function or class in Google style. Wrap the whole message in code block with language markdown and specify the line to insert. If the selected text already contains docstring, generate a new one and specify the range of the code to replace. Generate only docstring.',
               callback = function(response, _)
@@ -569,6 +578,10 @@ require('lazy').setup({
                   vim.fn.setreg('+', commit_message , 'c')
                 end
               end,
+            },
+
+            BetterNamings = {
+              prompt = '/COPILOT_GENERATE\n\nPlease provide better names for the following variables and functions. Wrap the whole message in code block with language markdown and specify the range of the code to replace.',
             },
             CommitStaged = {
               prompt = '> #git:staged\n\nWrite commit message for the change with commitizen convention. Make sure the title has maximum 50 characters and message is wrapped at 72 characters. Wrap the whole message in code block with language gitcommit.',
