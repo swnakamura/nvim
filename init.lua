@@ -2170,9 +2170,15 @@ $0
         -- List of parsers to ignore installing (for "all")
         ignore_install = { "json" },
 
+        -- Install parsers synchronously (only applied to `ensure_installed`)
+        sync_install = false,
+
         -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
         auto_install = true,
 
+        modules = {},
+
+        -- modules and its options
         highlight = { enable = true, disable = { "json" } },
         indent = { enable = true },
         incremental_selection = {
