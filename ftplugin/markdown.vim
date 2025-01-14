@@ -21,5 +21,13 @@ function GHCopy(line1, line2) abort
   let text = text->substitute('[^!]\zs\[\[\([^]]\+\)\]\]\ze', '<strong>\1</strong>' ,'ge') " Remove double square bracket from non-image link and surround it with double star instead: [[file.md]] -> <strong>file.md</strong>
   let text = text->substitute('\n\s*\\<\([^>]\+\)>','\r<\1>','ge') " Remove preceding backslashes for html tags in the beginning of the line
   let text = text->substitute('\v\n\\(!\[[^]]+\]\([^)]+\))','\r\1','ge') " Remove preceding backslashes for image formats `![alias](path)` in the beginning of the line
+  " Make a newline after bullet lists.
+  " Note that we cannot use \s as the regular expression. We also have to use
+  " \n as the replacement string to make a newline.
+  let text = text->substitute('- [^\n]*\n\zs\ze[^\(\( 	\)*-\)\n]', '\n', 'ge')
+  " Here, '[^\(\( 	\)*-\)\n]' means:
+  " From this line new text starts, and it's not
+  " 1. there's already newline
+  " 2. There's another bullet list in this line
   call setreg('+', text, 'V')
 endfunction
