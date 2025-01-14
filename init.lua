@@ -568,7 +568,7 @@ require('lazy').setup({
 
           prompts = {
             ArgTypeAnnot = {
-              prompt = '/COPILOT_GENERATE\n\nDo type annotation for the selected function arguments. Generate only the function declaration. Wrap the whole message in code block with language markdown and specify the range of the code to replace.',
+              prompt = '/COPILOT_GENERATE\n\nGive type annotation for the selected function arguments. Generate only the function declaration. Specify the range of the code to replace above the code snippet.',
               callback = function(response, _)
                 local commit_message = response:match("```python\n(.-)```")
                 if commit_message then
@@ -577,7 +577,7 @@ require('lazy').setup({
               end,
             },
             DocString = {
-              prompt = '/COPILOT_GENERATE\n\nWrite docstring for the selected function or class in Google style. Wrap the whole message in code block with language markdown and specify the line to insert. If the selected text already contains docstring, generate a new one and specify the range of the code to replace. Generate only docstring.',
+              prompt = '/COPILOT_GENERATE\n\nWrite docstring for the selected function or class in Google style. Specify the range of code to replace the snippet in the aforementioned syntax and wrap the docstring in code block with python language. If the selected text already contains docstring, specify the range of the code to replace and generate a new one. You can generate function declaration if you need to, but should not make any modification to that.',
               callback = function(response, _)
                 local commit_message = response:match("```python\n(.-)```")
                 if commit_message then
@@ -587,7 +587,7 @@ require('lazy').setup({
             },
 
             BetterNamings = {
-              prompt = '/COPILOT_GENERATE\n\nPlease provide better names for the following variables and functions. Wrap the whole message in code block with language markdown and specify the range of the code to replace.',
+              prompt = '/COPILOT_GENERATE\n\nPlease provide better names for the following variables and functions. Specify the range of the code to replace and wrap the whole message in code block with language markdown.',
             },
             CommitStaged = {
               prompt = '> #git:staged\n\nWrite commit message for the change with commitizen convention. Make sure the title has maximum 50 characters and message is wrapped at 72 characters. Wrap the whole message in code block with language gitcommit.',
