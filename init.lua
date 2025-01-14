@@ -280,6 +280,12 @@ require('lazy').setup({
           recent_commit_count = 30
         }
       }
+      -- Close neogit status tab with <BS>
+      vim.cmd([[
+      augroup neogit-keymap
+      autocmd FileType NeogitStatus nnoremap <buffer> <BS> <Cmd>q<CR>
+      augroup END
+      ]])
     end
   },
 
