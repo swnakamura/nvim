@@ -431,6 +431,16 @@ require('lazy').setup({
 
   -- clever s
   {
+    -- This one has japanese search functionality
+    'yuki-yano/fuzzy-motion.vim',
+    event = 'VeryLazy',
+    config = function()
+      vim.keymap.set('n', 'S', '<cmd>FuzzyMotion<CR>')
+      vim.cmd("let g:fuzzy_motion_matchers = ['kensaku', 'fzf']")
+    end
+  },
+
+  {
     cond = false,
     'https://github.com/ggandor/leap.nvim',
     config = function()
