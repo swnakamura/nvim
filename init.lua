@@ -874,80 +874,61 @@ require('lazy').setup({
 
   -- operator augmentation
   {
-    'rhysd/vim-operator-surround',
-    event = 'VeryLazy',
-    dependencies = {
-      'kana/vim-operator-user',
-      config = function()
-        vim.keymap.set('', 'sa', '<Plug>(operator-surround-append)', { remap = true, silent = true })
-        vim.keymap.set('', 'sd', '<Plug>(operator-surround-delete)', { remap = true, silent = true })
-        vim.keymap.set('', 'sr', '<Plug>(operator-surround-replace)', { remap = true, silent = true })
-        vim.keymap.set('o', 'ab', '<Plug>(textobj-multiblock-a)', { remap = true })
-        vim.keymap.set('o', 'ib', '<Plug>(textobj-multiblock-i)', { remap = true })
-        vim.keymap.set('v', 'ab', '<Plug>(textobj-multiblock-a)', { remap = true })
-        vim.keymap.set('v', 'ib', '<Plug>(textobj-multiblock-i)', { remap = true })
-        vim.cmd([[
-              let g:operator#surround#blocks = {
-              \   'markdown' : [
-              \       { 'block' : ["```\n", "\n```"], 'motionwise' : ['line'], 'keys' : ['`'] },
-              \       { 'block' : ['**', '**'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ["d*"] },
-              \   ],
-              \   '-' : [
-              \       { 'block' : ['「', '」'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['j[', 'j]'] },
-              \       { 'block' : ['（', '）'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['j(', 'j)'] },
-              \       { 'block' : ['『', '』'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['j{', 'j}'] },
-              \       { 'block' : ['〝', '〟'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['j"'] },
-              \       { 'block' : ['【', '】'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ["j'"] },
-              \   ],
-              \ }
-
-              ]])
-      end,
-    },
-  },
-  {
-    'kana/vim-textobj-entire',
-    event = 'VeryLazy',
-    dependencies = { 'kana/vim-textobj-user' },
-    init = function()
-      vim.g.textobj_entire_no_default_key_mappings = true
-    end,
+    'echasnovski/mini.surround',
+    version = false,
     config = function()
-      vim.keymap.set('o', 'av', '<Plug>(textobj-entire-a)', { remap = true })
-      vim.keymap.set('o', 'iv', '<Plug>(textobj-entire-i)', { remap = true })
-      vim.keymap.set('x', 'av', '<Plug>(textobj-entire-a)', { remap = true })
-      vim.keymap.set('x', 'iv', '<Plug>(textobj-entire-i)', { remap = true })
-    end,
-    -- keys = { { 'av', mode = { 'o', 'x' } }, { 'iv', mode = { 'o', 'x' } } }
-  },
-  {
-    'kana/vim-textobj-syntax',
-    dependencies = { 'kana/vim-textobj-user' },
-    event = 'VeryLazy',
-  },
-  {
-    'thinca/vim-textobj-between',
-    event = 'VeryLazy',
-    init = function()
-      vim.keymap.set('n', 'sdb', '<Plug>(operator-surround-delete)<Plug>(textobj-between-a)',
-        { remap = true, silent = true })
-      vim.keymap.set('n', 'srb', '<Plug>(operator-surround-replace)<Plug>(textobj-between-a)',
-        { remap = true, silent = true })
-    end,
-    dependencies = { 'kana/vim-textobj-user' },
-    -- keys = { 'srb', 'sdb' }
-  },
-  {
-    'osyo-manga/vim-textobj-multiblock',
-    event = 'VeryLazy',
-    init = function()
-      vim.keymap.set('n', 'sdd', '<Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)',
-        { remap = true, silent = true })
-      vim.keymap.set('n', 'srr', '<Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)',
-        { remap = true, silent = true })
-    end,
-    dependencies = { 'kana/vim-textobj-user' },
-    -- keys = { 'sdd', 'srr' }
+      require('mini.surround').setup({
+        custom_surroundings = {
+          -- Japanese brackets. Code from https://riq0h.jp/2023/02/18/142447
+          ['j'] = {
+            input = function()
+              local ok, val = pcall(vim.fn.getchar)
+              if not ok then return end
+              local char = vim.fn.nr2char(val)
+
+              local dict = {
+                ['('] = { '（().-()）' },
+                ['{'] = { '｛().-()｝' },
+                ['['] = { '「().-()」' },
+                [']'] = { '『().-()』' },
+                ['<'] = { '＜().-()＞' },
+                ['"'] = { '”().-()”' },
+              }
+
+              -- If char is 'b', return all the surroundings to cover all patterns
+              if char == 'b' then
+                local ret = {}
+                for _, v in pairs(dict) do table.insert(ret, v) end
+                return { ret }
+              end
+
+              -- else, return the corresponding surroundings
+              if dict[char] then return dict[char] end
+
+              error('%s is unsupported surroundings in Japanese')
+            end,
+            output = function()
+              local ok, val = pcall(vim.fn.getchar)
+              if not ok then return end
+              local char = vim.fn.nr2char(val)
+
+              local dict = {
+                ['('] = { left = '（', right = '）' },
+                ['{'] = { left = '｛', right = '｝' },
+                ['['] = { left = '「', right = '」' },
+                [']'] = { left = '『', right = '』' },
+                ['<'] = { left = '＜', right = '＞' },
+                ['"'] = { left = '”', right = '”' },
+              }
+
+              if not dict[char] then error('%s is unsupported surroundings in Japanese') end
+
+              return dict[char]
+            end
+          }
+        },
+      })
+    end
   },
 
   {
