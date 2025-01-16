@@ -578,7 +578,7 @@ require('lazy').setup({
 
           prompts = {
             ArgTypeAnnot = {
-              prompt = '/COPILOT_GENERATE\n\nGive type annotation for the selected function arguments. Generate only the function declaration. Specify the range of the code to replace above the code snippet.',
+              prompt = '/COPILOT_GENERATE\n\nGive type annotation for the selected function arguments. Generate only the function declaration. Specify the range of the code to replace above the code snippet (even if it\' a single line, specify start and end of the range to replace).',
               callback = function(response, _)
                 local commit_message = response:match("```python\n(.-)```")
                 if commit_message then
