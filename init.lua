@@ -291,7 +291,7 @@ require('lazy').setup({
 
   {
     'tpope/vim-fugitive',
-    cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep', 'GBrowse' },
+    cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep', 'GBrowse', 'Dispatch' },
     dependencies = { 'tpope/vim-dispatch', 'tpope/vim-rhubarb', 'tyru/open-browser.vim' },
     init = function()
       -- vim.keymap.set("n", "<leader>gs", "<cmd>Git <CR><Cmd>only<CR>", { silent = true })
@@ -361,18 +361,6 @@ require('lazy').setup({
 
       -- With the help of rhubarb and open-browser.vim, you can open the current line in the browser with `:GBrowse`
       vim.cmd([[command! -nargs=1 Browse OpenBrowser <args>]])
-    end,
-    config = function()
-      vim.cmd([[
-      augroup fugitive-keymap
-      autocmd FileType fugitive nnoremap <buffer><nowait><expr> m '<Cmd>exe <SNR>' . g:fugitive_sid . '_NextFile(v:count1)<CR>'
-      augroup END
-      ]])
-      vim.schedule(function()
-        vim.cmd([[
-          let g:fugitive_sid = getscriptinfo(#{name:'autoload/fugitive.vim'})[0]['sid']
-          ]])
-      end)
     end,
   },
   {
