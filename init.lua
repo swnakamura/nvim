@@ -2731,8 +2731,15 @@ vim.keymap.set({ 'n', 'v' }, '<Space><BS>', '<C-^>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<C-Space>', '<Nop>', { silent = true })
 -- vim.keymap.set({ 'n', 'v', 'o' }, '<cr>', '<Plug>(clever-f-repeat-forward)', { silent = true })
 
+-- Tabs is used as %, while <C-i> remains as go to next location
 vim.keymap.set({ 'n', 'v', 'o' }, '<Tab>', '%', { silent = true, remap = true })
 vim.keymap.set({ 'n', 'v' }, '<C-i>', '<C-i>', { silent = true })
+
+-- Pseudo operator for selecting the whole text
+vim.keymap.set('v' , 'iv', 'gg0oG$', { silent = true })
+vim.keymap.set('o', 'iv', ':<C-u>normal! gg0vG$<CR>')
+vim.keymap.set('v' , 'av', 'gg0oG$', { silent = true })
+vim.keymap.set('o', 'av', ':<C-u>normal! gg0vG$<CR>')
 
 -- Remap for dealing with word wrap
 -- H/L for ^/$
@@ -2837,7 +2844,6 @@ vim.keymap.set({ "n" }, "<leader>cy", "yygcc", { remap = true })
 vim.keymap.set({ "v" }, "<leader>cy", "ygvgc", { remap = true })
 
 -- window control by s
--- disabled
 vim.keymap.set('n', '<Plug>(my-win)', '<Nop>')
 vim.keymap.set('n', 's', '<Plug>(my-win)', { remap = true })
 -- window control
