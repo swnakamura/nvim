@@ -297,12 +297,16 @@ require('lazy').setup({
       -- vim.keymap.set("n", "<leader>gs", "<cmd>Git <CR><Cmd>only<CR>", { silent = true })
       -- vim.keymap.set("n", "<leader>ga", "<cmd>Gwrite<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gc", "<cmd>Git commit -v<CR>", { silent = true })
-      -- Generate commit message with copilot and commit with `q`
+      -- Generate commit message with copilot and commit with `q`. Abort with `Q`
       vim.keymap.set("n", "<leader>gm",
         function()
           vim.cmd("Git commit -v")
           -- wait for 0.2 seconds to wait for the commit window to open
           vim.defer_fn(function()
+            -- If not in the commit message window, something went wrong. Abort
+            if vim.bo.filetype ~= 'gitcommit' then
+              return
+            end
             vim.cmd("CopilotChatReset")
             vim.cmd("CopilotChatCommitStaged")
             -- make mapping to use the commit message with `q`
@@ -312,9 +316,12 @@ require('lazy').setup({
                 vim.keymap.set("n", "q", require('CopilotChat').close, { buffer = 0, silent = true })
                 vim.keymap.del("n", "Q", { buffer = 0, silent = true })
                 vim.cmd('quit') -- quit the copilotchat window
-                vim.cmd('normal p')
-                vim.cmd('write') -- write the commit message
-                vim.cmd('quit') -- quit the commit message window
+                -- if I'm currently in the commit message window, paste the commit message and close it
+                if vim.bo.filetype == 'gitcommit' then
+                  vim.cmd('normal p')
+                  vim.cmd('write') -- write the commit message
+                  vim.cmd('quit') -- quit the commit message window
+                end
               end
               , { buffer = 0, silent = true }
             )
@@ -325,7 +332,10 @@ require('lazy').setup({
                 vim.keymap.set("n", "q", require('CopilotChat').close, { buffer = 0, silent = true })
                 vim.keymap.del("n", "Q", { buffer = 0, silent = true })
                 vim.cmd('quit') -- quit the copilotchat window
-                vim.cmd('quit') -- quit the commit message window
+                -- if I'm currently in the commit message window, close it
+                if vim.bo.filetype == 'gitcommit' then
+                  vim.cmd('quit') -- quit the commit message window
+                end
               end
               , { buffer = 0, silent = true }
             )
