@@ -1564,6 +1564,7 @@ $0
       map({ 'n', 'v' }, '<backspace>', '<Cmd>BufferClose<CR>', opts)
       map({ 'n', 'v' }, '<S-backspace>', '<Cmd>BufferClose!<CR>', opts)
       map({ 'n', 'v' }, '<leader>bd', '<Cmd>BufferClose<CR>', opts)
+      map({ 'n', 'v' }, '<leader>bo', '<Cmd>BufferCloseAllButVisible<CR>', opts)
       -- map('n', '<C-w>', '<Cmd>BufferClose<CR>', opts)
       map('n', '<C-1>', '<Cmd>BufferGoto 1<CR>', opts)
       map('n', '<C-2>', '<Cmd>BufferGoto 2<CR>', opts)
