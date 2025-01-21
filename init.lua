@@ -876,6 +876,10 @@ require('lazy').setup({
     version = false,
     config = function()
       require('mini.surround').setup({
+        mappings = {
+          -- Disable sh as it is already used for "goto left window"
+          highlight = '', -- Highlight surrounding
+        },
         custom_surroundings = {
           -- Japanese brackets. Code from https://riq0h.jp/2023/02/18/142447
           ['j'] = {
