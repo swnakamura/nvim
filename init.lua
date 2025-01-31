@@ -2205,8 +2205,8 @@ $0
     dependencies = 'nvim-treesitter/nvim-treesitter',
     config = function()
       require "treesitter-context".setup {
-        -- max_lines=1,
-        -- multiline_threshold = 1, -- Maximum number of lines to show for a single context
+        max_lines = 10, -- maximum number of lines to show in the context
+        multiline_threshold = 1, -- Maximum number of lines to show for a single context
         trim_scope = 'inner',
       }
       vim.keymap.set({ "n", "v" }, "[c", function()
