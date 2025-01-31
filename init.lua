@@ -2565,6 +2565,10 @@ vim.go.relativenumber = true
 -- Enable mouse mode
 vim.o.mouse = 'a'
 
+-- window minimum size is 0
+vim.go.winminheight = 0
+vim.go.winminwidth = 0
+
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
