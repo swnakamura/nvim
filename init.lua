@@ -306,9 +306,15 @@ require('lazy').setup({
       "ibhagwan/fzf-lua",              -- optional
       "echasnovski/mini.pick",         -- optional
     },
+    keys = {
+      {'<leader>gs'},
+      {'<leader>ga'},
+      {'<leader>gc'},
+    },
     config = function()
       vim.keymap.set("n", "<leader>gs", require('neogit').open)
       vim.keymap.set("n", "<leader>ga", '<cmd>silent !git add %<CR>', {silent = true})
+      vim.keymap.set("n", "<leader>gc", require('neogit').action('commit', 'commit', {'--verbose'}), {silent = true})
       require('neogit').setup {
         status = {
           recent_commit_count = 30
@@ -338,9 +344,6 @@ require('lazy').setup({
     cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep', 'GBrowse', 'Dispatch' },
     dependencies = { 'tpope/vim-dispatch', 'tpope/vim-rhubarb', 'tyru/open-browser.vim' },
     init = function()
-      -- vim.keymap.set("n", "<leader>gs", "<cmd>Git <CR><Cmd>only<CR>", { silent = true })
-      -- vim.keymap.set("n", "<leader>ga", "<cmd>Gwrite<CR>", { silent = true })
-      vim.keymap.set("n", "<leader>gc", "<cmd>Git commit -v<CR>", { silent = true })
       -- Generate commit message with copilot and commit with `q`. Abort with `Q`
       vim.keymap.set("n", "<leader>gm",
         function()
