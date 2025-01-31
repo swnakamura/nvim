@@ -1874,37 +1874,7 @@ $0
   -- colorscheme
   {
     cond = not vim.g.is_vscode,
-    'swnakamura/iceberg.vim',
-    lazy = false,
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme 'iceberg'
-      vim.cmd([[
-        " Less bright search color
-        hi clear Search
-        hi Search                gui=bold,underline guisp=#e27878
-        " Statusline color
-        hi StatusLine            gui=NONE guibg=#0f1117 guifg=#9a9ca5
-        hi StatusLineNC          gui=NONE guibg=#0f1117 guifg=#9a9ca5
-        hi User1                 gui=NONE guibg=#0f1117 guifg=#9a9ca5
-        " Do not show unnecessary separation colors
-        hi LineNr                guibg=#161821
-        hi CursorLineNr          guibg=#161821
-        hi SignColumn            guibg=#161821
-        hi GitGutterAdd          guibg=#161821
-        hi GitGutterChange       guibg=#161821
-        hi GitGutterChangeDelete guibg=#161821
-        hi GitGutterDelete       guibg=#161821
-        hi IndentBlanklineIndent guifg=#3c3c43 gui=nocombine
-        " Visual mode match and Cursor word match
-        hi link VisualMatch Search
-        hi CursorWord guibg=#282d44
-        ]])
-    end,
-  },
-  {
-    cond = false,
-    dir = 'oahlen/iceberg.nvim',
+    'swnakamura/iceberg.nvim',
     -- event = 'VimEnter',
     config = function()
       if vim.o.bg == 'light' then
@@ -1916,10 +1886,9 @@ $0
         " Less bright search color
         hi clear Search
         hi Search                guibg=NONE gui=bold,underline guisp=#e27878
-        " Less bright cursor line number
-        hi CursorLineNr guibg=NONE guifg=#abaeba
         " Do not show unnecessary separation colors
         hi LineNr                guibg=NONE
+        hi CursorLineNr          guibg=NONE
         hi SignColumn            guibg=NONE
         hi GitGutterAdd          guibg=NONE
         hi GitGutterChange       guibg=NONE
@@ -1927,6 +1896,7 @@ $0
         hi GitGutterDelete       guibg=NONE
         " Disable hl for winbar which is used by dropbar
         hi WinBar guibg=NONE
+        hi link LspInlayHint ModeMsg
         ]])
     end
   },
