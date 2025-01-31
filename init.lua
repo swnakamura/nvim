@@ -1039,7 +1039,7 @@ require('lazy').setup({
 
   -- lsp signature help
   {
-    cond = not vim.g.is_vscode,
+    cond = not vim.g.is_vscode and not vim.g.is_macos,
     "ray-x/lsp_signature.nvim",
     event = "VeryLazy",
     opts = {},
@@ -1617,11 +1617,11 @@ $0
   {
     -- cond = false,
     -- Add indentation guides even on blank lines
-    cond = not vim.g.is_vscode and not vim.g.is_macos, -- somehow emits error on macos neovim v11
+    cond = not vim.g.is_vscode,
     'lukas-reineke/indent-blankline.nvim',
     event = 'VeryLazy',
     config = function()
-      vim.cmd([[set listchars-=leadmultispace:---\|]])
+      vim.cmd([[set listchars-=leadmultispace:---\|]]) -- remove the counterpart of this plugin
       require("ibl").setup {
         indent = { char = "▏" },
         -- scope with wider character
