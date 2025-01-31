@@ -796,10 +796,9 @@ require('lazy').setup({
             end, 'Toggle inlay hint')
           end
 
-          local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
           local handlers = {
             function(server_name)
+              local capabilities = require('blink.cmp').get_lsp_capabilities(server2setting[server_name])
               require('lspconfig')[server_name].setup {
                 capabilities = capabilities,
                 on_attach = on_attach,
