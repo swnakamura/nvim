@@ -3284,8 +3284,8 @@ vim.cmd([[
   nnoremap <silent> <Plug>(my-toggle)<C-t> <Cmd>setl expandtab! expandtab?<CR>
   nnoremap <silent> <Plug>(my-toggle)w     <Cmd>setl wrap! wrap?<CR>
   nnoremap <silent> <Plug>(my-toggle)<C-w> <Cmd>setl wrap! wrap?<CR>
-  nnoremap <silent> <Plug>(my-toggle)b     <Cmd>setl scrollbind! scrollbind?<CR>
-  nnoremap <silent> <Plug>(my-toggle)<C-b> <Cmd>setl scrollbind! scrollbind?<CR>
+  nnoremap <silent> <Plug>(my-toggle)b     <Cmd>setl cursorbind! cursorbind?<CR>
+  nnoremap <silent> <Plug>(my-toggle)<C-b> <Cmd>setl cursorbind! cursorbind?<CR>
   nnoremap <silent> <Plug>(my-toggle)d     <Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>
   nnoremap <silent> <Plug>(my-toggle)<C-d> <Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>
   nnoremap <silent> <Plug>(my-toggle)c     <Cmd>if &conceallevel > 0 \| set conceallevel=0 \| else \| set conceallevel=2 \| endif \| set conceallevel?<CR>
