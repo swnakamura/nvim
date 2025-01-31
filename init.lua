@@ -190,6 +190,18 @@ require('lazy').setup({
     },
   },
 
+    {
+    "folke/lazydev.nvim",
+    ft = "lua", -- only load on lua files
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      },
+    },
+  },
+
   -- startup
   {
     cond = false,
@@ -641,22 +653,10 @@ require('lazy').setup({
     event = { "BufReadPost", "BufNewFile" },
     cmd = { "LspInfo", "LspInstall", "LspUninstall", "Mason" },
     dependencies = {
+      {'Saghen/blink.cmp'},
       { 'williamboman/mason.nvim', config = true },
       {
         'williamboman/mason-lspconfig.nvim',
-        dependencies =
-          {
-            ft = { 'lua' },
-            'folke/neodev.nvim',
-            config = function()
-              require("neodev").setup({
-                override = function(root_dir, library)
-                  library.enabled = true
-                  library.plugins = true
-                end,
-              })
-            end
-          },
         config = function()
           local mason_lspconfig = require 'mason-lspconfig'
           local words = {}
@@ -933,118 +933,68 @@ require('lazy').setup({
     end
   },
 
+  -- completion
   {
-    cond = not vim.g.is_vscode,
-    -- Autocompletion
-    'hrsh7th/nvim-cmp',
-    event = { 'InsertEnter', 'CmdlineEnter' },
-    dependencies = {
-      -- Snippet Engine & its associated nvim-cmp source
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
+    'https://github.com/Saghen/blink.cmp',
 
-      -- Adds LSP completion capabilities
-      'hrsh7th/cmp-nvim-lsp',
+    -- use a release tag to download pre-built binaries
+    version = '*',
+    -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
+    -- build = 'cargo build --release',
+    -- If you use nix, you can build from source using latest nightly rust with:
+    -- build = 'nix run .#build-plugin',
 
-      -- Adds a number of user-friendly snippets
-      'rafamadriz/friendly-snippets',
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
+    opts = {
+      -- 'default' for mappings similar to built-in completion
+      -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
+      -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
+      -- See the full "keymap" documentation for information on defining your own keymap.
+      keymap = { preset = 'default' },
 
-      -- Adds several other sources
-      'octaltree/cmp-look',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-cmdline',
-      'onsails/lspkind.nvim',
-      -- 'hrsh7th/cmp-nvim-lsp-signature-help',
-    },
-    config = function()
-      local cmp = require 'cmp'
-      local luasnip = require 'luasnip'
-      require('luasnip.loaders.from_vscode').lazy_load()
-
-      cmp.setup {
-        snippet = {
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
-          end,
+      completion = {
+        menu = {
+          max_height = 30,
         },
-        mapping = cmp.mapping.preset.insert {
-          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-e>'] = function(_)
-            if cmp.visible() then
-              cmp.mapping.abort()
-            end
-            vim.cmd('call feedkeys("\\<End>")')
-          end,
-          ['<C-n>'] = cmp.mapping.select_next_item(),
-          ['<C-p>'] = cmp.mapping.select_prev_item(),
-          ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-d>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete {},
-          ['<CR>'] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = false,
-          }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        documentation = {
+          auto_show = true,
+          auto_show_delay_ms = 100,
         },
-        sources = cmp.config.sources({
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-          { name = 'buffer' },
-          { name = 'path' },
-          -- { name = 'nvim_lsp_signature_help' }
-          -- { name = 'copilot' },
-        }, {
-            { name = 'look' },
-          }),
-      }
-
-      -- For gitcommit, only complete from local buffer and dictionary
-      cmp.setup.filetype('gitcommit', {
-        sources = cmp.config.sources({
-          { name = 'buffer' },
-          {
-            name = 'look',
-            keyword_length = 5,
-          },
-        })
-      })
-      cmp.setup.filetype('yaml', {
-        sources = cmp.config.sources({})
-      })
-
-      cmp.setup.filetype('tex', {
-        sources = cmp.config.sources({
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-          { name = 'buffer' },
-          { name = 'path' }
-        }, {
-            {
-              name = 'look',
-              keyword_length = 5,
-            },
-          })
-      })
-
-      -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-      cmp.setup.cmdline({ '/', '?' }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = 'buffer' }
+        list = {
+          selection = {
+            preselect = false,
+          }
         }
-      })
+      },
 
-      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-      cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = 'path' }
-        }, {
-            { name = 'cmdline' }
-          })
-      })
-    end,
+      appearance = {
+        -- Sets the fallback highlight groups to nvim-cmp's highlight groups
+        -- Useful for when your theme doesn't support blink.cmp
+        -- Will be removed in a future release
+        use_nvim_cmp_as_default = true,
+        -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+        -- Adjusts spacing to ensure icons are aligned
+        nerd_font_variant = 'mono'
+      },
+
+      snippets = { preset = 'luasnip' },
+
+      -- Default list of enabled providers defined so that you can extend it
+      -- elsewhere in your config, without redefining it, due to `opts_extend`
+      sources = {
+        default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+        providers = {
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            -- make lazydev completions top priority (see `:h blink.cmp`)
+            score_offset = 100,
+          },
+        },
+      },
+    },
+    opts_extend = { "sources.default" }
   },
 
   -- lsp signature help
