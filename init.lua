@@ -322,7 +322,17 @@ require('lazy').setup({
       ]])
     end
   },
-
+  {
+    "FabijanZulj/blame.nvim",
+    lazy = false,
+    opts = {
+        virtual_style = 'float',
+        date_format = "%Y.%m.%d",
+      },
+    keys = {
+      { "<Left>", "<Cmd>BlameToggle<CR>"}
+    }
+  },
   {
     'tpope/vim-fugitive',
     cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep', 'GBrowse', 'Dispatch' },
@@ -396,10 +406,6 @@ require('lazy').setup({
             return [[<Cmd>tabclose<CR>]]
           end
         end,
-        { expr = true, silent = true }
-      )
-      vim.keymap.set("n", "<Left>",
-        function() return '<Cmd>' .. (vim.o.ft == 'fugitiveblame' and 'quit' or 'Git blame') .. '<CR>' end,
         { expr = true, silent = true }
       )
 
