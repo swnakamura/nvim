@@ -11,13 +11,15 @@ function GHCopy(line1, line2) abort
 
   let text = text->substitute('%%.\{-1,}%%', '' ,'ge') " Remove contents of obsidian comments
 
-  let text = text->substitute('\$\([^$]\{-1,}\)\$','$`\1`$','ge') " Surround inline math with backticks: $inline math$ -> `$inline math$`
+  let text = text->substitute('\$\([^$]\{-1,}\)\$','$`\1`$','ge') " Surround inline math with backticks: $inline math$ -> $`inline math`$
   let text = text->substitute(' --- ',':','ge') " Replace ' --- ' with ':'
 
   let text = text->substitute('#\([^# ]\+\)', '', 'ge') " remove tags e.g. #tags
   let text = text->substitute('[📅➕⏳✅] \d\d\d\d-\d\d-\d\d', '', 'ge') " remove emoji dates from obsidian-tasks
   let text = text->substitute('	','    ','ge') " Replace tabs with 4 spaces
   let text = text->substitute('[^!]\[\[\zs[^]]\+|\([^]]\+\)\ze\]\]', '\1' ,'ge') " Remove original link from aliased file name: [[original name|aliased name]] -> [[aliased name]]
+  " If double bracket link is followed by an http link, change the double bracket link to a markdown link
+  let text = text->substitute('[^!]\zs\[\[\([^]]\+\)\]\]\s\?(\(http[^)]\+\))', '[\1](\2)' ,'ge') " Change double bracket link to markdown link: [[file.md]] <link> -> [file.md](<link>)
   let text = text->substitute('[^!]\zs\[\[\([^]]\+\)\]\]\ze', '<strong>\1</strong>' ,'ge') " Remove double square bracket from non-image link and surround it with double star instead: [[file.md]] -> <strong>file.md</strong>
 
   " Note that ^ cannot be used in the following regexes because the text is already merged into one line
