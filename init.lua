@@ -977,6 +977,12 @@ require('lazy').setup({
   {
     'https://github.com/Saghen/blink.cmp',
 
+    event = { 'InsertEnter' , 'CmdlineEnter' },
+
+    dependencies = {
+      { "epwalsh/obsidian.nvim" },
+    },
+
     -- use a release tag to download pre-built binaries
     version = '*',
     -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
@@ -1023,8 +1029,20 @@ require('lazy').setup({
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'obsidian', 'obsidian_new', 'obsidian_tags', 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
         providers = {
+          obsidian = {
+            name = "obsidian",
+            module = "blink.compat.source",
+          },
+          obsidian_new = {
+            name = "obsidian_new",
+            module = "blink.compat.source",
+          },
+          obsidian_tags = {
+            name = "obsidian_tags",
+            module = "blink.compat.source",
+          },
           lazydev = {
             name = "LazyDev",
             module = "lazydev.integrations.blink",
@@ -1035,6 +1053,15 @@ require('lazy').setup({
       },
     },
     opts_extend = { "sources.default" }
+  },
+  {
+    'saghen/blink.compat',
+    -- use the latest release, via version = '*', if you also use the latest release for blink.cmp
+    version = '*',
+    -- lazy.nvim will automatically load the plugin when it's required by blink.cmp
+    lazy = true,
+    -- make sure to set opts so that lazy.nvim calls blink.compat's setup
+    opts = {},
   },
 
   -- lsp signature help
