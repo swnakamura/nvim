@@ -1960,16 +1960,10 @@ $0
     event = 'VeryLazy',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      -- local custom_color = require('lualine.themes.iceberg_light')
-      -- if vim.o.bg == 'dark' then
-      --   custom_color = require('lualine.themes.iceberg_dark')
-      -- end
-      -- custom_color.normal.c.fg = '#6b7089'
-      local custom_color = 'auto'
       require('lualine').setup {
         options = {
           icons_enabled = true,
-          theme = custom_color,
+          theme = 'auto',
           -- component_separators = { left = '', right = '' },
           -- section_separators = { left = '', right = '' },
           component_separators = { left = '', right = '' },
