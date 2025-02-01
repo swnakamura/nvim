@@ -1901,29 +1901,6 @@ $0
     end
   },
 
-  -- rosepine colorscheme
-  {
-    cond = false,
-    "rose-pine/neovim",
-    name = "rose-pine",
-    config = function()
-      if vim.o.bg == 'light' then
-        require('rose-pine').setup({
-          variant = 'dawn',
-          dim_inactive_windows = true,
-          styles = { italic = false },
-        })
-      else
-        require('rose-pine').setup({
-          variant = 'night',
-          dim_inactive_windows = true,
-          styles = { italic = false },
-        })
-      end
-      vim.cmd([[colorscheme rose-pine]])
-    end
-  },
-
   -- Show modes with the current line color instead of the statusline
   {
     cond=false,
