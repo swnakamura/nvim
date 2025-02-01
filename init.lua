@@ -390,7 +390,6 @@ require('lazy').setup({
             )
           end, 200)
         end, { silent = true })
-      vim.keymap.set("n", "<leader>gb", "<cmd>Git blame<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gh", "<cmd>tab sp<CR>:0Gclog<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gp", "<cmd>Dispatch! git push<CR>", { silent = true })
       vim.keymap.set("n", "<leader>gf", "<cmd>Dispatch! git fetch<CR>", { silent = true })
