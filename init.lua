@@ -152,6 +152,8 @@ vim.o.guifont = "JetBrains Mono Light:h12" -- text below applies for VimScript
 
 -- [[ Plugin settings ]]
 
+local treesitter_filetypes = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'go', 'html', 'lua', 'markdown', 'markdown_inline', 'org', 'python', 'rust', 'latex', 'tsx', 'typescript', 'vimdoc', 'vim', 'yaml' }
+
 require('lazy').setup({
 
   {
@@ -590,6 +592,8 @@ require('lazy').setup({
       { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
     },
     build = "make tiktoken", -- Only on MacOS or Linux
+    cmd = { "CopilotChat", "CopilotChatReset" },
+    keys = {'<C-k>', '<leader>-', '<leader>9'},
     config = function()
       vim.keymap.set("n", "<C-k>", "<Cmd>CopilotChat <CR>i#buffer<CR><CR>/COPILOT_GENERATE<CR><CR>", { silent = true })
       vim.keymap.set("v", "<C-k>", "<Cmd>CopilotChat <CR>i/COPILOT_GENERATE<CR><CR>", { silent = true })
@@ -1692,6 +1696,7 @@ $0
   {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    ft = { 'markdown', 'copilot-chat' },
     config = function()
       require('render-markdown').setup({
         file_types = { 'markdown', 'copilot-chat' }, -- Registers copilot-chat filetype for markdown rendering
@@ -2116,11 +2121,12 @@ $0
   },
 
 
+  -- treesitter
   {
     cond = not vim.g.is_vscode,
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
-    event = 'VeryLazy',
+    ft = treesitter_filetypes,
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
@@ -2128,9 +2134,7 @@ $0
     config = function()
       require('nvim-treesitter.configs').setup {
         -- Add languages to be installed here that you want installed for treesitter
-        ensure_installed = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'go', 'html', 'lua', 'markdown', 'markdown_inline', 'org', 'python', 'rust',
-          'latex', 'tsx',
-          'typescript', 'vimdoc', 'vim', 'yaml' },
+        ensure_installed = treesitter_filetypes,
 
         -- List of parsers to ignore installing (for "all")
         ignore_install = { "json" },
@@ -2205,7 +2209,7 @@ $0
   {
     cond = not vim.g.is_vscode,
     'nvim-treesitter/nvim-treesitter-context',
-    event = 'VeryLazy',
+    ft = treesitter_filetypes,
     dependencies = 'nvim-treesitter/nvim-treesitter',
     config = function()
       require "treesitter-context".setup {
@@ -2275,6 +2279,7 @@ $0
   {
     'lervag/vimtex',
     -- lazy loading not allowed
+    -- ft = 'tex',
     init = function()
       vim.g.tex_flavor = 'latex'
       vim.g.tex_conceal = 'abdmg'
