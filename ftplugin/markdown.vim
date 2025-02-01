@@ -1,6 +1,7 @@
 setlocal conceallevel=1
 
-command -range=% GHCopy call GHCopy(<line1>, <line2>)
+command -range=% MDGHCopy call MDGHCopy(<line1>, <line2>)
+command -range=% MDPTCopy call MDPTCopy(<line1>, <line2>)
 
 function GHCopy(line1, line2) abort
   let text_lst = getline(a:line1, a:line2)
