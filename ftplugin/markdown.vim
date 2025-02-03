@@ -29,7 +29,7 @@ function MDGHCopy(line1, line2) abort
   " Make a newline after bullet lists.
   " Note that we cannot use \s as the regular expression. We also have to use
   " \n as the replacement string to make a newline.
-  let text = text->substitute('- [^\n]*\n\zs\ze[^\(\( 	\)*-\)\n]', '\n', 'ge')
+  let text = text->substitute('\n- [^\n]*\n\zs\ze[^\(\( 	\)*-\)\n]', '\n', 'ge')
   " Here, '[^\(\( 	\)*-\)\n]' means:
   " From this line new text starts, and it's not
   " 1. there's already newline
