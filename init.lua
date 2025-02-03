@@ -592,7 +592,7 @@ require('lazy').setup({
     },
     build = "make tiktoken", -- Only on MacOS or Linux
     cmd = { "CopilotChat", "CopilotChatReset" },
-    keys = {'<C-k>', '<leader>-', '<leader>9'},
+    keys = {{ '<C-k>', mode = 'v' }, '<leader>-', '<leader>9'},
     config = function()
       vim.keymap.set("n", "<C-k>", "<Cmd>CopilotChat <CR>i#buffer<CR><CR>/COPILOT_GENERATE<CR><CR>", { silent = true })
       vim.keymap.set("v", "<C-k>", "<Cmd>CopilotChat <CR>i/COPILOT_GENERATE<CR><CR>", { silent = true })
