@@ -147,8 +147,11 @@ end
 -- [[ Neovide settings ]]
 vim.g.neovide_cursor_animation_length = 0.10 -- default 0.13
 vim.g.neovide_cursor_trail_size = 0.2 -- default 0.8
-
-vim.o.guifont = "JetBrains Mono Light:h12" -- text below applies for VimScript
+if vim.g.is_macos then
+  vim.o.guifont = "JetBrains Mono:h12"
+else
+  vim.o.guifont = "JetBrains Mono Light:h12"
+end
 
 -- [[ Plugin settings ]]
 
