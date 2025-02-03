@@ -3,7 +3,7 @@ setlocal conceallevel=1
 command -range=% MDGHCopy call MDGHCopy(<line1>, <line2>)
 command -range=% MDPTCopy call MDPTCopy(<line1>, <line2>)
 
-function GHCopy(line1, line2) abort
+function MDGHCopy(line1, line2) abort
   let text_lst = getline(a:line1, a:line2)
 
   let text_lst = text_lst->filter('v:val !~ ''\[\[[^\]]*\.\(png\|jpg\|jpeg\)\]\]'' ') " Remove lines with internal links to image files: [[*.png]] or [[*.jpg]]
@@ -39,7 +39,7 @@ endfunction
 
 
 " Copy markdown text and convert it to plain text
-function PlainTextCopy(line1, line2) abort
+function MDPTCopy(line1, line2) abort
   let text_lst = getline(a:line1, a:line2)
 
   let text_lst = text_lst->filter('v:val !~ ''\[\[[^\]]*\.\(png\|jpg\|jpeg\)\]\]'' ') " Remove lines with internal links to image files: [[*.png]] or [[*.jpg]]
