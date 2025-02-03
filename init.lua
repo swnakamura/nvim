@@ -1092,7 +1092,7 @@ require('lazy').setup({
 
   -- Adds latex snippets
   {
-    dir = '~/ghq/github.com/iurimateus/luasnip-latex-snippets.nvim',
+    'iurimateus/luasnip-latex-snippets.nvim',
     ft = { 'tex', 'markdown' },
     -- vimtex isn't required if using treesitter
     dependencies = "L3MON4D3/LuaSnip",
