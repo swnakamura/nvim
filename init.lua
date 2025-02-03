@@ -2693,6 +2693,7 @@ vim.go.signcolumn = 'yes:1'
 -- [[ Basic Keymaps ]]
 
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+vim.keymap.set({ 'i' },      '<CR>',    '<CR>', { silent = true})
 vim.keymap.set({ 'n', 'v' }, '<Space>o', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<Space><BS>', '<C-^>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<C-Space>', '<Nop>', { silent = true })
