@@ -2310,12 +2310,12 @@ $0
   },
 
   {
-    cond = vim.g.is_macos and fn.isdirectory(vim.fn.expand('~/ghq/github.com/swnakamura/novel_formatter')) == 1,
+    cond = vim.g.is_macos and fn.isdirectory(fn.expand('~/ghq/github.com/swnakamura/novel_formatter')) == 1,
     dir = '~/ghq/github.com/swnakamura/novel_formatter'
   },
 
   {
-    cond = vim.g.is_macos and fn.isdirectory(vim.fn.expand('~/ghq/github.com/swnakamura/novel-preview.vim')) == 1,
+    cond = vim.g.is_macos and fn.isdirectory(fn.expand('~/ghq/github.com/swnakamura/novel-preview.vim')) == 1,
     dir = '~/ghq/github.com/swnakamura/novel-preview.vim',
     -- ft = 'text',
     dependencies = 'vim-denops/denops.vim',
