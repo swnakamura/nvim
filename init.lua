@@ -1008,10 +1008,14 @@ require('lazy').setup({
       completion = {
         menu = {
           max_height = 30,
+          winblend = 30,
         },
         documentation = {
           auto_show = true,
           auto_show_delay_ms = 100,
+          window = {
+            winblend = 30,
+          }
         },
         list = {
           selection = {
