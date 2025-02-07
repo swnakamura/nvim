@@ -1537,10 +1537,7 @@ $0
     keys = {
       {
         "<C-y>",
-        function()
-          -- require("yazi").yazi()
-          require("yazi").yazi(nil, vim.fn.getcwd())
-        end,
+        "<cmd>Yazi<CR>",
         desc = "Open the file manager",
       },
       -- {
