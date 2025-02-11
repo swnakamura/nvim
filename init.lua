@@ -1777,6 +1777,29 @@ $0
     config = function()
       require('render-markdown').setup({
         file_types = { 'markdown', 'copilot-chat' }, -- Registers copilot-chat filetype for markdown rendering
+        render_modes = true,
+        heading = {
+          width = "block",
+          left_pad = 0,
+          right_pad = 0,
+          icons = {},
+        },
+        code = {
+          width = "block",
+          right_pad = 5,
+        },
+        checkbox = {
+          checked = { scope_highlight = "@markup.strikethrough" },
+          custom = {
+            -- デフォルトの`[-]`であるtodoは削除
+            todo = { raw = "", rendered = "", highlight = "" },
+            canceled = {
+              raw = "[-]",
+              rendered = "󱘹",
+              scope_highlight = "@markup.strikethrough",
+            },
+          },
+        },
       })
     end
   },
