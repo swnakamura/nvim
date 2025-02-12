@@ -990,6 +990,12 @@ require('lazy').setup({
     end
   },
 
+  {
+    -- pseudo scrollbar
+    "https://github.com/lewis6991/satellite.nvim",
+    opts = {}
+  },
+
   -- operator augmentation
   {
     'echasnovski/mini.surround',
