@@ -688,7 +688,7 @@ require('lazy').setup({
           separator = '---',
           error_header = '> [!ERROR] Error',
           -- See Configuration section for options
-          model = 'claude-3.5-sonnet',
+          model = 'gemini-2.0-flash-001',
           window = {
             layout = 'float',
             relative = 'cursor',
@@ -721,7 +721,7 @@ require('lazy').setup({
               prompt = '/COPILOT_GENERATE\n\nPlease provide better names for the following variables and functions. Specify the range of the code to replace and wrap the whole message in code block with language markdown.',
             },
             CommitStaged = {
-              prompt = '> #git:staged\n\nSummarize and explain the change in the code. Then write commit message for the change with commitizen convention. Make sure the title has maximum 50 characters and message is wrapped at 72 characters. Wrap the whole message in code block with language gitcommit.',
+              prompt = '> #git:staged\n\nSummarize and explain the change in the code. Then write commit message for the change with commitizen convention. Make sure the title has maximum 50 characters and message is wrapped at 72 characters. Wrap the whole message in code block with language gitcommit. Do not put spaces in front of the commit comment lines.',
               selection = nil,
               callback = function(response, _)
                 local commit_message = response:match("```gitcommit\n(.-)```")
@@ -2429,10 +2429,9 @@ $0
 
   -- org mode
   {
-    -- timeがマージされていないので
-    -- dir = '~/syncthing_config/nvim-orgmode',
-    cond=false,
+    -- cond=false,
     'nvim-orgmode/orgmode',
+    ft = 'org',
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter' },
     },
