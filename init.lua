@@ -2243,6 +2243,7 @@ $0
       vim.keymap.set({ "n", "v" }, "[c", function()
         require("treesitter-context").go_to_context()
       end, { silent = true })
+      vim.keymap.set("n", "<C-w><C-o>", "<C-w>o<cmd>TSContextEnable<CR>", { silent = true })
     end,
   },
 
