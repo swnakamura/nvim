@@ -993,7 +993,13 @@ require('lazy').setup({
   {
     -- pseudo scrollbar
     "https://github.com/lewis6991/satellite.nvim",
-    opts = {}
+    opts = {
+      handlers = {
+        cursor = {
+          enable = false,
+        }
+      }
+    }
   },
 
   -- operator augmentation
