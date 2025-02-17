@@ -1135,7 +1135,14 @@ require('lazy').setup({
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { 'obsidian', 'obsidian_new', 'obsidian_tags', 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+        -- default = { 'obsidian', 'obsidian_new', 'obsidian_tags', 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+        default = function()
+          if vim.bo.filetype == 'markdown' then
+            return { 'obsidian', 'obsidian_new', 'obsidian_tags', 'lazydev', 'path', 'snippets', 'buffer' }
+          else
+            return { 'lazydev', 'path', 'snippets', 'buffer' }
+          end
+        end,
         providers = {
           obsidian = {
             name = "obsidian",
