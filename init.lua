@@ -1091,6 +1091,16 @@ require('lazy').setup({
       -- See the full "keymap" documentation for information on defining your own keymap.
       keymap = { preset = 'default' },
 
+      enabled = function()
+        local current_file = vim.fn.expand('%:p')
+        -- Enable when all of the following are true:
+        -- 1. Not in text file insert mode
+        -- 2. Not in prompt
+        local is_text = vim.bo.filetype == 'text'
+        local is_insert = vim.api.nvim_get_mode().mode == 'i'
+        return not (is_text and is_insert) and vim.bo.buftype ~= "prompt"
+      end,
+
       completion = {
         menu = {
           max_height = 30,
