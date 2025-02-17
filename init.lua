@@ -594,38 +594,6 @@ require('lazy').setup({
 
   {
     cond=false,
-    'github/copilot.vim',
-    -- programming filetypes
-    ft = { 'c', 'cpp', 'lisp', 'lua', 'python', 'rust', 'sh', 'bash', 'zsh', 'html', 'xhtml', 'typescript', 'javascript', 'vim', 'yaml', 'css', 'tex', 'lisp', 'make', 'gitcommit' },
-    init = function()
-      -- the same filetypes
-      vim.g.copilot_filetypes = {
-        ['*'] = false,
-        ['c'] = true,
-        ['cpp'] = true,
-        ['lisp'] = true,
-        ['lua'] = true,
-        ['python'] = true,
-        ['rust'] = true,
-        ['sh'] = true,
-        ['bash'] = true,
-        ['zsh'] = true,
-        ['html'] = true,
-        ['xhtml'] = true,
-        ['typescript'] = true,
-        ['javascript'] = true,
-        ['vim'] = true,
-        ['yaml'] = true,
-        ['css'] = true,
-        -- ['tex'] = true,
-      }
-
-      -- vim.g.copilot_proxy = 'http://localhost:11435'
-      -- vim.g.copilot_proxy_strict_ssl = false
-    end
-  },
-  {
-    cond=false,
     "zbirenbaum/copilot-cmp",
     config = function ()
       require("copilot_cmp").setup()
@@ -1755,7 +1723,6 @@ $0
   },
 
   {
-    -- cond = false,
     -- Add indentation guides even on blank lines
     cond = not vim.g.is_vscode,
     'lukas-reineke/indent-blankline.nvim',
@@ -1797,11 +1764,6 @@ $0
   },
 
   -- markdown
-  {
-    cond = false,
-    'preservim/vim-markdown',
-    ft = 'markdown'
-  },
   {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
