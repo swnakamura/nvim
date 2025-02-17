@@ -2067,6 +2067,7 @@ $0
 
   {
     'preservim/nerdcommenter',
+    cond=false,
     event = 'VeryLazy',
     init = function()
       vim.g.NERDSpaceDelims = 1
