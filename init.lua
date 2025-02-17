@@ -2738,6 +2738,9 @@ vim.keymap.set({ 'n', 'v' }, '<Space><BS>', '<C-^>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<C-Space>', '<Nop>', { silent = true })
 -- vim.keymap.set({ 'n', 'v', 'o' }, '<cr>', '<Plug>(clever-f-repeat-forward)', { silent = true })
 
+-- move cursor to the center of the window lr
+vim.keymap.set('n', 'z.', 'zezL')
+
 -- Tabs is used as %, while <C-i> remains as go to next location
 vim.keymap.set({ 'n', 'v', 'o' }, '<Tab>', '%', { silent = true, remap = true })
 vim.keymap.set({ 'n', 'v' }, '<C-i>', '<C-i>', { silent = true })
