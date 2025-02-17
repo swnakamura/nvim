@@ -797,9 +797,9 @@ require('lazy').setup({
                 },
               },
             },
-            rust_analyzer = {},
-            -- pylyzer = {},
             ruff = {},
+            -- pylyzer = {},
+            rust_analyzer = {},
 
             lua_ls = {
               Lua = {
