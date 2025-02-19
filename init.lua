@@ -2750,7 +2750,7 @@ vim.keymap.set('n', '<leader>fed', '<Cmd>edit $MYVIMRC<CR>')
 
 -- normally, ; is used for :
 -- vim.keymap.set({ 'n', 'v' }, ';', ':')
-vim.keymap.set({ 'n', 'v' }, '<leader><leader>', ':')
+vim.keymap.set({ 'n', 'v' }, '<leader><leader>', '<C-^>')
 
 -- f and F submode to move to the next/previous character by ; and , after f/F temporaily
 -- vim.cmd([[
