@@ -1724,7 +1724,7 @@ $0
 
   {
     -- Add indentation guides even on blank lines
-    cond = not vim.g.is_vscode,
+    cond = false,
     'lukas-reineke/indent-blankline.nvim',
     event = 'VeryLazy',
     config = function()
@@ -1738,8 +1738,7 @@ $0
   },
 
   {
-    -- cond=not vim.g.is_vscode,
-    cond = false,
+    cond=not vim.g.is_vscode,
     "shellRaining/hlchunk.nvim",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
