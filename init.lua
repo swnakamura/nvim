@@ -2927,9 +2927,6 @@ vim.keymap.set('x', 'g-', 'g<c-x>')
 vim.keymap.set('n', 'gp', '`[v`]')
 vim.keymap.set('n', 'gP', '`[V`]')
 
--- reload init.vim
-vim.keymap.set('n', '<leader>re', '<Cmd>e $MYVIMRC<CR>')
-
 -- quickfix jump
 vim.keymap.set('n', '[q', '<Cmd>cprevious<CR>')
 vim.keymap.set('n', ']q', '<Cmd>cnext<CR>')
