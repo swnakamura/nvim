@@ -317,9 +317,9 @@ require('lazy').setup({
       {'<leader>gc'},
     },
     config = function()
-      vim.keymap.set("n", "<leader>gs", require('neogit').open)
-      vim.keymap.set("n", "<leader>ga", '<cmd>silent !git add %<CR>', {silent = true})
-      vim.keymap.set("n", "<leader>gc", require('neogit').action('commit', 'commit', {'--verbose'}), {silent = true})
+      vim.keymap.set("n", "<leader>gs", function() require('neogit').open() end, { desc = "Git status (neogit)"})
+      vim.keymap.set("n", "<leader>ga", '<cmd>silent !git add %<CR>', {silent = true, desc = "Git add current file"})
+      vim.keymap.set("n", "<leader>gc", require('neogit').action('commit', 'commit', {'--verbose'}), {silent = true, desc = "Git commit"}) -- TODO: wrapping this command with function enables lazy loading of neogit, but it results in an error
       require('neogit').setup {
         status = {
           recent_commit_count = 30
@@ -392,11 +392,10 @@ require('lazy').setup({
               , { buffer = 0, silent = true }
             )
           end, 200)
-        end, { silent = true })
-      vim.keymap.set("n", "<leader>gh", "<cmd>tab sp<CR>:0Gclog<CR>", { silent = true })
-      vim.keymap.set("n", "<leader>gp", "<cmd>Dispatch! git push<CR>", { silent = true })
-      vim.keymap.set("n", "<leader>gf", "<cmd>Dispatch! git fetch<CR>", { silent = true })
-      vim.keymap.set("n", "<leader>gr", "<cmd>Git rebase -i<CR>", { silent = true })
+        end, { silent = true, desc = "Git commit with copilot commit message" })
+      vim.keymap.set("n", "<leader>gh", "<cmd>tab sp<CR>:0Gclog<CR>", { silent = true, desc = 'Git history' })
+      vim.keymap.set("n", "<leader>gp", "<cmd>Dispatch! git push<CR>", { silent = true, desc = 'Git async push' })
+      vim.keymap.set("n", "<leader>gf", "<cmd>Dispatch! git fetch<CR>", { silent = true, desc = 'Git async fetch' })
       vim.keymap.set("n", "<leader>gg", [[:<C-u>Glgrep ""<Left>]])
 
       vim.keymap.set("n", "<leader>gd",
@@ -413,7 +412,7 @@ require('lazy').setup({
             return [[<Cmd>tabclose<CR>]]
           end
         end,
-        { expr = true, silent = true }
+        { expr = true, silent = true, desc = "Git diff" }
       )
 
       -- With the help of rhubarb and open-browser.vim, you can open the current line in the browser with `:GBrowse`
@@ -424,7 +423,7 @@ require('lazy').setup({
     'cohama/agit.vim',
     cmd = 'Agit',
     init = function()
-      vim.keymap.set('n', '<leader>gl', '<Cmd>Agit<CR>', { silent = true })
+      vim.keymap.set('n', '<leader>gl', '<Cmd>Agit<CR>', { silent = true, desc = "Git log (agit)" })
     end,
     config = function()
       vim.cmd([[
@@ -488,20 +487,20 @@ require('lazy').setup({
         end, { expr = true })
 
         -- Actions
-        map('n', '<leader>hs', gs.stage_hunk)
-        map('n', '<C-Up>', gs.stage_hunk)
-        map('n', '<Right>', gs.stage_hunk)
-        map('n', '<leader>hu', gs.reset_hunk)
-        map('v', '<leader>hs', function() gs.stage_hunk { fn.line("."), fn.line("v") } end)
-        map('v', '<leader>hu', function() gs.reset_hunk { fn.line("."), fn.line("v") } end)
-        map('n', '<leader>hS', gs.stage_buffer)
-        map('n', '<leader>hr', gs.undo_stage_hunk)
-        map('n', '<leader>hR', gs.reset_buffer)
-        map('n', '<leader>hp', gs.preview_hunk)
-        map('n', '<leader>hb', function() gs.blame_line { full = true } end)
+        map('n', '<leader>hs', gs.stage_hunk, { desc = "Git stage hunk" })
+        map('n', '<C-Up>', gs.stage_hunk, { desc = "Git stage hunk" })
+        map('n', '<Right>', gs.stage_hunk, { desc = "Git stage hunk" })
+        map('n', '<leader>hu', gs.reset_hunk, { desc = "Git reset hunk" })
+        map('v', '<leader>hs', function() gs.stage_hunk { fn.line("."), fn.line("v") } end, { desc = "Git stage hunk" })
+        map('v', '<leader>hu', function() gs.reset_hunk { fn.line("."), fn.line("v") } end, { desc = "Git reset hunk" })
+        map('n', '<leader>hS', gs.stage_buffer, { desc = "Git stage buffer" })
+        map('n', '<leader>hr', gs.undo_stage_hunk, { desc = "Git undo stage hunk" })
+        map('n', '<leader>hR', gs.reset_buffer, { desc = "Git reset buffer" })
+        map('n', '<leader>hp', gs.preview_hunk, { desc = "Git preview hunk"})
+        map('n', '<leader>hb', function() gs.blame_line { full = true } end, { desc = "Git blame hunk" })
         -- map('n', '<leader>tb', gs.toggle_current_line_blame)
-        map('n', '<leader>hd', gs.diffthis)
-        map('n', '<leader>hD', function() gs.diffthis('~') end)
+        map('n', '<leader>hd', gs.diffthis, { desc = 'Git diff this' })
+        map('n', '<leader>hD', function() gs.diffthis('~') end, { desc = 'Git diff this' })
         -- map('n', '<leader>td', gs.toggle_deleted)
 
         -- Text object
@@ -648,7 +647,7 @@ require('lazy').setup({
         end,
         {desc = "CopilotChat - Prompt actions"}
       )
-      vim.keymap.set({"n", "v"}, "<leader>9", require("CopilotChat").open)
+      vim.keymap.set({"n", "v"}, "<leader>9", require("CopilotChat").open, { desc = "CopilotChat - Open" })
       require("CopilotChat").setup(
         {
           -- Since I use rendermarkdown, default fancy features are disabled
@@ -795,27 +794,27 @@ require('lazy').setup({
               vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
             end
 
-            nmap('<leader>ln', vim.lsp.buf.rename, '[R]e[n]ame')
-            nmap('<leader>la', vim.lsp.buf.code_action, '[C]ode [A]ction')
+            nmap('<leader>ln', vim.lsp.buf.rename, 'Rename')
+            nmap('<leader>la', vim.lsp.buf.code_action, 'Code Action')
 
-            nmap('<leader>ld', "<cmd>Lspsaga peek_definition<CR>", '[G]oto [D]efinition')
-            nmap('<leader>lr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-            nmap('<leader>li', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-            -- nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-            -- nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-            -- nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+            nmap('<leader>ld', "<cmd>Lspsaga peek_definition<CR>", 'Goto Definition')
+            nmap('<leader>lr', require('telescope.builtin').lsp_references, 'Goto References')
+            nmap('<leader>li', vim.lsp.buf.implementation, 'Goto Implementation')
+            -- nmap('<leader>D', vim.lsp.buf.type_definition, 'Type Definition')
+            -- nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, 'Document Symbols')
+            -- nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Workspace Symbols')
 
             -- See `:help K` for why this keymap
             nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
             -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
             -- Lesser used LSP functionality
-            nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-            nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-            nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+            nmap('gD', vim.lsp.buf.declaration, 'Goto Declaration')
+            nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, 'Workspace Add Folder')
+            nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, 'Workspace Remove Folder')
             nmap('<leader>wl', function()
               print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-            end, '[W]orkspace [L]ist Folders')
+            end, 'Workspace List Folders')
 
             -- Diagnostic keymaps
             -- nmap('[d', function() vim.diagnostic.jump({ count = -1 }) end, 'Go to previous diagnostic message')
@@ -1920,7 +1919,7 @@ $0
   },
 
   -- Useful plugin to show you pending keybinds.
-  -- { 'folke/which-key.nvim',                                opts = {}, event = 'BufEnter' },
+  { 'folke/which-key.nvim',                                opts = {}, event = 'BufEnter' },
 
   -- colorscheme
   {
@@ -2082,16 +2081,16 @@ $0
       require('telescope').load_extension('fzf')
     end,
     init = function()
-      vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
-      vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[F]ind [F]iles' })
-      vim.keymap.set('n', '<leader>fr', require('telescope.builtin').oldfiles)
-      vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers)
-      vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[F]ind [H]elp' })
-      vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = '[F]ind current [W]ord' })
-      vim.keymap.set('n', '<leader>fm', require('telescope.builtin').man_pages, { desc = '[F]ind [M]anpages' })
-      vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = '[F]ind [K]eymaps' })
-      vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = '[F]ind by [G]rep' })
-      vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = '[F]ind [D]iagnostics' })
+      vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search Git Files' })
+      vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = 'Find Files' })
+      vim.keymap.set('n', '<leader>fr', require('telescope.builtin').oldfiles, { desc = 'Find Recent Files' })
+      vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = 'Find Buffers' })
+      vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = 'Find Help' })
+      vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = 'Find current Word' })
+      vim.keymap.set('n', '<leader>fm', require('telescope.builtin').man_pages, { desc = 'Find Manpages' })
+      vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = 'Find Keymaps' })
+      vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = 'Find by Grep' })
+      vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = 'Find Diagnostics' })
     end,
     cmd = 'Telescope',
   },
@@ -2116,7 +2115,7 @@ $0
       "nvim-telescope/telescope.nvim",
     },
     config = function()
-      vim.keymap.set('n', '<leader>fo', function() vim.cmd([[ObsidianQuickSwitch]]) end)
+      vim.keymap.set('n', '<leader>fo', function() vim.cmd([[ObsidianQuickSwitch]]) end, {desc='Obsidian Quick Switch'})
       require('obsidian').setup(
         {
           disable_frontmatter = true,
@@ -2369,7 +2368,7 @@ $0
             }
           }
         })
-      end)
+      end, { desc = 'Zen mode' })
     end,
   },
 
@@ -2954,7 +2953,7 @@ vim.keymap.set('n', '>', '>>')
 vim.keymap.set('n', '<', '<<')
 
 -- tagsジャンプの時に複数ある時は一覧表示
-vim.keymap.set('n', '<C-]>', 'g<C-]>')
+-- vim.keymap.set('n', '<C-]>', 'g<C-]>')
 
 vim.keymap.set('i', '<C-b>', "<Cmd>normal! b<CR>")
 vim.keymap.set('i', '<C-f>', "<Cmd>normal! w<CR>")
