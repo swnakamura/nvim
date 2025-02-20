@@ -2358,7 +2358,7 @@ $0
     "folke/zen-mode.nvim",
     event = 'VeryLazy',
     config = function()
-      vim.keymap.set('n', '<leader>wcc', function()
+      vim.keymap.set('n', '<leader>z', function()
         require("zen-mode").toggle({
           plugins = {
             options = {
