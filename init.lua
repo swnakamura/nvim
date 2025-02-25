@@ -666,7 +666,7 @@ require('lazy').setup({
           separator = '---',
           error_header = '> [!ERROR] Error',
           -- See Configuration section for options
-          model = 'gemini-2.0-flash-001',
+          model = 'gpt-4o',
           window = {
             layout = 'float',
             relative = 'cursor',
