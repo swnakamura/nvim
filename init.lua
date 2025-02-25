@@ -1841,6 +1841,7 @@ $0
 
   -- close parenthesis automatically
   {
+    cond=false,
     'kana/vim-smartinput',
     event = 'InsertEnter',
     config = function()
@@ -1876,6 +1877,10 @@ $0
       -- TODO rewrite above with lua
       -- TODO tex rule is not sufficient
     end
+  },
+  {
+    'windwp/nvim-autopairs',
+    config = true,
   },
 
   -- rust
