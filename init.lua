@@ -567,7 +567,6 @@ require('lazy').setup({
     'yuki-yano/fuzzy-motion.vim',
     event = 'VeryLazy',
     config = function()
-      vim.keymap.set('n', 'S', '<cmd>FuzzyMotion<CR>')
       vim.cmd("let g:fuzzy_motion_matchers = ['kensaku', 'fzf']")
     end
   },
@@ -3275,11 +3274,13 @@ function! IME_toggle() abort
 let b:IME_autoenable = !get(b:, 'IME_autoenable', v:false)
 if b:IME_autoenable ==# v:true
 echo '日本語入力モードON'
+nnoremap <buffer> S <cmd>FuzzyMotion<CR>
 if mode() == 'i'
 call Enable()
 endif
 else
 echo '日本語入力モードOFF'
+nunmap <buffer> S
 if mode() == 'i'
 call Disable()
 endif
