@@ -383,7 +383,7 @@ require('lazy').setup({
                 vim.cmd('quit') -- quit the copilotchat window
                 -- if I'm currently in the commit message window, paste the commit message and close it
                 if vim.bo.filetype == 'gitcommit' then
-                  vim.cmd('normal "op')
+                  vim.cmd('normal ""p')
                   vim.cmd('write') -- write the commit message
                   vim.cmd('quit') -- quit the commit message window
                 end
@@ -707,7 +707,7 @@ require('lazy').setup({
               callback = function(response, _)
                 local commit_message = response:match("```gitcommit\n(.-)```")
                 if commit_message then
-                  vim.fn.setreg('o', commit_message , 'c')
+                  vim.fn.setreg('"', commit_message , 'c')
                 end
               end,
             },
