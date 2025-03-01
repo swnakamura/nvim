@@ -1098,6 +1098,20 @@ require('lazy').setup({
           }
         }
       },
+      cmdline = {
+        completion = {
+          menu = {
+            auto_show = function(ctx)
+              return vim.fn.getcmdtype() == ':'
+            end,
+          },
+          list = {
+            selection = {
+              preselect = false,
+            }
+          }
+        },
+      },
 
       appearance = {
         -- Sets the fallback highlight groups to nvim-cmp's highlight groups
