@@ -1614,6 +1614,13 @@ $0
     end
   },
 
+  -- telescope based filer
+  {
+    "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+    keys = {{'<leader>fl', ':Telescope file_browser<CR>' }}
+  },
+
   -- oil
   {
     'https://github.com/stevearc/oil.nvim',
