@@ -1796,7 +1796,7 @@ $0
   -- markdown
   {
     'MeanderingProgrammer/render-markdown.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
     ft = { 'markdown', 'copilot-chat' },
     config = function()
       require('render-markdown').setup({
@@ -1815,9 +1815,7 @@ $0
         checkbox = {
           checked = { scope_highlight = "@markup.strikethrough" },
           custom = {
-            -- デフォルトの`[-]`であるtodoは削除
-            todo = { raw = "", rendered = "", highlight = "" },
-            canceled = {
+            cancelled = {
               raw = "[-]",
               rendered = "󱘹",
               scope_highlight = "@markup.strikethrough",
