@@ -5,10 +5,8 @@ local fn = vim.fn
 -- Do not load some of the default plugins
 vim.g.loaded_netrwPlugin = true
 
-vim.cmd([[
-let g:mapleader = "\<Space>"
-let g:maplocalleader = "\<C-space>"
-]])
+vim.g.mapleader = " "
+vim.g.maplocalleader = "<C-space>"
 
 -- Install lazy.nvim (package manager)
 local lazypath = fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -36,13 +34,11 @@ else
   vim.g.is_macos = false
 end
 
-vim.cmd([[
-if exists('g:vscode')
-let g:is_vscode = v:true
+if fn.exists('g:vscode') == 1 then
+    vim.g.is_vscode = true
 else
-let g:is_vscode = v:false
-endif
-]])
+    vim.g.is_vscode = false
+end
 
 -- check if the window is wide enough and vim is open with an argument to open the neotree explorer
 if vim.o.columns > 200 and fn.argc() > 0 then
@@ -53,20 +49,18 @@ end
 
 
 if vim.g.is_wsl then
-  vim.cmd([[
-  let g:clipboard = {
-  \   'name': 'WslClipboard',
-  \   'copy': {
-  \      '+': ['sh', '-c', 'iconv -t sjis | clip.exe'],
-  \      '*': ['sh', '-c', 'iconv -t sjis | clip.exe'],
-  \    },
-  \   'paste': {
-  \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-  \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-  \   },
-  \   'cache_enabled': 0,
-  \ }
-  ]])
+vim.g.clipboard = {
+    name = 'WslClipboard',
+    copy = {
+        ['+'] = { 'sh', '-c', 'iconv -t sjis | clip.exe' },
+        ['*'] = { 'sh', '-c', 'iconv -t sjis | clip.exe' },
+    },
+    paste = {
+        ['+'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+        ['*'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+    },
+    cache_enabled = 0,
+}
 end
 
 
@@ -567,7 +561,7 @@ require('lazy').setup({
     'yuki-yano/fuzzy-motion.vim',
     event = 'VeryLazy',
     config = function()
-      vim.cmd("let g:fuzzy_motion_matchers = ['kensaku', 'fzf']")
+      vim.g.fuzzy_motion_matchers = { 'kensaku', 'fzf' }
     end
   },
 
@@ -1908,10 +1902,12 @@ $0
 
   -- tagbar
   {
-    cond = not vim.g.is_vscode,
+    cond = false,
     'majutsushi/tagbar',
     init = function()
       vim.keymap.set('n', '<leader>t', '<cmd>TagbarToggle<CR>')
+    end,
+    config = function()
       vim.cmd([[
         let g:tagbar_sort = 0
         let g:tagbar_autoclose = 0
@@ -2652,34 +2648,6 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
--- Use ripgrep if available
-if fn.executable('rg') then
-  vim.o.grepprg = 'rg --vimgrep'
-  vim.o.grepformat = '%f:%l:%c:%m'
-  -- Rgコマンド：引数がないなら選択領域を検索、選択されてもいないならカーソルの単語を検索
-  vim.cmd([[
-  command -range -nargs=* -complete=file Rg <line1>,<line2>call g:Rg(<q-args>, <range>)
-  fun! g:Rg(input, range) range
-  if a:range == 2 && a:firstline == a:lastline
-  " Assumes that the command is run with visual selection
-  " let colrange = charcol('.') < charcol('v') ? [charcol('.'), charcol('v')] : [charcol('v'), charcol('.')]
-  let colrange = [charcol("'<"), charcol("'>")]
-  let text = getline('.')->strcharpart(colrange[0]-1, colrange[1]-colrange[0]+1)->escape('\')
-  elseif empty(a:input)
-  let text = expand("<cword>")
-  echoerr text
-  else
-  let text = a:input
-  endif
-  if text == ''
-  echoerr 'search text is empty'
-  return
-  endif
-  exec 'grep' "'" . text . "'"
-  endfun
-  ]])
-end
-
 -- Open quickfix window after some commands
 vim.cmd("au QuickfixCmdPost make,grep,grepadd,vimgrep copen")
 
@@ -2785,22 +2753,6 @@ vim.keymap.set('n', '<leader>fed', '<Cmd>edit $MYVIMRC<CR>')
 -- normally, ; is used for :
 -- vim.keymap.set({ 'n', 'v' }, ';', ':')
 vim.keymap.set({ 'n', 'v' }, '<leader><leader>', '<C-^>')
-
--- f and F submode to move to the next/previous character by ; and , after f/F temporaily
--- vim.cmd([[
--- function! F_AND_FMODE(mode) abort
---   if a:mode ==# 'f'
---       return 'f' .. nr2char(getchar()) .. '<Plug>(f-mode)'
---   elseif a:mode ==# 'F'
---       return 'F' .. nr2char(getchar()) .. '<Plug>(f-mode)'
---   endif
--- endfunction
--- ]])
--- vim.keymap.set('n', 'f', 'F_AND_FMODE("f")', { silent = true, expr = true, remap = true })
--- vim.keymap.set('n', 'F', 'F_AND_FMODE("F")', { silent = true, expr = true, remap = true })
--- vim.keymap.set('n', '<Plug>(f-mode);', ';<Plug>(f-mode)')
--- vim.keymap.set('n', '<Plug>(f-mode),', ',<Plug>(f-mode)')
--- vim.keymap.set('n', '<Plug>(f-mode)', '<Nop>', { remap = true })
 
 -- terminal
 -- open terminal in new split with height 15
