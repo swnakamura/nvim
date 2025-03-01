@@ -3277,58 +3277,8 @@ vim.keymap.set({ 'n', 'v' }, '<leader>k', [[<Cmd>lua Float(-1)<CR>]])
 vim.keymap.set({ 'n', 'v' }, '<leader>j', [[<Cmd>lua Float(1)<CR>]])
 
 -- [[ autocmd-IME ]]
-vim.cmd([[
-nnoremap <silent><expr> <F2> IME_toggle()
-inoremap <silent><expr> <F2> IME_toggle()
+vim.keymap.set({'n', 'i'}, '<F2>', require('japanese_input').toggle_IME, { noremap = true, silent = true, expr = true })
 
-augroup IME_autotoggle
-autocmd!
-autocmd InsertEnter * if get(b:, 'IME_autoenable', v:false) | call Enable() | endif
-autocmd InsertLeave * call Disable()
-autocmd CmdLineEnter /,\? if get(b:, 'IME_autoenable', v:false) | cnoremap <CR> <Plug>(kensaku-search-replace)<CR>| endif
-autocmd CmdLineEnter /,\? if !get(b:, 'IME_autoenable', v:false) | silent! cunmap <CR> | endif
-augroup END
-
-function! IME_toggle() abort
-let b:IME_autoenable = !get(b:, 'IME_autoenable', v:false)
-if b:IME_autoenable ==# v:true
-echo '日本語入力モードON'
-nnoremap <buffer> S <cmd>FuzzyMotion<CR>
-if mode() == 'i'
-call Enable()
-endif
-else
-echo '日本語入力モードOFF'
-nunmap <buffer> S
-if mode() == 'i'
-call Disable()
-endif
-endif
-return ''
-endfunction
-
-function! Enable() abort
-if g:is_macos
-call system('macism com.justsystems.inputmethod.atok33.Japanese')
-else
-call system('fcitx5-remote -o')
-endif
-endfunction
-
-function! Disable() abort
-if g:is_macos
-call system('macism com.apple.keylayout.ABC')
-else
-call system('fcitx5-remote -c')
-endif
-endfunction
-
-augroup auto_ja
-autocmd BufRead */my-text/**.txt call IME_toggle()
-autocmd BufRead */my-text/**.md call IME_toggle()
-autocmd BufRead */obsidian/**.md call IME_toggle()
-augroup END
-]])
 
 -- [[ toggle/switch settings with local leader ]]
 vim.cmd([[
