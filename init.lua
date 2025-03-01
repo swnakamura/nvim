@@ -2770,42 +2770,42 @@ vim.api.nvim_create_autocmd("BufEnter", {
   end
 })
 
-vim.cmd([[
-" カーソルがインデント内部ならtrue
-function! s:in_indent() abort
-return col('.') <= indent('.')
-endfunction
+-- カーソルがインデント内部ならtrue
+local function in_indent()
+  return fn.col('.') <= fn.indent('.')
+end
 
-" カーソルがインデントとずれた位置ならtrue
-function! s:not_fit_indent() abort
-return !!((col('.') - 1) % shiftwidth())
-endfunction
+-- カーソルがインデントとずれた位置ならtrue
+local function not_fit_indent()
+  return ((fn.col('.') - 1) % fn.shiftwidth()) ~= 0
+end
 
-function! s:quantized_h(cnt = 1) abort
-if a:cnt > 1 || !&expandtab
-execute printf('normal! %sh', a:cnt)
-return
-endif
-normal! h
-while s:in_indent() && s:not_fit_indent()
-normal! h
-endwhile
-endfunction
+function Quantized_h(cnt)
+  cnt = cnt or 1
+  if cnt > 1 or not vim.o.expandtab then
+    vim.cmd(string.format('normal! %sh', cnt))
+    return
+  end
+  vim.cmd('normal! h')
+  while in_indent() and not_fit_indent() do
+    vim.cmd('normal! h')
+  end
+end
 
-function! s:quantized_l(cnt = 1) abort
-if a:cnt > 1 || !&expandtab
-execute printf('normal! %sl', a:cnt)
-return
-endif
-normal! l
-while s:in_indent() && s:not_fit_indent()
-normal! l
-endwhile
-endfunction
+function Quantized_l(cnt)
+  cnt = cnt or 1
+  if cnt > 1 or not vim.o.expandtab then
+    vim.cmd(string.format('normal! %sl', cnt))
+    return
+  end
+  vim.cmd('normal! l')
+  while in_indent() and not_fit_indent() do
+    vim.cmd('normal! l')
+  end
+end
 
-noremap h <cmd>call <sid>quantized_h(v:count1)<cr>
-noremap l <cmd>call <sid>quantized_l(v:count1)<cr>
-]])
+vim.api.nvim_set_keymap('n', 'h', '<cmd>lua Quantized_h(vim.v.count1)<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'l', '<cmd>lua Quantized_l(vim.v.count1)<CR>', { noremap = true, silent = true })
 
 -- do not copy when deleting by x
 vim.keymap.set({ 'n', 'x' }, 'x', '"_x')
