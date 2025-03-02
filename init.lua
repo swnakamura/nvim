@@ -2388,9 +2388,13 @@ $0
     cond = not vim.g.is_vscode,
     "folke/zen-mode.nvim",
     event = 'VeryLazy',
-    config = function()
-      vim.keymap.set('n', '<leader>z', function()
-        require("zen-mode").toggle({
+    opts ={
+          on_open = function()
+            vim.cmd('SatelliteDisable')
+          end,
+          on_close = function()
+            vim.cmd('SatelliteEnable')
+          end,
           plugins = {
             options = {
               ruler = false,
@@ -2398,7 +2402,10 @@ $0
               laststatus = 0,
             }
           }
-        })
+        },
+    config = function()
+      vim.keymap.set('n', '<leader>z', function()
+        vim.cmd('ZenMode')
       end, { desc = 'Zen mode' })
     end,
   },
