@@ -3249,7 +3249,7 @@ vim.keymap.set('n', toggle_prefix .. 'd',     [[<Cmd>if !&diff | diffthis | else
 vim.keymap.set('n', toggle_prefix .. 'c',     [[<Cmd>if &conceallevel > 0 | set conceallevel=0 | else | set conceallevel=2 | endif | set conceallevel?<CR>]], { silent = true, desc = 'toggle conceallevel' })
 vim.keymap.set('n', toggle_prefix .. 'y',     [[<Cmd>if &clipboard == 'unnamedplus' | set clipboard=| else | set clipboard=unnamedplus | endif | set clipboard?<CR>]], { silent = true, desc = 'toggle clipboard' })
 vim.keymap.set('n', toggle_prefix .. 'n',     [[<Cmd>call Toggle_syntax()<CR>]], { silent = true, desc = 'toggle syntax' })
-vim.keymap.set('n', toggle_prefix .. 'n',     [[<Cmd>call Toggle_noice()<CR>]], { silent = true, desc = 'toggle noice' })
+vim.keymap.set('n', toggle_prefix .. 'n',     [[<Cmd>lua Toggle_noice()<CR>]], { silent = true, desc = 'toggle noice' })
 vim.cmd([[
   function! Toggle_syntax() abort
   if exists('g:syntax_on')
@@ -3262,19 +3262,19 @@ vim.cmd([[
   echo 'syntax on'
   endif
   endfunction
-  let g:is_noice_enabled = v:true
-  function Toggle_noice() abort
-  if g:is_noice_enabled
-  let g:is_noice_enabled=v:false
-  Noice disable
-  set cmdheight=1
-  echomsg 'noice disabled'
-  else
-  let g:is_noice_enabled=v:true
-  Noice enable
-  echomsg 'noice enabled'
-  endif
-  endfunction
 ]])
+vim.g.is_noice_enabled = true
+Toggle_noice = function()
+  if vim.g.is_noice_enabled then
+    vim.g.is_noice_enabled = false
+    vim.cmd('Noice disable')
+    vim.opt.cmdheight=1
+    print('Noice disabled')
+  else
+    vim.g.is_noice_enabled = true
+    vim.cmd('Noice enable')
+    print('Noice enabled')
+  end
+end
 
 -- vim: ts=2 sts=2 sw=2 et
