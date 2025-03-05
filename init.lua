@@ -165,7 +165,6 @@ local treesitter_filetypes = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'go', 'html'
 require('lazy').setup({
 
   {
-    cond = false,
     "folke/noice.nvim",
     event = "VeryLazy",
     opts = {
