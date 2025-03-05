@@ -3240,16 +3240,16 @@ vim.keymap.set({'n', 'i'}, '<F2>', require('japanese_input').toggle_IME, { norem
 
 -- [[ toggle/switch settings with local leader ]]
 local toggle_prefix = [[\]]
-vim.keymap.set('n', toggle_prefix .. 's',     '<Cmd>setl spell! spell?<CR>', { silent = true })
-vim.keymap.set('n', toggle_prefix .. 'l',     '<Cmd>setl list! list?<CR>', { silent = true })
-vim.keymap.set('n', toggle_prefix .. 't',     '<Cmd>setl expandtab! expandtab?<CR>', { silent = true })
-vim.keymap.set('n', toggle_prefix .. 'w',     '<Cmd>setl wrap! wrap?<CR>', { silent = true })
-vim.keymap.set('n', toggle_prefix .. 'b',     '<Cmd>setl cursorbind! cursorbind?<CR>', { silent = true })
-vim.keymap.set('n', toggle_prefix .. 'd',     [[<Cmd>if !&diff | diffthis | else | diffoff | endif | set diff?<CR>]], { silent = true })
-vim.keymap.set('n', toggle_prefix .. 'c',     [[<Cmd>if &conceallevel > 0 | set conceallevel=0 | else | set conceallevel=2 | endif | set conceallevel?<CR>]], { silent = true })
-vim.keymap.set('n', toggle_prefix .. 'y',     [[<Cmd>if &clipboard == 'unnamedplus' | set clipboard=| else | set clipboard=unnamedplus | endif | set clipboard?<CR>]], { silent = true })
-vim.keymap.set('n', toggle_prefix .. 'n',     [[<Cmd>call Toggle_syntax()<CR>]], { silent = true })
-vim.keymap.set('n', toggle_prefix .. 'n',     [[<Cmd>call Toggle_noice()<CR>]], { silent = true })
+vim.keymap.set('n', toggle_prefix .. 's',     '<Cmd>setl spell! spell?<CR>', { silent = true, desc = 'toggle spell' })
+vim.keymap.set('n', toggle_prefix .. 'l',     '<Cmd>setl list! list?<CR>', { silent = true, desc = 'toggle list' })
+vim.keymap.set('n', toggle_prefix .. 't',     '<Cmd>setl expandtab! expandtab?<CR>', { silent = true, desc = 'toggle expandtab' })
+vim.keymap.set('n', toggle_prefix .. 'w',     '<Cmd>setl wrap! wrap?<CR>', { silent = true, desc = 'toggle wrap' })
+vim.keymap.set('n', toggle_prefix .. 'b',     '<Cmd>setl cursorbind! cursorbind?<CR>', { silent = true, desc = 'toggle cursorbind' })
+vim.keymap.set('n', toggle_prefix .. 'd',     [[<Cmd>if !&diff | diffthis | else | diffoff | endif | set diff?<CR>]], { silent = true, desc = 'toggle diff' })
+vim.keymap.set('n', toggle_prefix .. 'c',     [[<Cmd>if &conceallevel > 0 | set conceallevel=0 | else | set conceallevel=2 | endif | set conceallevel?<CR>]], { silent = true, desc = 'toggle conceallevel' })
+vim.keymap.set('n', toggle_prefix .. 'y',     [[<Cmd>if &clipboard == 'unnamedplus' | set clipboard=| else | set clipboard=unnamedplus | endif | set clipboard?<CR>]], { silent = true, desc = 'toggle clipboard' })
+vim.keymap.set('n', toggle_prefix .. 'n',     [[<Cmd>call Toggle_syntax()<CR>]], { silent = true, desc = 'toggle syntax' })
+vim.keymap.set('n', toggle_prefix .. 'n',     [[<Cmd>call Toggle_noice()<CR>]], { silent = true, desc = 'toggle noice' })
 vim.cmd([[
   function! Toggle_syntax() abort
   if exists('g:syntax_on')
