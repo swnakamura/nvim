@@ -3245,9 +3245,9 @@ vim.keymap.set('n', toggle_prefix .. 'l',     '<Cmd>setl list! list?<CR>', { sil
 vim.keymap.set('n', toggle_prefix .. 't',     '<Cmd>setl expandtab! expandtab?<CR>', { silent = true })
 vim.keymap.set('n', toggle_prefix .. 'w',     '<Cmd>setl wrap! wrap?<CR>', { silent = true })
 vim.keymap.set('n', toggle_prefix .. 'b',     '<Cmd>setl cursorbind! cursorbind?<CR>', { silent = true })
-vim.keymap.set('n', toggle_prefix .. 'd',     [[<Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>]], { silent = true })
-vim.keymap.set('n', toggle_prefix .. 'c',     [[<Cmd>if &conceallevel > 0 \| set conceallevel=0 \| else \| set conceallevel=2 \| endif \| set conceallevel?<CR>]], { silent = true })
-vim.keymap.set('n', toggle_prefix .. 'y',     [[<Cmd>if &clipboard == 'unnamedplus' \| set clipboard=\| else \| set clipboard=unnamedplus \| endif \| set clipboard?<CR>]], { silent = true })
+vim.keymap.set('n', toggle_prefix .. 'd',     [[<Cmd>if !&diff | diffthis | else | diffoff | endif | set diff?<CR>]], { silent = true })
+vim.keymap.set('n', toggle_prefix .. 'c',     [[<Cmd>if &conceallevel > 0 | set conceallevel=0 | else | set conceallevel=2 | endif | set conceallevel?<CR>]], { silent = true })
+vim.keymap.set('n', toggle_prefix .. 'y',     [[<Cmd>if &clipboard == 'unnamedplus' | set clipboard=| else | set clipboard=unnamedplus | endif | set clipboard?<CR>]], { silent = true })
 vim.keymap.set('n', toggle_prefix .. 'n',     [[<Cmd>call Toggle_syntax()<CR>]], { silent = true })
 vim.keymap.set('n', toggle_prefix .. 'n',     [[<Cmd>call Toggle_noice()<CR>]], { silent = true })
 vim.cmd([[
