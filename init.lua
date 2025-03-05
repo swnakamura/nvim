@@ -3248,21 +3248,7 @@ vim.keymap.set('n', toggle_prefix .. 'b',     '<Cmd>setl cursorbind! cursorbind?
 vim.keymap.set('n', toggle_prefix .. 'd',     [[<Cmd>if !&diff | diffthis | else | diffoff | endif | set diff?<CR>]], { silent = true, desc = 'toggle diff' })
 vim.keymap.set('n', toggle_prefix .. 'c',     [[<Cmd>if &conceallevel > 0 | set conceallevel=0 | else | set conceallevel=2 | endif | set conceallevel?<CR>]], { silent = true, desc = 'toggle conceallevel' })
 vim.keymap.set('n', toggle_prefix .. 'y',     [[<Cmd>if &clipboard == 'unnamedplus' | set clipboard=| else | set clipboard=unnamedplus | endif | set clipboard?<CR>]], { silent = true, desc = 'toggle clipboard' })
-vim.keymap.set('n', toggle_prefix .. 'n',     [[<Cmd>call Toggle_syntax()<CR>]], { silent = true, desc = 'toggle syntax' })
 vim.keymap.set('n', toggle_prefix .. 'n',     [[<Cmd>lua Toggle_noice()<CR>]], { silent = true, desc = 'toggle noice' })
-vim.cmd([[
-  function! Toggle_syntax() abort
-  if exists('g:syntax_on')
-  syntax off
-  redraw
-  echo 'syntax off'
-  else
-  syntax on
-  redraw
-  echo 'syntax on'
-  endif
-  endfunction
-]])
 vim.g.is_noice_enabled = true
 Toggle_noice = function()
   if vim.g.is_noice_enabled then
