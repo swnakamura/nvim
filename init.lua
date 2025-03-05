@@ -6,7 +6,7 @@ local fn = vim.fn
 vim.g.loaded_netrwPlugin = true
 
 vim.g.mapleader = " "
-vim.g.maplocalleader = "<C-space>"
+vim.g.maplocalleader = [[\]]
 
 -- Install lazy.nvim (package manager)
 local lazypath = fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -3242,28 +3242,26 @@ vim.keymap.set({'n', 'i'}, '<F2>', require('japanese_input').toggle_IME, { norem
 
 -- [[ toggle/switch settings with local leader ]]
 vim.cmd([[
-  nnoremap <Plug>(my-toggle) <Nop>
-  nmap <localleader> <Plug>(my-toggle)
-  nnoremap <silent> <Plug>(my-toggle)s     <Cmd>setl spell! spell?<CR>
-  nnoremap <silent> <Plug>(my-toggle)<C-s> <Cmd>setl spell! spell?<CR>
-  nnoremap <silent> <Plug>(my-toggle)l     <Cmd>setl list! list?<CR>
-  nnoremap <silent> <Plug>(my-toggle)<C-l> <Cmd>setl list! list?<CR>
-  nnoremap <silent> <Plug>(my-toggle)t     <Cmd>setl expandtab! expandtab?<CR>
-  nnoremap <silent> <Plug>(my-toggle)<C-t> <Cmd>setl expandtab! expandtab?<CR>
-  nnoremap <silent> <Plug>(my-toggle)w     <Cmd>setl wrap! wrap?<CR>
-  nnoremap <silent> <Plug>(my-toggle)<C-w> <Cmd>setl wrap! wrap?<CR>
-  nnoremap <silent> <Plug>(my-toggle)b     <Cmd>setl cursorbind! cursorbind?<CR>
-  nnoremap <silent> <Plug>(my-toggle)<C-b> <Cmd>setl cursorbind! cursorbind?<CR>
-  nnoremap <silent> <Plug>(my-toggle)d     <Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>
-  nnoremap <silent> <Plug>(my-toggle)<C-d> <Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>
-  nnoremap <silent> <Plug>(my-toggle)c     <Cmd>if &conceallevel > 0 \| set conceallevel=0 \| else \| set conceallevel=2 \| endif \| set conceallevel?<CR>
-  nnoremap <silent> <Plug>(my-toggle)<C-c> <Cmd>if &conceallevel > 0 \| set conceallevel=0 \| else \| set conceallevel=2 \| endif \| set conceallevel?<CR>
-  nnoremap <silent> <Plug>(my-toggle)y     <Cmd>if &clipboard == 'unnamedplus' \| set clipboard=\| else \| set clipboard=unnamedplus \| endif \| set clipboard?<CR>
-  nnoremap <silent> <Plug>(my-toggle)<C-y> <Cmd>if &clipboard == 'unnamedplus' \| set clipboard=\| else \| set clipboard=unnamedplus \| endif \| set clipboard?<CR>
-  nnoremap <silent> <Plug>(my-toggle)n     <Cmd>call Toggle_syntax()<CR>
-  nnoremap <silent> <Plug>(my-toggle)<C-n> <Cmd>call Toggle_syntax()<CR>
-  "nnoremap <silent> <Plug>(my-toggle)n     <Cmd>call Toggle_noice()<CR>
-  "nnoremap <silent> <Plug>(my-toggle)<C-n> <Cmd>call Toggle_noice()<CR>
+  nnoremap <silent> <localleader>s     <Cmd>setl spell! spell?<CR>
+  nnoremap <silent> <localleader><C-s> <Cmd>setl spell! spell?<CR>
+  nnoremap <silent> <localleader>l     <Cmd>setl list! list?<CR>
+  nnoremap <silent> <localleader><C-l> <Cmd>setl list! list?<CR>
+  nnoremap <silent> <localleader>t     <Cmd>setl expandtab! expandtab?<CR>
+  nnoremap <silent> <localleader><C-t> <Cmd>setl expandtab! expandtab?<CR>
+  nnoremap <silent> <localleader>w     <Cmd>setl wrap! wrap?<CR>
+  nnoremap <silent> <localleader><C-w> <Cmd>setl wrap! wrap?<CR>
+  nnoremap <silent> <localleader>b     <Cmd>setl cursorbind! cursorbind?<CR>
+  nnoremap <silent> <localleader><C-b> <Cmd>setl cursorbind! cursorbind?<CR>
+  nnoremap <silent> <localleader>d     <Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>
+  nnoremap <silent> <localleader><C-d> <Cmd>if !&diff \| diffthis \| else \| diffoff \| endif \| set diff?<CR>
+  nnoremap <silent> <localleader>c     <Cmd>if &conceallevel > 0 \| set conceallevel=0 \| else \| set conceallevel=2 \| endif \| set conceallevel?<CR>
+  nnoremap <silent> <localleader><C-c> <Cmd>if &conceallevel > 0 \| set conceallevel=0 \| else \| set conceallevel=2 \| endif \| set conceallevel?<CR>
+  nnoremap <silent> <localleader>y     <Cmd>if &clipboard == 'unnamedplus' \| set clipboard=\| else \| set clipboard=unnamedplus \| endif \| set clipboard?<CR>
+  nnoremap <silent> <localleader><C-y> <Cmd>if &clipboard == 'unnamedplus' \| set clipboard=\| else \| set clipboard=unnamedplus \| endif \| set clipboard?<CR>
+  nnoremap <silent> <localleader>n     <Cmd>call Toggle_syntax()<CR>
+  nnoremap <silent> <localleader><C-n> <Cmd>call Toggle_syntax()<CR>
+  nnoremap <silent> <localleader>n     <Cmd>call Toggle_noice()<CR>
+  nnoremap <silent> <localleader><C-n> <Cmd>call Toggle_noice()<CR>
   function! Toggle_syntax() abort
   if exists('g:syntax_on')
   syntax off
