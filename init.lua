@@ -2011,6 +2011,11 @@ $0
     event = 'VeryLazy',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
+      local isRecordingMacro = function()
+        local reg = vim.fn.reg_recording()
+        if reg == "" then return "" end -- not recording
+        return "   Recording [" .. reg .. "]"
+      end
       require('lualine').setup {
         options = {
           icons_enabled = true,
@@ -2033,7 +2038,7 @@ $0
           }
         },
         sections = {
-          lualine_a = {'mode'},
+          lualine_a = { isRecordingMacro, 'mode' },
           lualine_b = { 'encoding', 'fileformat', 'filetype', 'progress', 'location', 'filename' },
           lualine_c = { 'branch', 'diff', 'diagnostics' },
           lualine_x = {},
