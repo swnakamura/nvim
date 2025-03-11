@@ -316,12 +316,14 @@ require('lazy').setup({
     },
     keys = {
       {'<leader>gs'},
+      {'gs'},
       {'<leader>ga'},
       {'<leader>gc'},
       {'<leader>gl'}
     },
     config = function()
       vim.keymap.set("n", "<leader>gs", function() require('neogit').open() end, { desc = "Git status (neogit)"})
+      vim.keymap.set("n", "gs",         function() require('neogit').open() end, { desc = "Git status (neogit)"})
       vim.keymap.set("n", "<leader>ga", '<cmd>silent !git add %<CR>', {silent = true, desc = "Git add current file"})
       vim.keymap.set("n", "<leader>gc", require('neogit').action('commit', 'commit', {'--verbose'}), {silent = true, desc = "Git commit"}) -- TODO: wrapping this command with function enables lazy loading of neogit, but it results in an error
       vim.keymap.set("n", "<leader>gl", require('neogit').action('log', 'log_all_branches', {'--graph', '--topo-order', '--decorate'}), {silent = true, desc = "Git log"})
