@@ -3118,43 +3118,29 @@ api.nvim_create_autocmd('CursorMoved', {
   callback = VisualMatch
 })
 
-vim.cmd([[
-" 単語を自動でハイライトする
-augroup cursor-word-highlight
-au!
-autocmd CursorHold * call Wordmatch()
-autocmd InsertEnter * call DelWordmatch()
-augroup END
+vim.cmd([[hi CursorWord guibg=#2a2e41]])
+WordMatch = function()
+  if vim.tbl_contains({ 'fern', 'neo-tree', 'floaterm', 'oil', 'org', 'NeogitStatus' }, vim.bo.filetype) then
+    return
+  end
+  DelWordMatch()
+  if vim.o.hlsearch then
+    return
+  end
 
-function! Wordmatch()
-if index(['fern','neo-tree','floaterm','oil','org','NeogitStatus'], &ft) != -1
-return
-endif
-call DelWordmatch()
-if &hlsearch
-" avoid interfering with hlsearch
-return
-endif
+  local cursorword = fn.expand('<cword>'):escape('\\')
+  if cursorword == '' then
+    return
+  end
+  vim.w.wordmatch_id = fn.matchadd('CursorWord', [[\V\<]] .. cursorword .. [[\>]])
+end
 
-let w:cursorword = expand('<cword>')->escape('\')
-if w:cursorword != ''
-let w:wordmatch_id =  matchadd('CursorWord','\V\<' .. w:cursorword .. '\>')
-endif
-
-" if exists('w:wordmatch_tid')
-"     call timer_stop(w:wordmatch_tid)
-"     unlet w:wordmatch_tid
-" endif
-" let w:wordmatch_tid = timer_start(200, 'DelWordmatch')
-endfunction
-
-function! DelWordmatch(...)
-if exists('w:wordmatch_id')
-call matchdelete(w:wordmatch_id)
-unlet w:wordmatch_id
-endif
-endfunction
-]])
+DelWordMatch = function()
+  if vim.w.wordmatch_id then
+    fn.matchdelete(vim.w.wordmatch_id)
+    vim.w.wordmatch_id = nil
+  end
+end
 
 vim.cmd([[
 augroup numbertoggle
