@@ -195,7 +195,7 @@ require('lazy').setup({
       -- OPTIONAL:
       --   `nvim-notify` is only needed, if you want to use the notification view.
       --   If not available, we use `mini` as the fallback
-      "rcarriga/nvim-notify",
+      -- "rcarriga/nvim-notify",
     },
   },
 
@@ -2013,11 +2013,6 @@ $0
     event = 'VeryLazy',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      local isRecordingMacro = function()
-        local reg = vim.fn.reg_recording()
-        if reg == "" then return "" end -- not recording
-        return "   Recording [" .. reg .. "]"
-      end
       require('lualine').setup {
         options = {
           icons_enabled = true,
@@ -2040,9 +2035,23 @@ $0
           }
         },
         sections = {
-          lualine_a = { isRecordingMacro, 'mode' },
+          lualine_a = { 
+              'mode',
+              {
+                require("noice").api.status.mode.get,
+                cond = function()
+                  return require("noice").api.status.mode.has() and vim.fn.reg_recording() ~= ""
+                end,
+                color = { fg = "#ff9e64" },
+              },
+            },
           lualine_b = { 'encoding', 'fileformat', 'filetype', 'progress', 'location', 'filename' },
-          lualine_c = { 'branch', 'diff', 'diagnostics' },
+          lualine_c = { 'branch', 'diff', 'diagnostics',
+            {
+              require("noice").api.status.message.get,
+              cond = require("noice").api.status.message.has,
+            },
+          },
           lualine_x = {},
           lualine_y = {},
           lualine_z = {}
@@ -3047,14 +3056,6 @@ au FileType csv,tsv,json                          setlocal synmaxcol=256
 "  インデントの有りそうなファイルならbreakindent
 au FileType c,cpp,rust,go,python,lua,bash,vim,tex,markdown setlocal breakindent
 augroup END
-
-" used in 'ftplugin/python.vim' etc
-function! Preserve(command)
-let l:curw = winsaveview()
-execute a:command
-call winrestview(l:curw)
-return ''
-endfunction
 
 " / as file completion when in <c-x><c-f> completion
 " https://zenn.dev/kawarimidoll/articles/54e38aa7f55aff
