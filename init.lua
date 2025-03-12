@@ -3012,23 +3012,16 @@ vim.keymap.set('n', '<leader>oo', '<cmd>e ~/org/inbox.org<cr>zR')
 vim.keymap.set('n', '<leader>on', '<cmd>e ~/research_vault/notes/note.md<cr>G')
 vim.keymap.set('n', '<leader>oi', '<cmd>e ~/research_vault/weekly-issues/issue.md<cr>')
 
-
-
 -- [[minor functionalities]]
+-- abbreviation for substitution
+vim.cmd([[cnoreabbrev <expr> ss getcmdtype() .. getcmdline() ==# ':ss' ? [getchar(), ''][1] .. "%s///g<Left><Left>" : 'ss']])
+
+-- visual modeで複数行を選択して'/'を押すと，その範囲内での検索を行う
 vim.cmd([[
-" abbreviation for vimgrep
-" nnoremap <leader>vv :<C-u>vimgrep // %:p:h/*<Left><Left><Left><Left><Left><Left><Left><Left><Left>
-
-" abbreviation for substitution
-cnoreabbrev <expr> ss getcmdtype() .. getcmdline() ==# ':ss' ? [getchar(), ''][1] .. "%s///g<Left><Left>" : 'ss'
-
-" visual modeで複数行を選択して'/'を押すと，その範囲内での検索を行う
 xnoremap <expr> / (line('.') == line('v')) ?
 \ '/' :
 \ ((line('.') < line('v')) ? '' : 'o') . "<ESC>" . '/\%>' . (min([line('v'), line('.')])-1) . 'l\%<' . (max([line('v'), line('.')])+1) . 'l'
-
 ]])
-
 
 -- [[autocmd]]
 vim.cmd([[
@@ -3063,7 +3056,9 @@ inoremap <expr> /
 \ complete_info(['mode']).mode == 'files' && complete_info(['selected']).selected >= 0
 \   ? '<c-x><c-f>'
 \   : '/'
+]])
 
+vim.cmd([[
 " 検索中の領域をハイライトする
 augroup vimrc-incsearch-highlight
 au!
@@ -3076,7 +3071,9 @@ nnoremap N N<Cmd>set hlsearch<CR><Cmd>autocmd CursorMoved * ++once set nohlsearc
 au CmdlineLeave /,\? autocmd CursorHold * ++once autocmd CursorMoved * ++once set nohlsearch
 " au CmdlineLeave /,\? set nohlsearch
 augroup END
+]])
 
+vim.cmd([[
 " 選択した領域を自動でハイライトする
 augroup instant-visual-highlight
 au!
@@ -3125,7 +3122,9 @@ else
 let w:visual_match_id = matchadd('VisualMatch', '\V\<' .. text .. '\>', -999)
 endif
 endfunction
+]])
 
+vim.cmd([[
 " 単語を自動でハイライトする
 augroup cursor-word-highlight
 au!
@@ -3161,7 +3160,9 @@ call matchdelete(w:wordmatch_id)
 unlet w:wordmatch_id
 endif
 endfunction
+]])
 
+vim.cmd([[
 augroup numbertoggle
 autocmd!
 autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
