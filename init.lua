@@ -35,9 +35,9 @@ else
 end
 
 if fn.exists('g:vscode') == 1 then
-    vim.g.is_vscode = true
+  vim.g.is_vscode = true
 else
-    vim.g.is_vscode = false
+  vim.g.is_vscode = false
 end
 
 -- check if the window is wide enough and vim is open with an argument to open the neotree explorer
@@ -49,18 +49,18 @@ end
 
 
 if vim.g.is_wsl then
-vim.g.clipboard = {
+  vim.g.clipboard = {
     name = 'WslClipboard',
     copy = {
-        ['+'] = { 'sh', '-c', 'iconv -t sjis | clip.exe' },
-        ['*'] = { 'sh', '-c', 'iconv -t sjis | clip.exe' },
+      ['+'] = { 'sh', '-c', 'iconv -t sjis | clip.exe' },
+      ['*'] = { 'sh', '-c', 'iconv -t sjis | clip.exe' },
     },
     paste = {
-        ['+'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-        ['*'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+      ['+'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+      ['*'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
     },
     cache_enabled = 0,
-}
+  }
 end
 
 
@@ -199,7 +199,7 @@ require('lazy').setup({
     },
   },
 
-    {
+  {
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files
     opts = {
@@ -345,9 +345,9 @@ require('lazy').setup({
     "FabijanZulj/blame.nvim",
     lazy = false,
     opts = {
-        virtual_style = 'float',
-        date_format = "%Y.%m.%d",
-      },
+      virtual_style = 'float',
+      date_format = "%Y.%m.%d",
+    },
     keys = {
       { "<Left>", "<Cmd>BlameToggle<CR>"}
     }
@@ -2036,15 +2036,15 @@ $0
         },
         sections = {
           lualine_a = { 
-              'mode',
-              {
-                require("noice").api.status.mode.get,
-                cond = function()
-                  return require("noice").api.status.mode.has() and vim.fn.reg_recording() ~= ""
-                end,
-                color = { fg = "#ff9e64" },
-              },
+            'mode',
+            {
+              require("noice").api.status.mode.get,
+              cond = function()
+                return require("noice").api.status.mode.has() and vim.fn.reg_recording() ~= ""
+              end,
+              color = { fg = "#ff9e64" },
             },
+          },
           lualine_b = { 'encoding', 'fileformat', 'filetype', 'progress', 'location', 'filename' },
           lualine_c = { 'branch', 'diff', 'diagnostics',
             {
@@ -2406,20 +2406,20 @@ $0
     "folke/zen-mode.nvim",
     event = 'VeryLazy',
     opts ={
-          on_open = function()
-            vim.cmd('SatelliteDisable')
-          end,
-          on_close = function()
-            vim.cmd('SatelliteEnable')
-          end,
-          plugins = {
-            options = {
-              ruler = false,
-              showcmd = false,
-              laststatus = 0,
-            }
-          }
-        },
+      on_open = function()
+        vim.cmd('SatelliteDisable')
+      end,
+      on_close = function()
+        vim.cmd('SatelliteEnable')
+      end,
+      plugins = {
+        options = {
+          ruler = false,
+          showcmd = false,
+          laststatus = 0,
+        }
+      }
+    },
     config = function()
       vim.keymap.set('n', '<leader>z', function()
         vim.cmd('ZenMode')
@@ -3095,7 +3095,7 @@ VisualMatch = function()
   if line'.' == line'v' then
     vim.cmd([[
       let g:text = getline('.')->strcharpart(g:colrange[0]-1, g:colrange[1]-g:colrange[0]+1)->escape('\')
-    ]])
+      ]])
   else
     if line'.' > line'v' then
       vim.g.linerange = { 'v', '.' }
@@ -3107,7 +3107,7 @@ VisualMatch = function()
       let g:lines[0] = g:lines[0]->strcharpart(charcol(g:linerange[0])-1)
       let g:lines[-1] = g:lines[-1]->strcharpart(0,charcol(g:linerange[1]))
       let g:text = g:lines->map({key, line -> line->escape('\')})->join('\n')
-    ]])
+      ]])
   end
   vim.w.visual_match_id = fn.matchadd('VisualMatch', [[\V]] .. vim.g.text, -999)
   return nil
