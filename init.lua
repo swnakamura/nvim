@@ -3073,56 +3073,50 @@ au CmdlineLeave /,\? autocmd CursorHold * ++once autocmd CursorMoved * ++once se
 augroup END
 ]])
 
-vim.cmd([[
-" 選択した領域を自動でハイライトする
-augroup instant-visual-highlight
-au!
-autocmd CursorMoved,CursorHold * call Visualmatch()
-augroup END
+-- 選択した領域を自動でハイライトする
+vim.cmd([[hi link VisualMatch Search]])
+VisualMatch = function()
+  if vim.w.visual_match_id then
+    fn.matchdelete(vim.w.visual_match_id)
+    vim.w.visual_match_id = nil
+  end
 
-hi link VisualMatch Search
-function! Visualmatch()
-if exists("w:visual_match_id")
-call matchdelete(w:visual_match_id)
-unlet w:visual_match_id
-endif
+  local line = fn.line
+  local charcol = fn.charcol
 
-" Don't run for visual block mode
-if index(["\<C-v>"], mode()) == -1
-return
-endif
+  if charcol'.' < charcol'v' then
+    vim.g.colrange = { charcol('.'), charcol('v') }
+  elseif charcol'.' > charcol'v' then
+    vim.g.colrange = { charcol('v'), charcol('.') }
+  else
+    return nil
+  end
 
+  if line'.' == line'v' then
+    vim.cmd([[
+      let g:text = getline('.')->strcharpart(g:colrange[0]-1, g:colrange[1]-g:colrange[0]+1)->escape('\')
+    ]])
+  else
+    if line'.' > line'v' then
+      vim.g.linerange = { 'v', '.' }
+    else
+      vim.g.linerange = { '.', 'v' }
+    end
+    vim.cmd([[
+      let g:lines=getline(g:linerange[0], g:linerange[1])
+      let g:lines[0] = g:lines[0]->strcharpart(charcol(g:linerange[0])-1)
+      let g:lines[-1] = g:lines[-1]->strcharpart(0,charcol(g:linerange[1]))
+      let g:text = g:lines->map({key, line -> line->escape('\')})->join('\n')
+    ]])
+  end
+  vim.w.visual_match_id = fn.matchadd('VisualMatch', [[\V]] .. vim.g.text, -999)
+  return nil
+end
 
-if line('.') == line('v')
-let colrange = charcol('.') < charcol('v') ? [charcol('.'), charcol('v')] : [charcol('v'), charcol('.')]
-let text = getline('.')->strcharpart(colrange[0]-1, colrange[1]-colrange[0]+1)->escape('\')
-elseif mode() == 'v' " multiline matchingはvisual modeのみ
-if line('.') > line('v')
-let linerange = ['v','.']
-else
-let linerange = ['.','v']
-endif
-let lines=getline(linerange[0], linerange[1])
-let lines[0] = lines[0]->strcharpart(charcol(linerange[0])-1)
-let lines[-1] = lines[-1]->strcharpart(0,charcol(linerange[1]))
-let text = lines->map({key, line -> line->escape('\')})->join('\n')
-else
-let text = ''
-endif
-
-" virtualeditの都合でempty textが選択されることがある．
-" この場合全部がハイライトされてしまうので除く
-if text == ''
-return
-endif
-
-if mode() == 'v'
-let w:visual_match_id = matchadd('VisualMatch', '\V' .. text, -999)
-else
-let w:visual_match_id = matchadd('VisualMatch', '\V\<' .. text .. '\>', -999)
-endif
-endfunction
-]])
+api.nvim_create_autocmd('CursorMoved', {
+  pattern = '*',
+  callback = VisualMatch
+})
 
 vim.cmd([[
 " 単語を自動でハイライトする
