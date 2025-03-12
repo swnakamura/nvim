@@ -1,6 +1,7 @@
 vim.loader.enable()
 
 local fn = vim.fn
+local api = vim.api
 
 -- Do not load some of the default plugins
 vim.g.loaded_netrwPlugin = true
@@ -640,6 +641,7 @@ require('lazy').setup({
     dependencies = {
       { "zbirenbaum/copilot.lua" },
       { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
+      -- { "nvim-telescope/telescope-ui-select.nvim" } -- for telescope picker?
     },
     build = "make tiktoken", -- Only on MacOS or Linux
     cmd = { "CopilotChat", "CopilotChatReset" },
@@ -834,14 +836,14 @@ require('lazy').setup({
             -- nmap('<leader>a', '<cmd>Lspsaga outline<cr>', 'Open outline')
 
             -- Create a command `:Format` local to the LSP buffer
-            vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+            api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
               vim.lsp.buf.format()
             end, { desc = 'Format current buffer with LSP' })
             -- vim.keymap.set('n', 'gF', vim.lsp.buf.format)
 
             nmap('<leader>i', function(_)
               vim.lsp.inlay_hint.enable()
-              vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "InsertEnter" }, {
+              api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "InsertEnter" }, {
                 once = true,
                 callback = function()
                   vim.lsp.inlay_hint.enable(false)
@@ -911,19 +913,19 @@ require('lazy').setup({
       'nvim-dap-python',
     },
     config = function()
-      vim.api.nvim_set_keymap('n', '<leader>lu', '<cmd>lua require("dapui").toggle()<CR>', {})
+      api.nvim_set_keymap('n', '<leader>lu', '<cmd>lua require("dapui").toggle()<CR>', {})
 
       -- https://zenn.dev/kawat/articles/51f9cc1f0f0aa9 を参考
-      vim.api.nvim_set_keymap('n', '<F6>', '<cmd>DapContinue<CR>', { silent = true })
-      vim.api.nvim_set_keymap('n', '<F10>', '<cmd>DapStepOver<CR>', { silent = true })
-      vim.api.nvim_set_keymap('n', '<F11>', '<cmd>DapStepInto<CR>', { silent = true })
-      vim.api.nvim_set_keymap('n', '<F12>', '<cmd>DapStepOut<CR>', { silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>b', '<cmd>DapToggleBreakpoint<CR>', { silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>B', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Breakpoint condition: "))<CR>', { silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>lp', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>le', '<cmd>lua require("dapui").eval()<CR>', { silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>Dr', '<cmd>lua require("dap").repl.open()<CR>', { silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>Dl', '<cmd>lua require("dap").run_last()<CR>', { silent = true })
+      api.nvim_set_keymap('n', '<F6>', '<cmd>DapContinue<CR>', { silent = true })
+      api.nvim_set_keymap('n', '<F10>', '<cmd>DapStepOver<CR>', { silent = true })
+      api.nvim_set_keymap('n', '<F11>', '<cmd>DapStepInto<CR>', { silent = true })
+      api.nvim_set_keymap('n', '<F12>', '<cmd>DapStepOut<CR>', { silent = true })
+      api.nvim_set_keymap('n', '<leader>b', '<cmd>DapToggleBreakpoint<CR>', { silent = true })
+      api.nvim_set_keymap('n', '<leader>B', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Breakpoint condition: "))<CR>', { silent = true })
+      api.nvim_set_keymap('n', '<leader>lp', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { silent = true })
+      api.nvim_set_keymap('n', '<leader>le', '<cmd>lua require("dapui").eval()<CR>', { silent = true })
+      api.nvim_set_keymap('n', '<leader>Dr', '<cmd>lua require("dap").repl.open()<CR>', { silent = true })
+      api.nvim_set_keymap('n', '<leader>Dl', '<cmd>lua require("dap").run_last()<CR>', { silent = true })
     end
 
   },
@@ -956,7 +958,7 @@ require('lazy').setup({
         -- tex = { 'proselint' },
         -- python = { 'cspell' }
       }
-      vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+      api.nvim_create_autocmd({ "BufWritePost" }, {
         callback = function()
           require("lint").try_lint()
         end,
@@ -1071,7 +1073,7 @@ require('lazy').setup({
         -- 1. Not in text file insert mode
         -- 2. Not in prompt
         local is_text = vim.bo.filetype == 'text'
-        local is_insert = vim.api.nvim_get_mode().mode == 'i'
+        local is_insert = api.nvim_get_mode().mode == 'i'
         return not (is_text and is_insert) and vim.bo.buftype ~= "prompt"
       end,
 
@@ -1171,7 +1173,7 @@ require('lazy').setup({
     event = "VeryLazy",
     opts = {},
     config = function(_, opts)
-      vim.api.nvim_create_autocmd("LspAttach", {
+      api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
           local bufnr = args.buf
           local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -1582,9 +1584,9 @@ $0
               local path = node:get_id()
               path = fn.shellescape(path, 1)
               if vim.g.is_macos then
-                vim.api.nvim_command("silent !open -g " .. path)
+                api.nvim_command("silent !open -g " .. path)
               else
-                vim.api.nvim_command("silent !xdg-open " .. path)
+                api.nvim_command("silent !xdg-open " .. path)
               end
             end,
           },
@@ -1824,7 +1826,7 @@ $0
     'dhruvasagar/vim-table-mode',
     ft = 'markdown',
     config = function()
-      vim.api.nvim_create_autocmd({ "FileType" }, {
+      api.nvim_create_autocmd({ "FileType" }, {
         pattern = "markdown",
         callback = function()
           vim.keymap.set('n', '<C-t>', '<cmd>TableModeToggle<cr>', { buffer = 0 })
@@ -2106,10 +2108,10 @@ $0
       }
 
       -- To avoid entering insert mode after search
-      vim.api.nvim_create_autocmd("WinLeave", {
+      api.nvim_create_autocmd("WinLeave", {
         callback = function()
           if vim.bo.ft == "TelescopePrompt" and fn.mode() == "i" then
-            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "i", false)
+            api.nvim_feedkeys(api.nvim_replace_termcodes("<Esc>", true, false, true), "i", false)
           end
         end,
       })
@@ -2421,13 +2423,13 @@ $0
     cond = false,
     'https://github.com/subnut/nvim-ghost.nvim',
     init = function()
-      vim.api.nvim_create_augroup('nvim-ghost-user-autocmd', {})
-      vim.api.nvim_create_autocmd('User', {
+      api.nvim_create_augroup('nvim-ghost-user-autocmd', {})
+      api.nvim_create_autocmd('User', {
         pattern = { 'www.reddit.com', 'www.stackoverflow.com', 'github.com' },
         command = 'set filetype=markdown',
         group = 'nvim-ghost-user-autocmd'
       })
-      vim.api.nvim_create_autocmd('User', {
+      api.nvim_create_autocmd('User', {
         pattern = { 'www.overleaf.com' },
         command = 'set filetype=tex',
         group = 'nvim-ghost-user-autocmd'
@@ -2491,7 +2493,7 @@ $0
         org_agenda_span = 'week',
       })
       -- settings for org files
-      vim.api.nvim_create_autocmd("FileType", {
+      api.nvim_create_autocmd("FileType", {
         pattern = "org",
         callback = function()
           vim.keymap.set('i', "<C-CR>",
@@ -2515,26 +2517,26 @@ $0
         end
       })
       -- q to quit in org agenda
-      vim.api.nvim_create_autocmd("FileType", {
+      api.nvim_create_autocmd("FileType", {
         pattern = "orgagenda",
         callback = function()
           vim.keymap.set('n', "q", '<cmd>q<cr>', { buffer = true })
         end
       })
       -- highlight settings for org agenda
-      vim.api.nvim_create_autocmd('FileType', {
+      api.nvim_create_autocmd('FileType', {
         pattern = { '*' },
         callback = function()
           -- Define own colors
           -- colors for day separation
-          vim.api.nvim_set_hl(0, '@org.agenda.day', { link = 'DiffAdd' })
+          api.nvim_set_hl(0, '@org.agenda.day', { link = 'DiffAdd' })
           -- colors for deadline and scheduled
-          vim.api.nvim_set_hl(0, '@org.agenda.deadline', { link = 'ErrorMsg' })
-          vim.api.nvim_set_hl(0, '@org.agenda.scheduled', { link = 'SpecialKey' })
+          api.nvim_set_hl(0, '@org.agenda.deadline', { link = 'ErrorMsg' })
+          api.nvim_set_hl(0, '@org.agenda.scheduled', { link = 'SpecialKey' })
           -- colors for done (by default it is white and hard to read)
-          vim.api.nvim_set_hl(0, '@org.keyword.done', { link = 'SpecialKey' })
+          api.nvim_set_hl(0, '@org.keyword.done', { link = 'SpecialKey' })
           -- Link to another highlight group
-          -- vim.api.nvim_set_hl(0, '@org.agenda.scheduled_past', { link = 'Statement' })
+          -- api.nvim_set_hl(0, '@org.agenda.scheduled_past', { link = 'Statement' })
         end
       })
     end,
@@ -2550,8 +2552,8 @@ $0
     'chentoast/marks.nvim',
     config = function()
       require('marks').setup({})
-      vim.api.nvim_set_hl(0, 'MarkSignHL', { link = "CursorLineNr" })
-      vim.api.nvim_set_hl(0, 'MarkSignNumHL', { link = "LineNr" })
+      api.nvim_set_hl(0, 'MarkSignHL', { link = "CursorLineNr" })
+      api.nvim_set_hl(0, 'MarkSignNumHL', { link = "LineNr" })
     end
   },
 
@@ -2774,7 +2776,7 @@ vim.keymap.set({ 'n', 'v' }, '<leader><leader>', '<C-^>')
 -- vim.keymap.set('t', '<C-[>', [[<C-\><C-n><C-w><C-k>]], { silent = true })
 vim.keymap.set('t', '<C-l>', [[<C-\><C-n>]], { silent = true })
 -- enter insert mode when entering terminal buffer
-vim.api.nvim_create_autocmd("BufEnter", {
+api.nvim_create_autocmd("BufEnter", {
   callback = function()
     -- if entered to termianl buffer, enter insert mode
     if vim.bo.buftype == 'terminal' then
@@ -2817,8 +2819,8 @@ function Quantized_l(cnt)
   end
 end
 
-vim.api.nvim_set_keymap('n', 'h', '<cmd>lua Quantized_h(vim.v.count1)<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'l', '<cmd>lua Quantized_l(vim.v.count1)<CR>', { noremap = true, silent = true })
+api.nvim_set_keymap('n', 'h', '<cmd>lua Quantized_h(vim.v.count1)<CR>', { noremap = true, silent = true })
+api.nvim_set_keymap('n', 'l', '<cmd>lua Quantized_l(vim.v.count1)<CR>', { noremap = true, silent = true })
 
 -- do not copy when deleting by x
 vim.keymap.set({ 'n', 'x' }, 'x', '"_x')
@@ -2886,8 +2888,8 @@ vim.keymap.set('n', '<leader>qs', '<Cmd>update<cr><cmd>quit<CR>')
 vim.keymap.set('n', '<leader>qQ', '<Cmd>quitall!<CR>')
 
 -- On certain files, quit by <leader>q
-vim.api.nvim_create_augroup('bdel-quit', {})
-vim.api.nvim_create_autocmd('FileType', {
+api.nvim_create_augroup('bdel-quit', {})
+api.nvim_create_autocmd('FileType', {
   pattern = { 'gitcommit', 'lazy', 'help', 'man', 'noice', 'lspinfo', 'qf' },
   callback = function()
     vim.keymap.set('n', '<leader>q', '<Cmd>q<CR>', { buffer = true })
@@ -2896,8 +2898,8 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 -- On git commit message file, set colorcolumn at 51
-vim.api.nvim_create_augroup('gitcommit-colorcolumn', {})
-vim.api.nvim_create_autocmd('FileType', {
+api.nvim_create_augroup('gitcommit-colorcolumn', {})
+api.nvim_create_autocmd('FileType', {
   pattern = 'gitcommit',
   command = 'setlocal colorcolumn=51,+1',
   group = 'gitcommit-colorcolumn'
@@ -2967,8 +2969,8 @@ vim.keymap.set({ 'i', 'c' }, '<C-E>', '<End>')
 -- Open quickfix window
 -- nnoremap Q <Cmd>copen<CR>
 -- autocmd for quickfix window
-vim.api.nvim_create_augroup('quick-fix-window', {})
-vim.api.nvim_create_autocmd('FileType', {
+api.nvim_create_augroup('quick-fix-window', {})
+api.nvim_create_autocmd('FileType', {
   pattern = 'qf',
   callback = function()
     vim.keymap.set('n', 'p', '<CR>zz<C-w>p', { buffer = true })
@@ -2985,8 +2987,8 @@ vim.api.nvim_create_autocmd('FileType', {
   group = 'quick-fix-window'
 })
 
-vim.api.nvim_create_augroup('markdown-mapping', {})
-vim.api.nvim_create_autocmd('FileType', {
+api.nvim_create_augroup('markdown-mapping', {})
+api.nvim_create_autocmd('FileType', {
   pattern = 'markdown',
   callback = function()
     vim.keymap.set('v', '<C-b>', '<Plug>(operator-surround-append)d*', { buffer = true, silent = true })
