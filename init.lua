@@ -3221,6 +3221,31 @@ autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup='DiffText', ti
 augroup END
 ]])
 
+-- [[ ftplugins ]]
+-- python
+api.nvim_create_autocmd(
+  'FileType',
+  {
+    pattern='python',
+    callback=function()
+      vim.wo.foldmethod = 'indent'
+      function Preserve(command)
+        local curw = vim.fn.winsaveview()
+        vim.api.nvim_exec2(command, {output = true})
+        vim.fn.winrestview(curw)
+        return
+      end
+      function FormatPython()
+        vim.cmd('update')
+        Preserve(':silent %!ruff format --line-length=140 -')
+        Preserve(':silent %!ruff check --fix-only -q --extend-select I -')
+        vim.cmd('update')
+      end
+      vim.keymap.set('n', 'gF', FormatPython, { buffer = true })
+    end
+  })
+
+-- [[ Float keymap (jump until non-whitespace is found) ]]
 Float = function(up)
   local curpos = fn.getcurpos()
   -- 現在位置に文字がある間……
