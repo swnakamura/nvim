@@ -3247,17 +3247,105 @@ vim.keymap.set({ 'n', 'v' }, '<leader>j', [[<Cmd>lua Float(1)<CR>]])
 vim.keymap.set({'n', 'i'}, '<F2>', require('japanese_input').toggle_IME, { noremap = true, silent = true, expr = true })
 
 
+-- [[ autosave ]]
+local delay = 250 -- ms
+
+local autosave = api.nvim_create_augroup("autosave", { clear = true })
+-- Initialization
+api.nvim_create_autocmd("BufRead", {
+    pattern = "*",
+    group = autosave,
+    callback = function(ctx)
+        api.nvim_buf_set_var(ctx.buf, "autosave_enabled", true)
+        api.nvim_buf_set_var(ctx.buf, "autosave_queued", false)
+        api.nvim_buf_set_var(ctx.buf, "autosave_block", false)
+    end,
+})
+
+api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
+    pattern = "*",
+    group = autosave,
+    callback = function(ctx)
+        -- conditions that donnot do autosave
+        local disabled_ft = { "acwrite", "oil", "yazi", "neo-tree" }
+        if
+            not vim.bo.modified
+            or fn.findfile(ctx.file, ".") == "" -- a new file
+            or ctx.file:match("wezterm.lua")
+            or vim.tbl_contains(disabled_ft, vim.bo[ctx.buf].ft)
+            or not api.nvim_buf_get_var(ctx.buf, "autosave_enabled")
+        then
+            return
+        end
+
+        local ok, queued = pcall(api.nvim_buf_get_var, ctx.buf, "autosave_queued")
+        if not ok then
+            return
+        end
+
+        if not queued then
+            vim.cmd("silent w")
+            api.nvim_buf_set_var(ctx.buf, "autosave_queued", true)
+            vim.notify("Saved " .. ctx.file, "info", { title = "Autosave" })
+        end
+
+        local block = api.nvim_buf_get_var(ctx.buf, "autosave_block")
+        if not block then
+            api.nvim_buf_set_var(ctx.buf, "autosave_block", true)
+            vim.defer_fn(function()
+                if api.nvim_buf_is_valid(ctx.buf) then
+                    api.nvim_buf_set_var(ctx.buf, "autosave_queued", false)
+                    api.nvim_buf_set_var(ctx.buf, "autosave_block", false)
+                end
+            end, delay)
+        end
+    end,
+})
+
 -- [[ toggle/switch settings with local leader ]]
 local toggle_prefix = [[\]]
 vim.keymap.set('n', toggle_prefix .. 's',     '<Cmd>setl spell! spell?<CR>', { silent = true, desc = 'toggle spell' })
-vim.keymap.set('n', toggle_prefix .. 'l',     '<Cmd>setl list! list?<CR>', { silent = true, desc = 'toggle list' })
-vim.keymap.set('n', toggle_prefix .. 't',     '<Cmd>setl expandtab! expandtab?<CR>', { silent = true, desc = 'toggle expandtab' })
-vim.keymap.set('n', toggle_prefix .. 'w',     '<Cmd>setl wrap! wrap?<CR>', { silent = true, desc = 'toggle wrap' })
-vim.keymap.set('n', toggle_prefix .. 'b',     '<Cmd>setl cursorbind! cursorbind?<CR>', { silent = true, desc = 'toggle cursorbind' })
-vim.keymap.set('n', toggle_prefix .. 'd',     [[<Cmd>if !&diff | diffthis | else | diffoff | endif | set diff?<CR>]], { silent = true, desc = 'toggle diff' })
-vim.keymap.set('n', toggle_prefix .. 'c',     [[<Cmd>if &conceallevel > 0 | set conceallevel=0 | else | set conceallevel=2 | endif | set conceallevel?<CR>]], { silent = true, desc = 'toggle conceallevel' })
-vim.keymap.set('n', toggle_prefix .. 'y',     [[<Cmd>if &clipboard == 'unnamedplus' | set clipboard=| else | set clipboard=unnamedplus | endif | set clipboard?<CR>]], { silent = true, desc = 'toggle clipboard' })
-vim.keymap.set('n', toggle_prefix .. 'n',     [[<Cmd>lua Toggle_noice()<CR>]], { silent = true, desc = 'toggle noice' })
+vim.keymap.set('n', toggle_prefix .. 'a', function()
+  if vim.b.autosave_enabled then
+    vim.b.autosave_enabled = false
+    print('Autosave disabled')
+  else
+    vim.b.autosave_enabled = true
+    print('Autosave enabled')
+  end
+end, { silent = true, desc = 'toggle autosave' })
+vim.keymap.set('n', toggle_prefix .. 'l', '<Cmd>setl list! list?<CR>', { silent = true, desc = 'toggle list' })
+vim.keymap.set('n', toggle_prefix .. 't', '<Cmd>setl expandtab! expandtab?<CR>', { silent = true, desc = 'toggle expandtab' })
+vim.keymap.set('n', toggle_prefix .. 'w', '<Cmd>setl wrap! wrap?<CR>', { silent = true, desc = 'toggle wrap' })
+vim.keymap.set('n', toggle_prefix .. 'b', '<Cmd>setl cursorbind! cursorbind?<CR>', { silent = true, desc = 'toggle cursorbind' })
+vim.keymap.set('n', toggle_prefix .. 'd', function()
+  if vim.o.diff then
+    vim.cmd('diffoff')
+    print('Diff off')
+  else
+    vim.cmd('diffthis')
+    print('Diff on')
+  end
+end, { silent = true, desc = 'toggle diff' })
+vim.keymap.set('n', toggle_prefix .. 'c', function()
+  if vim.o.conceallevel > 0 then
+    vim.o.conceallevel = 0
+    print('Conceal off')
+  else
+    vim.o.conceallevel = 2
+    print('Conceal on')
+  end
+end, { silent = true, desc = 'toggle conceallevel' })
+vim.keymap.set('n', toggle_prefix .. 'y', function()
+  if vim.o.clipboard == 'unnamedplus' then
+    vim.o.clipboard = ''
+    print('clipboard=')
+  else
+    vim.o.clipboard = 'unnamedplus'
+    print('clipboard=unnamedplus')
+  end
+end, { silent = true, desc = 'toggle clipboard' })
+
 vim.g.is_noice_enabled = true
 Toggle_noice = function()
   if vim.g.is_noice_enabled then
@@ -3271,5 +3359,6 @@ Toggle_noice = function()
     print('Noice enabled')
   end
 end
+vim.keymap.set('n', toggle_prefix .. 'n', Toggle_noice, { silent = true, desc = 'toggle noice' })
 
 -- vim: ts=2 sts=2 sw=2 et
