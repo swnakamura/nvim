@@ -3274,58 +3274,62 @@ vim.keymap.set({'n', 'i'}, '<F2>', require('japanese_input').toggle_IME, { norem
 
 
 -- [[ autosave ]]
-local delay = 250 -- ms
+local delay = 1000 -- ms
 
 local autosave = api.nvim_create_augroup("autosave", { clear = true })
 -- Initialization
 api.nvim_create_autocmd("BufRead", {
-    pattern = "*",
-    group = autosave,
-    callback = function(ctx)
-        api.nvim_buf_set_var(ctx.buf, "autosave_enabled", true)
-        api.nvim_buf_set_var(ctx.buf, "autosave_queued", false)
-        api.nvim_buf_set_var(ctx.buf, "autosave_block", false)
-    end,
+  pattern = "*",
+  group = autosave,
+  callback = function(ctx)
+    api.nvim_buf_set_var(ctx.buf, "autosave_enabled", true)
+    api.nvim_buf_set_var(ctx.buf, "autosave_recentdone", false) -- recently autosaved. Do not autosave until `delay` ms passes from the last change.
+    api.nvim_buf_set_var(ctx.buf, "autosave_reserved", false) -- autosave is reserved after the delay.
+  end,
 })
 
 api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
-    pattern = "*",
-    group = autosave,
-    callback = function(ctx)
-        -- conditions that donnot do autosave
-        local disabled_ft = { "acwrite", "oil", "yazi", "neo-tree" }
-        if
-            not vim.bo.modified
-            or fn.findfile(ctx.file, ".") == "" -- a new file
-            or ctx.file:match("wezterm.lua")
-            or vim.tbl_contains(disabled_ft, vim.bo[ctx.buf].ft)
-            or not api.nvim_buf_get_var(ctx.buf, "autosave_enabled")
-        then
-            return
-        end
+  pattern = "*",
+  group = autosave,
+  callback = function(ctx)
+    -- conditions that donnot do autosave
+    local disabled_ft = { "acwrite", "oil", "yazi", "neo-tree" }
+    if
+      not vim.bo.modified
+      or fn.findfile(ctx.file, ".") == "" -- a new file
+      or ctx.file:match("wezterm.lua")
+      or vim.tbl_contains(disabled_ft, vim.bo[ctx.buf].ft)
+      or not api.nvim_buf_get_var(ctx.buf, "autosave_enabled")
+    then
+      return
+    end
 
-        local ok, queued = pcall(api.nvim_buf_get_var, ctx.buf, "autosave_queued")
-        if not ok then
-            return
-        end
+    local ok, recentdone = pcall(api.nvim_buf_get_var, ctx.buf, "autosave_recentdone")
+    if not ok then
+      return
+    end
 
-        if not queued then
+    if not recentdone then
+      -- if not recently autosaved, save it. Mark it as recently autosaved and return
+      vim.cmd("silent w")
+      api.nvim_buf_set_var(ctx.buf, "autosave_recentdone", true)
+      vim.notify("Saved " .. ctx.file, "info", { title = "Autosave" })
+      vim.defer_fn(function()
+        if api.nvim_buf_is_valid(ctx.buf) then
+          api.nvim_buf_set_var(ctx.buf, "autosave_recentdone", false)
+          if api.nvim_buf_get_var(ctx.buf, "autosave_reserved") then
+            api.nvim_buf_set_var(ctx.buf, "autosave_reserved", false)
             vim.cmd("silent w")
-            api.nvim_buf_set_var(ctx.buf, "autosave_queued", true)
             vim.notify("Saved " .. ctx.file, "info", { title = "Autosave" })
+          end
         end
+      end, delay)
+    else
+      -- If recently autosaved, reserve autosave after the delay
+      api.nvim_buf_set_var(ctx.buf, "autosave_reserved", true)
+    end
 
-        local block = api.nvim_buf_get_var(ctx.buf, "autosave_block")
-        if not block then
-            api.nvim_buf_set_var(ctx.buf, "autosave_block", true)
-            vim.defer_fn(function()
-                if api.nvim_buf_is_valid(ctx.buf) then
-                    api.nvim_buf_set_var(ctx.buf, "autosave_queued", false)
-                    api.nvim_buf_set_var(ctx.buf, "autosave_block", false)
-                end
-            end, delay)
-        end
-    end,
+  end,
 })
 
 -- [[ toggle/switch settings with local leader ]]
