@@ -3254,7 +3254,7 @@ api.nvim_create_autocmd(
   })
 
 -- [[ Float keymap (jump until non-whitespace is found) ]]
-Float = function(up)
+MoveUntilNonWS = function(up)
   local curpos = fn.getcurpos()
   -- 現在位置に文字がある間……
   while true do
@@ -3274,8 +3274,8 @@ Float = function(up)
   end
 end
 
-vim.keymap.set({ 'n', 'v' }, '<leader>k', [[<Cmd>lua Float(-1)<CR>]])
-vim.keymap.set({ 'n', 'v' }, '<leader>j', [[<Cmd>lua Float(1)<CR>]])
+vim.keymap.set({ 'n', 'v' }, '<leader>k', [[<Cmd>lua MoveUntilNonWS(-1)<CR>]])
+vim.keymap.set({ 'n', 'v' }, '<leader>j', [[<Cmd>lua MoveUntilNonWS(1)<CR>]])
 
 -- [[ autocmd-IME ]]
 vim.keymap.set({'n', 'i'}, '<F2>', require('japanese_input').toggle_IME, { noremap = true, silent = true, expr = true })
