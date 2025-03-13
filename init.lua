@@ -3180,12 +3180,6 @@ au BufWritePre              *.tsv call Preserve('silent %s/ \+\ze	//ge')
 au BufWritePre              *.tsv call Preserve('silent %s/\s\+$//ge')
 augroup END
 
-fu! s:isdir(dir) abort
-return !empty(a:dir) && (isdirectory(a:dir) ||
-\ (!empty($SYSTEMDRIVE) && isdirectory('/'.tolower($SYSTEMDRIVE[0]).a:dir)))
-endfu
-
-
 augroup jupyter-notebook
 au!
 au BufReadPost *.ipynb %!jupytext --from ipynb --to py:percent
