@@ -3168,7 +3168,7 @@ au BufWritePost * set nomod | endif
 augroup END
 ]])
 
-function Preserve(command)
+function RestoreWinAfter(command)
   local curw = vim.fn.winsaveview()
   vim.api.nvim_exec2(command, {output = true})
   vim.fn.winrestview(curw)
@@ -3181,9 +3181,9 @@ api.nvim_create_autocmd(
     pattern = '*.csv',
     callback = function()
       if fn.has('uniz') then
-        Preserve('silent %!column -s, -o, -t -L')
+        RestoreWinAfter('silent %!column -s, -o, -t -L')
       else
-        Preserve([[silent %!column -s -t]])
+        RestoreWinAfter([[silent %!column -s -t]])
       end
     end
   }
@@ -3193,7 +3193,7 @@ api.nvim_create_autocmd(
   {
     pattern = '*.tsv',
     callback = function()
-      Preserve([[silent %!column -s "$(printf '\t')" -o "$(printf '\t')" -t -L]])
+      RestoreWinAfter([[silent %!column -s "$(printf '\t')" -o "$(printf '\t')" -t -L]])
     end
   }
 )
@@ -3202,8 +3202,8 @@ api.nvim_create_autocmd(
   {
     pattern = '*.csv',
     callback = function()
-      Preserve([[silent %s/ \+\ze,/,/ge]])
-      Preserve([[silent %s/\s\+$//ge]])
+      RestoreWinAfter([[silent %s/ \+\ze,/,/ge]])
+      RestoreWinAfter([[silent %s/\s\+$//ge]])
     end
   }
 )
@@ -3212,8 +3212,8 @@ api.nvim_create_autocmd(
   {
     pattern = '*.tsv',
     callback = function()
-      Preserve([[silent %s/ \+\ze	//ge]])
-      Preserve([[silent %s/\s\+$//ge]])
+      RestoreWinAfter([[silent %s/ \+\ze	//ge]])
+      RestoreWinAfter([[silent %s/\s\+$//ge]])
     end
   }
 )
@@ -3245,8 +3245,8 @@ api.nvim_create_autocmd(
       vim.wo.foldmethod = 'indent'
       function FormatPython()
         vim.cmd('update')
-        Preserve(':silent %!ruff format --line-length=140 -')
-        Preserve(':silent %!ruff check --fix-only -q --extend-select I -')
+        RestoreWinAfter(':silent %!ruff format --line-length=140 -')
+        RestoreWinAfter(':silent %!ruff check --fix-only -q --extend-select I -')
         vim.cmd('update')
       end
       vim.keymap.set('n', 'gF', FormatPython, { buffer = true })
