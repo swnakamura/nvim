@@ -3166,20 +3166,59 @@ au BufWritePre * endif
 au BufWritePost * if exists('b:bin_xxd') | %!xxd
 au BufWritePost * set nomod | endif
 augroup END
+]])
 
-augroup csv-tsv
-au!
-if has('unix')
-au BufReadPost,BufWritePost *.csv call Preserve('silent %!column -s, -o, -t -L')
-else
-au BufReadPost,BufWritePost *.csv call Preserve('silent %!column -s, -t') " macOS
-endif
-au BufWritePre              *.csv call Preserve('silent %s/\s\+\ze,/,/ge')
-au BufReadPost,BufWritePost *.tsv call Preserve('silent %!column -s "$(printf ''\t'')" -o "$(printf ''\t'')" -t -L')
-au BufWritePre              *.tsv call Preserve('silent %s/ \+\ze	//ge')
-au BufWritePre              *.tsv call Preserve('silent %s/\s\+$//ge')
-augroup END
+function Preserve(command)
+  local curw = vim.fn.winsaveview()
+  vim.api.nvim_exec2(command, {output = true})
+  vim.fn.winrestview(curw)
+  return
+end
 
+api.nvim_create_autocmd(
+  {'BufReadPost', 'BufWritePost'},
+  {
+    pattern = '*.csv',
+    callback = function()
+      if fn.has('uniz') then
+        Preserve('silent %!column -s, -o, -t -L')
+      else
+        Preserve([[silent %!column -s -t]])
+      end
+    end
+  }
+)
+api.nvim_create_autocmd(
+  {'BufReadPost', 'BufWritePost'},
+  {
+    pattern = '*.tsv',
+    callback = function()
+      Preserve([[silent %!column -s "$(printf '\t')" -o "$(printf '\t')" -t -L]])
+    end
+  }
+)
+api.nvim_create_autocmd(
+  {'BufWritePre'},
+  {
+    pattern = '*.csv',
+    callback = function()
+      Preserve([[silent %s/ \+\ze,/,/ge]])
+      Preserve([[silent %s/\s\+$//ge]])
+    end
+  }
+)
+api.nvim_create_autocmd(
+  {'BufWritePre'},
+  {
+    pattern = '*.tsv',
+    callback = function()
+      Preserve([[silent %s/ \+\ze	//ge]])
+      Preserve([[silent %s/\s\+$//ge]])
+    end
+  }
+)
+
+vim.cmd([[
 augroup jupyter-notebook
 au!
 au BufReadPost *.ipynb %!jupytext --from ipynb --to py:percent
@@ -3204,12 +3243,6 @@ api.nvim_create_autocmd(
     pattern='python',
     callback=function()
       vim.wo.foldmethod = 'indent'
-      function Preserve(command)
-        local curw = vim.fn.winsaveview()
-        vim.api.nvim_exec2(command, {output = true})
-        vim.fn.winrestview(curw)
-        return
-      end
       function FormatPython()
         vim.cmd('update')
         Preserve(':silent %!ruff format --line-length=140 -')
