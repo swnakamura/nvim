@@ -1074,7 +1074,7 @@ require('lazy').setup({
         -- 2. Not in prompt
         local is_text = vim.bo.filetype == 'text'
         local is_insert = api.nvim_get_mode().mode == 'i'
-        return not (is_text and is_insert) and vim.bo.buftype ~= "prompt"
+        return not (is_text and is_insert)
       end,
 
       completion = {
