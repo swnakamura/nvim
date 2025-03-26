@@ -2771,9 +2771,6 @@ vim.keymap.set('n', '<Plug>(g-mode)j', 'gj<Plug>(g-mode)')
 vim.keymap.set('n', '<Plug>(g-mode)k', 'gk<Plug>(g-mode)')
 vim.keymap.set('n', '<Plug>(g-mode)', '<Nop>', { remap = true })
 
--- <leader>fed to open init.lua
-vim.keymap.set('n', '<leader>fed', '<Cmd>edit $MYVIMRC<CR>')
-
 -- normally, ; is used for :
 -- vim.keymap.set({ 'n', 'v' }, ';', ':')
 vim.keymap.set({ 'n', 'v' }, '<leader><leader>', '<C-^>')
@@ -3011,6 +3008,8 @@ api.nvim_create_autocmd('FileType', {
 vim.keymap.set('n', '<leader>oo', '<cmd>e ~/org/inbox.org<cr>zR')
 vim.keymap.set('n', '<leader>on', '<cmd>e ~/research_vault/notes/note.md<cr>G')
 vim.keymap.set('n', '<leader>oi', '<cmd>e ~/research_vault/weekly-issues/issue.md<cr>')
+-- <leader>fed to open init.lua
+vim.keymap.set('n', '<leader>fed', '<Cmd>edit $MYVIMRC<CR>')
 
 -- [[minor functionalities]]
 -- abbreviation for substitution
