@@ -1723,6 +1723,9 @@ $0
           separator = { left = '', right = '' },
           separator_at_end = false,
 
+          maximum_padding = 0,
+          minimum_padding = 0,
+
           -- Configure the icons on the bufferline when modified or pinned.
           -- Supports all the base icon options.
           modified = { button = '●' },
@@ -1730,10 +1733,10 @@ $0
 
           -- Configure the icons on the bufferline based on the visibility of a buffer.
           -- Supports all the base icon options, plus `modified` and `pinned`.
-          alternate = { separator = { left = '', right = '' } },
-          current = { separator = { left = '', right = '' } },
-          inactive = { separator = { left = '', right = '' } },
-          visible = { separator = { left = '', right = '' } },
+          alternate = { separator = { left = '　', right = '　' } },
+          current = { separator = { left = '【', right = '】' } },
+          inactive = { separator = { left = '　', right = '　' } },
+          visible = { separator = { left = '　', right = '　' } },
         },
       }
     end,
