@@ -3055,6 +3055,9 @@ VisualMatch = function()
     vim.g.colrange = { charcol('.'), charcol('v') }
   elseif charcol'.' > charcol'v' then
     vim.g.colrange = { charcol('v'), charcol('.') }
+  elseif line'.' ~= line'v' then
+    -- same column, different line
+    vim.g.colrange = { charcol('v'), charcol('.') }
   else
     return nil
   end
