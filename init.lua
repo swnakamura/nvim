@@ -2735,9 +2735,13 @@ vim.keymap.set('n', '<Plug>(g-mode)j', 'gj<Plug>(g-mode)')
 vim.keymap.set('n', '<Plug>(g-mode)k', 'gk<Plug>(g-mode)')
 vim.keymap.set('n', '<Plug>(g-mode)', '<Nop>', { remap = true })
 
--- normally, ; is used for :
--- vim.keymap.set({ 'n', 'v' }, ';', ':')
+-- keymap for alternate file
 vim.keymap.set({ 'n', 'v' }, '<leader><leader>', '<C-^>')
+
+-- keymap for ex command
+-- vim.keymap.set({ 'n', 'v' }, ';', ':')
+vim.keymap.set({ 'n', 'v' }, '<leader>;', ':')
+
 
 -- terminal
 -- open terminal in new split with height 15
