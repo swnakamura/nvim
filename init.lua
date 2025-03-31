@@ -3079,6 +3079,12 @@ VisualMatch = function()
       let g:text = g:lines->map({key, line -> line->escape('\')})->join('\n')
       ]])
   end
+
+  -- if length of the text is too long, do not highlight
+  if #vim.g.text > 5000 then
+    return nil
+  end
+
   vim.w.visual_match_id = fn.matchadd('VisualMatch', [[\V]] .. vim.g.text, -999)
   return nil
 end
