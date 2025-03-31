@@ -1227,6 +1227,7 @@ require('lazy').setup({
       ls.add_snippets("python", {
         ls.parser.parse_snippet("pf", [[print(f"{$1}")$0]]),
         ls.parser.parse_snippet("bp", [[breakpoint()]]),
+        ls.parser.parse_snippet("pretty_traceback", [[import colored_traceback.always  # noqa: F401]]),
         ls.parser.parse_snippet("todo", "# TODO: "),
         ls.parser.parse_snippet("pltimport", "import matplotlib.pyplot as plt"),
         ls.parser.parse_snippet("ifmain", [[if __name__ == "__main__":]]),
