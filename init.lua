@@ -830,7 +830,7 @@ require('lazy').setup({
             -- nmap(']d', function() vim.diagnostic.jump({ count = 1 }) end, 'Go to next diagnostic message')
             nmap('[d', function() vim.diagnostic.goto_prev() end, 'Go to previous diagnostic message')
             nmap(']d', function() vim.diagnostic.goto_next() end, 'Go to next diagnostic message')
-            nmap('<leader>e', vim.diagnostic.open_float, 'Open floating diagnostic message')
+            nmap('<leader>le', vim.diagnostic.open_float, 'Open floating diagnostic message')
             nmap('<leader>ll', vim.diagnostic.setloclist, 'Open diagnostics list')
 
             -- nmap('<leader>a', '<cmd>Lspsaga outline<cr>', 'Open outline')
@@ -1616,7 +1616,7 @@ $0
           ["H"] = "actions.toggle_hidden",
         }
       })
-      vim.keymap.set("n", "<leader>fj", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+      vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>", { desc = "Open parent directory" })
     end
   },
 
