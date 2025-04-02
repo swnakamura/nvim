@@ -3299,14 +3299,16 @@ api.nvim_create_autocmd({ "InsertLeave", "TextChanged", "CursorHoldI" }, {
       api.nvim_buf_set_var(ctx.buf, "autosave_recentdone", true)
       vim.notify("Saved " .. ctx.file, "info", { title = "Autosave" })
       vim.defer_fn(function()
-        if api.nvim_buf_is_valid(ctx.buf) then
-          api.nvim_buf_set_var(ctx.buf, "autosave_recentdone", false)
-          if api.nvim_buf_get_var(ctx.buf, "autosave_reserved") then
-            api.nvim_buf_set_var(ctx.buf, "autosave_reserved", false)
-            vim.cmd("silent lockmarks update")
-            vim.notify("Saved " .. ctx.file, "info", { title = "Autosave" })
-          end
+        api.nvim_buf_set_var(ctx.buf, "autosave_recentdone", false)
+        if not api.nvim_buf_is_valid(ctx.buf) then
+          return
         end
+        if not api.nvim_buf_get_var(ctx.buf, "autosave_reserved") then
+          return
+        end
+        api.nvim_buf_set_var(ctx.buf, "autosave_reserved", false)
+        vim.cmd("silent lockmarks update")
+        vim.notify("Saved " .. ctx.file, "info", { title = "Autosave" })
       end, delay)
     else
       -- If recently autosaved, reserve autosave after the delay
