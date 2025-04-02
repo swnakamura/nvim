@@ -3295,7 +3295,7 @@ api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
 
     if not recentdone then
       -- if not recently autosaved, save it. Mark it as recently autosaved and return
-      vim.cmd("silent w")
+      vim.cmd("silent lockmarks update")
       api.nvim_buf_set_var(ctx.buf, "autosave_recentdone", true)
       vim.notify("Saved " .. ctx.file, "info", { title = "Autosave" })
       vim.defer_fn(function()
@@ -3303,7 +3303,7 @@ api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
           api.nvim_buf_set_var(ctx.buf, "autosave_recentdone", false)
           if api.nvim_buf_get_var(ctx.buf, "autosave_reserved") then
             api.nvim_buf_set_var(ctx.buf, "autosave_reserved", false)
-            vim.cmd("silent w")
+            vim.cmd("silent lockmarks update")
             vim.notify("Saved " .. ctx.file, "info", { title = "Autosave" })
           end
         end
