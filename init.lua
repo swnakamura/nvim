@@ -3272,7 +3272,7 @@ api.nvim_create_autocmd("BufRead", {
   end,
 })
 
-api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
+api.nvim_create_autocmd({ "InsertLeave", "TextChanged", "CursorHoldI" }, {
   pattern = "*",
   group = autosave,
   callback = function(ctx)
