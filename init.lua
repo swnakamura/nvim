@@ -2072,6 +2072,21 @@ $0
   },
 
   {
+    'nvim-tree/nvim-web-devicons',
+    opts = {
+
+    override = {
+        sh = {
+          icon = "",
+          color = "#89e051",
+          cterm_color = 113,
+          name = "sh"
+        },
+      }
+    }
+  },
+
+  {
     'preservim/nerdcommenter',
     cond=false,
     event = 'VeryLazy',
