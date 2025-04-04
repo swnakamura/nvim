@@ -608,31 +608,34 @@ require('lazy').setup({
   },
 
   {
-    cond = not vim.g.is_vscode,
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
+    "monkoose/neocodeium",
+    dependencies = {"Saghen/blink.cmp"},
+    event = "VeryLazy",
     config = function()
-      require("copilot").setup({
-        suggestion = {
-          auto_trigger = true,
-          keymap = {
-            accept = "<Tab>"
-          }
-        },
+      local neocodeium = require("neocodeium")
+      local blink = require("blink.cmp")
+      neocodeium.setup({
         filetypes = {
-          -- yaml = false,
-          text = false,
-          markdown = false,
-          help = false,
-          gitcommit = true,
-          gitrebase = false,
-          hgcommit = false,
-          svn = false,
-          cvs = false,
-          ["."] = false,
+            text = false,
+            markdown = false,
+            help = false,
+            gitcommit = false,
+            gitrebase = false,
+            ["."] = false,
         },
+        filter = function()
+          return not blink.is_visible()
+        end,
       })
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'BlinkCmpMenuOpen',
+        callback = function()
+          neocodeium.clear()
+        end,
+      })
+      vim.keymap.set("i", "<A-f>", neocodeium.accept)
+      vim.keymap.set("i", "<Tab>", neocodeium.accept)
+      vim.keymap.set("i", "<A-e>", function() neocodeium.cycle_or_complete() end)
     end,
   },
 
@@ -1069,6 +1072,9 @@ require('lazy').setup({
         menu = {
           max_height = 30,
           winblend = 30,
+          auto_show = function(ctx)
+              return ctx.mode ~= 'default'
+          end,
         },
         documentation = {
           auto_show = true,
