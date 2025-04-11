@@ -3153,7 +3153,7 @@ WordMatch = function()
     return
   end
 
-  local cursorword = fn.expand('<cword>'):escape('\\')
+  local cursorword = fn.expand('<cword>')
   if cursorword == '' then
     return
   end
@@ -3166,6 +3166,11 @@ DelWordMatch = function()
     vim.w.wordmatch_id = nil
   end
 end
+
+api.nvim_create_autocmd('CursorHold', {
+  pattern = '*',
+  callback = WordMatch
+})
 
 vim.cmd([[
 augroup numbertoggle
