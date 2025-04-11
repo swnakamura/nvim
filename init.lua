@@ -220,19 +220,6 @@ require('lazy').setup({
     end
   },
 
-  {
-    cond = not vim.g.is_vscode,
-    'https://github.com/Bekaboo/dropbar.nvim',
-    config = function()
-      vim.keymap.set('n', "<leader>n", require('dropbar.api').pick)
-      vim.cmd([[
-      augroup dropbar-keymap
-      autocmd FileType dropbar_menu nnoremap q <Cmd>q<CR>
-      augroup END
-      ]])
-    end
-  },
-
   -- smart increment/decrement
   {
     'monaqa/dial.nvim',
