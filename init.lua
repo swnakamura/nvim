@@ -1073,9 +1073,9 @@ require('lazy').setup({
         menu = {
           max_height = 30,
           winblend = 30,
-          auto_show = function(ctx)
-              return ctx.mode ~= 'default'
-          end,
+          -- auto_show = function(ctx)
+          --     return ctx.mode ~= 'default'
+          -- end,
         },
         documentation = {
           auto_show = true,
