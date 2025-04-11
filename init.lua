@@ -2718,9 +2718,11 @@ vim.cmd([[
 set foldtext=MyFoldText()
 function! MyFoldText()
 let line = getline(v:foldstart)
-let sub = substitute(line, '/\*\|\*/\|{{{\d\=', '', 'g')
+if line =~ '^\s*{$'
+let line = line .. getline(v:foldstart + 1)->substitute('^\s*', ' ', '')
+endif
 let nline = v:foldend - v:foldstart
-return sub . ' <' . nline  . ' lines>' . v:folddashes
+return line . ' <' . nline  . ' lines>' . v:folddashes
 endfunction
 ]])
 
