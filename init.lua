@@ -2722,12 +2722,6 @@ if fn.has('nvim-0.11') == 1 then
    })
 end
 
--- v0.11 highlight fix
-if fn.has('nvim-0.11') == 1 then
-  vim.api.nvim_set_hl(0, "StatusLine", {reverse = false})
-  vim.api.nvim_set_hl(0, "StatusLineNC", {reverse = false})
-end
-
 vim.cmd([[
 set foldtext=MyFoldText()
 function! MyFoldText()
