@@ -624,7 +624,9 @@ require('lazy').setup({
       vim.keymap.set("i", "<A-f>", neocodeium.accept)
       vim.keymap.set("i", "<Tab>", neocodeium.accept)
       vim.keymap.set("i", "<C-;>", neocodeium.accept)
-      vim.keymap.set("i", "<A-e>", function() neocodeium.cycle_or_complete() end)
+      vim.keymap.set("i", "<A-e>", neocodeium.cycle_or_complete)
+      vim.keymap.set("i", "<A-w>", neocodeium.accept_word)
+      vim.keymap.set("i", "<A-a>", neocodeium.accept_line)
     end,
   },
 
