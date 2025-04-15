@@ -449,36 +449,37 @@ require('lazy').setup({
 
         -- Navigation
         -- pagedown, ]h, <Down> does the same thing
+        local hunk_nav_opts = {preview = true, greedy = false}
         map('n', '<PageDown>', function()
           if vim.wo.diff then return ']c' end
-          vim.schedule(function() gs.next_hunk({ preview = true }) end)
+          vim.schedule(function() gs.nav_hunk('next', hunk_nav_opts) end)
           return '<Ignore>'
         end, { expr = true })
         map('n', ']h', function()
           if vim.wo.diff then return ']c' end
-          vim.schedule(function() gs.next_hunk({ preview = true }) end)
+          vim.schedule(function() gs.nav_hunk('next', hunk_nav_opts) end)
           return '<Ignore>'
         end, { expr = true })
         map('n', '<Down>', function()
           if vim.wo.diff then return ']c' end
-          vim.schedule(function() gs.next_hunk({ preview = true }) end)
+          vim.schedule(function() gs.nav_hunk('next', hunk_nav_opts) end)
           return '<Ignore>'
         end, { expr = true })
 
         -- pageup, [h, <Up> does the same thing
         map('n', '<PageUp>', function()
           if vim.wo.diff then return '[c' end
-          vim.schedule(function() gs.prev_hunk({ preview = true }) end)
+          vim.schedule(function() gs.nav_hunk('prev', hunk_nav_opts) end)
           return '<Ignore>'
         end, { expr = true })
         map('n', '[h', function()
           if vim.wo.diff then return '[c' end
-          vim.schedule(function() gs.prev_hunk({ preview = true }) end)
+          vim.schedule(function() gs.nav_hunk('prev', hunk_nav_opts) end)
           return '<Ignore>'
         end, { expr = true })
         map('n', '<Up>', function()
           if vim.wo.diff then return '[c' end
-          vim.schedule(function() gs.prev_hunk({ preview = true }) end)
+          vim.schedule(function() gs.nav_hunk('prev', hunk_nav_opts) end)
           return '<Ignore>'
         end, { expr = true })
 
