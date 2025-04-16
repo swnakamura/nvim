@@ -2640,7 +2640,7 @@ vim.go.winminwidth = 0
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
--- vim.o.clipboard = 'unnamedplus'
+vim.o.clipboard = 'unnamedplus'
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -2683,8 +2683,6 @@ vim.o.list = true
 vim.o.listchars = 'leadmultispace:---|,tab:» ,trail:~,extends:»,precedes:«,nbsp:%'
 
 vim.o.scrolloff = 5
-
-vim.o.clipboard = 'unnamedplus'
 
 vim.go.laststatus = 3
 
