@@ -40,6 +40,13 @@ else
   vim.g.is_vscode = false
 end
 
+-- check if this is an ssh client using the environment variable
+if fn.getenv('SSH_CONNECTION') ~= nil then
+  vim.g.is_ssh = true
+else
+  vim.g.is_ssh = false
+end
+
 -- check if the window is wide enough and vim is open with an argument to open the neotree explorer
 if vim.o.columns > 200 and fn.argc() > 0 then
   vim.g.open_neotree = true
@@ -2157,7 +2164,7 @@ $0
 
   -- obsidian integration
   {
-    cond = not vim.g.is_vscode,
+    cond = not vim.g.is_vscode and not vim.g.is_ssh, -- run only in local neovim
     'epwalsh/obsidian.nvim',
     dependencies = {
       -- Required.
