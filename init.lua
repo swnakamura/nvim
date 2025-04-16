@@ -3344,7 +3344,7 @@ api.nvim_create_autocmd({ "InsertLeave", "TextChanged", "CursorHoldI" }, {
   group = autosave,
   callback = function(ctx)
     -- conditions that donnot do autosave. Special files and data files
-    local disabled_ft = { "acwrite", "oil", "yazi", "neo-tree", "yaml", "toml", "json"}
+    local disabled_ft = { "acwrite", "oil", "yazi", "neo-tree", "yaml", "toml", "json", "csv", "tsv", "gitcommit"}
     if
       not vim.bo.modified
       or fn.findfile(ctx.file, ".") == "" -- a new file
