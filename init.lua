@@ -683,7 +683,7 @@ require('lazy').setup({
           separator = '---',
           error_header = '> [!ERROR] Error',
           -- See Configuration section for options
-          model = 'gpt-4o',
+          model = 'gpt-4.1',
           window = {
             layout = function()
               local layout = vim.g.copilotchat_layout or 'vertical'
