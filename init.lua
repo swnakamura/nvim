@@ -934,7 +934,7 @@ require('lazy').setup({
       'nvim-dap-python',
     },
     config = function()
-      api.nvim_set_keymap('n', '<leader>lu', '<cmd>lua require("dapui").toggle()<CR>', {})
+      api.nvim_set_keymap('n', '<leader>Du', '<cmd>lua require("dapui").toggle()<CR>', {})
 
       -- https://zenn.dev/kawat/articles/51f9cc1f0f0aa9 を参考
       api.nvim_set_keymap('n', '<F6>', '<cmd>DapContinue<CR>', { silent = true })
@@ -943,8 +943,8 @@ require('lazy').setup({
       api.nvim_set_keymap('n', '<F12>', '<cmd>DapStepOut<CR>', { silent = true })
       api.nvim_set_keymap('n', '<leader>b', '<cmd>DapToggleBreakpoint<CR>', { silent = true })
       api.nvim_set_keymap('n', '<leader>B', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Breakpoint condition: "))<CR>', { silent = true })
-      api.nvim_set_keymap('n', '<leader>lp', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { silent = true })
-      api.nvim_set_keymap('n', '<leader>le', '<cmd>lua require("dapui").eval()<CR>', { silent = true })
+      api.nvim_set_keymap('n', '<leader>Dp', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { silent = true })
+      api.nvim_set_keymap('n', '<leader>De', '<cmd>lua require("dapui").eval()<CR>', { silent = true })
       api.nvim_set_keymap('n', '<leader>Dr', '<cmd>lua require("dap").repl.open()<CR>', { silent = true })
       api.nvim_set_keymap('n', '<leader>Dl', '<cmd>lua require("dap").run_last()<CR>', { silent = true })
     end
