@@ -376,8 +376,11 @@ require('lazy').setup({
             if vim.bo.filetype ~= 'gitcommit' then
               return
             end
+            local layout_orig = vim.g.copilotchat_layout
+            vim.g.copilotchat_layout = 'float'
             vim.cmd("CopilotChatReset")
             vim.cmd("CopilotChatCommitStaged")
+            vim.g.copilotchat_layout = layout_orig
             -- make mapping to use the commit message with `q`
             vim.keymap.set("n", "q",
               function()
@@ -682,10 +685,12 @@ require('lazy').setup({
           -- See Configuration section for options
           model = 'gpt-4o',
           window = {
-            layout = 'float',
+            layout = function()
+              local layout = vim.g.copilotchat_layout or 'vertical'
+              return layout
+            end,
             relative = 'cursor',
-            width = 1,
-            height = 0.4,
+            width = 65,
             row = 1
           },
 
