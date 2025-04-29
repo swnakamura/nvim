@@ -2102,6 +2102,7 @@ $0
         hi GitGutterChange       guibg=NONE
         hi GitGutterChangeDelete guibg=NONE
         hi GitGutterDelete       guibg=NONE
+        hi Folded                guibg=#0f111a
         " Disable hl for winbar which is used by dropbar
         hi WinBar guibg=NONE
         hi link LspInlayHint ModeMsg
