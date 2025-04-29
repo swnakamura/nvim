@@ -3281,6 +3281,10 @@ VisualMatch = function()
     vim.w.visual_match_id = nil
   end
 
+  if fn.mode() ~= 'v' then
+    return nil
+  end
+
   local line = fn.line
   local charcol = fn.charcol
 
