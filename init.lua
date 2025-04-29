@@ -1623,6 +1623,15 @@ $0
     end
   },
 
+  {
+    'benfowler/telescope-luasnip.nvim',
+    init = function()
+      vim.keymap.set('n', '<leader>fl', function()
+        require('telescope').extensions.luasnip.luasnip()
+      end, { desc = 'Telescope: Show Luasnip snippets' })
+    end,
+  },
+
   -- Neotree (filer)
   {
     cond = not vim.g.is_vscode,
@@ -1717,6 +1726,7 @@ $0
 
   -- telescope based filer
   {
+    cond=false,
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
     keys = {{'<leader>fl', ':Telescope file_browser<CR>' }}
