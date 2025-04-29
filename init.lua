@@ -2288,6 +2288,19 @@ $0
       vim.keymap.set('n', '<leader>fm', require('telescope.builtin').man_pages, { desc = 'Find Manpages' })
       vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = 'Find Keymaps' })
       vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = 'Find by Grep' })
+      vim.keymap.set('n', '<leader>fG',
+        function() 
+          require('telescope.builtin').live_grep({
+            cwd = (function()
+              local cwd = vim.fn.expand "%:p:h"
+              -- for Oil buffers such as "oil://~", remove "oil://"
+              if cwd:match("oil://") then
+                cwd = cwd:gsub("oil://", "")
+              end
+              return cwd
+            end)()
+          })
+        end, { desc = 'Find by Grep from cwd' })
       vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = 'Find Diagnostics' })
     end,
     cmd = 'Telescope',
