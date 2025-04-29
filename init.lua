@@ -3514,26 +3514,17 @@ vim.keymap.set({'n', 'i'}, '<F2>', require('japanese_input').toggle_IME, { norem
 
 
 -- [[ autosave ]]
-local delay = 1000 -- ms
-
-local autosave = api.nvim_create_augroup("autosave", { clear = true })
--- Initialization
+local disabled_ft = { "acwrite", "oil", "yazi", "neo-tree", "yaml", "toml", "json", "csv", "tsv", "gitcommit"}
 api.nvim_create_autocmd("BufRead", {
   pattern = "*",
   group = autosave,
   callback = function(ctx)
     api.nvim_buf_set_var(ctx.buf, "autosave_enabled", true)
-    api.nvim_buf_set_var(ctx.buf, "autosave_recentdone", false) -- recently autosaved. Do not autosave until `delay` ms passes from the last change.
-    api.nvim_buf_set_var(ctx.buf, "autosave_reserved", false) -- autosave is reserved after the delay.
   end,
 })
-
-api.nvim_create_autocmd({ "InsertLeave", "TextChanged", "CursorHoldI" }, {
+api.nvim_create_autocmd({"BufLeave", "FocusLost"}, {
   pattern = "*",
-  group = autosave,
   callback = function(ctx)
-    -- conditions that donnot do autosave. Special files and data files
-    local disabled_ft = { "acwrite", "oil", "yazi", "neo-tree", "yaml", "toml", "json", "csv", "tsv", "gitcommit"}
     if
       not vim.bo.modified
       or fn.findfile(ctx.file, ".") == "" -- a new file
@@ -3543,34 +3534,9 @@ api.nvim_create_autocmd({ "InsertLeave", "TextChanged", "CursorHoldI" }, {
     then
       return
     end
-
-    local ok, recentdone = pcall(api.nvim_buf_get_var, ctx.buf, "autosave_recentdone")
-    if not ok then
-      return
-    end
-
-    if not recentdone then
-      -- if not recently autosaved, save it. Mark it as recently autosaved and return
+    if vim.bo.modified then
       vim.cmd("silent lockmarks update")
-      api.nvim_buf_set_var(ctx.buf, "autosave_recentdone", true)
-      vim.notify("Saved " .. ctx.file, "info", { title = "Autosave" })
-      vim.defer_fn(function()
-        api.nvim_buf_set_var(ctx.buf, "autosave_recentdone", false)
-        if not api.nvim_buf_is_valid(ctx.buf) then
-          return
-        end
-        if not api.nvim_buf_get_var(ctx.buf, "autosave_reserved") then
-          return
-        end
-        api.nvim_buf_set_var(ctx.buf, "autosave_reserved", false)
-        vim.cmd("silent lockmarks update")
-        vim.notify("Saved " .. ctx.file, "info", { title = "Autosave" })
-      end, delay)
-    else
-      -- If recently autosaved, reserve autosave after the delay
-      api.nvim_buf_set_var(ctx.buf, "autosave_reserved", true)
     end
-
   end,
 })
 
