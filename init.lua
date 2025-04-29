@@ -2657,6 +2657,23 @@ $0
 
   { 'kevinhwang91/nvim-bqf', ft = 'qf' },
 
+  -- beautify fold
+  {
+    "chrisgrieser/nvim-origami",
+    event = "VeryLazy",
+    opts = {
+      foldtextWithLineCount = {
+        -- enabled = package.loaded["ufo"] == nil,
+        template = "  ⤢ %s", -- `%s` gets the number of folded lines
+        -- hlgroupForCount = "Comment",
+      },
+
+      foldKeymaps = {
+        setup = true, -- modifies `h` and `l`
+      },
+    },
+  },
+
   -- org mode
   {
     -- cond=false,
