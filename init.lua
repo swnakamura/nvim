@@ -2933,8 +2933,10 @@ vim.keymap.set({ 'n', 'i' }, '<CR>',    '<CR>', { silent = true})
 vim.keymap.set({ 'n', 'v' }, '<Space>o', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<Space><BS>', '<C-^>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<C-Space>', '<Nop>', { silent = true })
--- vim.keymap.set({ 'n', 'v', 'o' }, '<cr>', '<Plug>(clever-f-repeat-forward)', { silent = true })
---
+
+-- remove default <Tab> mapping
+vim.keymap.del({ 'i', 's' }, '<Tab>')
+
 --https://zenn.dev/vim_jp/articles/67ec77641af3f2
 vim.keymap.set('n', 'zz', 'zz<Plug>(z1)', { remap = true })
 vim.keymap.set('n', '<Plug>(z1)z', 'zt<Plug>(z2)')
