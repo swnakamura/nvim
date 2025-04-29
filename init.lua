@@ -1429,6 +1429,50 @@ if not args.debug:
     logger.remove()
     logger.add(sys.stderr, level="ERROR")
 ]]
+        ),
+        ls.parser.parse_snippet({ trig = "sort_gpu_by_usage", name = "sort available gpu by usage using pynvml and cuda functionality" },
+          [[
+import pynvml
+
+pynvml.nvmlInit()
+device_count = pynvml.nvmlDeviceGetCount()
+
+available_gpus = []
+
+for i in range(device_count):
+    handle = pynvml.nvmlDeviceGetHandleByIndex(i)
+    meminfo = pynvml.nvmlDeviceGetMemoryInfo(handle)
+    free_mem = meminfo.free / (1024**2)  # MB
+    total_mem = meminfo.total / (1024**2)
+    usage = (meminfo.used / meminfo.total)
+    available_gpus.append((i, usage, free_mem))
+
+# usageが少ない順にソート
+available_gpus.sort(key=lambda x: x[1])
+
+best_gpu = available_gpus[0][0]
+print(f"Best GPU ID: {best_gpu}")
+os.environ["CUDA_VISIBLE_DEVICES"] = str(best_gpu)
+]]
+          ),
+        ls.parser.parse_snippet({ trig = "image_sequence", name = "A class that simulates video capture from a directory of images" },
+          [[
+class ImageSequence:
+    def __init__(self, dirname):
+        self.dirname = dirname
+        self.files = sorted(Path(dirname).glob("*.(JPG|jpg|png|jpeg)"))
+        self.idx = 0
+
+    def read(self):
+        if self.idx >= len(self.files):
+            return False, None
+        img = cv2.imread(str(self.files[self.idx]), cv2.IMREAD_COLOR)
+        self.idx += 1
+        return True, img
+
+    def release(self):
+        pass
+]]
         )
       })
 
