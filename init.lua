@@ -2666,7 +2666,7 @@ $0
     event = "VeryLazy",
     opts = {
       foldtextWithLineCount = {
-        -- enabled = package.loaded["ufo"] == nil,
+        enabled = false,
         template = "  ⤢ %s", -- `%s` gets the number of folded lines
         -- hlgroupForCount = "Comment",
       },
