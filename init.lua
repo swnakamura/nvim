@@ -1304,7 +1304,8 @@ require('lazy').setup({
         ls.parser.parse_snippet({ trig = "plot_instantly", name = "plot_instantly" },
           [[
 import matplotlib.pyplot as plt
-fig, ax = plt.subplots(layout='tight')
+fig = plt.figure()
+ax = fig.add_subplot(111)
 ax.$1
 plt.show()
 $0
