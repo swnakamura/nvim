@@ -625,6 +625,48 @@ require('lazy').setup({
   },
 
   {
+    cond = not vim.g.is_vscode,
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = {
+          auto_trigger = true,
+          keymap = {
+            accept = "<Tab>"
+          }
+        },
+        filetypes = {
+          -- yaml = false,
+          text = false,
+          markdown = false,
+          help = false,
+          gitrebase = false,
+          hgcommit = false,
+          svn = false,
+          cvs = false,
+          ["."] = false,
+          ["*"] = false, -- disable by default
+
+          c = true,
+          cpp = true,
+          python = true,
+          rust = true,
+          go = true,
+          javascript = true,
+          typescript = true,
+          lua = true,
+          html = true,
+          css = true,
+          gitcommit = true,
+        },
+      })
+    end,
+  },
+
+  {
+    cond=false,
     "monkoose/neocodeium",
     dependencies = {"Saghen/blink.cmp"},
     event = "VeryLazy",
