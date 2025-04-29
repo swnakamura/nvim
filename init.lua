@@ -510,8 +510,12 @@ require('lazy').setup({
 
         -- Actions
         map('n', '<leader>hs', gs.stage_hunk, { desc = "Git stage hunk" })
-        map('n', '<C-Up>', gs.stage_hunk, { desc = "Git stage hunk" })
-        map('n', '<Right>', gs.stage_hunk, { desc = "Git stage hunk" })
+        map('n', '<C-Up>', function()
+            gs.stage_hunk(nil, { greedy = false })
+          end, { desc = "Git stage hunk" })
+        map('n', '<Right>', function()
+            gs.stage_hunk(nil, { greedy = false })
+          end, { desc = "Git stage hunk" })
         map('n', '<leader>hu', gs.reset_hunk, { desc = "Git reset hunk" })
         map('v', '<leader>hs', function() gs.stage_hunk { fn.line("."), fn.line("v") } end, { desc = "Git stage hunk" })
         map('v', '<leader>hu', function() gs.reset_hunk { fn.line("."), fn.line("v") } end, { desc = "Git reset hunk" })
