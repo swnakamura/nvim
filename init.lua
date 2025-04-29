@@ -1120,7 +1120,10 @@ require('lazy').setup({
       -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
       -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
       -- See the full "keymap" documentation for information on defining your own keymap.
-      keymap = { preset = 'default' },
+      keymap = {
+        preset = 'default',
+        ['<Tab>'] = {},
+      },
 
       enabled = function()
         local current_file = vim.fn.expand('%:p')
@@ -2933,9 +2936,6 @@ vim.keymap.set({ 'n', 'i' }, '<CR>',    '<CR>', { silent = true})
 vim.keymap.set({ 'n', 'v' }, '<Space>o', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<Space><BS>', '<C-^>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<C-Space>', '<Nop>', { silent = true })
-
--- remove default <Tab> mapping
-vim.keymap.del({ 'i', 's' }, '<Tab>')
 
 --https://zenn.dev/vim_jp/articles/67ec77641af3f2
 vim.keymap.set('n', 'zz', 'zz<Plug>(z1)', { remap = true })
