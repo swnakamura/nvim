@@ -2904,7 +2904,7 @@ if line =~ '^\s*{$'
 let line = line .. getline(v:foldstart + 1)->substitute('^\s*', ' ', '')
 endif
 let nline = v:foldend - v:foldstart
-return line . ' <' . nline  . ' lines>' . v:folddashes
+return line . ' ⤢' . nline
 endfunction
 ]])
 
