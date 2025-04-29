@@ -3333,7 +3333,7 @@ api.nvim_create_autocmd('CursorMoved', {
 
 vim.cmd([[hi CursorWord guibg=#2a2e41]])
 WordMatch = function()
-  if vim.tbl_contains({ 'fern', 'neo-tree', 'floaterm', 'oil', 'org', 'NeogitStatus' }, vim.bo.filetype) then
+  if vim.tbl_contains({ 'fern', 'neo-tree', 'floaterm', 'oil', 'org', 'NeogitStatus', 'aerial' }, vim.bo.filetype) then
     return
   end
   DelWordMatch()
