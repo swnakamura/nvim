@@ -3026,8 +3026,8 @@ function Quantized_l(cnt)
   end
 end
 
-api.nvim_set_keymap('n', 'h', '<cmd>lua Quantized_h(vim.v.count1)<CR>', { noremap = true, silent = true })
-api.nvim_set_keymap('n', 'l', '<cmd>lua Quantized_l(vim.v.count1)<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', 'h', '<cmd>lua Quantized_h(vim.v.count1)<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', 'l', '<cmd>lua Quantized_l(vim.v.count1)<CR>', { noremap = true, silent = true })
 
 -- do not copy when deleting by x
 vim.keymap.set({ 'n', 'x' }, 'x', '"_x')
