@@ -1638,6 +1638,13 @@ $0
       require('oil').setup({
         keymaps = {
           ["H"] = "actions.toggle_hidden",
+          ['cy'] = {
+              desc = 'Copy filepath to system clipboard',
+              callback = function ()
+                  require('oil.actions').copy_entry_path.callback()
+                  vim.fn.setreg("+", vim.fn.getreg(vim.v.register))
+              end,
+          },
         }
       })
       vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>", { desc = "Open parent directory" })
