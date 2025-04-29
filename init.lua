@@ -3393,6 +3393,14 @@ function RestoreWinAfter(command)
   return
 end
 
+function is_joblog()
+  -- if the first line starts with "Seq	Host ..." then it's a joblog file
+  if fn.getline(1):sub(1, 29) == 'Seq\tHost\tStarttime\tJobRuntime' then
+    return true
+  end
+  return false
+end
+
 api.nvim_create_autocmd(
   {'BufReadPost', 'BufWritePost'},
   {
@@ -3411,6 +3419,9 @@ api.nvim_create_autocmd(
   {
     pattern = '*.tsv',
     callback = function()
+      if is_joblog() then
+        return
+      end
       RestoreWinAfter([[silent %!column -s "$(printf '\t')" -o "$(printf '\t')" -t -L]])
     end
   }
@@ -3430,6 +3441,9 @@ api.nvim_create_autocmd(
   {
     pattern = '*.tsv',
     callback = function()
+      if is_joblog() then
+        return
+      end
       RestoreWinAfter([[silent %s/ \+\ze	//ge]])
       RestoreWinAfter([[silent %s/\s\+$//ge]])
     end
