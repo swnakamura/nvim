@@ -551,7 +551,7 @@ require('lazy').setup({
     init = function()
       vim.g.floaterm_width = 0.9
       vim.g.floaterm_height = 0.9
-      vim.keymap.set('n', '<C-z>', '<Cmd>FloatermToggle<CR>', { silent = true })
+      vim.keymap.set({'n', 'i'}, '<C-z>', '<Cmd>FloatermToggle<CR>', { silent = true })
       vim.keymap.set('t', [[<C-;>]], [[<C-\><C-n>:FloatermHide<CR>]], { silent = true })
       vim.keymap.set('t', [[<C-/>]], [[<C-\><C-n>:FloatermHide<CR>]], { silent = true })
       vim.keymap.set('t', '<C-l>', [[<C-\><C-n>]], { silent = true })
