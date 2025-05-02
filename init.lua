@@ -586,8 +586,8 @@ require('lazy').setup({
   {
     'https://github.com/ggandor/leap.nvim',
     config = function()
-      vim.keymap.set({'n', 'x', 'o'}, 'S',     '<Plug>(leap)')
       vim.keymap.set({'n', 'x', 'o'}, '<C-s>', '<Plug>(leap)')
+      vim.keymap.set({'n', 'x', 'o'}, 'S',     '<Plug>(leap-from-window)')
     end
   },
 
