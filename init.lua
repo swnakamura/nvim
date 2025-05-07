@@ -812,7 +812,6 @@ require('lazy').setup({
       {
         'williamboman/mason-lspconfig.nvim',
         config = function()
-          local mason_lspconfig = require 'mason-lspconfig'
           local words = {}
           for word in io.open(fn.stdpath("config") .. "/spell/en.utf-8.add", 'r'):lines() do
             table.insert(words, word)
@@ -861,89 +860,93 @@ require('lazy').setup({
             -- },
             -- grammarly = {},
           }
-          local on_attach = function(_, bufnr)
-            local nmap = function(keys, func, desc)
-              if desc then
-                desc = 'LSP: ' .. desc
-              end
 
-              vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
-            end
-
-            nmap('<leader>ln', vim.lsp.buf.rename, 'Rename')
-            nmap('<leader>la', vim.lsp.buf.code_action, 'Code Action')
-
-            nmap('<leader>ld', "<cmd>Lspsaga peek_definition<CR>", 'Goto Definition')
-            nmap('<leader>lr', require('telescope.builtin').lsp_references, 'Goto References')
-            nmap('<leader>li', vim.lsp.buf.implementation, 'Goto Implementation')
-            -- nmap('<leader>D', vim.lsp.buf.type_definition, 'Type Definition')
-            -- nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, 'Document Symbols')
-            -- nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Workspace Symbols')
-
-            -- See `:help K` for why this keymap
-            nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-            -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-
-            -- Lesser used LSP functionality
-            nmap('gD', vim.lsp.buf.declaration, 'Goto Declaration')
-            nmap('<leader>lwa', vim.lsp.buf.add_workspace_folder, 'Workspace Add Folder')
-            nmap('<leader>lwr', vim.lsp.buf.remove_workspace_folder, 'Workspace Remove Folder')
-            nmap('<leader>lwl', function()
-              print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-            end, 'Workspace List Folders')
-
-            -- Diagnostic keymaps
-            -- nmap('[d', function() vim.diagnostic.jump({ count = -1 }) end, 'Go to previous diagnostic message')
-            -- nmap(']d', function() vim.diagnostic.jump({ count = 1 }) end, 'Go to next diagnostic message')
-            nmap('[d', function() vim.diagnostic.goto_prev() end, 'Go to previous diagnostic message')
-            nmap(']d', function() vim.diagnostic.goto_next() end, 'Go to next diagnostic message')
-            nmap('<leader>le', vim.diagnostic.open_float, 'Open floating diagnostic message')
-            nmap('<leader>ll', vim.diagnostic.setloclist, 'Open diagnostics list')
-
-            -- nmap('<leader>a', '<cmd>Lspsaga outline<cr>', 'Open outline')
-
-            -- Create a command `:Format` local to the LSP buffer
-            api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-              vim.lsp.buf.format()
-            end, { desc = 'Format current buffer with LSP' })
-            -- vim.keymap.set('n', 'gF', vim.lsp.buf.format)
-
-            nmap('<leader>i', function(_)
-              vim.lsp.inlay_hint.enable()
-              api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "InsertEnter" }, {
-                once = true,
-                callback = function()
-                  vim.lsp.inlay_hint.enable(false)
-                end
-              })
-            end, 'Toggle inlay hint')
+          local lspconfig = require('lspconfig')
+          for server_name, settings in pairs(server2setting) do
+            vim.lsp.config(server_name, {
+              capabilities = require('blink.cmp').get_lsp_capabilities(settings.capabilities),
+              settings = settings,
+            })
           end
 
-          local handlers = {
-            function(server_name)
-              local capabilities = require('blink.cmp').get_lsp_capabilities(server2setting[server_name])
-              require('lspconfig')[server_name].setup {
-                capabilities = capabilities,
-                on_attach = on_attach,
-                settings = server2setting[server_name],
-              }
-            end,
-            -- special configuration for grammarly
-            -- ["grammarly"] = function()
-            --   require 'lspconfig'.grammarly.setup {
-            --     filetypes = { "bibtex", "gitcommit", "org", "tex", "restructuredtext", "rsweave", "latex", "quarto", "rmd", "context", "html" },
-            --     -- This is necessary as grammary language server does not support newer versions of nodejs
-            --     -- https://github.com/znck/grammarly/issues/334
-            --     cmd = { "n", "run", "16", os.getenv("HOME") .. "/.local/share/nvim/mason/bin/grammarly-languageserver", "--stdio" },
-            --     root_dir = function(fname)
-            --       return require 'lspconfig'.util.find_git_ancestor(fname) or vim.loop.os_homedir()
-            --     end,
-            --   }
-            -- end,
-          }
+          -- special configuration for grammarly
+          -- require 'lspconfig'.grammarly.setup {
+          --   filetypes = { "bibtex", "gitcommit", "org", "tex", "restructuredtext", "rsweave", "latex", "quarto", "rmd", "context", "html" },
+          --   -- This is necessary as grammary language server does not support newer versions of nodejs
+          --   -- https://github.com/znck/grammarly/issues/334
+          --   cmd = { "n", "run", "16", os.getenv("HOME") .. "/.local/share/nvim/mason/bin/grammarly-languageserver", "--stdio" },
+          --   root_dir = function(fname)
+          --     return require 'lspconfig'.util.find_git_ancestor(fname) or vim.loop.os_homedir()
+          --   end,
+          -- }
 
-          mason_lspconfig.setup({
-            handlers = handlers,
+
+          vim.api.nvim_create_autocmd('LspAttach', {
+            group = vim.api.nvim_create_augroup('my.lsp', {}),
+            callback = function(args)
+              local bufnr = args.buf
+              local nmap = function(keys, func, desc)
+                if desc then
+                  desc = 'LSP: ' .. desc
+                end
+
+                vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+              end
+
+              nmap('<leader>ln', vim.lsp.buf.rename, 'Rename')
+              nmap('<leader>la', vim.lsp.buf.code_action, 'Code Action')
+
+              nmap('<leader>ld', "<cmd>Lspsaga peek_definition<CR>", 'Goto Definition')
+              nmap('<leader>lr', require('telescope.builtin').lsp_references, 'Goto References')
+              nmap('<leader>li', vim.lsp.buf.implementation, 'Goto Implementation')
+              -- nmap('<leader>D', vim.lsp.buf.type_definition, 'Type Definition')
+              -- nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, 'Document Symbols')
+              -- nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Workspace Symbols')
+
+              -- See `:help K` for why this keymap
+              nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+              -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+
+              -- Lesser used LSP functionality
+              nmap('gD', vim.lsp.buf.declaration, 'Goto Declaration')
+              nmap('<leader>lwa', vim.lsp.buf.add_workspace_folder, 'Workspace Add Folder')
+              nmap('<leader>lwr', vim.lsp.buf.remove_workspace_folder, 'Workspace Remove Folder')
+              nmap('<leader>lwl', function()
+                print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+              end, 'Workspace List Folders')
+
+              -- Diagnostic keymaps
+              -- nmap('[d', function() vim.diagnostic.jump({ count = -1 }) end, 'Go to previous diagnostic message')
+              -- nmap(']d', function() vim.diagnostic.jump({ count = 1 }) end, 'Go to next diagnostic message')
+              -- nmap('[d', function() vim.diagnostic.goto_prev() end, 'Go to previous diagnostic message')
+              -- nmap(']d', function() vim.diagnostic.goto_next() end, 'Go to next diagnostic message')
+              nmap('[d', function() require("lspsaga.diagnostic"):goto_prev() end, 'Go to previous diagnostic message')
+              nmap(']d', function() require("lspsaga.diagnostic"):goto_next() end, 'Go to next diagnostic message')
+              nmap('<leader>le', vim.diagnostic.open_float, 'Open floating diagnostic message')
+              nmap('<leader>ll', vim.diagnostic.setloclist, 'Open diagnostics list')
+
+              -- nmap('<leader>a', '<cmd>Lspsaga outline<cr>', 'Open outline')
+
+              -- Create a command `:Format` local to the LSP buffer
+              api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+                vim.lsp.buf.format()
+              end, { desc = 'Format current buffer with LSP' })
+              -- vim.keymap.set('n', 'gF', vim.lsp.buf.format)
+
+              nmap('<leader>i', function(_)
+                vim.lsp.inlay_hint.enable()
+                api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "InsertEnter" }, {
+                  once = true,
+                  callback = function()
+                    vim.lsp.inlay_hint.enable(false)
+                  end
+                })
+              end, 'Toggle inlay hint')
+            end
+          })
+
+          require('mason').setup()
+          require('mason-lspconfig').setup({
             ensure_installed = vim.tbl_keys(server2setting),
           })
         end
