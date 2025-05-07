@@ -553,6 +553,12 @@ require('lazy').setup({
       vim.g.floaterm_height = 0.9
       vim.keymap.set({'n', 'i'}, '<C-z>', '<Cmd>FloatermToggle<CR>', { silent = true })
       vim.keymap.set('t', [[<C-;>]], [[<C-\><C-n>:FloatermHide<CR>]], { silent = true })
+      vapi.nvim_create_autocmd('FileType', {
+        pattern = 'floaterm',
+        callback = function()
+          vim.keymap.set('n', [[<C-;>]], [[<C-\><C-n>:FloatermHide<CR>]], { silent = true })
+        end
+      })
       vim.keymap.set('t', [[<C-/>]], [[<C-\><C-n>:FloatermHide<CR>]], { silent = true })
       vim.keymap.set('t', '<C-l>', [[<C-\><C-n>]], { silent = true })
     end
