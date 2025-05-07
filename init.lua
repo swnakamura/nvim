@@ -2766,7 +2766,11 @@ $0
     config = function()
       require('ufo').setup({
         provider_selector = function(bufnr, filetype, buftype)
+          if filetype == 'NeogitStatus' then
+            return ''
+          else
             return {'treesitter', 'indent'}
+          end
         end,
         fold_virt_text_handler = UFOVirtTextHandler,
       })
