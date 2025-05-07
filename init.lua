@@ -1040,8 +1040,9 @@ require('lazy').setup({
     config = function()
       require('mini.surround').setup({
         mappings = {
-          -- Disable sh as it is already used for "goto left window"
-          highlight = '', -- Highlight surrounding
+          -- Disable sh and sn mappings
+          highlight = '',
+          update_n_lines = '',
         },
         custom_surroundings = {
           -- Japanese brackets. Code from https://riq0h.jp/2023/02/18/142447
@@ -1749,9 +1750,27 @@ $0
                   vim.fn.setreg("+", vim.fn.getreg(vim.v.register))
               end,
           },
+          ["gd"] = {
+            desc = "Toggle file detail view",
+            callback = function()
+              detail = not detail
+              if detail then
+                require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
+              else
+                require("oil").set_columns({ "icon" })
+              end
+            end,
+          },
         }
       })
       vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+      vim.keymap.set("n", "<leader>E",
+        function()
+          local cwd = vim.fn.getcwd()
+          vim.cmd("Oil " .. cwd)
+        end,
+        { desc = "Open parent directory" }
+      )
     end
   },
 
@@ -1816,7 +1835,7 @@ $0
       map('n', '<C-.>', '<Cmd>BufferMoveNext<CR>', opts)
       map('n', '<leader>wd', '<Cmd>quit<CR>', opts)
       map({ 'n', 'v' }, '<backspace>', '<Cmd>BufferClose<CR>', opts)
-      map({ 'n', 'v' }, '<S-backspace>', '<Cmd>BufferClose!<CR>', opts)
+      map({ 'n', 'v' }, '<C-backspace>', '<Cmd>BufferClose<CR><Cmd>close<CR>', opts)
       map({ 'n', 'v' }, '<leader>bd', '<Cmd>BufferClose<CR>', opts)
       map({ 'n', 'v' }, '<leader>bo', '<Cmd>BufferCloseAllButVisible<CR>', opts)
       -- map('n', '<C-w>', '<Cmd>BufferClose<CR>', opts)
@@ -1834,7 +1853,8 @@ $0
     config = function()
       vim.g.barbar_auto_setup = false -- disable auto-setup
 
-      vim.cmd [[highlight! link BufferCurrent DiagnosticVirtualTextInfo]]
+      vim.cmd [[hi! link BufferCurrent    DiagnosticVirtualTextInfo]]
+      vim.cmd [[hi! link BufferCurrentMod DiagnosticVirtualTextInfo]]
 
       require 'barbar'.setup {
         icons = {
@@ -2097,15 +2117,18 @@ $0
         " Less bright search color
         hi clear Search
         hi Search                guibg=NONE gui=bold,underline guisp=#e27878
+        hi clear CurSearch
+        hi CurSearch             guibg=NvimDarkYellow
         " Do not show unnecessary separation colors
         hi LineNr                guibg=NONE
         hi CursorLineNr          guibg=NONE
+        hi FoldColumn            guibg=NONE
         hi SignColumn            guibg=NONE
         hi GitGutterAdd          guibg=NONE
         hi GitGutterChange       guibg=NONE
         hi GitGutterChangeDelete guibg=NONE
         hi GitGutterDelete       guibg=NONE
-        hi Folded                guibg=#0f111a
+        hi Folded                guibg=#2d273f
         " Disable hl for winbar which is used by dropbar
         hi WinBar guibg=NONE
         hi link LspInlayHint ModeMsg
@@ -2157,9 +2180,9 @@ $0
           always_divide_middle = true,
           globalstatus = false,
           refresh = {
-            statusline = 100,
-            tabline = 100,
-            winbar = 100,
+            statusline = 1,
+            tabline = 1,
+            winbar = 1,
           }
         },
         sections = {
@@ -2595,12 +2618,28 @@ $0
     cond = not vim.g.is_vscode,
     "folke/zen-mode.nvim",
     event = 'VeryLazy',
-    opts ={
+    opts = {
       on_open = function()
-        vim.cmd('SatelliteDisable')
+        vim.o.laststatus = 0
+
+        if vim.tbl_contains({ 'text', 'markdown' }, vim.o.filetype) then
+          vim.o.number = false
+          vim.o.relativenumber = false
+          Zen_PrevStatusColumn = vim.wo.statuscolumn
+          vim.wo.statuscolumn = ''
+          Zen_PrevFoldColumn = vim.wo.foldcolumn
+          vim.o.foldcolumn = '0'
+        end
       end,
       on_close = function()
-        vim.cmd('SatelliteEnable')
+        vim.o.laststatus = 3
+
+        if vim.tbl_contains({ 'text', 'markdown' }, vim.o.filetype) then
+          vim.o.number = true
+          vim.o.relativenumber = true
+          vim.wo.statuscolumn = Zen_PrevStatusColumn
+          vim.o.foldcolumn = Zen_PrevFoldColumn
+        end
       end,
       plugins = {
         options = {
@@ -2610,7 +2649,7 @@ $0
         }
       }
     },
-    config = function()
+    init = function()
       vim.keymap.set('n', '<leader>z', function()
         vim.cmd('ZenMode')
       end, { desc = 'Zen mode' })
@@ -2675,6 +2714,54 @@ $0
         setup = true, -- modifies `h` and `l`
       },
     },
+  },
+  {
+    'kevinhwang91/nvim-ufo',
+    dependencies = { 'kevinhwang91/promise-async' },
+    event = 'VeryLazy',
+    init = function()
+      vim.o.foldenable = true
+      vim.o.foldlevel = 99
+      vim.o.foldlevelstart = 99
+      vim.opt.foldcolumn = "1"
+      vim.o.statuscolumn = '%s%#FoldColumn#%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? " " : " ") : "  " }%*%=%-l '
+
+      UFOVirtTextHandler = function(virtText, lnum, endLnum, width, truncate)
+          local newVirtText = {}
+          local suffix = (' 󰁂 %d '):format(endLnum - lnum)
+          local sufWidth = vim.fn.strdisplaywidth(suffix)
+          local targetWidth = width - sufWidth
+          local curWidth = 0
+          for _, chunk in ipairs(virtText) do
+              local chunkText = chunk[1]
+              local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+              if targetWidth > curWidth + chunkWidth then
+                  table.insert(newVirtText, chunk)
+              else
+                  chunkText = truncate(chunkText, targetWidth - curWidth)
+                  local hlGroup = chunk[2]
+                  table.insert(newVirtText, {chunkText, hlGroup})
+                  chunkWidth = vim.fn.strdisplaywidth(chunkText)
+                  -- str width returned from truncate() may less than 2nd argument, need padding
+                  if curWidth + chunkWidth < targetWidth then
+                      suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
+                  end
+                  break
+              end
+              curWidth = curWidth + chunkWidth
+          end
+          table.insert(newVirtText, {suffix, 'MoreMsg'})
+          return newVirtText
+      end
+    end,
+    config = function()
+      require('ufo').setup({
+        provider_selector = function(bufnr, filetype, buftype)
+            return {'treesitter', 'indent'}
+        end,
+        fold_virt_text_handler = UFOVirtTextHandler,
+      })
+    end
   },
 
   -- org mode
@@ -2879,38 +2966,6 @@ vim.o.inccommand = 'split'
 
 vim.o.colorcolumn = "+1"
 
--- Nice and simple folding: https://www.reddit.com/r/neovim/comments/1jmqd7t/sorry_ufo_these_7_lines_replaced_you/
-vim.o.foldenable = true
-vim.o.foldlevel = 99
-vim.opt.foldcolumn = "0"
-vim.opt.fillchars:append({fold = " "})
-vim.o.foldmethod = "expr"
-vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
--- Prefer LSP folding if client supports it for version 0.11 or later
-if fn.has('nvim-0.11') == 1 then
-  vim.api.nvim_create_autocmd('LspAttach', {
-      callback = function(args)
-           local client = vim.lsp.get_client_by_id(args.data.client_id)
-           if client:supports_method('textDocument/foldingRange') then
-               local win = vim.api.nvim_get_current_win()
-               vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
-          end
-      end,
-   })
-end
-
-vim.cmd([[
-set foldtext=MyFoldText()
-function! MyFoldText()
-let line = getline(v:foldstart)
-if line =~ '^\s*{$'
-let line = line .. getline(v:foldstart + 1)->substitute('^\s*', ' ', '')
-endif
-let nline = v:foldend - v:foldstart
-return line . ' ⤢' . nline
-endfunction
-]])
-
 vim.opt.diffopt:append('vertical,algorithm:patience,indent-heuristic')
 
 vim.o.wildmode = 'list:full'
@@ -2931,7 +2986,7 @@ vim.go.signcolumn = 'yes:1'
 
 -- [[ Basic Keymaps ]]
 
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+-- vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'i' }, '<CR>',    '<CR>', { silent = true})
 vim.keymap.set({ 'n', 'v' }, '<Space>o', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<Space><BS>', '<C-^>', { silent = true })
@@ -3051,9 +3106,7 @@ vim.keymap.set('n', '<Plug>(my-win)s', '<Cmd>split<CR>')
 vim.keymap.set('n', '<Plug>(my-win)v', '<Cmd>vsplit<CR>')
 -- st is used by nvim-tree
 vim.keymap.set('n', '<Plug>(my-win)c', '<Cmd>tab sp<CR>')
--- vim.keymap.set('n', '<C-w>c', '<Cmd>tab sp<CR>')
--- vim.keymap.set('n', '<C-w><C-c>', '<Cmd>tab sp<CR>')
-vim.keymap.set('n', '<Plug>(my-win)C', '<Cmd>-tab sp<CR>')
+vim.keymap.set('n', '<Plug>(my-win)C', '<Cmd>tabc<CR>')
 vim.keymap.set('n', '<Plug>(my-win)j', '<C-w>j')
 vim.keymap.set('n', '<Plug>(my-win)k', '<C-w>k')
 vim.keymap.set('n', '<Plug>(my-win)l', '<C-w>l')
@@ -3474,7 +3527,6 @@ api.nvim_create_autocmd(
   {
     pattern='python',
     callback=function()
-      vim.wo.foldmethod = 'indent'
       function FormatPython()
         vim.cmd('update')
         RestoreWinAfter(':silent %!ruff format --line-length=140 -')
