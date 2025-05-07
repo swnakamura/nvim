@@ -1,7 +1,7 @@
 vim.loader.enable()
 
-local fn = vim.fn
-local api = vim.api
+local vfn = vim.fn
+local vapi = vim.api
 
 -- Do not load some of the default plugins
 vim.g.loaded_netrwPlugin = true
@@ -9,9 +9,9 @@ vim.g.loaded_netrwPlugin = true
 vim.g.mapleader = " "
 
 -- Install lazy.nvim (package manager)
-local lazypath = fn.stdpath 'data' .. '/lazy/lazy.nvim'
+local lazypath = vfn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.uv.fs_stat(lazypath) then
-  fn.system {
+  vfn.system {
     'git',
     'clone',
     '--filter=blob:none',
@@ -22,33 +22,33 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-if fn.has('wsl') == 1 then
+if vfn.has('wsl') == 1 then
   vim.g.is_wsl = true
 else
   vim.g.is_wsl = false
 end
 
-if fn.has('mac') == 1 then
+if vfn.has('mac') == 1 then
   vim.g.is_macos = true
 else
   vim.g.is_macos = false
 end
 
-if fn.exists('g:vscode') == 1 then
+if vfn.exists('g:vscode') == 1 then
   vim.g.is_vscode = true
 else
   vim.g.is_vscode = false
 end
 
 -- check if this is an ssh client using the environment variable
-if fn.getenv('SSH_CONNECTION') ~= nil then
+if vfn.getenv('SSH_CONNECTION') ~= nil then
   vim.g.is_ssh = true
 else
   vim.g.is_ssh = false
 end
 
 -- check if the window is wide enough and vim is open with an argument to open the neotree explorer
-if vim.o.columns > 200 and fn.argc() > 0 then
+if vim.o.columns > 200 and vfn.argc() > 0 then
   vim.g.open_neotree = true
 else
   vim.g.open_neotree = false
@@ -140,7 +140,7 @@ if vim.g.is_macos == false then
     end
   end
 
-  if fn.executable('fswatch') == 1 then
+  if vfn.executable('fswatch') == 1 then
     require('vim.lsp._watchfiles')._watchfunc = fswatch
   end
 end
@@ -517,8 +517,8 @@ require('lazy').setup({
             gs.stage_hunk(nil, { greedy = false })
           end, { desc = "Git stage hunk" })
         map('n', '<leader>hu', gs.reset_hunk, { desc = "Git reset hunk" })
-        map('v', '<leader>hs', function() gs.stage_hunk { fn.line("."), fn.line("v") } end, { desc = "Git stage hunk" })
-        map('v', '<leader>hu', function() gs.reset_hunk { fn.line("."), fn.line("v") } end, { desc = "Git reset hunk" })
+        map('v', '<leader>hs', function() gs.stage_hunk { vfn.line("."), vfn.line("v") } end, { desc = "Git stage hunk" })
+        map('v', '<leader>hu', function() gs.reset_hunk { vfn.line("."), vfn.line("v") } end, { desc = "Git reset hunk" })
         map('n', '<leader>hS', gs.stage_buffer, { desc = "Git stage buffer" })
         map('n', '<leader>hr', gs.undo_stage_hunk, { desc = "Git undo stage hunk" })
         map('n', '<leader>hR', gs.reset_buffer, { desc = "Git reset buffer" })
@@ -686,7 +686,7 @@ require('lazy').setup({
           return not blink.is_visible()
         end,
       })
-      api.nvim_create_autocmd('User', {
+      vapi.nvim_create_autocmd('User', {
         pattern = 'BlinkCmpMenuOpen',
         callback = function()
           neocodeium.clear()
@@ -746,7 +746,7 @@ require('lazy').setup({
               callback = function(response, _)
                 local commit_message = response:match("```python\n(.-)```")
                 if commit_message then
-                  fn.setreg('+', commit_message , 'c')
+                  vfn.setreg('+', commit_message , 'c')
                 end
               end,
             },
@@ -755,7 +755,7 @@ require('lazy').setup({
               callback = function(response, _)
                 local commit_message = response:match("```python\n(.-)```")
                 if commit_message then
-                  fn.setreg('+', commit_message , 'c')
+                  vfn.setreg('+', commit_message , 'c')
                 end
               end,
             },
@@ -769,7 +769,7 @@ require('lazy').setup({
               callback = function(response, _)
                 local commit_message = response:match("```gitcommit\n(.-)```")
                 if commit_message then
-                  fn.setreg('"', commit_message , 'c')
+                  vfn.setreg('"', commit_message , 'c')
                 end
               end,
             },
@@ -813,7 +813,7 @@ require('lazy').setup({
         'williamboman/mason-lspconfig.nvim',
         config = function()
           local words = {}
-          for word in io.open(fn.stdpath("config") .. "/spell/en.utf-8.add", 'r'):lines() do
+          for word in io.open(vfn.stdpath("config") .. "/spell/en.utf-8.add", 'r'):lines() do
             table.insert(words, word)
           end
           local server2setting = {
@@ -881,8 +881,8 @@ require('lazy').setup({
           -- }
 
 
-          api.nvim_create_autocmd('LspAttach', {
-            group = api.nvim_create_augroup('my.lsp', {}),
+          vapi.nvim_create_autocmd('LspAttach', {
+            group = vapi.nvim_create_augroup('my.lsp', {}),
             callback = function(args)
               local bufnr = args.buf
               local nmap = function(keys, func, desc)
@@ -928,14 +928,14 @@ require('lazy').setup({
               -- nmap('<leader>a', '<cmd>Lspsaga outline<cr>', 'Open outline')
 
               -- Create a command `:Format` local to the LSP buffer
-              api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+              vapi.nvim_buf_create_user_command(bufnr, 'Format', function(_)
                 vim.lsp.buf.format()
               end, { desc = 'Format current buffer with LSP' })
               -- vim.keymap.set('n', 'gF', vim.lsp.buf.format)
 
               nmap('<leader>i', function(_)
                 vim.lsp.inlay_hint.enable()
-                api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "InsertEnter" }, {
+                vapi.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "InsertEnter" }, {
                   once = true,
                   callback = function()
                     vim.lsp.inlay_hint.enable(false)
@@ -983,19 +983,19 @@ require('lazy').setup({
       'nvim-dap-python',
     },
     config = function()
-      api.nvim_set_keymap('n', '<leader>Du', '<cmd>lua require("dapui").toggle()<CR>', {})
+      vapi.nvim_set_keymap('n', '<leader>Du', '<cmd>lua require("dapui").toggle()<CR>', {})
 
       -- https://zenn.dev/kawat/articles/51f9cc1f0f0aa9 を参考
-      api.nvim_set_keymap('n', '<F6>', '<cmd>DapContinue<CR>', { silent = true })
-      api.nvim_set_keymap('n', '<F10>', '<cmd>DapStepOver<CR>', { silent = true })
-      api.nvim_set_keymap('n', '<F11>', '<cmd>DapStepInto<CR>', { silent = true })
-      api.nvim_set_keymap('n', '<F12>', '<cmd>DapStepOut<CR>', { silent = true })
-      api.nvim_set_keymap('n', '<leader>b', '<cmd>DapToggleBreakpoint<CR>', { silent = true })
-      api.nvim_set_keymap('n', '<leader>B', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Breakpoint condition: "))<CR>', { silent = true })
-      api.nvim_set_keymap('n', '<leader>Dp', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { silent = true })
-      api.nvim_set_keymap('n', '<leader>De', '<cmd>lua require("dapui").eval()<CR>', { silent = true })
-      api.nvim_set_keymap('n', '<leader>Dr', '<cmd>lua require("dap").repl.open()<CR>', { silent = true })
-      api.nvim_set_keymap('n', '<leader>Dl', '<cmd>lua require("dap").run_last()<CR>', { silent = true })
+      vapi.nvim_set_keymap('n', '<F6>', '<cmd>DapContinue<CR>', { silent = true })
+      vapi.nvim_set_keymap('n', '<F10>', '<cmd>DapStepOver<CR>', { silent = true })
+      vapi.nvim_set_keymap('n', '<F11>', '<cmd>DapStepInto<CR>', { silent = true })
+      vapi.nvim_set_keymap('n', '<F12>', '<cmd>DapStepOut<CR>', { silent = true })
+      vapi.nvim_set_keymap('n', '<leader>b', '<cmd>DapToggleBreakpoint<CR>', { silent = true })
+      vapi.nvim_set_keymap('n', '<leader>B', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Breakpoint condition: "))<CR>', { silent = true })
+      vapi.nvim_set_keymap('n', '<leader>Dp', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { silent = true })
+      vapi.nvim_set_keymap('n', '<leader>De', '<cmd>lua require("dapui").eval()<CR>', { silent = true })
+      vapi.nvim_set_keymap('n', '<leader>Dr', '<cmd>lua require("dap").repl.open()<CR>', { silent = true })
+      vapi.nvim_set_keymap('n', '<leader>Dl', '<cmd>lua require("dap").run_last()<CR>', { silent = true })
     end
 
   },
@@ -1028,7 +1028,7 @@ require('lazy').setup({
         -- tex = { 'proselint' },
         -- python = { 'cspell' }
       }
-      api.nvim_create_autocmd({ "BufWritePost" }, {
+      vapi.nvim_create_autocmd({ "BufWritePost" }, {
         callback = function()
           require("lint").try_lint()
         end,
@@ -1051,9 +1051,9 @@ require('lazy').setup({
           -- Japanese brackets. Code from https://riq0h.jp/2023/02/18/142447
           ['j'] = {
             input = function()
-              local ok, val = pcall(fn.getchar)
+              local ok, val = pcall(vfn.getchar)
               if not ok then return end
-              local char = fn.nr2char(val)
+              local char = vfn.nr2char(val)
 
               local dict = {
                 ['('] = { '（().-()）' },
@@ -1077,9 +1077,9 @@ require('lazy').setup({
               error('%s is unsupported surroundings in Japanese')
             end,
             output = function()
-              local ok, val = pcall(fn.getchar)
+              local ok, val = pcall(vfn.getchar)
               if not ok then return end
-              local char = fn.nr2char(val)
+              local char = vfn.nr2char(val)
 
               local dict = {
                 ['('] = { left = '（', right = '）' },
@@ -1130,12 +1130,12 @@ require('lazy').setup({
       },
 
       enabled = function()
-        local current_file = fn.expand('%:p')
+        local current_file = vfn.expand('%:p')
         -- Enable when all of the following are true:
         -- 1. Not in text file insert mode
         -- 2. Not in prompt
         local is_text = vim.bo.filetype == 'text'
-        local is_insert = api.nvim_get_mode().mode == 'i'
+        local is_insert = vapi.nvim_get_mode().mode == 'i'
         return not (is_text and is_insert)
       end,
 
@@ -1164,7 +1164,7 @@ require('lazy').setup({
         completion = {
           menu = {
             auto_show = function(ctx)
-              return fn.getcmdtype() == ':'
+              return vfn.getcmdtype() == ':'
             end,
           },
           list = {
@@ -1238,7 +1238,7 @@ require('lazy').setup({
     event = "VeryLazy",
     opts = {},
     config = function(_, opts)
-      api.nvim_create_autocmd("LspAttach", {
+      vapi.nvim_create_autocmd("LspAttach", {
         callback = function(args)
           local bufnr = args.buf
           local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -1702,11 +1702,11 @@ $0
             system_open = function(state)
               local node = state.tree:get_node()
               local path = node:get_id()
-              path = fn.shellescape(path, 1)
+              path = vfn.shellescape(path, 1)
               if vim.g.is_macos then
-                api.nvim_command("silent !open -g " .. path)
+                vapi.nvim_command("silent !open -g " .. path)
               else
-                api.nvim_command("silent !xdg-open " .. path)
+                vapi.nvim_command("silent !xdg-open " .. path)
               end
             end,
           },
@@ -1750,7 +1750,7 @@ $0
               desc = 'Copy filepath to system clipboard',
               callback = function ()
                   require('oil.actions').copy_entry_path.callback()
-                  fn.setreg("+", fn.getreg(vim.v.register))
+                  vfn.setreg("+", vfn.getreg(vim.v.register))
               end,
           },
           ["gd"] = {
@@ -1769,7 +1769,7 @@ $0
       vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>", { desc = "Open parent directory" })
       vim.keymap.set("n", "<leader>E",
         function()
-          local cwd = fn.getcwd()
+          local cwd = vfn.getcwd()
           vim.cmd("Oil " .. cwd)
         end,
         { desc = "Open parent directory" }
@@ -1976,7 +1976,7 @@ $0
     'dhruvasagar/vim-table-mode',
     ft = 'markdown',
     config = function()
-      api.nvim_create_autocmd({ "FileType" }, {
+      vapi.nvim_create_autocmd({ "FileType" }, {
         pattern = "markdown",
         callback = function()
           vim.keymap.set('n', '<C-t>', '<cmd>TableModeToggle<cr>', { buffer = 0 })
@@ -2194,7 +2194,7 @@ $0
             {
               require("noice").api.status.mode.get,
               cond = function()
-                return require("noice").api.status.mode.has() and fn.reg_recording() ~= ""
+                return require("noice").api.status.mode.has() and vfn.reg_recording() ~= ""
               end,
               color = { fg = "#ff9e64" },
             },
@@ -2267,7 +2267,7 @@ $0
       'nvim-telescope/telescope-fzf-native.nvim',
       build = 'make',
       cond = function()
-        return fn.executable 'make' == 1
+        return vfn.executable 'make' == 1
       end,
     } },
     config = function()
@@ -2296,10 +2296,10 @@ $0
       }
 
       -- To avoid entering insert mode after search
-      api.nvim_create_autocmd("WinLeave", {
+      vapi.nvim_create_autocmd("WinLeave", {
         callback = function()
-          if vim.bo.ft == "TelescopePrompt" and fn.mode() == "i" then
-            api.nvim_feedkeys(api.nvim_replace_termcodes("<Esc>", true, false, true), "i", false)
+          if vim.bo.ft == "TelescopePrompt" and vfn.mode() == "i" then
+            vapi.nvim_feedkeys(vapi.nvim_replace_termcodes("<Esc>", true, false, true), "i", false)
           end
         end,
       })
@@ -2321,7 +2321,7 @@ $0
         function() 
           require('telescope.builtin').live_grep({
             cwd = (function()
-              local cwd = fn.expand "%:p:h"
+              local cwd = vfn.expand "%:p:h"
               -- for Oil buffers such as "oil://~", remove "oil://"
               if cwd:match("oil://") then
                 cwd = cwd:gsub("oil://", "")
@@ -2510,7 +2510,7 @@ $0
       end
 
       local function paste()
-        return { fn.split(fn.getreg(''), '\n'), fn.getregtype('') }
+        return { vfn.split(vfn.getreg(''), '\n'), vfn.getregtype('') }
       end
 
       vim.g.clipboard = {
@@ -2577,7 +2577,7 @@ $0
               head = true,
           })
           if pos then
-              api.nvim_win_set_cursor(0, { pos.row, pos.col })
+              vapi.nvim_win_set_cursor(0, { pos.row, pos.col })
           end
       end)
       vim.keymap.set("n", "E", function()
@@ -2585,19 +2585,19 @@ $0
               head = false,
           })
           if pos then
-              api.nvim_win_set_cursor(0, { pos.row, pos.col })
+              vapi.nvim_win_set_cursor(0, { pos.row, pos.col })
           end
       end)
     end
   },
 
   {
-    cond = vim.g.is_macos and fn.isdirectory(fn.expand('~/ghq/github.com/swnakamura/novel_formatter')) == 1,
+    cond = vim.g.is_macos and vfn.isdirectory(vfn.expand('~/ghq/github.com/swnakamura/novel_formatter')) == 1,
     dir = '~/ghq/github.com/swnakamura/novel_formatter'
   },
 
   {
-    cond = vim.g.is_macos and fn.isdirectory(fn.expand('~/ghq/github.com/swnakamura/novel-preview.vim')) == 1,
+    cond = vim.g.is_macos and vfn.isdirectory(vfn.expand('~/ghq/github.com/swnakamura/novel-preview.vim')) == 1,
     dir = '~/ghq/github.com/swnakamura/novel-preview.vim',
     -- ft = 'text',
     dependencies = 'vim-denops/denops.vim',
@@ -2664,13 +2664,13 @@ $0
     cond = false,
     'https://github.com/subnut/nvim-ghost.nvim',
     init = function()
-      api.nvim_create_augroup('nvim-ghost-user-autocmd', {})
-      api.nvim_create_autocmd('User', {
+      vapi.nvim_create_augroup('nvim-ghost-user-autocmd', {})
+      vapi.nvim_create_autocmd('User', {
         pattern = { 'www.reddit.com', 'www.stackoverflow.com', 'github.com' },
         command = 'set filetype=markdown',
         group = 'nvim-ghost-user-autocmd'
       })
-      api.nvim_create_autocmd('User', {
+      vapi.nvim_create_autocmd('User', {
         pattern = { 'www.overleaf.com' },
         command = 'set filetype=tex',
         group = 'nvim-ghost-user-autocmd'
@@ -2680,7 +2680,7 @@ $0
         vim.g.nvim_ghost_python_executable = '/usr/bin/python3'
       end
     end,
-    build = function() fn['nvim_ghost#installer#install']() end
+    build = function() vfn['nvim_ghost#installer#install']() end
   },
 
   -- color picker
@@ -2732,19 +2732,19 @@ $0
       UFOVirtTextHandler = function(virtText, lnum, endLnum, width, truncate)
           local newVirtText = {}
           local suffix = (' 󰁂 %d '):format(endLnum - lnum)
-          local sufWidth = fn.strdisplaywidth(suffix)
+          local sufWidth = vfn.strdisplaywidth(suffix)
           local targetWidth = width - sufWidth
           local curWidth = 0
           for _, chunk in ipairs(virtText) do
               local chunkText = chunk[1]
-              local chunkWidth = fn.strdisplaywidth(chunkText)
+              local chunkWidth = vfn.strdisplaywidth(chunkText)
               if targetWidth > curWidth + chunkWidth then
                   table.insert(newVirtText, chunk)
               else
                   chunkText = truncate(chunkText, targetWidth - curWidth)
                   local hlGroup = chunk[2]
                   table.insert(newVirtText, {chunkText, hlGroup})
-                  chunkWidth = fn.strdisplaywidth(chunkText)
+                  chunkWidth = vfn.strdisplaywidth(chunkText)
                   -- str width returned from truncate() may less than 2nd argument, need padding
                   if curWidth + chunkWidth < targetWidth then
                       suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
@@ -2799,7 +2799,7 @@ $0
         org_agenda_span = 'week',
       })
       -- settings for org files
-      api.nvim_create_autocmd("FileType", {
+      vapi.nvim_create_autocmd("FileType", {
         pattern = "org",
         callback = function()
           vim.keymap.set('i', "<C-CR>",
@@ -2823,24 +2823,24 @@ $0
         end
       })
       -- q to quit in org agenda
-      api.nvim_create_autocmd("FileType", {
+      vapi.nvim_create_autocmd("FileType", {
         pattern = "orgagenda",
         callback = function()
           vim.keymap.set('n', "q", '<cmd>q<cr>', { buffer = true })
         end
       })
       -- highlight settings for org agenda
-      api.nvim_create_autocmd('FileType', {
+      vapi.nvim_create_autocmd('FileType', {
         pattern = { '*' },
         callback = function()
           -- Define own colors
           -- colors for day separation
-          api.nvim_set_hl(0, '@org.agenda.day', { link = 'DiffAdd' })
+          vapi.nvim_set_hl(0, '@org.agenda.day', { link = 'DiffAdd' })
           -- colors for deadline and scheduled
-          api.nvim_set_hl(0, '@org.agenda.deadline', { link = 'ErrorMsg' })
-          api.nvim_set_hl(0, '@org.agenda.scheduled', { link = 'SpecialKey' })
+          vapi.nvim_set_hl(0, '@org.agenda.deadline', { link = 'ErrorMsg' })
+          vapi.nvim_set_hl(0, '@org.agenda.scheduled', { link = 'SpecialKey' })
           -- colors for done (by default it is white and hard to read)
-          api.nvim_set_hl(0, '@org.keyword.done', { link = 'SpecialKey' })
+          vapi.nvim_set_hl(0, '@org.keyword.done', { link = 'SpecialKey' })
           -- Link to another highlight group
           -- api.nvim_set_hl(0, '@org.agenda.scheduled_past', { link = 'Statement' })
         end
@@ -2858,8 +2858,8 @@ $0
     'chentoast/marks.nvim',
     config = function()
       require('marks').setup({})
-      api.nvim_set_hl(0, 'MarkSignHL', { link = "CursorLineNr" })
-      api.nvim_set_hl(0, 'MarkSignNumHL', { link = "LineNr" })
+      vapi.nvim_set_hl(0, 'MarkSignHL', { link = "CursorLineNr" })
+      vapi.nvim_set_hl(0, 'MarkSignNumHL', { link = "LineNr" })
     end
   },
 
@@ -2871,7 +2871,7 @@ $0
     -- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
     lazy = not vim.g.started_by_firenvim,
     build = function()
-      fn["firenvim#install"](0)
+      vfn["firenvim#install"](0)
     end
   },
 
@@ -3041,7 +3041,7 @@ vim.keymap.set({ 'n', 'v' }, '<leader>;', ':')
 -- vim.keymap.set('t', '<C-[>', [[<C-\><C-n><C-w><C-k>]], { silent = true })
 vim.keymap.set('t', '<C-l>', [[<C-\><C-n>]], { silent = true })
 -- enter insert mode when entering terminal buffer
-api.nvim_create_autocmd("BufEnter", {
+vapi.nvim_create_autocmd("BufEnter", {
   callback = function()
     -- if entered to termianl buffer, enter insert mode
     if vim.bo.buftype == 'terminal' then
@@ -3052,12 +3052,12 @@ api.nvim_create_autocmd("BufEnter", {
 
 -- カーソルがインデント内部ならtrue
 local function in_indent()
-  return fn.col('.') <= fn.indent('.')
+  return vfn.col('.') <= vfn.indent('.')
 end
 
 -- カーソルがインデントとずれた位置ならtrue
 local function not_fit_indent()
-  return ((fn.col('.') - 1) % fn.shiftwidth()) ~= 0
+  return ((vfn.col('.') - 1) % vfn.shiftwidth()) ~= 0
 end
 
 function Quantized_h(cnt)
@@ -3151,8 +3151,8 @@ vim.keymap.set('n', '<leader>qs', '<Cmd>update<cr><cmd>quit<CR>')
 vim.keymap.set('n', '<leader>qQ', '<Cmd>quitall!<CR>')
 
 -- On certain files, quit by <leader>q
-api.nvim_create_augroup('bdel-quit', {})
-api.nvim_create_autocmd('FileType', {
+vapi.nvim_create_augroup('bdel-quit', {})
+vapi.nvim_create_autocmd('FileType', {
   pattern = { 'gitcommit', 'lazy', 'help', 'man', 'noice', 'lspinfo', 'qf' },
   callback = function()
     vim.keymap.set('n', '<leader>q', '<Cmd>q<CR>', { buffer = true })
@@ -3161,8 +3161,8 @@ api.nvim_create_autocmd('FileType', {
 })
 
 -- On git commit message file, set colorcolumn at 51
-api.nvim_create_augroup('gitcommit-colorcolumn', {})
-api.nvim_create_autocmd('FileType', {
+vapi.nvim_create_augroup('gitcommit-colorcolumn', {})
+vapi.nvim_create_autocmd('FileType', {
   pattern = 'gitcommit',
   command = 'setlocal colorcolumn=51,+1',
   group = 'gitcommit-colorcolumn'
@@ -3232,8 +3232,8 @@ vim.keymap.set({ 'i', 'c' }, '<C-E>', '<End>')
 -- Open quickfix window
 -- nnoremap Q <Cmd>copen<CR>
 -- autocmd for quickfix window
-api.nvim_create_augroup('quick-fix-window', {})
-api.nvim_create_autocmd('FileType', {
+vapi.nvim_create_augroup('quick-fix-window', {})
+vapi.nvim_create_autocmd('FileType', {
   pattern = 'qf',
   callback = function()
     vim.keymap.set('n', 'p', '<CR>zz<C-w>p', { buffer = true })
@@ -3250,8 +3250,8 @@ api.nvim_create_autocmd('FileType', {
   group = 'quick-fix-window'
 })
 
-api.nvim_create_augroup('markdown-mapping', {})
-api.nvim_create_autocmd('FileType', {
+vapi.nvim_create_augroup('markdown-mapping', {})
+vapi.nvim_create_autocmd('FileType', {
   pattern = 'markdown',
   callback = function()
     vim.keymap.set('v', '<C-b>', '<Plug>(operator-surround-append)d*', { buffer = true, silent = true })
@@ -3333,16 +3333,16 @@ augroup END
 vim.cmd([[hi link VisualMatch Search]])
 VisualMatch = function()
   if vim.w.visual_match_id then
-    fn.matchdelete(vim.w.visual_match_id)
+    vfn.matchdelete(vim.w.visual_match_id)
     vim.w.visual_match_id = nil
   end
 
-  if fn.mode() ~= 'v' then
+  if vfn.mode() ~= 'v' then
     return nil
   end
 
-  local line = fn.line
-  local charcol = fn.charcol
+  local line = vfn.line
+  local charcol = vfn.charcol
 
   if charcol'.' < charcol'v' then
     vim.g.colrange = { charcol('.'), charcol('v') }
@@ -3378,11 +3378,11 @@ VisualMatch = function()
     return nil
   end
 
-  vim.w.visual_match_id = fn.matchadd('VisualMatch', [[\V]] .. vim.g.text, -999)
+  vim.w.visual_match_id = vfn.matchadd('VisualMatch', [[\V]] .. vim.g.text, -999)
   return nil
 end
 
-api.nvim_create_autocmd('CursorMoved', {
+vapi.nvim_create_autocmd('CursorMoved', {
   pattern = '*',
   callback = VisualMatch
 })
@@ -3397,21 +3397,21 @@ WordMatch = function()
     return
   end
 
-  local cursorword = fn.expand('<cword>')
+  local cursorword = vfn.expand('<cword>')
   if cursorword == '' then
     return
   end
-  vim.w.wordmatch_id = fn.matchadd('CursorWord', [[\V\<]] .. cursorword .. [[\>]])
+  vim.w.wordmatch_id = vfn.matchadd('CursorWord', [[\V\<]] .. cursorword .. [[\>]])
 end
 
 DelWordMatch = function()
   if vim.w.wordmatch_id then
-    fn.matchdelete(vim.w.wordmatch_id)
+    vfn.matchdelete(vim.w.wordmatch_id)
     vim.w.wordmatch_id = nil
   end
 end
 
-api.nvim_create_autocmd('CursorHold', {
+vapi.nvim_create_autocmd('CursorHold', {
   pattern = '*',
   callback = WordMatch
 })
@@ -3443,26 +3443,26 @@ augroup END
 ]])
 
 function RestoreWinAfter(command)
-  local curw = fn.winsaveview()
-  api.nvim_exec2(command, {output = true})
-  fn.winrestview(curw)
+  local curw = vfn.winsaveview()
+  vapi.nvim_exec2(command, {output = true})
+  vfn.winrestview(curw)
   return
 end
 
 function is_joblog()
   -- if the first line starts with "Seq	Host ..." then it's a joblog file
-  if fn.getline(1):sub(1, 29) == 'Seq\tHost\tStarttime\tJobRuntime' then
+  if vfn.getline(1):sub(1, 29) == 'Seq\tHost\tStarttime\tJobRuntime' then
     return true
   end
   return false
 end
 
-api.nvim_create_autocmd(
+vapi.nvim_create_autocmd(
   {'BufReadPost', 'BufWritePost'},
   {
     pattern = '*.csv',
     callback = function()
-      if fn.has('uniz') then
+      if vfn.has('uniz') then
         RestoreWinAfter('silent %!column -s, -o, -t -L')
       else
         RestoreWinAfter([[silent %!column -s -t]])
@@ -3470,7 +3470,7 @@ api.nvim_create_autocmd(
     end
   }
 )
-api.nvim_create_autocmd(
+vapi.nvim_create_autocmd(
   {'BufReadPost', 'BufWritePost'},
   {
     pattern = '*.tsv',
@@ -3482,7 +3482,7 @@ api.nvim_create_autocmd(
     end
   }
 )
-api.nvim_create_autocmd(
+vapi.nvim_create_autocmd(
   {'BufWritePre'},
   {
     pattern = '*.csv',
@@ -3492,7 +3492,7 @@ api.nvim_create_autocmd(
     end
   }
 )
-api.nvim_create_autocmd(
+vapi.nvim_create_autocmd(
   {'BufWritePre'},
   {
     pattern = '*.tsv',
@@ -3525,7 +3525,7 @@ augroup END
 
 -- [[ ftplugins ]]
 -- python
-api.nvim_create_autocmd(
+vapi.nvim_create_autocmd(
   'FileType',
   {
     pattern='python',
@@ -3542,20 +3542,20 @@ api.nvim_create_autocmd(
 
 -- [[ Float keymap (jump until non-whitespace is found) ]]
 MoveUntilNonWS = function(up)
-  local curpos = fn.getcurpos()
+  local curpos = vfn.getcurpos()
   -- 現在位置に文字がある間……
   while true do
     curpos[2] = curpos[2] + up
-    fn.cursor(curpos[2], curpos[3])
-    if fn.line('.') <= 1 or fn.line('.') >= fn.line('$') or (fn.strlen(fn.getline('.')) < fn.col('.') or fn.getline("."):sub(fn.col('.'), fn.col('.')) == ' ') then
+    vfn.cursor(curpos[2], curpos[3])
+    if vfn.line('.') <= 1 or vfn.line('.') >= vfn.line('$') or (vfn.strlen(vfn.getline('.')) < vfn.col('.') or vfn.getline("."):sub(vfn.col('.'), vfn.col('.')) == ' ') then
       break
     end
   end
   -- 現在位置が空白文字である間……
   while true do
     curpos[2] = curpos[2] + up
-    fn.cursor(curpos[2], curpos[3])
-    if fn.line('.') <= 1 or fn.line('.') >= fn.line('$') or not (fn.strlen(fn.getline('.')) < fn.col('.') or fn.getline("."):sub(fn.col('.'), fn.col('.')) == ' ') then
+    vfn.cursor(curpos[2], curpos[3])
+    if vfn.line('.') <= 1 or vfn.line('.') >= vfn.line('$') or not (vfn.strlen(vfn.getline('.')) < vfn.col('.') or vfn.getline("."):sub(vfn.col('.'), vfn.col('.')) == ' ') then
       break
     end
   end
@@ -3570,22 +3570,22 @@ vim.keymap.set({'n', 'i'}, '<F2>', require('japanese_input').toggle_IME, { norem
 
 -- [[ autosave ]]
 local disabled_ft = { "acwrite", "oil", "yazi", "neo-tree", "yaml", "toml", "json", "csv", "tsv", "gitcommit"}
-api.nvim_create_autocmd("BufRead", {
+vapi.nvim_create_autocmd("BufRead", {
   pattern = "*",
   group = autosave,
   callback = function(ctx)
-    api.nvim_buf_set_var(ctx.buf, "autosave_enabled", true)
+    vapi.nvim_buf_set_var(ctx.buf, "autosave_enabled", true)
   end,
 })
-api.nvim_create_autocmd({"BufLeave", "FocusLost"}, {
+vapi.nvim_create_autocmd({"BufLeave", "FocusLost"}, {
   pattern = "*",
   callback = function(ctx)
     if
       not vim.bo.modified
-      or fn.findfile(ctx.file, ".") == "" -- a new file
+      or vfn.findfile(ctx.file, ".") == "" -- a new file
       or ctx.file:match("wezterm.lua")
       or vim.tbl_contains(disabled_ft, vim.bo[ctx.buf].ft)
-      or not api.nvim_buf_get_var(ctx.buf, "autosave_enabled")
+      or not vapi.nvim_buf_get_var(ctx.buf, "autosave_enabled")
     then
       return
     end
