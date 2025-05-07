@@ -686,7 +686,7 @@ require('lazy').setup({
           return not blink.is_visible()
         end,
       })
-      vim.api.nvim_create_autocmd('User', {
+      api.nvim_create_autocmd('User', {
         pattern = 'BlinkCmpMenuOpen',
         callback = function()
           neocodeium.clear()
@@ -746,7 +746,7 @@ require('lazy').setup({
               callback = function(response, _)
                 local commit_message = response:match("```python\n(.-)```")
                 if commit_message then
-                  vim.fn.setreg('+', commit_message , 'c')
+                  fn.setreg('+', commit_message , 'c')
                 end
               end,
             },
@@ -755,7 +755,7 @@ require('lazy').setup({
               callback = function(response, _)
                 local commit_message = response:match("```python\n(.-)```")
                 if commit_message then
-                  vim.fn.setreg('+', commit_message , 'c')
+                  fn.setreg('+', commit_message , 'c')
                 end
               end,
             },
@@ -769,7 +769,7 @@ require('lazy').setup({
               callback = function(response, _)
                 local commit_message = response:match("```gitcommit\n(.-)```")
                 if commit_message then
-                  vim.fn.setreg('"', commit_message , 'c')
+                  fn.setreg('"', commit_message , 'c')
                 end
               end,
             },
@@ -881,8 +881,8 @@ require('lazy').setup({
           -- }
 
 
-          vim.api.nvim_create_autocmd('LspAttach', {
-            group = vim.api.nvim_create_augroup('my.lsp', {}),
+          api.nvim_create_autocmd('LspAttach', {
+            group = api.nvim_create_augroup('my.lsp', {}),
             callback = function(args)
               local bufnr = args.buf
               local nmap = function(keys, func, desc)
@@ -1051,9 +1051,9 @@ require('lazy').setup({
           -- Japanese brackets. Code from https://riq0h.jp/2023/02/18/142447
           ['j'] = {
             input = function()
-              local ok, val = pcall(vim.fn.getchar)
+              local ok, val = pcall(fn.getchar)
               if not ok then return end
-              local char = vim.fn.nr2char(val)
+              local char = fn.nr2char(val)
 
               local dict = {
                 ['('] = { '（().-()）' },
@@ -1077,9 +1077,9 @@ require('lazy').setup({
               error('%s is unsupported surroundings in Japanese')
             end,
             output = function()
-              local ok, val = pcall(vim.fn.getchar)
+              local ok, val = pcall(fn.getchar)
               if not ok then return end
-              local char = vim.fn.nr2char(val)
+              local char = fn.nr2char(val)
 
               local dict = {
                 ['('] = { left = '（', right = '）' },
@@ -1130,7 +1130,7 @@ require('lazy').setup({
       },
 
       enabled = function()
-        local current_file = vim.fn.expand('%:p')
+        local current_file = fn.expand('%:p')
         -- Enable when all of the following are true:
         -- 1. Not in text file insert mode
         -- 2. Not in prompt
@@ -1164,7 +1164,7 @@ require('lazy').setup({
         completion = {
           menu = {
             auto_show = function(ctx)
-              return vim.fn.getcmdtype() == ':'
+              return fn.getcmdtype() == ':'
             end,
           },
           list = {
@@ -1750,7 +1750,7 @@ $0
               desc = 'Copy filepath to system clipboard',
               callback = function ()
                   require('oil.actions').copy_entry_path.callback()
-                  vim.fn.setreg("+", vim.fn.getreg(vim.v.register))
+                  fn.setreg("+", fn.getreg(vim.v.register))
               end,
           },
           ["gd"] = {
@@ -1769,7 +1769,7 @@ $0
       vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>", { desc = "Open parent directory" })
       vim.keymap.set("n", "<leader>E",
         function()
-          local cwd = vim.fn.getcwd()
+          local cwd = fn.getcwd()
           vim.cmd("Oil " .. cwd)
         end,
         { desc = "Open parent directory" }
@@ -2194,7 +2194,7 @@ $0
             {
               require("noice").api.status.mode.get,
               cond = function()
-                return require("noice").api.status.mode.has() and vim.fn.reg_recording() ~= ""
+                return require("noice").api.status.mode.has() and fn.reg_recording() ~= ""
               end,
               color = { fg = "#ff9e64" },
             },
@@ -2321,7 +2321,7 @@ $0
         function() 
           require('telescope.builtin').live_grep({
             cwd = (function()
-              local cwd = vim.fn.expand "%:p:h"
+              local cwd = fn.expand "%:p:h"
               -- for Oil buffers such as "oil://~", remove "oil://"
               if cwd:match("oil://") then
                 cwd = cwd:gsub("oil://", "")
@@ -2577,7 +2577,7 @@ $0
               head = true,
           })
           if pos then
-              vim.api.nvim_win_set_cursor(0, { pos.row, pos.col })
+              api.nvim_win_set_cursor(0, { pos.row, pos.col })
           end
       end)
       vim.keymap.set("n", "E", function()
@@ -2585,7 +2585,7 @@ $0
               head = false,
           })
           if pos then
-              vim.api.nvim_win_set_cursor(0, { pos.row, pos.col })
+              api.nvim_win_set_cursor(0, { pos.row, pos.col })
           end
       end)
     end
@@ -2732,19 +2732,19 @@ $0
       UFOVirtTextHandler = function(virtText, lnum, endLnum, width, truncate)
           local newVirtText = {}
           local suffix = (' 󰁂 %d '):format(endLnum - lnum)
-          local sufWidth = vim.fn.strdisplaywidth(suffix)
+          local sufWidth = fn.strdisplaywidth(suffix)
           local targetWidth = width - sufWidth
           local curWidth = 0
           for _, chunk in ipairs(virtText) do
               local chunkText = chunk[1]
-              local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+              local chunkWidth = fn.strdisplaywidth(chunkText)
               if targetWidth > curWidth + chunkWidth then
                   table.insert(newVirtText, chunk)
               else
                   chunkText = truncate(chunkText, targetWidth - curWidth)
                   local hlGroup = chunk[2]
                   table.insert(newVirtText, {chunkText, hlGroup})
-                  chunkWidth = vim.fn.strdisplaywidth(chunkText)
+                  chunkWidth = fn.strdisplaywidth(chunkText)
                   -- str width returned from truncate() may less than 2nd argument, need padding
                   if curWidth + chunkWidth < targetWidth then
                       suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
@@ -3443,9 +3443,9 @@ augroup END
 ]])
 
 function RestoreWinAfter(command)
-  local curw = vim.fn.winsaveview()
-  vim.api.nvim_exec2(command, {output = true})
-  vim.fn.winrestview(curw)
+  local curw = fn.winsaveview()
+  api.nvim_exec2(command, {output = true})
+  fn.winrestview(curw)
   return
 end
 
