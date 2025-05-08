@@ -2737,7 +2737,7 @@ $0
       vim.o.foldlevel = 99
       vim.o.foldlevelstart = 99
       vim.opt.foldcolumn = "1"
-      vim.o.statuscolumn = '%s%#FoldColumn#%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? " " : " ") : "  " }%*%=%-l '
+      vim.o.statuscolumn = '%#FoldColumn#%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "▼" : "▶") : " " }%s%*%=%-l '
 
       UFOVirtTextHandler = function(virtText, lnum, endLnum, width, truncate)
           local newVirtText = {}
