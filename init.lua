@@ -2133,6 +2133,10 @@ $0
         hi CursorLineNr          guibg=NONE
         hi FoldColumn            guibg=NONE
         hi SignColumn            guibg=NONE
+        hi DiagnosticSignError   guibg=NONE
+        hi DiagnosticSignWarn    guibg=NONE
+        hi DiagnosticSignInfo    guibg=NONE
+        hi DiagnosticSignHint    guibg=NONE
         hi GitGutterAdd          guibg=NONE
         hi GitGutterChange       guibg=NONE
         hi GitGutterChangeDelete guibg=NONE
