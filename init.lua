@@ -171,6 +171,7 @@ local treesitter_filetypes = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'go', 'html'
 
 require('lazy').setup({
 
+  -- noice
   {
     "folke/noice.nvim",
     event = "VeryLazy",
@@ -221,6 +222,7 @@ require('lazy').setup({
     },
   },
 
+  -- lazydev
   {
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files
@@ -281,6 +283,7 @@ require('lazy').setup({
     end
   },
 
+  -- remote-nvim
   {
     "hmk114/remote-nvim.nvim",
     version = "*", -- Pin to GitHub releases
@@ -564,6 +567,7 @@ require('lazy').setup({
     end
   },
 
+  -- leap.nvim
   {
     'https://github.com/ggandor/leap.nvim',
     config = function()
@@ -578,6 +582,7 @@ require('lazy').setup({
     event='VeryLazy'
   },
 
+  -- copilot
   {
     cond = not vim.g.is_vscode,
     "zbirenbaum/copilot.lua",
@@ -619,6 +624,7 @@ require('lazy').setup({
     end,
   },
 
+  -- neocodeium
   {
     cond=false,
     "monkoose/neocodeium",
@@ -655,6 +661,7 @@ require('lazy').setup({
     end,
   },
 
+  -- copilot chat
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     dependencies = {
@@ -746,6 +753,7 @@ require('lazy').setup({
     cmd = "Registers",
   },
 
+  -- undotree
   {
     cond = not vim.g.is_vscode,
     'mbbill/undotree',
@@ -755,6 +763,7 @@ require('lazy').setup({
     cmd = 'UndotreeToggle'
   },
 
+  -- nvim-lspconfig
   {
     cond = not vim.g.is_vscode,
     'neovim/nvim-lspconfig',
@@ -909,6 +918,7 @@ require('lazy').setup({
     },
   },
 
+  -- lsp saga (useful lsp features)
   {
     cond = not vim.g.is_vscode,
     'nvimdev/lspsaga.nvim',
@@ -1211,18 +1221,7 @@ require('lazy').setup({
   },
 
 
-  -- Adds latex snippets
-  {
-    'iurimateus/luasnip-latex-snippets.nvim',
-    ft = { 'tex', 'markdown' },
-    -- vimtex isn't required if using treesitter
-    dependencies = "L3MON4D3/LuaSnip",
-    config = function()
-      require 'luasnip-latex-snippets'.setup({ use_treesitter = true })
-      -- or setup({ use_treesitter = true })
-    end,
-  },
-
+  -- snippets
   {
     'L3MON4D3/LuaSnip',
     event = 'InsertEnter',
@@ -1584,6 +1583,19 @@ $0
     end
   },
 
+  -- Adds latex snippets
+  {
+    'iurimateus/luasnip-latex-snippets.nvim',
+    ft = { 'tex', 'markdown' },
+    -- vimtex isn't required if using treesitter
+    dependencies = "L3MON4D3/LuaSnip",
+    config = function()
+      require 'luasnip-latex-snippets'.setup({ use_treesitter = true })
+      -- or setup({ use_treesitter = true })
+    end,
+  },
+
+  -- show luasnip snippets in telescope
   {
     'benfowler/telescope-luasnip.nvim',
     init = function()
@@ -1760,12 +1772,14 @@ $0
   },
 
 
+  -- emmet
   {
     cond=false, -- not to occupy <C-y> mapping
     'mattn/emmet-vim',
     ft = { 'html', 'xml', 'vue', 'htmldjango', 'markdown' }
   },
 
+  -- barbar
   {
     cond = not vim.g.is_vscode,
     'romgrk/barbar.nvim',
@@ -1904,6 +1918,8 @@ $0
       })
     end
   },
+
+  -- vim table mode for markdown
   {
     'dhruvasagar/vim-table-mode',
     ft = 'markdown',
@@ -1918,6 +1934,7 @@ $0
     end
   },
 
+  -- easy align
   {
     'junegunn/vim-easy-align',
     init = function()
@@ -2016,6 +2033,7 @@ $0
     cmd = 'TagbarToggle'
   },
 
+  -- aerial (outline based on treesitter)
   {
     'stevearc/aerial.nvim',
     config = function()
@@ -2098,6 +2116,7 @@ $0
   -- capture vim script output
   'https://github.com/tyru/capture.vim',
 
+  -- lualine (statusline implemented with lua)
   {
     cond = not vim.g.is_vscode,
     'nvim-lualine/lualine.nvim',
@@ -2164,6 +2183,7 @@ $0
     end
   },
 
+  -- dev icons
   {
     'nvim-tree/nvim-web-devicons',
     opts = {
@@ -2180,7 +2200,6 @@ $0
   },
 
   -- Fuzzy Finder (files, lsp, etc)
-  --
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
@@ -2395,6 +2414,7 @@ $0
     end,
   },
 
+  -- automatic session save and restore
   {
     'rmagatti/auto-session',
     config = function()
@@ -2422,12 +2442,14 @@ $0
     end
   },
 
+  -- spell check and load wrong spells to quickfix list
   {
     'inkarkat/vim-SpellCheck',
     cmd = 'SpellCheck',
     dependencies = 'inkarkat/vim-ingo-library'
   },
 
+  -- vimtex
   {
     'lervag/vimtex',
     -- lazy loading not allowed
@@ -2466,7 +2488,6 @@ $0
       vim.g.jpmoveword_stop_eol = 2
     end
   },
-
   {
     cond=false,
     "https://github.com/atusy/budouxify.nvim",
@@ -2490,12 +2511,10 @@ $0
       end)
     end
   },
-
   {
     cond = vfn.isdirectory(vfn.expand('~/ghq/github.com/swnakamura/novel_formatter')) == 1,
     dir = '~/ghq/github.com/swnakamura/novel_formatter'
   },
-
   {
     cond = vfn.isdirectory(vfn.expand('~/ghq/github.com/swnakamura/novel-preview.vim')) == 1,
     dir = '~/ghq/github.com/swnakamura/novel-preview.vim',
@@ -2510,7 +2529,7 @@ $0
       vim.keymap.set('n', '<F5>', '<Cmd>NovelPreviewStartServer<CR><Cmd>NovelPreviewAutoSend<CR>')
     end
   },
-
+  -- japanese kensaku
   {
     'lambdalisue/kensaku.vim',
     dependencies = { 'vim-denops/denops.vim', 'lambdalisue/kensaku-search.vim' },
@@ -2597,6 +2616,7 @@ $0
     event = { "WinNew" },
   },
 
+  -- better quickfix window
   { 'kevinhwang91/nvim-bqf', ft = 'qf' },
 
   -- beautify fold
