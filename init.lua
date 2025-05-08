@@ -233,15 +233,6 @@ require('lazy').setup({
     },
   },
 
-  -- startup
-  {
-    cond = false,
-    'mhinz/vim-startify',
-    init = function()
-      vim.g.startify_custom_header = [[startify#pad(split(system('shuf -n 1 ~/syncthing_config/fortune.txt'), '\n'))]]
-    end
-  },
-
   -- smart increment/decrement
   {
     'monaqa/dial.nvim',
@@ -440,22 +431,6 @@ require('lazy').setup({
     end,
   },
   {
-    cond=false,
-    'cohama/agit.vim',
-    cmd = 'Agit',
-    init = function()
-      vim.keymap.set('n', '<leader>gl', '<Cmd>Agit<CR>', { silent = true, desc = "Git log (agit)" })
-    end,
-    config = function()
-      vim.cmd([[
-      hi link agitStatAdded diffAdded
-      hi link agitStatRemoved diffRemoved
-      hi link agitDiffAdd diffAdded
-      hi link agitDiffRemove diffRemoved
-      ]])
-    end
-  },
-  {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     event = 'VeryLazy',
@@ -597,37 +572,10 @@ require('lazy').setup({
     end
   },
 
-  {
-    cond = false,
-    "folke/flash.nvim",
-    event = "VeryLazy",
-    opts = {
-      modes = {
-        search = {
-          enabled = false,
-        }
-      }
-    },
-    -- stylua: ignore
-    keys = {
-      -- capital is for range selection
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
-      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
-      { "r", mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
-      { "R", mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-      -- { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
-    },
-  },
-
   -- performance (faster macro execution)
-  { "https://github.com/pteroctopus/faster.nvim" },
-
   {
-    cond=false,
-    "zbirenbaum/copilot-cmp",
-    config = function ()
-      require("copilot_cmp").setup()
-    end
+    "https://github.com/pteroctopus/faster.nvim",
+    event='VeryLazy'
   },
 
   {
@@ -1737,14 +1685,6 @@ $0
     end
   },
 
-  -- telescope based filer
-  {
-    cond=false,
-    "nvim-telescope/telescope-file-browser.nvim",
-    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-    keys = {{'<leader>fl', ':Telescope file_browser<CR>' }}
-  },
-
   -- oil
   {
     'https://github.com/stevearc/oil.nvim',
@@ -1906,21 +1846,7 @@ $0
     end,
   },
 
-  {
-    -- Add indentation guides even on blank lines
-    cond = false,
-    'lukas-reineke/indent-blankline.nvim',
-    event = 'VeryLazy',
-    config = function()
-      vim.cmd([[set listchars-=leadmultispace:---\|]]) -- remove the counterpart of this plugin
-      require("ibl").setup {
-        indent = { char = "▏" },
-        -- scope with wider character
-        scope = { show_exact_scope = true, char = "▎" },
-      }
-    end,
-  },
-
+  -- Add indentation guides (vertical bar) and highlight current context
   {
     cond=not vim.g.is_vscode,
     "shellRaining/hlchunk.nvim",
@@ -2141,6 +2067,7 @@ $0
         hi GitGutterChange       guibg=NONE
         hi GitGutterChangeDelete guibg=NONE
         hi GitGutterDelete       guibg=NONE
+        " make Fold color pale purple
         hi Folded                guibg=#2d273f
         " Disable hl for winbar which is used by dropbar
         hi WinBar guibg=NONE
@@ -2251,22 +2178,6 @@ $0
       }
     }
   },
-
-  {
-    'preservim/nerdcommenter',
-    cond=false,
-    event = 'VeryLazy',
-    init = function()
-      vim.g.NERDSpaceDelims = 1
-      vim.g.NERDDefaultAlign = 'left'
-      vim.g.NERDCustomDelimiters = { vim = { left = '"', right = '' } }
-      vim.keymap.set({ "n", "x" }, "<C-_>", "<Plug>NERDCommenterToggle")
-      vim.keymap.set({ "n", "x" }, "<C-/>", "<Plug>NERDCommenterToggle")
-      vim.keymap.set({ "n", "x" }, "<C-;>", "<Plug>NERDCommenterToggle")
-      vim.keymap.set({ "n", "x" }, "<leader>cc", "<Plug>NERDCommenterToggle")
-    end
-  },
-
 
   -- Fuzzy Finder (files, lsp, etc)
   --
@@ -2512,26 +2423,6 @@ $0
   },
 
   {
-    cond = false,
-    'ojroques/nvim-osc52',
-    config = function()
-      local function copy(lines, _)
-        require('osc52').copy(table.concat(lines, '\n'))
-      end
-
-      local function paste()
-        return { vfn.split(vfn.getreg(''), '\n'), vfn.getregtype('') }
-      end
-
-      vim.g.clipboard = {
-        name = 'osc52',
-        copy = { ['+'] = copy, ['*'] = copy },
-        paste = { ['+'] = paste, ['*'] = paste },
-      }
-    end
-  },
-
-  {
     'inkarkat/vim-SpellCheck',
     cmd = 'SpellCheck',
     dependencies = 'inkarkat/vim-ingo-library'
@@ -2567,7 +2458,6 @@ $0
   },
 
   -- Japanese
-
   {
     'swnakamura/jpmoveword.vim',
     init = function()
@@ -2602,12 +2492,12 @@ $0
   },
 
   {
-    cond = vim.g.is_macos and vfn.isdirectory(vfn.expand('~/ghq/github.com/swnakamura/novel_formatter')) == 1,
+    cond = vfn.isdirectory(vfn.expand('~/ghq/github.com/swnakamura/novel_formatter')) == 1,
     dir = '~/ghq/github.com/swnakamura/novel_formatter'
   },
 
   {
-    cond = vim.g.is_macos and vfn.isdirectory(vfn.expand('~/ghq/github.com/swnakamura/novel-preview.vim')) == 1,
+    cond = vfn.isdirectory(vfn.expand('~/ghq/github.com/swnakamura/novel-preview.vim')) == 1,
     dir = '~/ghq/github.com/swnakamura/novel-preview.vim',
     -- ft = 'text',
     dependencies = 'vim-denops/denops.vim',
@@ -2698,9 +2588,6 @@ $0
 
   -- expl3
   { 'wtsnjp/vim-expl3',  filetype = 'expl3' },
-
-  -- pgmnt
-  { 'cocopon/pgmnt.vim' },
 
   -- window separation color
   {
