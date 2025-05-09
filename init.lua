@@ -1698,11 +1698,7 @@ $0
         name = 'window-picker',
         event = 'VeryLazy',
         version = '2.*',
-        config = function()
-          require 'window-picker'.setup({
-            hint = 'floating-big-letter'
-          })
-        end,
+        opts = {hint = 'floating-big-letter'},
       },
     },
     config = function()
