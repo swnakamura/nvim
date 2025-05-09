@@ -1782,8 +1782,8 @@ $0
           ["gd"] = {
             desc = "Toggle file detail view",
             callback = function()
-              detail = not detail
-              if detail then
+              Oil_detail = not Oil_detail
+              if Oil_detail then
                 require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
               else
                 require("oil").set_columns({ "icon" })
@@ -3435,10 +3435,9 @@ function RestoreWinAfter(command)
   local curw = vfn.winsaveview()
   vapi.nvim_exec2(command, {output = true})
   vfn.winrestview(curw)
-  return
 end
 
-function is_joblog()
+function Is_joblog()
   -- if the first line starts with "Seq	Host ..." then it's a joblog file
   if vfn.getline(1):sub(1, 29) == 'Seq\tHost\tStarttime\tJobRuntime' then
     return true
@@ -3464,7 +3463,7 @@ vapi.nvim_create_autocmd(
   {
     pattern = '*.tsv',
     callback = function()
-      if is_joblog() then
+      if Is_joblog() then
         return
       end
       RestoreWinAfter([[silent %!column -s "$(printf '\t')" -o "$(printf '\t')" -t -L]])
@@ -3486,7 +3485,7 @@ vapi.nvim_create_autocmd(
   {
     pattern = '*.tsv',
     callback = function()
-      if is_joblog() then
+      if Is_joblog() then
         return
       end
       RestoreWinAfter([[silent %s/ \+\ze	//ge]])
