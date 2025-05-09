@@ -333,11 +333,12 @@ require('lazy').setup({
         }
       }
       -- Close neogit status tab with <BS>
-      vim.cmd([[
-      augroup neogit-keymap
-      autocmd FileType NeogitStatus nnoremap <buffer> <BS> <Cmd>q<CR>
-      augroup END
-      ]])
+      vapi.nvim_create_autocmd('FileType', {
+        pattern = 'NeogitStatus',
+        callback = function()
+          map('n', '<BS>', '<Cmd>q<CR>', { buffer = 0, desc = "Close neogit status" })
+        end
+      })
     end
   },
   {
@@ -703,21 +704,9 @@ require('lazy').setup({
           prompts = {
             ArgTypeAnnot = {
               prompt = '/COPILOT_GENERATE\n\nGive type annotation for the selected function arguments. Generate only the function declaration. Specify the range of the code to replace above the code snippet (even if it\' a single line, specify start and end of the range to replace).',
-              callback = function(response, _)
-                local commit_message = response:match("```python\n(.-)```")
-                if commit_message then
-                  vfn.setreg('+', commit_message , 'c')
-                end
-              end,
             },
             DocString = {
               prompt = '/COPILOT_GENERATE\n\nWrite docstring for the selected function or class in Google style. Specify the range of code to replace the snippet in the aforementioned syntax and wrap the docstring in code block with python language. If the selected text already contains docstring, specify the range of the code to replace and generate a new one. You can generate function declaration if you need to, but should not make any modification to that.',
-              callback = function(response, _)
-                local commit_message = response:match("```python\n(.-)```")
-                if commit_message then
-                  vfn.setreg('+', commit_message , 'c')
-                end
-              end,
             },
 
             BetterNamings = {
