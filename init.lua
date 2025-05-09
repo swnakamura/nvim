@@ -683,6 +683,12 @@ require('lazy').setup({
         {desc = "CopilotChat - Prompt actions"}
       )
       vim.keymap.set({"n", "v"}, "<leader>9", require("CopilotChat").open, { desc = "CopilotChat - Open" })
+      vapi.nvim_create_autocmd('BufWinEnter', {
+        pattern = 'copilot-chat',
+        callback = function()
+          vim.wo.winfixwidth = true
+        end
+      })
       require("CopilotChat").setup(
         {
           -- Since I use rendermarkdown, default fancy features are disabled
