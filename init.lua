@@ -1071,7 +1071,7 @@ require('lazy').setup({
             input = function()
               local ok, val = pcall(vfn.getchar)
               if not ok then return end
-              local char = vfn.nr2char(val)
+              local char = vfn.nr2char(assert(tonumber(val)))
 
               local dict = {
                 ['('] = { '（().-()）' },
@@ -1097,7 +1097,7 @@ require('lazy').setup({
             output = function()
               local ok, val = pcall(vfn.getchar)
               if not ok then return end
-              local char = vfn.nr2char(val)
+              local char = vfn.nr2char(assert(tonumber(val)))
 
               local dict = {
                 ['('] = { left = '（', right = '）' },
