@@ -673,8 +673,7 @@ require('lazy').setup({
       map("v", "<C-k>", "<Cmd>CopilotChat <CR>i/COPILOT_GENERATE<CR><CR>", { silent = true })
       map({"n", "v"}, "<leader>-",
         function()
-          local actions = require("CopilotChat.actions")
-          require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
+          require("CopilotChat").select_prompt()
         end,
         {desc = "CopilotChat - Prompt actions"}
       )
@@ -881,7 +880,6 @@ require('lazy').setup({
             -- grammarly = {},
           }
 
-          local lspconfig = require('lspconfig')
           for server_name, settings in pairs(server2setting) do
             vim.lsp.config(server_name, {
               capabilities = require('blink.cmp').get_lsp_capabilities(settings.capabilities),
@@ -890,6 +888,7 @@ require('lazy').setup({
           end
 
           -- special configuration for grammarly
+          -- local lspconfig = require('lspconfig')
           -- require 'lspconfig'.grammarly.setup {
           --   filetypes = { "bibtex", "gitcommit", "org", "tex", "restructuredtext", "rsweave", "latex", "quarto", "rmd", "context", "html" },
           --   -- This is necessary as grammary language server does not support newer versions of nodejs
@@ -1152,7 +1151,6 @@ require('lazy').setup({
       },
 
       enabled = function()
-        local current_file = vfn.expand('%:p')
         -- Enable when all of the following are true:
         -- 1. Not in text file insert mode
         -- 2. Not in prompt
@@ -2253,7 +2251,7 @@ $0
     }
   },
 
-  -- Fuzzy Finder (files, lsp, etc)
+  -- Telescope Fuzzy Finder (files, lsp, etc)
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
@@ -2327,6 +2325,15 @@ $0
       vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = 'Find Diagnostics' })
     end,
     cmd = 'Telescope',
+  },
+
+  -- use telescope for vim.ui.select
+  {
+    'nvim-telescope/telescope-ui-select.nvim',
+    dependencies = { 'nvim-telescope/telescope.nvim' },
+    config = function()
+      require('telescope').load_extension('ui-select')
+    end,
   },
 
   -- show image with kitty graphics protocol
@@ -2742,92 +2749,6 @@ $0
     end
   },
 
-  -- org mode
-  {
-    -- cond=false,
-    'nvim-orgmode/orgmode',
-    ft = 'org',
-    dependencies = {
-      { 'nvim-treesitter/nvim-treesitter' },
-    },
-    config = function()
-      -- Load treesitter grammar for org
-      -- Setup orgmode
-      require('orgmode').setup({
-        calendar_week_start_day = 0,
-        -- org_startup_indented = true,
-        org_startup_folded = 'showeverything',
-        org_adapt_indentation = false,
-        org_agenda_files = '~/org/**/*',
-        org_default_notes_file = '~/org/inbox.org',
-        org_todo_keywords = { 'TODO', '|', 'DONE', 'CANCELLED' },
-        org_capture_templates = {
-          t = { description = 'Task', template = '* TODO %?\n  SCHEDULED: %t\n  %u' },
-          p = {
-            description = 'Paper',
-            template = '* TODO [[%x][%?]]\n  SCHEDULED: %t\n  %u\n',
-            target = '~/org/papers.org'
-          },
-          m = { description = 'Maybe (personal)', template = '* TODO %?\n  %u', target = '~/org/personal.org' },
-        },
-        org_id_method = 'uuid',
-        org_agenda_span = 'week',
-      })
-      -- settings for org files
-      vapi.nvim_create_autocmd("FileType", {
-        pattern = "org",
-        callback = function()
-          map('i', "<C-CR>",
-            function() require('orgmode').action('org_mappings.insert_heading_respect_content') end)
-          map('i', "<S-CR>",
-            function() require('orgmode').action('org_mappings.insert_todo_heading_respect_content') end)
-
-          -- key mappings for promoting/demoting headings
-          map('i', "<C-t>",
-            function()
-              require('orgmode').action('org_mappings.do_demote')
-              vim.cmd('normal! l')
-            end)
-          map('i', "<C-d>",
-            function()
-              require('orgmode').action('org_mappings.do_promote')
-              vim.cmd('normal! h')
-            end)
-
-          vim.bo.formatlistpat = [=[^\s*[\*-]*[ \t]\s*]=]
-        end
-      })
-      -- q to quit in org agenda
-      vapi.nvim_create_autocmd("FileType", {
-        pattern = "orgagenda",
-        callback = function()
-          map('n', "q", '<cmd>q<cr>', { buffer = true })
-        end
-      })
-      -- highlight settings for org agenda
-      vapi.nvim_create_autocmd('FileType', {
-        pattern = { '*' },
-        callback = function()
-          -- Define own colors
-          -- colors for day separation
-          vapi.nvim_set_hl(0, '@org.agenda.day', { link = 'DiffAdd' })
-          -- colors for deadline and scheduled
-          vapi.nvim_set_hl(0, '@org.agenda.deadline', { link = 'ErrorMsg' })
-          vapi.nvim_set_hl(0, '@org.agenda.scheduled', { link = 'SpecialKey' })
-          -- colors for done (by default it is white and hard to read)
-          vapi.nvim_set_hl(0, '@org.keyword.done', { link = 'SpecialKey' })
-          -- Link to another highlight group
-          -- api.nvim_set_hl(0, '@org.agenda.scheduled_past', { link = 'Statement' })
-        end
-      })
-    end,
-  },
-  {
-    cond = not vim.g.is_vscode,
-    'akinsho/org-bullets.nvim',
-    config = true,
-  },
-
   -- marks
   {
     'chentoast/marks.nvim',
@@ -2850,7 +2771,7 @@ $0
     end
   },
 
-}, {})
+}, require('lazy.core.config').defaults)
 
 -- [[ Setting options ]]
 
