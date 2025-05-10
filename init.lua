@@ -6,6 +6,8 @@ local vapi = vim.api
 -- [[ Keymap Helper ]]
 -- Usage: map({mode}, lhs, rhs, opts)
 -- Sets keymaps with default options (silent=true, noremap=true)
+---@overload fun(mode: string|table, lhs: string, rhs: string|function, opts: table): nil
+---@overload fun(mode: string|table, lhs: string, rhs: string|function): nil
 local function map(mode, lhs, rhs, opts)
   opts = opts or {}
   if opts.silent == nil then opts.silent = true end
@@ -720,6 +722,7 @@ require('lazy').setup({
                 if commit_message then
                   vfn.setreg('"', commit_message , 'c')
                 end
+                return ''
               end,
             },
           }
@@ -964,6 +967,7 @@ require('lazy').setup({
 
           require('mason').setup()
           require('mason-lspconfig').setup({
+            automatic_enable = true,
             ensure_installed = vim.tbl_keys(server2setting),
           })
         end
@@ -1688,7 +1692,7 @@ $0
         default_component_configs = {
           file_size = { enabled = false },
           type = { enabled = false },
-          last_modified = { enabled = false },
+          last_modified = { enabled = false, format = 'relative' },
         },
         filesystem = {
           follow_current_file = {
@@ -1718,7 +1722,7 @@ $0
             system_open = function(state)
               local node = state.tree:get_node()
               local path = node:get_id()
-              path = vfn.shellescape(path, 1)
+              path = vfn.shellescape(path, true)
               if vim.g.is_macos then
                 vapi.nvim_command("silent !open -g " .. path)
               else
@@ -2195,12 +2199,12 @@ $0
           }
         },
         sections = {
-          lualine_a = { 
+          lualine_a = {
             'mode',
             {
-              require("noice").api.status.mode.get,
+              require("noice").api.status.mode['get'],
               cond = function()
-                return require("noice").api.status.mode.has() and vfn.reg_recording() ~= ""
+                return require("noice").api.status.mode['has']() and vfn.reg_recording() ~= ""
               end,
               color = { fg = "#ff9e64" },
             },
@@ -2208,8 +2212,8 @@ $0
           lualine_b = { 'encoding', 'fileformat', 'filetype', 'progress', 'location', 'filename' },
           lualine_c = { 'branch', 'diff', 'diagnostics',
             {
-              require("noice").api.status.message.get,
-              cond = require("noice").api.status.message.has,
+              require("noice").api.status.message['get'],
+              cond = require("noice").api.status.message['has'],
             },
           },
           lualine_x = {},
@@ -2308,7 +2312,7 @@ $0
       vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = 'Find Keymaps' })
       vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = 'Find by Grep' })
       vim.keymap.set('n', '<leader>fG',
-        function() 
+        function()
           require('telescope.builtin').live_grep({
             cwd = (function()
               local cwd = vfn.expand "%:p:h"
@@ -3062,12 +3066,9 @@ map('n', 'l', '<cmd>lua Quantized_l(vim.v.count1)<CR>', { silent = true })
 map({ 'n', 'x' }, 'x', '"_x')
 
 -- commenting using <C-;> and <C-/>
-map({ "n" }, "<C-/>", "gcc", { remap = true })
-map({ "n" }, "<C-;>", "gcc", { remap = true })
-map({ "n" }, "<leader>cc", "gcc", { remap = true })
-map({ "v" }, "<C-/>", "gc", { remap = true })
-map({ "v" }, "<C-;>", "gc", { remap = true })
-map({ "v" }, "<leader>cc", "gc", { remap = true })
+map({ "n", "v" }, "<C-/>", "gcc", { remap = true })
+map({ "n", "v" }, "<C-;>", "gcc", { remap = true })
+map({ "n", "v" }, "<leader>cc", "gcc", { remap = true })
 -- comment after copying
 map({ "n" }, "<leader>cy", "yygcc", { remap = true })
 map({ "v" }, "<leader>cy", "ygvgc", { remap = true })
@@ -3542,7 +3543,7 @@ map({'n', 'i'}, '<F2>', require('japanese_input').toggle_IME, { noremap = true, 
 local disabled_ft = { "acwrite", "oil", "yazi", "neo-tree", "yaml", "toml", "json", "csv", "tsv", "gitcommit"}
 vapi.nvim_create_autocmd("BufRead", {
   pattern = "*",
-  group = autosave,
+  group = vapi.nvim_create_augroup("autosave", {}),
   callback = function(ctx)
     vapi.nvim_buf_set_var(ctx.buf, "autosave_enabled", true)
   end,
