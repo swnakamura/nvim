@@ -506,11 +506,11 @@ require('lazy').setup({
         -- Actions
         bufmap('n', '<leader>hs', gs.stage_hunk, { desc = "Git stage hunk" })
         bufmap('n', '<C-Up>', function()
-            gs.stage_hunk(nil, { greedy = false })
-          end, { desc = "Git stage hunk" })
+          gs.stage_hunk(nil, { greedy = false })
+        end, { desc = "Git stage hunk" })
         bufmap('n', '<Right>', function()
-            gs.stage_hunk(nil, { greedy = false })
-          end, { desc = "Git stage hunk" })
+          gs.stage_hunk(nil, { greedy = false })
+        end, { desc = "Git stage hunk" })
         bufmap('n', '<leader>hu', gs.reset_hunk, { desc = "Git reset hunk" })
         bufmap('v', '<leader>hs', function() gs.stage_hunk { vfn.line("."), vfn.line("v") } end, { desc = "Git stage hunk" })
         bufmap('v', '<leader>hu', function() gs.reset_hunk { vfn.line("."), vfn.line("v") } end, { desc = "Git reset hunk" })
@@ -650,12 +650,12 @@ require('lazy').setup({
       local blink = require("blink.cmp")
       neocodeium.setup({
         filetypes = {
-            text = false,
-            markdown = false,
-            help = false,
-            gitcommit = false,
-            gitrebase = false,
-            ["."] = false,
+          text = false,
+          markdown = false,
+          help = false,
+          gitcommit = false,
+          gitrebase = false,
+          ["."] = false,
         },
         filter = function()
           return not blink.is_visible()
@@ -750,9 +750,9 @@ require('lazy').setup({
     -- See Commands section for default commands if you want to lazy load on them
   },
   {
-  "yetone/avante.nvim",
-  version = false, -- Never set this value to "*"! Never!
-  keys = {
+    "yetone/avante.nvim",
+    version = false, -- Never set this value to "*"! Never!
+    keys = {
       '<leader>aa',
       '<leader>ad',
       '<leader>af',
@@ -764,27 +764,27 @@ require('lazy').setup({
       '<leader>aS',
       '<leader>at',
       '<leader>a?',
-  },
-  opts = {
-    -- add any opts here
-    -- for example
-    provider = "copilot",
-    copilot = {
-      model = "gpt-4.1",
-    }
-  },
-  -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-  build = "make",
-  -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
-  dependencies = {
-    "nvim-treesitter/nvim-treesitter",
-    "stevearc/dressing.nvim",
-    "nvim-lua/plenary.nvim",
-    "MunifTanjim/nui.nvim",
-    --- The below dependencies are optional,
-    "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-    "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-    "zbirenbaum/copilot.lua", -- for providers='copilot'
+    },
+    opts = {
+      -- add any opts here
+      -- for example
+      provider = "copilot",
+      copilot = {
+        model = "gpt-4.1",
+      }
+    },
+    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+    build = "make",
+    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      --- The below dependencies are optional,
+      "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+      "zbirenbaum/copilot.lua", -- for providers='copilot'
     }
   },
 
@@ -1461,7 +1461,7 @@ best_gpu = available_gpus[0][0]
 print(f"Best GPU ID: {best_gpu}")
 os.environ["CUDA_VISIBLE_DEVICES"] = str(best_gpu)
 ]]
-          ),
+        ),
         ls.parser.parse_snippet({ trig = "image_sequence", name = "A class that simulates video capture from a directory of images" },
           [[
 class ImageSequence:
@@ -1677,7 +1677,7 @@ $0
       },
     },
     config = function()
----@diagnostic disable-next-line: missing-fields
+      ---@diagnostic disable-next-line: missing-fields
       require("neo-tree").setup({
         default_component_configs = {
           file_size = { enabled = false },
@@ -1760,11 +1760,11 @@ $0
         keymaps = {
           ["H"] = "actions.toggle_hidden",
           ['cy'] = {
-              desc = 'Copy filepath to system clipboard',
-              callback = function ()
-                  require('oil.actions').copy_entry_path.callback()
-                  vfn.setreg("+", vfn.getreg(vim.v.register))
-              end,
+            desc = 'Copy filepath to system clipboard',
+            callback = function ()
+              require('oil.actions').copy_entry_path.callback()
+              vfn.setreg("+", vfn.getreg(vim.v.register))
+            end,
           },
           ["gd"] = {
             desc = "Toggle file detail view",
@@ -2272,7 +2272,7 @@ $0
     'nvim-tree/nvim-web-devicons',
     opts = {
 
-    override = {
+      override = {
         sh = {
           icon = "",
           color = "#89e051",
@@ -2307,14 +2307,14 @@ $0
             },
           },
           vimgrep_arguments = {
-          "rg",
-          "--color=never",
-          "--no-heading",
-          "--with-filename",
-          "--line-number",
-          "--column",
-          "--smart-case",
-          "-u" -- added
+            "rg",
+            "--color=never",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+            "--smart-case",
+            "-u" -- added
           }
         },
       }
@@ -2588,20 +2588,20 @@ $0
     dependencies = {"https://github.com/atusy/budoux.lua"},
     config = function()
       map("n", "W", function()
-          local pos = require("budouxify.motion").find_forward({
-              head = true,
-          })
-          if pos then
-              vapi.nvim_win_set_cursor(0, { pos.row, pos.col })
-          end
+        local pos = require("budouxify.motion").find_forward({
+          head = true,
+        })
+        if pos then
+          vapi.nvim_win_set_cursor(0, { pos.row, pos.col })
+        end
       end)
       map("n", "E", function()
-          local pos = require("budouxify.motion").find_forward({
-              head = false,
-          })
-          if pos then
-              vapi.nvim_win_set_cursor(0, { pos.row, pos.col })
-          end
+        local pos = require("budouxify.motion").find_forward({
+          head = false,
+        })
+        if pos then
+          vapi.nvim_win_set_cursor(0, { pos.row, pos.col })
+        end
       end)
     end
   },
@@ -2741,31 +2741,31 @@ $0
       vim.o.statuscolumn = '%#FoldColumn#%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "▼" : "▶") : " " }%s%*%=%-l '
 
       UFOVirtTextHandler = function(virtText, lnum, endLnum, width, truncate)
-          local newVirtText = {}
-          local suffix = (' 󰁂 %d '):format(endLnum - lnum)
-          local sufWidth = vfn.strdisplaywidth(suffix)
-          local targetWidth = width - sufWidth
-          local curWidth = 0
-          for _, chunk in ipairs(virtText) do
-              local chunkText = chunk[1]
-              local chunkWidth = vfn.strdisplaywidth(chunkText)
-              if targetWidth > curWidth + chunkWidth then
-                  table.insert(newVirtText, chunk)
-              else
-                  chunkText = truncate(chunkText, targetWidth - curWidth)
-                  local hlGroup = chunk[2]
-                  table.insert(newVirtText, {chunkText, hlGroup})
-                  chunkWidth = vfn.strdisplaywidth(chunkText)
-                  -- str width returned from truncate() may less than 2nd argument, need padding
-                  if curWidth + chunkWidth < targetWidth then
-                      suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
-                  end
-                  break
-              end
-              curWidth = curWidth + chunkWidth
+        local newVirtText = {}
+        local suffix = (' 󰁂 %d '):format(endLnum - lnum)
+        local sufWidth = vfn.strdisplaywidth(suffix)
+        local targetWidth = width - sufWidth
+        local curWidth = 0
+        for _, chunk in ipairs(virtText) do
+          local chunkText = chunk[1]
+          local chunkWidth = vfn.strdisplaywidth(chunkText)
+          if targetWidth > curWidth + chunkWidth then
+            table.insert(newVirtText, chunk)
+          else
+            chunkText = truncate(chunkText, targetWidth - curWidth)
+            local hlGroup = chunk[2]
+            table.insert(newVirtText, {chunkText, hlGroup})
+            chunkWidth = vfn.strdisplaywidth(chunkText)
+            -- str width returned from truncate() may less than 2nd argument, need padding
+            if curWidth + chunkWidth < targetWidth then
+              suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
+            end
+            break
           end
-          table.insert(newVirtText, {suffix, 'MoreMsg'})
-          return newVirtText
+          curWidth = curWidth + chunkWidth
+        end
+        table.insert(newVirtText, {suffix, 'MoreMsg'})
+        return newVirtText
       end
     end,
     config = function()
