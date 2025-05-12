@@ -1794,7 +1794,7 @@ $0
           local cwd = vfn.getcwd()
           vim.cmd("Oil " .. cwd)
         end,
-        { desc = "Open parent directory" }
+        { desc = "Open cwd" }
       )
     end
   },
