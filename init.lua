@@ -2119,7 +2119,7 @@ $0
   -- colorscheme
   {
     cond = not vim.g.is_vscode,
-    'swnakamura/iceberg.nvim',
+    'oahlen/iceberg.nvim',
     -- event = 'VimEnter',
     config = function()
       if vim.o.bg == 'light' then
@@ -2165,6 +2165,12 @@ $0
         " No color for floating windows
         hi! link NormalFloat Normal
         hi! FloatBorder guibg=NONE
+
+        " Dimmer floating windows
+        hi! Pmenu guifg=#c7c9d1 guibg=#242633
+        hi! PmenuSbar guifg=NONE guibg=#242633
+        hi! PmenuSel guifg=#e0e2eb guibg=#33374d
+        hi! DiagnosticFloatingHint guifg=#c7c9d1 guibg=#242633
 
         " Highlighting every text expression is annoying
         hi LspReferenceText guibg=None
@@ -3013,10 +3019,19 @@ map('n', 'l', '<cmd>lua Quantized_l(vim.v.count1)<CR>', { silent = true })
 -- do not copy when deleting by x
 map({ 'n', 'x' }, 'x', '"_x')
 
--- commenting using <C-;> and <C-/>
-map({ "n", "v" }, "<C-/>", "gcc", { remap = true })
-map({ "n", "v" }, "<C-;>", "gcc", { remap = true })
-map({ "n", "v" }, "<leader>cc", "gcc", { remap = true })
+-- commenting using <C-;>
+do
+  local operator_rhs = function()
+    return require('vim._comment').operator()
+  end
+  vim.keymap.set({ 'n', 'x' }, '<C-;>', operator_rhs, { expr = true, desc = 'Toggle comment' })
+
+  local line_rhs = function()
+    return require('vim._comment').operator() .. '_'
+  end
+  vim.keymap.set('n', '<C-;>', line_rhs, { expr = true, desc = 'Toggle comment line' })
+end
+
 -- comment after copying
 map({ "n" }, "<leader>cy", "yygcc", { remap = true })
 map({ "v" }, "<leader>cy", "ygvgc", { remap = true })
