@@ -180,10 +180,6 @@ require('lazy').setup({
       },
       views = {
         cmdline_popup = {
-          border = {
-            style = "none",
-            padding = { 2, 3 },
-          },
           filter_options = {},
           win_options = {
             winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
@@ -2142,6 +2138,7 @@ $0
         hi Search                guibg=NONE gui=bold,underline guisp=#e27878
         hi clear CurSearch
         hi CurSearch             guibg=NvimDarkYellow
+
         " Do not show unnecessary separation colors
         hi LineNr                guibg=NONE
         hi CursorLineNr          guibg=NONE
@@ -2155,11 +2152,27 @@ $0
         hi GitGutterChange       guibg=NONE
         hi GitGutterChangeDelete guibg=NONE
         hi GitGutterDelete       guibg=NONE
+
+        " Dim Neotree git signs
+        hi! link NeoTreeGitUntracked Title
+        hi! link NeoTreeGitUnstaged  Title
+
+        " Instead, show window separator
+        hi! link WinSeparator     LineNr
+
         " make Fold color pale purple
         hi Folded                guibg=#2d273f
         " Disable hl for winbar which is used by dropbar
         hi WinBar guibg=NONE
+
         hi link LspInlayHint ModeMsg
+
+        " No color for floating windows
+        hi! link NormalFloat Normal
+        hi! FloatBorder guibg=NONE
+
+        " Highlighting every text expression is annoying
+        hi LspReferenceText guibg=None
         ]])
     end
   },
