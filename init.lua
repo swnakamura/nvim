@@ -221,12 +221,20 @@ require('lazy').setup({
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
-    ---@type snacks.Config
+    keys = {
+      { "<leader>fr", function() Snacks.picker.smart({ layout='telescope' }) end, desc = "Smart Find Files" },
+      { "<leader>ff", function() Snacks.picker.files({ layout='telescope' }) end, desc = "Smart Find Files" },
+      { "<leader>fb", function() Snacks.picker.buffers({ layout='telescope' }) end, desc = "Buffers" },
+      { "<leader>fg", function() Snacks.picker.grep({ layout='telescope' }) end, desc = "Grep" },
+      { "<leader>fc", function() Snacks.picker.command_history({ layout='telescope' }) end, desc = "Command History" },
+      { "<leader>fn", function() Snacks.picker.notifications({ layout='telescope' }) end, desc = "Notification History" },
+    },
     opts = {
       bigfile = { enabled = true },
       dim = { enabled = true },
       input = { enabled = true },
       quickfile = { enabled = true },
+      picker = { enabled = true, },
       scope = { enabled = true },
       scroll = { enabled = true },
       words = { enabled = true },
