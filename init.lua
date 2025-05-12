@@ -2117,7 +2117,13 @@ $0
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',                                opts = {}, event = 'BufEnter' },
+  {
+    'folke/which-key.nvim',
+    opts = {
+      sort = { 'alphanum' }
+    },
+    event = 'BufEnter'
+  },
 
   -- colorscheme
   {
