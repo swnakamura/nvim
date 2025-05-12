@@ -1677,11 +1677,23 @@ $0
       },
     },
     config = function()
+---@diagnostic disable-next-line: missing-fields
       require("neo-tree").setup({
         default_component_configs = {
           file_size = { enabled = false },
           type = { enabled = false },
           last_modified = { enabled = false, format = 'relative' },
+          git_status = {
+            symbols = {
+              added     = "",
+              deleted   = "",
+              modified  = "",
+              renamed   = "",
+              untracked = "?",
+              unstaged = "U",
+              staged = "S",
+            }
+          }
         },
         filesystem = {
           follow_current_file = {
