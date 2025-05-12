@@ -2341,6 +2341,7 @@ $0
           })
         end, { desc = 'Find by Grep from cwd' })
       vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = 'Find Diagnostics' })
+      vim.keymap.set('n', '<leader>gS', require('telescope.builtin').git_stash, { desc = 'Find Git Stash' })
     end,
     cmd = 'Telescope',
   },
