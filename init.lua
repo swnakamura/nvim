@@ -220,6 +220,24 @@ require('lazy').setup({
     },
   },
 
+  -- snacks.nvim (many QoL plugins)
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = {
+      bigfile = { enabled = true },
+      dim = { enabled = true },
+      indent = { enabled = true },
+      input = { enabled = true },
+      quickfile = { enabled = true },
+      scope = { enabled = true },
+      scroll = { enabled = true },
+      words = { enabled = true },
+    },
+  },
+
   -- lazydev
   {
     "folke/lazydev.nvim",
@@ -2892,10 +2910,10 @@ map({ 'n', 'v' }, '<Space><BS>', '<C-^>')
 map({ 'n', 'v' }, '<C-Space>', '<Nop>')
 
 --https://zenn.dev/vim_jp/articles/67ec77641af3f2
-map('n', 'zz', 'zz<Plug>(z1)', { remap = true })
-map('n', '<Plug>(z1)z', 'zt<Plug>(z2)')
-map('n', '<Plug>(z2)z', 'zb<Plug>(z3)')
-map('n', '<Plug>(z3)z', 'zz<Plug>(z1)')
+-- map('n', 'zz', 'zz<Plug>(z1)', { remap = true })
+-- map('n', '<Plug>(z1)z', 'zt<Plug>(z2)')
+-- map('n', '<Plug>(z2)z', 'zb<Plug>(z3)')
+-- map('n', '<Plug>(z3)z', 'zz<Plug>(z1)')
 
 -- move cursor to the center of the window lr
 map('n', 'z.', 'zezL')
