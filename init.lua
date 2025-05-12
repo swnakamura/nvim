@@ -2866,7 +2866,7 @@ vim.o.previewheight = 999
 vim.o.list = true
 vim.o.listchars = 'leadmultispace:---|,tab:» ,trail:~,extends:»,precedes:«,nbsp:%'
 
-vim.o.scrolloff = 5
+vim.o.scrolloff = 15
 
 vim.go.laststatus = 3
 
