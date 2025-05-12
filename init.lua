@@ -222,12 +222,52 @@ require('lazy').setup({
     priority = 1000,
     lazy = false,
     keys = {
+      -- Find
       { "<leader>fr", function() Snacks.picker.smart({ layout='telescope' }) end, desc = "Smart Find Files" },
       { "<leader>ff", function() Snacks.picker.files({ layout='telescope' }) end, desc = "Smart Find Files" },
       { "<leader>fb", function() Snacks.picker.buffers({ layout='telescope' }) end, desc = "Buffers" },
-      { "<leader>fg", function() Snacks.picker.grep({ layout='telescope' }) end, desc = "Grep" },
+      { "<leader>fg", function() Snacks.picker.git_files({ layout='telescope' }) end, desc = "Find Git Files" },
       { "<leader>fc", function() Snacks.picker.command_history({ layout='telescope' }) end, desc = "Command History" },
       { "<leader>fn", function() Snacks.picker.notifications({ layout='telescope' }) end, desc = "Notification History" },
+
+      -- Grep
+      { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
+      { "<leader>sB", function() Snacks.picker.grep_buffers({ layout='telescope' }) end, desc = "Grep Open Buffers" },
+      { "<leader>sw", function() Snacks.picker.grep_word({ layout='telescope' }) end, desc = "Visual selection or word", mode = { "n", "x" } },
+      { "<leader>sg", function() Snacks.picker.grep({ layout='telescope' }) end, desc = "Grep" },
+      { "<leader>sG",
+        function()
+          local cwd = vfn.expand "%:p:h"
+          -- for Oil buffers such as "oil://~", remove "oil://"
+          if cwd:match("oil://") then
+            cwd = cwd:gsub("oil://", "")
+          end
+          Snacks.picker.grep({
+            layout='telescope',
+            dirs = { cwd }
+          })
+        end,
+        desc = "Grep"
+      },
+
+      { '<leader>s"', function() Snacks.picker.registers({ layout='telescope' }) end, desc = "Registers" },
+      { '<leader>s/', function() Snacks.picker.search_history({ layout='telescope' }) end, desc = "Search History" },
+      { "<leader>sa", function() Snacks.picker.autocmds({ layout='telescope' }) end, desc = "Autocmds" },
+      { "<leader>sc", function() Snacks.picker.command_history({ layout='telescope' }) end, desc = "Command History" },
+      { "<leader>sC", function() Snacks.picker.commands({ layout='telescope' }) end, desc = "Commands" },
+      { "<leader>sd", function() Snacks.picker.diagnostics({ layout='telescope' }) end, desc = "Diagnostics" },
+      { "<leader>sD", function() Snacks.picker.diagnostics_buffer({ layout='telescope' }) end, desc = "Buffer Diagnostics" },
+      { "<leader>sh", function() Snacks.picker.help({ layout='telescope' }) end, desc = "Help Pages" },
+      { "<leader>sH", function() Snacks.picker.highlights({ layout='telescope' }) end, desc = "Highlights" },
+      { "<leader>si", function() Snacks.picker.icons({ layout='telescope' }) end, desc = "Icons" },
+      { "<leader>sj", function() Snacks.picker.jumps({ layout='telescope' }) end, desc = "Jumps" },
+      { "<leader>sk", function() Snacks.picker.keymaps({ layout='telescope' }) end, desc = "Keymaps" },
+      { "<leader>sl", function() Snacks.picker.loclist({ layout='telescope' }) end, desc = "Location List" },
+      { "<leader>sm", function() Snacks.picker.marks({ layout='telescope' }) end, desc = "Marks" },
+      { "<leader>sM", function() Snacks.picker.man({ layout='telescope' }) end, desc = "Man Pages" },
+      { "<leader>sq", function() Snacks.picker.qflist({ layout='telescope' }) end, desc = "Quickfix List" },
+      { "<leader>sR", function() Snacks.picker.resume({ layout='telescope' }) end, desc = "Resume" },
+      { "<leader>su", function() Snacks.picker.undo({ layout='telescope' }) end, desc = "Undo History" },
     },
     opts = {
       bigfile = { enabled = true },
@@ -2330,32 +2370,6 @@ $0
 
       -- Enable telescope fzf native, if installed
       require('telescope').load_extension('fzf')
-    end,
-    init = function()
-      vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search Git Files' })
-      vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = 'Find Files' })
-      vim.keymap.set('n', '<leader>fr', require('telescope.builtin').oldfiles, { desc = 'Find Recent Files' })
-      vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = 'Find Buffers' })
-      vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = 'Find Help' })
-      vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = 'Find current Word' })
-      vim.keymap.set('n', '<leader>fm', require('telescope.builtin').man_pages, { desc = 'Find Manpages' })
-      vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = 'Find Keymaps' })
-      vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = 'Find by Grep' })
-      vim.keymap.set('n', '<leader>fG',
-        function()
-          require('telescope.builtin').live_grep({
-            cwd = (function()
-              local cwd = vfn.expand "%:p:h"
-              -- for Oil buffers such as "oil://~", remove "oil://"
-              if cwd:match("oil://") then
-                cwd = cwd:gsub("oil://", "")
-              end
-              return cwd
-            end)()
-          })
-        end, { desc = 'Find by Grep from cwd' })
-      vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = 'Find Diagnostics' })
-      vim.keymap.set('n', '<leader>gS', require('telescope.builtin').git_stash, { desc = 'Find Git Stash' })
     end,
     cmd = 'Telescope',
   },
