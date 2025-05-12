@@ -229,7 +229,6 @@ require('lazy').setup({
     opts = {
       bigfile = { enabled = true },
       dim = { enabled = true },
-      indent = { enabled = true },
       input = { enabled = true },
       quickfile = { enabled = true },
       scope = { enabled = true },
