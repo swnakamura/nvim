@@ -1911,9 +1911,6 @@ $0
     config = function()
       vim.g.barbar_auto_setup = false -- disable auto-setup
 
-      vim.cmd [[hi! link BufferCurrent    DiagnosticVirtualTextInfo]]
-      vim.cmd [[hi! link BufferCurrentMod DiagnosticVirtualTextInfo]]
-
       require 'barbar'.setup {
         icons = {
           -- Configure the base icons on the bufferline.
@@ -2214,7 +2211,16 @@ $0
 
         " Highlighting every text expression is annoying
         hi LspReferenceText guibg=None
+
+        " Dimmer TabLine
+        hi TabLine    guifg=#828597 guibg=#24283d
+        hi TabLineSel guifg=#e9e9ed guibg=#373c59
         ]])
+
+      -- Black background in tabline for inactive buffers
+      for _, group in ipairs({'', 'ADDED', 'Btn', 'CHANGED', 'DELETED', 'ERROR', 'HINT', 'Icon', 'Index', 'INFO', 'Mod', 'ModBtn', 'Number', 'Pin', 'PinBtn', 'Sign', 'SignRight', 'Target', 'WARN'}) do
+        vapi.nvim_set_hl(0, 'BufferInactive' .. group, { bg = '#000000' })
+      end
     end
   },
 
