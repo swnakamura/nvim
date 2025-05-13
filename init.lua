@@ -2185,6 +2185,9 @@ $0
         hi GitGutterChangeDelete guibg=NONE
         hi GitGutterDelete       guibg=NONE
 
+        " Nontext is way too dark
+        hi NonText              guifg=#353b5e
+
         " Dim Neotree git signs
         hi! link NeoTreeGitUntracked Title
         hi! link NeoTreeGitUnstaged  Title
@@ -2198,10 +2201,6 @@ $0
         hi WinBar guibg=NONE
 
         hi link LspInlayHint ModeMsg
-
-        " No color for floating windows
-        hi! link NormalFloat Normal
-        hi! FloatBorder guibg=NONE
 
         " Dimmer floating windows
         hi! Pmenu guifg=#c7c9d1 guibg=#242633
@@ -2221,6 +2220,13 @@ $0
       for _, group in ipairs({'', 'ADDED', 'Btn', 'CHANGED', 'DELETED', 'ERROR', 'HINT', 'Icon', 'Index', 'INFO', 'Mod', 'ModBtn', 'Number', 'Pin', 'PinBtn', 'Sign', 'SignRight', 'Target', 'WARN'}) do
         vapi.nvim_set_hl(0, 'BufferInactive' .. group, { bg = '#000000' })
       end
+      
+      -- No color for floating windows
+      local nf = vapi.nvim_get_hl(0, { name = 'NormalFloat' })
+      vapi.nvim_set_hl(0, 'TreesitterContext', nf)
+      vapi.nvim_set_hl(0, 'NormalFloat', { link = 'Normal' })
+      vim.cmd([[hi! FloatBorder guibg=NONE]])
+
     end
   },
 
