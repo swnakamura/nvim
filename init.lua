@@ -41,7 +41,7 @@ local function detect_env()
   env.is_macos = vfn.has('mac') == 1
   env.is_vscode = vfn.exists('g:vscode') == 1
   env.is_ssh = vfn.getenv('SSH_CONNECTION') ~= nil
-  env.open_neotree = vim.o.columns > 200 and vfn.argc() > 0
+  env.is_wide_for_neotree = vim.o.columns > 200 and vfn.argc() > 0
   return env
 end
 
@@ -50,10 +50,10 @@ vim.g.is_wsl = env.is_wsl
 vim.g.is_macos = env.is_macos
 vim.g.is_vscode = env.is_vscode
 vim.g.is_ssh = env.is_ssh
-vim.g.open_neotree = env.open_neotree
+vim.g.is_wide_for_neotree = env.is_wide_for_neotree
 
 
-if vim.g.is_wsl then
+if env.is_wsl then
   vim.g.clipboard = {
     name = 'WslClipboard',
     copy = {
@@ -69,7 +69,7 @@ if vim.g.is_wsl then
 end
 
 
-if vim.g.is_macos == false then
+if env.is_macos == false then
   local FSWATCH_EVENTS = {
     Created = 1,
     Updated = 2,
@@ -146,7 +146,7 @@ end
 -- [[ Neovide settings ]]
 vim.g.neovide_cursor_animation_length = 0.10 -- default 0.13
 vim.g.neovide_cursor_trail_size = 0.2 -- default 0.8
-if vim.g.is_macos then
+if env.is_macos then
   vim.o.guifont = "JetBrains Mono:h12"
 else
   vim.o.guifont = "JetBrains Mono Light:h12"
@@ -578,7 +578,7 @@ require('lazy').setup({
 
   -- floating terminal
   {
-    cond = not vim.g.is_vscode,
+    cond = not env.is_vscode,
     'voldikss/vim-floaterm',
     cmd = 'FloatermToggle',
     init = function()
@@ -639,7 +639,7 @@ require('lazy').setup({
 
   -- copilot
   {
-    cond = not vim.g.is_vscode,
+    cond = not env.is_vscode,
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",
@@ -830,7 +830,7 @@ require('lazy').setup({
 
   -- register preview
   {
-    cond = not vim.g.is_vscode,
+    cond = not env.is_vscode,
     'tversteeg/registers.nvim',
     config = true,
     keys = {
@@ -842,7 +842,7 @@ require('lazy').setup({
 
   -- undotree
   {
-    cond = not vim.g.is_vscode,
+    cond = not env.is_vscode,
     'mbbill/undotree',
     init = function()
       map('n', 'U', ':UndotreeToggle<CR>')
@@ -852,7 +852,7 @@ require('lazy').setup({
 
   -- nvim-lspconfig
   {
-    cond = not vim.g.is_vscode,
+    cond = not env.is_vscode,
     'neovim/nvim-lspconfig',
     event = { "BufReadPost", "BufNewFile" },
     cmd = { "LspInfo", "LspInstall", "LspUninstall", "Mason" },
@@ -1008,7 +1008,7 @@ require('lazy').setup({
 
   -- lsp saga (useful lsp features)
   {
-    cond = not vim.g.is_vscode,
+    cond = not env.is_vscode,
     'nvimdev/lspsaga.nvim',
     event = 'LspAttach',
     config = function()
@@ -1027,7 +1027,7 @@ require('lazy').setup({
 
   -- DAP
   {
-    cond = not vim.g.is_vscode,
+    cond = not env.is_vscode,
     'https://github.com/mfussenegger/nvim-dap',
     ft = { 'python', 'c', 'cpp', 'rust' },
     dependencies = {
@@ -1052,7 +1052,7 @@ require('lazy').setup({
 
   },
   {
-    cond = not vim.g.is_vscode,
+    cond = not env.is_vscode,
     'https://github.com/rcarriga/nvim-dap-ui',
     dependencies = 'https://github.com/nvim-neotest/nvim-nio',
     config = function()
@@ -1060,7 +1060,7 @@ require('lazy').setup({
     end
   },
   {
-    cond = not vim.g.is_vscode,
+    cond = not env.is_vscode,
     'https://github.com/mfussenegger/nvim-dap-python',
     config = function()
       local venv = os.getenv('VIRTUAL_ENV')
@@ -1071,7 +1071,7 @@ require('lazy').setup({
   },
 
   {
-    cond = not vim.g.is_vscode,
+    cond = not env.is_vscode,
     'mfussenegger/nvim-lint',
     event = { "BufReadPost", "BufNewFile" },
     config = function()
@@ -1284,7 +1284,7 @@ require('lazy').setup({
 
   -- lsp signature help
   {
-    cond = not vim.g.is_vscode and not vim.g.is_macos,
+    cond = not env.is_vscode and not env.is_macos,
     "ray-x/lsp_signature.nvim",
     event = "VeryLazy",
     opts = {},
@@ -1694,11 +1694,11 @@ $0
 
   -- Neotree (filer)
   {
-    cond = not vim.g.is_vscode,
+    cond = not env.is_vscode,
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     cmd = 'Neotree',
-    lazy = not vim.g.open_neotree,
+    lazy = not env.is_wide_for_neotree,
     init = function()
       vim.g.neo_tree_remove_legacy_commands = 1
 
@@ -1764,7 +1764,7 @@ $0
               local node = state.tree:get_node()
               local path = node:get_id()
               path = vfn.shellescape(path, true)
-              if vim.g.is_macos then
+              if env.is_macos then
                 vapi.nvim_command("silent !open -g " .. path)
               else
                 vapi.nvim_command("silent !xdg-open " .. path)
@@ -1785,7 +1785,7 @@ $0
       -- Open neotree delayed
       -- somehow don't work with auto-session
       -- vim.schedule(function()
-      --   if vim.g.open_neotree then
+      --   if env.is_wide_for_neotree then
       --     vim.cmd([[Neotree show]])
       --   end
       -- end)
@@ -1832,7 +1832,7 @@ $0
 
   -- yazi
   {
-    cond = not vim.g.is_vscode,
+    cond = not env.is_vscode,
     "mikavilpas/yazi.nvim",
     event = "VeryLazy",
     keys = {
@@ -1876,7 +1876,7 @@ $0
 
   -- barbar
   {
-    cond = not vim.g.is_vscode,
+    cond = not env.is_vscode,
     'romgrk/barbar.nvim',
     event = 'VeryLazy',
     dependencies = {
@@ -1954,7 +1954,7 @@ $0
 
   -- Add indentation guides (vertical bar) and highlight current context
   {
-    cond=not vim.g.is_vscode,
+    cond=not env.is_vscode,
     "shellRaining/hlchunk.nvim",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
@@ -1962,7 +1962,7 @@ $0
         chunk = {
           enable = true,
           style = {
-            { fg = "#62c1b9" },
+            { fg = "#7469c4" },
           },
           delay = 2, -- animation
           duration = 100,
@@ -2155,7 +2155,7 @@ $0
 
   -- colorscheme
   {
-    cond = not vim.g.is_vscode,
+    cond = not env.is_vscode,
     'oahlen/iceberg.nvim',
     -- event = 'VimEnter',
     config = function()
@@ -2248,7 +2248,7 @@ $0
 
   -- lualine (statusline implemented with lua)
   {
-    cond = not vim.g.is_vscode,
+    cond = not env.is_vscode,
     'nvim-lualine/lualine.nvim',
     event = 'VeryLazy',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -2399,7 +2399,7 @@ $0
 
   -- obsidian integration
   {
-    cond = not vim.g.is_vscode and not vim.g.is_ssh, -- run only in local neovim
+    cond = not env.is_vscode and not env.is_ssh, -- run only in local neovim
     'epwalsh/obsidian.nvim',
     dependencies = {
       -- Required.
@@ -2427,7 +2427,7 @@ $0
 
   -- treesitter
   {
-    cond = not vim.g.is_vscode,
+    cond = not env.is_vscode,
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     ft = treesitter_filetypes,
@@ -2511,7 +2511,7 @@ $0
     end
   },
   {
-    cond = not vim.g.is_vscode,
+    cond = not env.is_vscode,
     'nvim-treesitter/nvim-treesitter-context',
     ft = treesitter_filetypes,
     dependencies = 'nvim-treesitter/nvim-treesitter',
@@ -2572,7 +2572,7 @@ $0
       vim.g.tex_flavor = 'latex'
       vim.g.tex_conceal = 'abdmg'
       vim.g.vimtex_fold_enabled = 1
-      if vim.g.is_macos then
+      if env.is_macos then
         vim.g.vimtex_view_method = 'skim' -- skim
         -- vim.g.vimtex_view_general_viewer = 'zathura' -- zathura
       else
@@ -2635,7 +2635,7 @@ $0
     -- ft = 'text',
     dependencies = 'vim-denops/denops.vim',
     init = function()
-      -- if vim.g.is_macos then
+      -- if env.is_macos then
       --   vim.g['denops#deno'] = '/Users/snakamura/.deno/bin/deno'
       -- end
     end,
@@ -2651,7 +2651,7 @@ $0
 
   -- Zen mode
   {
-    cond = not vim.g.is_vscode,
+    cond = not env.is_vscode,
     "folke/zen-mode.nvim",
     event = 'VeryLazy',
     opts = {
@@ -2708,7 +2708,7 @@ $0
         command = 'set filetype=tex',
         group = 'nvim-ghost-user-autocmd'
       })
-      if vim.g.is_macos then
+      if env.is_macos then
         vim.g.nvim_ghost_use_script = 1
         vim.g.nvim_ghost_python_executable = '/usr/bin/python3'
       end
@@ -3593,15 +3593,15 @@ map('n', toggle_prefix .. 'y', function()
   end
 end, { silent = true, desc = 'toggle clipboard' })
 
-vim.g.is_noice_enabled = true
+env.is_noice_enabled = true
 Toggle_noice = function()
-  if vim.g.is_noice_enabled then
-    vim.g.is_noice_enabled = false
+  if env.is_noice_enabled then
+    env.is_noice_enabled = false
     vim.cmd('Noice disable')
     vim.opt.cmdheight=1
     print('Noice disabled')
   else
-    vim.g.is_noice_enabled = true
+    env.is_noice_enabled = true
     vim.cmd('Noice enable')
     print('Noice enabled')
   end
