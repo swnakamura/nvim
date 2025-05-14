@@ -854,7 +854,15 @@ require('lazy').setup({
       "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
       "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
       "zbirenbaum/copilot.lua", -- for providers='copilot'
-    }
+    },
+    init = function()
+      vapi.nvim_create_autocmd('FileType', {
+        pattern = 'Avante',
+        callback = function()
+          vim.wo.conceallevel = 2
+        end
+      })
+    end
   },
 
   -- register preview
