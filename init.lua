@@ -574,10 +574,10 @@ require('lazy').setup({
         -- Actions
         bufmap('n', '<leader>hs', gs.stage_hunk, { desc = "Git stage hunk" })
         bufmap('n', '<C-Up>', function()
-          gs.stage_hunk(nil, { greedy = false })
+          gs.stage_hunk(nil, {})
         end, { desc = "Git stage hunk" })
         bufmap('n', '<Right>', function()
-          gs.stage_hunk(nil, { greedy = false })
+          gs.stage_hunk(nil, {})
         end, { desc = "Git stage hunk" })
         bufmap('n', '<leader>hu', gs.reset_hunk, { desc = "Git reset hunk" })
         bufmap('v', '<leader>hs', function() gs.stage_hunk { vfn.line("."), vfn.line("v") } end, { desc = "Git stage hunk" })
