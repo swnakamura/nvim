@@ -1991,7 +1991,7 @@ $0
 
   -- Add indentation guides (vertical bar) and highlight current context
   {
-    cond=not env.is_vscode,
+    cond=false,
     "shellRaining/hlchunk.nvim",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
