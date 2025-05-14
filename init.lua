@@ -552,38 +552,24 @@ require('lazy').setup({
         end
 
         -- Navigation
-        local hunk_nav_opts = {preview = true, greedy = false}
-        bufmap('n', '<PageDown>', function()
-          if vim.wo.diff then return ']c' end
-          vim.schedule(function() gs.nav_hunk('next', hunk_nav_opts) end)
-          return '<Ignore>'
-        end, { expr = true })
-        bufmap('n', ']h', function()
-          if vim.wo.diff then return ']c' end
-          vim.schedule(function() gs.nav_hunk('next', hunk_nav_opts) end)
-          return '<Ignore>'
-        end, { expr = true })
-        bufmap('n', '<Down>', function()
-          if vim.wo.diff then return ']c' end
-          vim.schedule(function() gs.nav_hunk('next', hunk_nav_opts) end)
-          return '<Ignore>'
-        end, { expr = true })
+        local hunk_nav_opts = {}
+        for _, downkey in ipairs({'<PageDown>', ']h', '<Down>'}) do
+          bufmap('n', downkey, function()
+            if vim.wo.diff then return ']c' end
+            vim.schedule(function() gs.nav_hunk('next', hunk_nav_opts) end)
+            vim.defer_fn(function() gs.preview_hunk_inline() end, 500)
+            return '<Ignore>'
+          end, { expr = true })
+        end
 
-        bufmap('n', '<PageUp>', function()
-          if vim.wo.diff then return '[c' end
-          vim.schedule(function() gs.nav_hunk('prev', hunk_nav_opts) end)
-          return '<Ignore>'
-        end, { expr = true })
-        bufmap('n', '[h', function()
-          if vim.wo.diff then return '[c' end
-          vim.schedule(function() gs.nav_hunk('prev', hunk_nav_opts) end)
-          return '<Ignore>'
-        end, { expr = true })
-        bufmap('n', '<Up>', function()
-          if vim.wo.diff then return '[c' end
-          vim.schedule(function() gs.nav_hunk('prev', hunk_nav_opts) end)
-          return '<Ignore>'
-        end, { expr = true })
+        for _, upkey in ipairs({'<PageUp>', '[h', '<Up>'}) do
+          bufmap('n', upkey, function()
+            if vim.wo.diff then return '[c' end
+            vim.schedule(function() gs.nav_hunk('prev', hunk_nav_opts) end)
+            vim.defer_fn(function() gs.preview_hunk_inline() end, 500)
+            return '<Ignore>'
+          end, { expr = true })
+        end
 
         -- Actions
         bufmap('n', '<leader>hs', gs.stage_hunk, { desc = "Git stage hunk" })
