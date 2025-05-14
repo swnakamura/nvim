@@ -250,6 +250,7 @@ require('lazy').setup({
         desc = "Grep"
       },
 
+      -- other search functionalities
       { '<leader>s"', function() Snacks.picker.registers({ layout='telescope' }) end, desc = "Registers" },
       { '<leader>s/', function() Snacks.picker.search_history({ layout='telescope' }) end, desc = "Search History" },
       { "<leader>sa", function() Snacks.picker.autocmds({ layout='telescope' }) end, desc = "Autocmds" },
@@ -269,16 +270,39 @@ require('lazy').setup({
       { "<leader>sR", function() Snacks.picker.resume({ layout='telescope' }) end, desc = "Resume" },
       { "<leader>su", function() Snacks.picker.undo({ layout='telescope' }) end, desc = "Undo History" },
     },
-    opts = {
-      bigfile = { enabled = true },
-      dim = { enabled = true },
-      input = { enabled = true },
-      quickfile = { enabled = true },
-      picker = { enabled = true, },
-      scope = { enabled = true },
-      scroll = { enabled = true },
-      words = { enabled = true },
-    },
+    config = function()
+      local opts = {
+        bigfile = { enabled = true },
+        dim = { enabled = true },
+        -- input = { enabled = true },
+        indent = {
+          enabled = true,
+          chunk = { enabled = true },
+        },
+        quickfile = { enabled = true },
+        picker = { enabled = true, },
+        scope = { enabled = true },
+        scroll = { enabled = true },
+        words = { enabled = true },
+      }
+      require('snacks').setup(opts)
+
+      -- somehow we need to defer the highlight setting not to be overridden by the default
+      vim.defer_fn(
+        function()
+          vim.cmd[[hi! SnacksIndentChunk guifg=#7469c4]]
+          vim.cmd[[hi! SnacksIndentScope guifg=#7469c4]]
+        -- No need for default listchars
+        end, 200
+      )
+      vim.defer_fn(
+        function()
+        -- No need for default listchars
+        -- This needs to be deferred as it should override the default
+        vim.cmd([[set listchars-=leadmultispace:---\|]])
+        end, 100
+      )
+    end
   },
 
   -- lazydev
