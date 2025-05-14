@@ -822,6 +822,7 @@ require('lazy').setup({
     version = false, -- Never set this value to "*"! Never!
     keys = {
       '<leader>aa',
+      '<leader>ae',
       '<leader>ad',
       '<leader>af',
       '<leader>ah',
