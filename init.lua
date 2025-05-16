@@ -167,6 +167,12 @@ end
 
 local treesitter_filetypes = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'go', 'html', 'lua', 'markdown', 'markdown_inline', 'python', 'rust', 'latex', 'tsx', 'typescript', 'vimdoc', 'vim', 'yaml' }
 
+
+local event = require("lazy.core.handler.event")
+
+event.mappings.LazyFile = { id = "LazyFile", event = { "BufReadPost", "BufNewFile", "BufWritePre" } }
+event.mappings["User LazyFile"] = event.mappings.LazyFile
+
 require('lazy').setup({
 
   -- noice
@@ -274,6 +280,22 @@ require('lazy').setup({
       local opts = {
         bigfile = { enabled = true },
         dim = { enabled = true },
+        dashboard = {
+          enabled = true,
+          sections = {
+            { section = "header" },
+            { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
+            { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
+            { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
+            {
+              icon = " ",
+              key = "p",
+              desc = "... or, search for a project",
+              action = ":lua Snacks.picker.projects()",
+            },
+            { section = "startup" },
+          },
+        },
         -- input = { enabled = true },
         indent = {
           enabled = true,
@@ -308,7 +330,7 @@ require('lazy').setup({
   -- prettier diagnostics
   {
     "rachartier/tiny-inline-diagnostic.nvim",
-    event = "VeryLazy", -- Or `LspAttach`
+    event = "LazyFile",
     priority = 1000, -- needs to be loaded in first
     config = function()
         require('tiny-inline-diagnostic').setup({
@@ -338,8 +360,11 @@ require('lazy').setup({
 
   -- smart increment/decrement
   {
+    keys = {
+      { "<C-a>", mode = { "n", "v" }, desc = "Increment" },
+      { "<C-x>", mode = { "n", "v" }, desc = "Decrement" },
+    },
     'monaqa/dial.nvim',
-    event = 'VeryLazy',
     config = function()
       local augend = require("dial.augend")
       require("dial.config").augends:register_group {
@@ -386,6 +411,7 @@ require('lazy').setup({
 
   -- remote-nvim
   {
+    cmd = { "RemoteNvim" },
     "hmk114/remote-nvim.nvim",
     version = "*", -- Pin to GitHub releases
     dependencies = {
@@ -446,7 +472,6 @@ require('lazy').setup({
   },
   {
     "FabijanZulj/blame.nvim",
-    lazy = false,
     opts = {
       virtual_style = 'float',
       date_format = "%Y.%m.%d",
@@ -598,6 +623,7 @@ require('lazy').setup({
 
   -- dmacro for recording automatically
   {
+    event = 'LazyFile',
     'https://github.com/tani/dmacro.vim',
     config = function()
       map({ "i", "n" }, '<C-m>', '<Plug>(dmacro-play-macro)')
@@ -644,7 +670,7 @@ require('lazy').setup({
   {
     -- This one has japanese search functionality
     'yuki-yano/fuzzy-motion.vim',
-    event = 'VeryLazy',
+    cmd = { 'FuzzyMotion' },
     config = function()
       vim.g.fuzzy_motion_matchers = { 'kensaku', 'fzf' }
     end
@@ -653,16 +679,16 @@ require('lazy').setup({
   -- leap.nvim
   {
     'https://github.com/ggandor/leap.nvim',
-    config = function()
-      map({'n', 'x', 'o'}, '<C-s>', '<Plug>(leap)')
-      map({'n', 'x', 'o'}, 'S',     '<Plug>(leap-from-window)')
-    end
+    keys = {
+      { '<C-s>', '<Plug>(leap)',             mode = { 'n', 'x', 'o' }, desc = "Leap" },
+      { 'S',     '<Plug>(leap-from-window)', mode = { 'n', 'x', 'o' }, desc = "Leap from window" },
+    },
   },
 
   -- performance (faster macro execution)
   {
     "https://github.com/pteroctopus/faster.nvim",
-    event='VeryLazy'
+    event='LazyFile'
   },
 
   -- copilot
@@ -1089,6 +1115,7 @@ require('lazy').setup({
 
   },
   {
+    event = 'LazyFile',
     cond = not env.is_vscode,
     'https://github.com/rcarriga/nvim-dap-ui',
     dependencies = 'https://github.com/nvim-neotest/nvim-nio',
@@ -1097,6 +1124,7 @@ require('lazy').setup({
     end
   },
   {
+    ft = { 'python' },
     cond = not env.is_vscode,
     'https://github.com/mfussenegger/nvim-dap-python',
     config = function()
@@ -1127,6 +1155,7 @@ require('lazy').setup({
 
   -- operator augmentation
   {
+    event = 'LazyFile',
     'echasnovski/mini.surround',
     version = false,
     config = function()
@@ -1722,11 +1751,9 @@ $0
   -- show luasnip snippets in telescope
   {
     'benfowler/telescope-luasnip.nvim',
-    init = function()
-      vim.keymap.set('n', '<leader>fl', function()
-        require('telescope').extensions.luasnip.luasnip()
-      end, { desc = 'Telescope: Show Luasnip snippets' })
-    end,
+    keys = {
+      { "<leader>ss", "<cmd>Telescope luasnip<CR>", desc = "Telescope: Show Luasnip snippets" },
+    },
   },
 
   -- Neotree (filer)
@@ -1735,7 +1762,6 @@ $0
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     cmd = 'Neotree',
-    lazy = not env.is_wide_for_neotree,
     init = function()
       vim.g.neo_tree_remove_legacy_commands = 1
 
@@ -1748,7 +1774,6 @@ $0
       {
         's1n7ax/nvim-window-picker',
         name = 'window-picker',
-        event = 'VeryLazy',
         version = '2.*',
         opts = {hint = 'floating-big-letter'},
       },
@@ -1831,6 +1856,7 @@ $0
 
   -- oil
   {
+    keys = { "<leader>e", "<leader>E" },
     'https://github.com/stevearc/oil.nvim',
     config = function()
       require('oil').setup({
@@ -1871,7 +1897,6 @@ $0
   {
     cond = not env.is_vscode,
     "mikavilpas/yazi.nvim",
-    event = "VeryLazy",
     keys = {
       {
         "<C-y>",
@@ -2074,7 +2099,7 @@ $0
   -- Fix Neovim's broken visual star search
   {
     'thinca/vim-visualstar',
-    event = 'VeryLazy',
+    event = 'LazyFile',
     init = function()
       vim.g.visualstar_no_default_key_mappings = false
     end,
@@ -2124,8 +2149,10 @@ $0
     end
   },
   {
-    'windwp/nvim-autopairs',
-    config = true,
+    event = 'InsertEnter',
+    'echasnovski/mini.pairs',
+    version = false,
+    config=true,
   },
 
   -- rust
@@ -2164,6 +2191,10 @@ $0
 
   -- aerial (outline based on treesitter)
   {
+    keys = {
+      { '<leader>ta', '<cmd>AerialToggle<CR>',  mode = {'n'} },
+    },
+    cmd = 'AerialToggle',
     'stevearc/aerial.nvim',
     config = function()
       require("aerial").setup({
@@ -2176,8 +2207,6 @@ $0
         close_on_select = true,
         autojump = true,
       })
-      -- You probably also want to set a keymap to toggle aerial
-      vim.keymap.set("n", "<leader>ta", "<cmd>AerialToggle<CR>")
     end
   },
 
@@ -2287,7 +2316,10 @@ $0
 
   },
   -- capture vim script output
-  'https://github.com/tyru/capture.vim',
+  {
+    'https://github.com/tyru/capture.vim',
+    cmd = 'Capture',
+  },
 
   -- lualine (statusline implemented with lua)
   {
@@ -2358,6 +2390,7 @@ $0
 
   -- dev icons
   {
+    lazy = true,
     'nvim-tree/nvim-web-devicons',
     opts = {
 
@@ -2421,15 +2454,6 @@ $0
       require('telescope').load_extension('fzf')
     end,
     cmd = 'Telescope',
-  },
-
-  -- use telescope for vim.ui.select
-  {
-    'nvim-telescope/telescope-ui-select.nvim',
-    dependencies = { 'nvim-telescope/telescope.nvim' },
-    config = function()
-      require('telescope').load_extension('ui-select')
-    end,
   },
 
   -- show image with kitty graphics protocol
@@ -2675,7 +2699,7 @@ $0
   {
     cond = vfn.isdirectory(vfn.expand('~/ghq/github.com/swnakamura/novel-preview.vim')) == 1,
     dir = '~/ghq/github.com/swnakamura/novel-preview.vim',
-    -- ft = 'text',
+    ft = 'text',
     dependencies = 'vim-denops/denops.vim',
     init = function()
       -- if env.is_macos then
@@ -2688,6 +2712,7 @@ $0
   },
   -- japanese kensaku
   {
+    event = 'LazyFile',
     'lambdalisue/kensaku.vim',
     dependencies = { 'vim-denops/denops.vim', 'lambdalisue/kensaku-search.vim' },
   },
@@ -2696,7 +2721,9 @@ $0
   {
     cond = not env.is_vscode,
     "folke/zen-mode.nvim",
-    event = 'VeryLazy',
+    keys = {
+      { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen mode" },
+    },
     opts = {
       on_open = function()
         vim.o.laststatus = 0
@@ -2728,11 +2755,6 @@ $0
         }
       }
     },
-    init = function()
-      map('n', '<leader>z', function()
-        vim.cmd('ZenMode')
-      end, { desc = 'Zen mode' })
-    end,
   },
 
   -- ghosttext
@@ -2763,7 +2785,7 @@ $0
   { 'uga-rosa/ccc.nvim', event = 'VeryLazy', config = true },
 
   -- expl3
-  { 'wtsnjp/vim-expl3',  filetype = 'expl3' },
+  { 'wtsnjp/vim-expl3',  ft = 'expl3' },
 
   -- window separation color
   {
@@ -2779,7 +2801,7 @@ $0
   -- beautify fold
   {
     "chrisgrieser/nvim-origami",
-    event = "VeryLazy",
+    event = "LazyFile",
     opts = {
       foldtextWithLineCount = {
         enabled = false,
@@ -2795,7 +2817,7 @@ $0
   {
     'kevinhwang91/nvim-ufo',
     dependencies = { 'kevinhwang91/promise-async' },
-    event = 'VeryLazy',
+    event = 'LazyFile',
     init = function()
       vim.o.foldenable = true
       vim.o.foldlevel = 99
@@ -2847,6 +2869,7 @@ $0
 
   -- marks
   {
+    event = 'LazyFile',
     'chentoast/marks.nvim',
     config = function()
       require('marks').setup({})
@@ -2981,11 +3004,9 @@ vim.go.signcolumn = 'yes:1'
 
 -- [[ Basic Keymaps ]]
 
--- map({ 'n', 'v' }, '<Space>', '<Nop>')
-map({ 'n', 'i' }, '<CR>',    '<CR>')
 map({ 'n', 'v' }, '<Space>o', '<Nop>')
-map({ 'n', 'v' }, '<Space><BS>', '<C-^>')
-map({ 'n', 'v' }, '<C-Space>', '<Nop>')
+map('n', '<C-h>', '<C-w>h')
+map('n', '<C-l>', '<C-w>l')
 
 --https://zenn.dev/vim_jp/articles/67ec77641af3f2
 -- map('n', 'zz', 'zz<Plug>(z1)', { remap = true })
@@ -3574,22 +3595,21 @@ vapi.nvim_create_autocmd("BufRead", {
     vapi.nvim_buf_set_var(ctx.buf, "autosave_enabled", true)
   end,
 })
+local autosave = function(ctx)
+  if
+    not vim.bo.modified
+    or vfn.findfile(ctx.file, ".") == "" -- a new file
+    or ctx.file:match("wezterm.lua")
+    or vim.tbl_contains(disabled_ft, vim.bo[ctx.buf].ft)
+    or not vapi.nvim_buf_get_var(ctx.buf, "autosave_enabled")
+  then
+    return
+  end
+  vim.cmd("silent lockmarks update")
+end
 vapi.nvim_create_autocmd({"BufLeave", "FocusLost"}, {
   pattern = "*",
-  callback = function(ctx)
-    if
-      not vim.bo.modified
-      or vfn.findfile(ctx.file, ".") == "" -- a new file
-      or ctx.file:match("wezterm.lua")
-      or vim.tbl_contains(disabled_ft, vim.bo[ctx.buf].ft)
-      or not vapi.nvim_buf_get_var(ctx.buf, "autosave_enabled")
-    then
-      return
-    end
-    if vim.bo.modified then
-      vim.cmd("silent lockmarks update")
-    end
-  end,
+  callback = autosave,
 })
 
 -- [[ toggle/switch settings with local leader ]]
