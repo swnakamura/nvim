@@ -52,6 +52,34 @@ vim.g.is_vscode = env.is_vscode
 vim.g.is_ssh = env.is_ssh
 vim.g.is_wide_for_neotree = env.is_wide_for_neotree
 
+local icons = {
+  misc = {
+    dots = "󰇘",
+  },
+  ft = {
+    octo = "",
+  },
+  dap = {
+    Stopped             = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
+    Breakpoint          = " ",
+    BreakpointCondition = " ",
+    BreakpointRejected  = { " ", "DiagnosticError" },
+    LogPoint            = ".>",
+  },
+  diagnostics = {
+    Error = " ",
+    Warn  = " ",
+    Hint  = " ",
+    Info  = " ",
+  },
+  git = {
+    added    = " ",
+    modified = " ",
+    removed  = " ",
+  },
+}
+
+_G.LazyVim = require("lazyvim.util")
 
 if env.is_wsl then
   vim.g.clipboard = {
@@ -287,6 +315,7 @@ require('lazy').setup({
             { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
             { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
             { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
+            { icon = " ", action = ':lua require("persistence").load()', desc = " Restore Session", key = "s" },
             {
               icon = " ",
               key = "p",
@@ -2286,12 +2315,16 @@ $0
       for _, group in ipairs({'', 'ADDED', 'Btn', 'CHANGED', 'DELETED', 'ERROR', 'HINT', 'Icon', 'Index', 'INFO', 'Mod', 'ModBtn', 'Number', 'Pin', 'PinBtn', 'Sign', 'SignRight', 'Target', 'WARN'}) do
         vapi.nvim_set_hl(0, 'BufferInactive' .. group, { bg = '#000000' })
       end
-      
+
       -- No color for floating windows
-      local nf = vapi.nvim_get_hl(0, { name = 'NormalFloat' })
-      vapi.nvim_set_hl(0, 'TreesitterContext', nf)
+      local hl = vapi.nvim_get_hl(0, { name = 'NormalFloat' })
+      vapi.nvim_set_hl(0, 'TreesitterContext', hl)
       vapi.nvim_set_hl(0, 'NormalFloat', { link = 'Normal' })
       vim.cmd([[hi! FloatBorder guibg=NONE]])
+
+      -- Bold highlight group for filename
+      hl = vapi.nvim_get_hl(0, { name = 'Normal' })
+      vapi.nvim_set_hl(0, 'Bold', { bold = true, fg = hl.fg, bg = hl.bg })
 
     end
   },
@@ -2337,7 +2370,7 @@ $0
           component_separators = { left = '', right = '' },
           section_separators = { left = '', right = '' },
           disabled_filetypes = {
-            statusline = {},
+            statusline = {'snacks_dashboard'},
             winbar = {},
           },
           ignore_focus = {},
@@ -2360,12 +2393,43 @@ $0
               color = { fg = "#ff9e64" },
             },
           },
-          lualine_b = { 'encoding', 'fileformat', 'filetype', 'progress', 'location', 'filename' },
-          lualine_c = { 'branch', 'diff', 'diagnostics',
+          lualine_b = {
+            'branch',
+            { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+            { require'lazyvim.util.lualine'.pretty_path() },
+            'progress', 'location',
+          },
+          lualine_c = {
+            {
+              'diff',
+              symbols = {
+                added = icons.git.added,
+                modified = icons.git.modified,
+                removed = icons.git.removed,
+              },
+              source = function()
+                local gitsigns = vim.b.gitsigns_status_dict
+                if gitsigns then
+                  return {
+                    added = gitsigns.added,
+                    modified = gitsigns.changed,
+                    removed = gitsigns.removed,
+                  }
+                end
+              end,
+            },
+            'diagnostics',
             {
               require("noice").api.status.message['get'],
               cond = require("noice").api.status.message['has'],
+              color = function() return { fg = Snacks.util.color("Statement") } end,
             },
+            {
+              require("lazy.status").updates,
+              cond = require("lazy.status").has_updates,
+              color = function() return { fg = Snacks.util.color("Special") } end,
+            },
+            'encoding', 'fileformat',
           },
           lualine_x = {},
           lualine_y = {},
@@ -2373,7 +2437,7 @@ $0
         },
         inactive_sections = {
           lualine_a = {},
-          lualine_b = { 'encoding', 'fileformat', 'filetype', 'progress', 'location', 'filename' },
+          lualine_b = { 'encoding', 'fileformat', 'progress', 'location', 'filename' },
           lualine_c = {},
           lualine_x = {},
           lualine_y = {},
@@ -2597,13 +2661,9 @@ $0
 
   -- automatic session save and restore
   {
-    'rmagatti/auto-session',
-    config = function()
-      require("auto-session").setup {
-        log_level = "error",
-        -- auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
-      }
-    end
+    "folke/persistence.nvim",
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    opts = {}
   },
 
   {
