@@ -590,7 +590,7 @@ require('lazy').setup({
   {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
-    event = 'VeryLazy',
+    event = 'LazyFile',
     opts = {
       signs_staged_enable = false,
       signcolumn = false,
@@ -1969,7 +1969,7 @@ $0
   {
     cond = not env.is_vscode,
     'romgrk/barbar.nvim',
-    event = 'VeryLazy',
+    event = 'LazyFile',
     dependencies = {
       'lewis6991/gitsigns.nvim',     -- OPTIONAL: for git status
       'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
@@ -2119,10 +2119,10 @@ $0
 
   -- easy align
   {
+    keys = {
+      { 'ga', '<Plug>(EasyAlign)', mode = { 'x' }, desc = 'Easy Align' },
+    },
     'junegunn/vim-easy-align',
-    init = function()
-      vim.keymap.set('x', 'ga', '<Plug>(EasyAlign)')
-    end,
   },
 
   -- Fix Neovim's broken visual star search
@@ -2358,7 +2358,7 @@ $0
   {
     cond = not env.is_vscode,
     'nvim-lualine/lualine.nvim',
-    event = 'VeryLazy',
+    event = 'LazyFile',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       require('lualine').setup {
@@ -2723,6 +2723,7 @@ $0
   -- Japanese
   {
     'swnakamura/jpmoveword.vim',
+    event = 'LazyFile',
     init = function()
       vim.g.jpmoveword_separator = '，．、。・「」『』（）【】'
       vim.g.matchpairs_textobject = 1
@@ -2754,6 +2755,7 @@ $0
   },
   {
     cond = vfn.isdirectory(vfn.expand('~/ghq/github.com/swnakamura/novel_formatter')) == 1,
+    event = 'LazyFile',
     dir = '~/ghq/github.com/swnakamura/novel_formatter'
   },
   {
@@ -2842,7 +2844,11 @@ $0
   },
 
   -- color picker
-  { 'uga-rosa/ccc.nvim', event = 'VeryLazy', config = true },
+  {
+    'uga-rosa/ccc.nvim',
+    cmd = {'CccPick', 'CccConvert', 'CccHighlighterEnable', 'CccHighlighterToggle', 'CccHighlighterDisable' },
+    config = true
+  },
 
   -- expl3
   { 'wtsnjp/vim-expl3',  ft = 'expl3' },
