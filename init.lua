@@ -651,7 +651,9 @@ require('lazy').setup({
   },
 
   -- dmacro for recording automatically
+  -- disabled as it conflicts with blink.cmp (<CR> malfunctions with this plugin)
   {
+    cond = false,
     event = 'LazyFile',
     'https://github.com/tani/dmacro.vim',
     config = function()
@@ -1255,6 +1257,7 @@ require('lazy').setup({
 
     dependencies = {
       { "epwalsh/obsidian.nvim" },
+      { 'L3MON4D3/LuaSnip' }
     },
 
     -- use a release tag to download pre-built binaries
