@@ -79,7 +79,7 @@ local icons = {
   },
 }
 
-_G.LazyVim = require("lazyvim.util")
+_G.LazyVim = require("LazyVim.lua.lazyvim.util")
 
 if env.is_wsl then
   vim.g.clipboard = {
@@ -2396,7 +2396,7 @@ $0
           lualine_b = {
             'branch',
             { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-            { require'lazyvim.util.lualine'.pretty_path() },
+            { require'LazyVim.lua.lazyvim.util.lualine'.pretty_path() },
             'progress', 'location',
           },
           lualine_c = {
