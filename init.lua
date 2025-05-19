@@ -52,33 +52,6 @@ vim.g.is_vscode = env.is_vscode
 vim.g.is_ssh = env.is_ssh
 vim.g.is_wide_for_neotree = env.is_wide_for_neotree
 
-local icons = {
-  misc = {
-    dots = "󰇘",
-  },
-  ft = {
-    octo = "",
-  },
-  dap = {
-    Stopped             = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
-    Breakpoint          = " ",
-    BreakpointCondition = " ",
-    BreakpointRejected  = { " ", "DiagnosticError" },
-    LogPoint            = ".>",
-  },
-  diagnostics = {
-    Error = " ",
-    Warn  = " ",
-    Hint  = " ",
-    Info  = " ",
-  },
-  git = {
-    added    = " ",
-    modified = " ",
-    removed  = " ",
-  },
-}
-
 _G.LazyVim = require("LazyVim.lua.lazyvim.util")
 
 if env.is_wsl then
@@ -2406,9 +2379,9 @@ $0
             {
               'diff',
               symbols = {
-                added = icons.git.added,
-                modified = icons.git.modified,
-                removed = icons.git.removed,
+                added = require('LazyVim.lua.lazyvim.config.init').icons.git.added,
+                modified = require('LazyVim.lua.lazyvim.config.init').icons.git.modified,
+                removed = require('LazyVim.lua.lazyvim.config.init').icons.git.removed,
               },
               source = function()
                 local gitsigns = vim.b.gitsigns_status_dict
