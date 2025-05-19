@@ -241,7 +241,21 @@ require('lazy').setup({
       { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
       { "<leader>sB", function() Snacks.picker.grep_buffers({ layout='telescope' }) end, desc = "Grep Open Buffers" },
       { "<leader>sw", function() Snacks.picker.grep_word({ layout='telescope' }) end, desc = "Visual selection or word", mode = { "n", "x" } },
-      { "<leader>sg", function() Snacks.picker.grep({ layout='telescope' }) end, desc = "Grep" },
+      { "<leader>sg", function() Snacks.picker.grep({ layout='telescope',
+        args = {
+          "--color=never",
+          "--no-heading",
+          "--with-filename",
+          "--line-number",
+          "--column",
+          "--smart-case",
+          "--max-columns=500",
+          "--max-columns-preview",
+          "-g",
+          "!.git",
+          "-u", -- added
+        }
+      }) end, desc = "Grep" },
       { "<leader>sG",
         function()
           local cwd = vfn.expand "%:p:h"
@@ -251,7 +265,20 @@ require('lazy').setup({
           end
           Snacks.picker.grep({
             layout='telescope',
-            dirs = { cwd }
+            dirs = { cwd },
+            args = {
+              "--color=never",
+              "--no-heading",
+              "--with-filename",
+              "--line-number",
+              "--column",
+              "--smart-case",
+              "--max-columns=500",
+              "--max-columns-preview",
+              "-g",
+              "!.git",
+              "-u", -- added
+            }
           })
         end,
         desc = "Grep"
