@@ -690,21 +690,6 @@ require('lazy').setup({
     end
   },
 
-  -- clever f/F/t/T
-  {
-    cond = false,
-    'rhysd/clever-f.vim',
-    event = 'VeryLazy',
-    init = function()
-      map({ 'n', 'v' }, ';', ':')
-      vim.g.clever_f_smart_case = 1
-      vim.g.clever_f_use_migemo = 1
-      vim.g.clever_f_across_no_line = 1
-      vim.g.clever_f_chars_match_any_signs = ';'
-    end
-  },
-
-
   -- clever s
   {
     -- This one has japanese search functionality
@@ -2054,32 +2039,6 @@ $0
     end,
   },
 
-  -- Add indentation guides (vertical bar) and highlight current context
-  {
-    cond=false,
-    "shellRaining/hlchunk.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    config = function()
-      require("hlchunk").setup({
-        chunk = {
-          enable = true,
-          style = {
-            { fg = "#7469c4" },
-          },
-          delay = 2, -- animation
-          duration = 100,
-          exclude_filetypes = {
-            floaterm = true,
-          }
-
-        },
-        indent = { enable = true, style = { "#35314d" } },
-      })
-      -- remove leadmultispace from listchars
-      vim.cmd([[set listchars-=leadmultispace:---\|]])
-    end
-  },
-
   -- markdown
   {
     'MeanderingProgrammer/render-markdown.nvim',
@@ -2150,44 +2109,6 @@ $0
   },
 
   -- close parenthesis automatically
-  {
-    cond=false,
-    'kana/vim-smartinput',
-    event = 'InsertEnter',
-    config = function()
-      vim.cmd([[
-      call smartinput#map_to_trigger('i', '<Bar>', '<Bar>', '<Bar>')
-      " argument of lambda function
-      call smartinput#define_rule({
-      \   'at': '(\s*\%#',
-      \   'char': '<Bar>',
-      \   'input': '<Bar><Bar><Left>',
-      \   'filetype': ['rust'],
-      \ })
-      call smartinput#define_rule({
-      \   'at': '\%#\_s*|',
-      \   'char': '<Bar>',
-      \   'input': '<C-r>=smartinput#_leave_block(''|'')<Enter><Right>',
-      \   'filetype': ['rust'],
-      \ })
-      " lifetime specifier
-      call smartinput#define_rule({
-      \   'at': '<\%#',
-      \   'char': "'",
-      \   'input': "'",
-      \   'filetype': ['rust'],
-      \ })
-      call smartinput#define_rule({
-      \   'at': '''\%#',
-      \   'char': "'",
-      \   'input': "'",
-      \   'filetype': ['tex'],
-      \ })
-      ]])
-      -- TODO rewrite above with lua
-      -- TODO tex rule is not sufficient
-    end
-  },
   {
     event = 'InsertEnter',
     'echasnovski/mini.pairs',
@@ -2676,23 +2597,6 @@ $0
     opts = {}
   },
 
-  {
-    cond = false,
-    'swnakamura/gitsession.vim',
-    config = function()
-      vim.cmd([[
-      " Change the temporary file location.
-      let g:gitsession_tmp_dir = $HOME . "/.tmp/gitsession"
-
-      " mappings
-      nmap gss <Cmd>SaveSession<CR>
-      nmap gsl <Cmd>LoadSession<CR>
-      nmap gsr <Cmd>StartRepeatedSave<CR>
-      nmap gsc <Cmd>CleanUpSession<CR>
-      ]])
-    end
-  },
-
   -- spell check and load wrong spells to quickfix list
   {
     'inkarkat/vim-SpellCheck',
@@ -2863,14 +2767,6 @@ $0
   -- expl3
   { 'wtsnjp/vim-expl3',  ft = 'expl3' },
 
-  -- window separation color
-  {
-    cond = false,
-    "nvim-zh/colorful-winsep.nvim",
-    config = true,
-    event = { "WinNew" },
-  },
-
   -- better quickfix window
   { 'kevinhwang91/nvim-bqf', ft = 'qf' },
 
@@ -2951,18 +2847,6 @@ $0
       require('marks').setup({})
       vapi.nvim_set_hl(0, 'MarkSignHL', { link = "CursorLineNr" })
       vapi.nvim_set_hl(0, 'MarkSignNumHL', { link = "LineNr" })
-    end
-  },
-
-  -- firenvim
-  {
-    cond = false,
-    'glacambre/firenvim',
-    -- Lazy load firenvim
-    -- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
-    lazy = not vim.g.started_by_firenvim,
-    build = function()
-      vfn["firenvim#install"](0)
     end
   },
 
