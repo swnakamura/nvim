@@ -2637,9 +2637,9 @@ $0
   -- Japanese
   {
     'swnakamura/jpmoveword.vim',
-    event = 'LazyFile',
     init = function()
       vim.g.jpmoveword_separator = '，．、。・「」『』（）【】'
+      vim.g.jpmoveword_enable_WBE = 2
       vim.g.matchpairs_textobject = 1
       vim.g.jpmoveword_stop_eol = 2
     end
