@@ -1377,7 +1377,7 @@ require('lazy').setup({
   {
     cond = not env.is_vscode and not env.is_macos,
     "ray-x/lsp_signature.nvim",
-    event = "VeryLazy",
+    event = "LazyFile",
     opts = {},
     config = function(_, opts)
       vapi.nvim_create_autocmd("LspAttach", {
