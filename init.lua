@@ -592,9 +592,17 @@ require('lazy').setup({
     'lewis6991/gitsigns.nvim',
     event = 'LazyFile',
     opts = {
-      signs_staged_enable = false,
-      signcolumn = false,
+      signs_staged_enable = true,
+      signcolumn = true,
       numhl      = true,
+      signs = {
+        add          = { text = '▏' },
+        change       = { text = '▏' },
+      },
+      signs_staged = {
+        add          = { text = '▏' },
+        change       = { text = '▏' },
+      },
       on_attach  = function(bufnr)
         local gs = package.loaded.gitsigns
 
@@ -2891,7 +2899,7 @@ $0
       vim.o.foldlevel = 99
       vim.o.foldlevelstart = 99
       vim.opt.foldcolumn = "1"
-      vim.o.statuscolumn = '%#FoldColumn#%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "▼" : "▶") : " " }%*%=%-l '
+      vim.o.statuscolumn = '%#FoldColumn#%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "▼" : "▶") : " " }%*%=%-l %s'
 
       UFOVirtTextHandler = function(virtText, lnum, endLnum, width, truncate)
         local newVirtText = {}
