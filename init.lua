@@ -2451,7 +2451,6 @@ $0
         inactive_winbar = {},
         extensions = {}
       }
-      vim.go.laststatus = 3
     end
   },
 
@@ -2803,7 +2802,7 @@ $0
         end
       end,
       on_close = function()
-        vim.o.laststatus = 3
+        vim.o.laststatus = 2
 
         if vim.tbl_contains({ 'text', 'markdown' }, vim.o.filetype) then
           vim.o.number = true
@@ -3037,7 +3036,7 @@ vim.o.listchars = 'leadmultispace:---|,tab:» ,trail:~,extends:»,precedes:«,nb
 
 vim.o.scrolloff = 15
 
-vim.go.laststatus = 3
+vim.go.laststatus = 2
 
 vim.o.showtabline = 2
 
