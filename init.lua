@@ -52,7 +52,7 @@ vim.g.is_vscode = env.is_vscode
 vim.g.is_ssh = env.is_ssh
 vim.g.is_wide_for_neotree = env.is_wide_for_neotree
 
-_G.LazyVim = require("LazyVim.lua.lazyvim.util")
+_G.LazyVim = require("lazyvim.util")
 
 if env.is_wsl then
   vim.g.clipboard = {
@@ -2399,16 +2399,16 @@ $0
           lualine_b = {
             'branch',
             { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-            { require'LazyVim.lua.lazyvim.util.lualine'.pretty_path() },
+            { require'lazyvim.util.lualine'.pretty_path() },
             'progress', 'location',
           },
           lualine_c = {
             {
               'diff',
               symbols = {
-                added = require('LazyVim.lua.lazyvim.config.init').icons.git.added,
-                modified = require('LazyVim.lua.lazyvim.config.init').icons.git.modified,
-                removed = require('LazyVim.lua.lazyvim.config.init').icons.git.removed,
+                added = require('lazyvim.config.init').icons.git.added,
+                modified = require('lazyvim.config.init').icons.git.modified,
+                removed = require('lazyvim.config.init').icons.git.removed,
               },
               source = function()
                 local gitsigns = vim.b.gitsigns_status_dict
