@@ -1294,6 +1294,7 @@ require('lazy').setup({
           auto_show_delay_ms = 100,
           window = {
             winblend = 30,
+            border = 'rounded'
           }
         },
         list = {
@@ -2248,11 +2249,12 @@ $0
         vapi.nvim_set_hl(0, 'BufferInactive' .. group, { bg = '#000000' })
       end
 
-      -- No color for floating windows
+      -- Use Pmenu color for floating windows
+      -- but not for TreesitterContext
       local hl = vapi.nvim_get_hl(0, { name = 'NormalFloat' })
       vapi.nvim_set_hl(0, 'TreesitterContext', hl)
       vapi.nvim_set_hl(0, 'NormalFloat', { link = 'Normal' })
-      vim.cmd([[hi! FloatBorder guibg=NONE]])
+      vapi.nvim_set_hl(0, 'FloatBorder', { fg = '#6c7189', bg = '#161822' })
 
       -- Bold highlight group for filename
       hl = vapi.nvim_get_hl(0, { name = 'Normal' })
