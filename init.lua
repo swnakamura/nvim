@@ -2309,7 +2309,7 @@ $0
           },
           ignore_focus = {},
           always_divide_middle = true,
-          globalstatus = false,
+          globalstatus = true,
           refresh = {
             statusline = 1,
             tabline = 1,
@@ -2716,7 +2716,7 @@ $0
         end
       end,
       on_close = function()
-        vim.o.laststatus = 2
+        vim.o.laststatus = 3
 
         if vim.tbl_contains({ 'text', 'markdown' }, vim.o.filetype) then
           vim.o.number = true
@@ -2930,7 +2930,7 @@ vim.o.listchars = 'leadmultispace:---|,tab:» ,trail:~,extends:»,precedes:«,nb
 
 vim.o.scrolloff = 15
 
-vim.go.laststatus = 2
+vim.go.laststatus = 3
 
 vim.o.showtabline = 2
 
