@@ -310,18 +310,26 @@ require('lazy').setup({
         dim = { enabled = true },
         dashboard = {
           enabled = true,
+          preset = {
+            keys = {
+              { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+              { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
+              { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+              { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+              { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+              { icon = " ", key = "s", desc = "Restore Session", section = "session" },
+              { icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
+              { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+              { icon = " ", key = "R", desc = "Remote Neovim", action = ":RemoteStart" },
+              { icon = " ", key = "p", desc = "search for a project", action = ":lua Snacks.picker.projects()" },
+              { icon = " ", key = "G", desc = "Git status", action = require('neogit').open },
+            }
+          },
           sections = {
             { section = "header" },
-            { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
-            { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-            { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
-            { icon = " ", action = ':lua require("persistence").load()', desc = " Restore Session", key = "s" },
-            {
-              icon = " ",
-              key = "p",
-              desc = "... or, search for a project",
-              action = ":lua Snacks.picker.projects()",
-            },
+            { icon = " ",          title = "Keymaps",         section = "keys",                              indent = 2,  padding = 1 },
+            { icon = " ",          title = "Recent Files",    section = "recent_files",                      indent = 2,  padding = 1 },
+            { icon = " ",          title = "Projects",        section = "projects",                          indent = 2,  padding = 1 },
             { section = "startup" },
           },
         },
@@ -440,7 +448,7 @@ require('lazy').setup({
 
   -- remote-nvim
   {
-    cmd = { "RemoteNvim" },
+    cmd = { "RemoteStart" },
     "hmk114/remote-nvim.nvim",
     version = "*", -- Pin to GitHub releases
     dependencies = {
