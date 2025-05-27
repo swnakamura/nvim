@@ -714,6 +714,7 @@ require('lazy').setup({
     'https://github.com/ggandor/leap.nvim',
     keys = {
       { '<C-s>', '<Plug>(leap)',             mode = { 'n', 'x', 'o' }, desc = "Leap" },
+      { 't',     '<Plug>(leap)',             mode = { 'n', 'x', 'o' }, desc = "Leap" },
       { 'S',     '<Plug>(leap-from-window)', mode = { 'n', 'x', 'o' }, desc = "Leap from window" },
     },
   },
