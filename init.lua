@@ -2205,7 +2205,7 @@ $0
       vim.cmd([[
         " Less bright search color
         hi clear Search
-        hi Search                guibg=NONE gui=bold,underline guisp=#e27878
+        hi Search                guibg=NvimDarkYellow
         hi clear CurSearch
         hi CurSearch             guibg=NvimDarkYellow
 
