@@ -179,7 +179,7 @@ require('lazy').setup({
   -- noice
   {
     "folke/noice.nvim",
-    event = "VeryLazy",
+    event = "LazyFile",
     opts = {
       -- add any options here
       notify = {
@@ -2618,7 +2618,8 @@ $0
   {
     'lervag/vimtex',
     -- lazy loading not allowed
-    -- ft = 'tex',
+    ft = 'tex',
+    cmd = 'VimtexInverseSearch',
     init = function()
       vim.g.tex_flavor = 'latex'
       vim.g.tex_conceal = 'abdmg'
