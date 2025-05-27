@@ -3312,11 +3312,11 @@ augroup vimrc-incsearch-highlight
 au!
 " 検索に入ったときにhlsearchをオン
 au CmdlineEnter /,\? set hlsearch
-nnoremap n n<Cmd>set hlsearch<CR><Cmd>autocmd CursorMoved * ++once set nohlsearch<CR>
-nnoremap N N<Cmd>set hlsearch<CR><Cmd>autocmd CursorMoved * ++once set nohlsearch<CR>
+nnoremap n n<Cmd>set hlsearch<CR><Cmd>autocmd CursorMoved,BufEnter * ++once set nohlsearch<CR>
+nnoremap N N<Cmd>set hlsearch<CR><Cmd>autocmd CursorMoved,BufEnter * ++once set nohlsearch<CR>
 " CmdlineLeave時に即座に消す代わりに、少し待って、更にカーソルが動いたときに消す
 " カーソルが動いたときにすぐ消すようにすると、検索された単語に移動した瞬間に消えてしまうので意味がない。その防止
-au CmdlineLeave /,\? autocmd CursorHold * ++once autocmd CursorMoved * ++once set nohlsearch
+au CmdlineLeave /,\? autocmd CursorHold * ++once autocmd CursorMoved,BufEnter * ++once set nohlsearch
 " au CmdlineLeave /,\? set nohlsearch
 augroup END
 ]])
