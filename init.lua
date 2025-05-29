@@ -2714,6 +2714,8 @@ $0
       on_open = function()
         vim.o.laststatus = 0
 
+        map('n', '<C-l>', '<cmd>redraw<CR>', { desc = 'Redraw', buffer = 0 })
+
         if vim.tbl_contains({ 'text', 'markdown' }, vim.o.filetype) then
           vim.o.number = false
           vim.o.relativenumber = false
