@@ -328,9 +328,9 @@ require('lazy').setup({
           },
           sections = {
             { section = "header" },
-            { icon = " ",          title = "Keymaps",         section = "keys",                              indent = 2,  padding = 1 },
             { icon = " ",          title = "Recent Files",    section = "recent_files",                      indent = 2,  padding = 1 },
             { icon = " ",          title = "Projects",        section = "projects",                          indent = 2,  padding = 1 },
+            { icon = " ",          title = "Keymaps",         section = "keys",                              indent = 2,  padding = 1 },
             { section = "startup" },
           },
         },
@@ -1879,14 +1879,6 @@ $0
           }
         }
       })
-
-      -- Open neotree delayed
-      -- somehow don't work with auto-session
-      -- vim.schedule(function()
-      --   if env.is_wide_for_neotree then
-      --     vim.cmd([[Neotree show]])
-      --   end
-      -- end)
     end
   },
 
@@ -2190,6 +2182,7 @@ $0
   {
     'folke/which-key.nvim',
     opts = {
+      preset = "helix",
       sort = { 'alphanum' }
     },
     event = 'BufEnter'
@@ -2884,8 +2877,7 @@ vim.go.conceallevel = 1
 -- Set highlight on search
 vim.o.hlsearch = false
 
--- no wrapscan
-vim.o.wrapscan = false
+vim.o.wrapscan = true
 
 -- Make relative line numbers default
 vim.wo.number = true
@@ -3316,12 +3308,12 @@ augroup vimrc-incsearch-highlight
 au!
 " 検索に入ったときにhlsearchをオン
 au CmdlineEnter /,\? set hlsearch
-nnoremap n n<Cmd>set hlsearch<CR><Cmd>autocmd CursorMoved,BufEnter * ++once set nohlsearch<CR>
-nnoremap N N<Cmd>set hlsearch<CR><Cmd>autocmd CursorMoved,BufEnter * ++once set nohlsearch<CR>
+nnoremap n n<Cmd>set hlsearch<CR><Cmd>autocmd CursorMoved,BufLeave,WinLeave * ++once set nohlsearch<CR>
+nnoremap N N<Cmd>set hlsearch<CR><Cmd>autocmd CursorMoved,BufLeave,WinLeave * ++once set nohlsearch<CR>
 " CmdlineLeave時に即座に消す代わりに、少し待って、更にカーソルが動いたときに消す
 " カーソルが動いたときにすぐ消すようにすると、検索された単語に移動した瞬間に消えてしまうので意味がない。その防止
-au CmdlineLeave /,\? autocmd CursorHold * ++once autocmd CursorMoved,BufEnter * ++once set nohlsearch
-" au CmdlineLeave /,\? set nohlsearch
+au CmdlineLeave /,\? set hlsearch
+au CmdlineLeave /,\? autocmd CursorHold * ++once autocmd CursorMoved,BufLeave,WinLeave * ++once set nohlsearch
 augroup END
 ]])
 
@@ -3526,7 +3518,7 @@ vapi.nvim_create_autocmd(
     pattern='python',
     callback=function()
       function FormatPython()
-        vim.cmd('update')
+        pcall(vim.cmd, 'update')
         RestoreWinAfter(':silent %!ruff format --line-length=140 -')
         RestoreWinAfter(':silent %!ruff check --fix-only -q --extend-select I -')
         vim.cmd('update')
