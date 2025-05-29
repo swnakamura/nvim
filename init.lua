@@ -314,16 +314,16 @@ require('lazy').setup({
             keys = {
               { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
               { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-              { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+              { icon = "󰦨 ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
               { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
               { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
               { icon = " ", key = "s", desc = "Restore Session", section = "session" },
               { icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
-              { icon = "󰒲 ", key = "y", desc = "yazi", action = ":Yazi cwd", enabled = package.loaded.lazy ~= nil },
+              { icon = "󰪶 ", key = "y", desc = "yazi", action = ":Yazi cwd", enabled = package.loaded.lazy ~= nil },
               { icon = " ", key = "q", desc = "Quit", action = ":qa" },
-              { icon = " ", key = "R", desc = "Remote Neovim", action = ":RemoteStart" },
+              { icon = " ", key = "R", desc = "Remote Neovim", action = ":RemoteStart" },
               { icon = " ", key = "p", desc = "search for a project", action = ":lua Snacks.picker.projects()" },
-              { icon = " ", key = "G", desc = "Git status", action = ":lua require('neogit').open()" },
+              { icon = " ", key = "G", desc = "Git status", action = ":lua require('neogit').open()" },
             }
           },
           sections = {
