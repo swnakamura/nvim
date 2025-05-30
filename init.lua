@@ -833,6 +833,8 @@ require('lazy').setup({
       })
       require("CopilotChat").setup(
         {
+          question_header = "  User",
+          answer_header = "  Copilot ",
           -- Since I use rendermarkdown, default fancy features are disabled
           highlight_headers = false,
           separator = '---',
