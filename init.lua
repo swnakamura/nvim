@@ -1454,176 +1454,176 @@ require('lazy').setup({
         ls.parser.parse_snippet("ifmain", [[if __name__ == "__main__":]]),
         ls.parser.parse_snippet({ trig = "plot_instantly", name = "plot_instantly" },
           [[
-import matplotlib.pyplot as plt
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax.$1
-plt.show()
-$0
-]]
+            import matplotlib.pyplot as plt
+            fig = plt.figure()
+            ax = fig.add_subplot(111)
+            ax.$1
+            plt.show()
+            $0
+          ]]
         ),
         ls.parser.parse_snippet({ trig = "set_axes_equal", name = "set x y z axes equal for same aspect ratio." },
           [[
-def set_axes_equal(ax):
-    """
-    Make axes of 3D plot have equal scale so that spheres appear as spheres,
-    cubes as cubes, etc.
+            def set_axes_equal(ax):
+                """
+                Make axes of 3D plot have equal scale so that spheres appear as spheres,
+                cubes as cubes, etc.
 
-    Input
-      ax: a matplotlib axis, e.g., as output from plt.gca().
-    """
+                Input
+                  ax: a matplotlib axis, e.g., as output from plt.gca().
+                """
 
-    x_limits = ax.get_xlim3d()
-    y_limits = ax.get_ylim3d()
-    z_limits = ax.get_zlim3d()
+                x_limits = ax.get_xlim3d()
+                y_limits = ax.get_ylim3d()
+                z_limits = ax.get_zlim3d()
 
-    x_range = abs(x_limits[1] - x_limits[0])
-    x_middle = np.mean(x_limits)
-    y_range = abs(y_limits[1] - y_limits[0])
-    y_middle = np.mean(y_limits)
-    z_range = abs(z_limits[1] - z_limits[0])
-    z_middle = np.mean(z_limits)
+                x_range = abs(x_limits[1] - x_limits[0])
+                x_middle = np.mean(x_limits)
+                y_range = abs(y_limits[1] - y_limits[0])
+                y_middle = np.mean(y_limits)
+                z_range = abs(z_limits[1] - z_limits[0])
+                z_middle = np.mean(z_limits)
 
-    # The plot bounding box is a sphere in the sense of the infinity
-    # norm, hence I call half the max range the plot radius.
-    plot_radius = 0.5*max([x_range, y_range, z_range])
+                # The plot bounding box is a sphere in the sense of the infinity
+                # norm, hence I call half the max range the plot radius.
+                plot_radius = 0.5*max([x_range, y_range, z_range])
 
-    ax.set_xlim3d([x_middle - plot_radius, x_middle + plot_radius])
-    ax.set_ylim3d([y_middle - plot_radius, y_middle + plot_radius])
-    ax.set_zlim3d([z_middle - plot_radius, z_middle + plot_radius])
+                ax.set_xlim3d([x_middle - plot_radius, x_middle + plot_radius])
+                ax.set_ylim3d([y_middle - plot_radius, y_middle + plot_radius])
+                ax.set_zlim3d([z_middle - plot_radius, z_middle + plot_radius])
 
-]]
+          ]]
         ),
         ls.parser.parse_snippet({ trig = "argument_parser", name = "argument_parser" },
           [[
-import argparse
-p = argparse.ArgumentParser()
-p.add_argument('${1:foo}')
-args = p.parse_args()
-]]
+            import argparse
+            p = argparse.ArgumentParser()
+            p.add_argument('${1:foo}')
+            args = p.parse_args()
+          ]]
         ),
         ls.parser.parse_snippet({ trig = "tyro_argument_parser", name = "tyro_argument_parser" },
           [[
-import dataclasses
+            import dataclasses
 
-import tyro
+            import tyro
 
 
-@dataclasses.dataclass
-class Args:
-    """$1.
-    $2"""
+            @dataclasses.dataclass
+            class Args:
+                """$1.
+                $2"""
 
-    field1: tyro.conf.Positional[str]
-    """A string field."""
+                field1: tyro.conf.Positional[str]
+                """A string field."""
 
-    field2: int = 3
-    """A numeric field, with a default value."""
+                field2: int = 3
+                """A numeric field, with a default value."""
 
-    $3
+                $3
 
-if __name__ == "__main__":
-    args = tyro.cli(Args)
-    print(args)
-    $0
-]]
+            if __name__ == "__main__":
+                args = tyro.cli(Args)
+                print(args)
+                $0
+          ]]
         ),
         ls.parser.parse_snippet({ trig = "read_movie_using_cv2", name = "read movie using cv2" },
           [[
-cap = cv2.VideoCapture(movie_path)
-FPS = round(cap.get(cv2.CAP_PROP_FPS), 2)
-NUM_FRAMES = int(round(cap.get(cv2.CAP_PROP_FRAME_COUNT), 2))
-WIDTH, HEIGHT = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-while True:
-    ret, frame = cap.read()
-    if ret is False:
-        break
-cap.release()
-]]
+            cap = cv2.VideoCapture(movie_path)
+            FPS = round(cap.get(cv2.CAP_PROP_FPS), 2)
+            NUM_FRAMES = int(round(cap.get(cv2.CAP_PROP_FRAME_COUNT), 2))
+            WIDTH, HEIGHT = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+            while True:
+                ret, frame = cap.read()
+                if ret is False:
+                    break
+            cap.release()
+          ]]
         ),
         ls.parser.parse_snippet({ trig = "write_movie_using_cv2", name = "write movie using cv2" },
           [[
-out = cv2.VideoWriter(
-    f"out.mp4",
-    cv2.VideoWriter_fourcc("m", "p", "4", "v"),
-    FPS,
-    (WIDTH, HEIGHT),
-    )
-out.write((image * 255).astype(np.uint8))
-out.release()
-]]
+            out = cv2.VideoWriter(
+                f"out.mp4",
+                cv2.VideoWriter_fourcc("m", "p", "4", "v"),
+                FPS,
+                (WIDTH, HEIGHT),
+                )
+            out.write((image * 255).astype(np.uint8))
+            out.release()
+          ]]
         ),
         ls.parser.parse_snippet({ trig = "read_write_movie_using_cv2", name = "read and write movie using cv2" },
           [[
-cap = cv2.VideoCapture(movie_path)
-FPS = round(cap.get(cv2.CAP_PROP_FPS), 2)
-NUM_FRAMES = int(round(cap.get(cv2.CAP_PROP_FRAME_COUNT), 2))
-WIDTH, HEIGHT = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-out = cv2.VideoWriter(
-    f"out.mp4",
-    cv2.VideoWriter_fourcc("m", "p", "4", "v"),
-    FPS,
-    (WIDTH, HEIGHT),
-    )
-while True:
-    ret, frame = cap.read()
-    if ret is False:
-        break
-    out.write(frame)
-cap.release()
-out.release()
-]]
+            cap = cv2.VideoCapture(movie_path)
+            FPS = round(cap.get(cv2.CAP_PROP_FPS), 2)
+            NUM_FRAMES = int(round(cap.get(cv2.CAP_PROP_FRAME_COUNT), 2))
+            WIDTH, HEIGHT = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+            out = cv2.VideoWriter(
+                f"out.mp4",
+                cv2.VideoWriter_fourcc("m", "p", "4", "v"),
+                FPS,
+                (WIDTH, HEIGHT),
+                )
+            while True:
+                ret, frame = cap.read()
+                if ret is False:
+                    break
+                out.write(frame)
+            cap.release()
+            out.release()
+          ]]
         ),
         ls.parser.parse_snippet({ trig = "loguru_debugonly", name = "loguru_debugonly" },
           [[
-if not args.debug:
-    logger.remove()
-    logger.add(sys.stderr, level="ERROR")
-]]
+            if not args.debug:
+                logger.remove()
+                logger.add(sys.stderr, level="ERROR")
+          ]]
         ),
         ls.parser.parse_snippet({ trig = "sort_gpu_by_usage", name = "sort available gpu by usage using pynvml and cuda functionality" },
           [[
-import pynvml
+            import pynvml
 
-pynvml.nvmlInit()
-device_count = pynvml.nvmlDeviceGetCount()
+            pynvml.nvmlInit()
+            device_count = pynvml.nvmlDeviceGetCount()
 
-available_gpus = []
+            available_gpus = []
 
-for i in range(device_count):
-    handle = pynvml.nvmlDeviceGetHandleByIndex(i)
-    meminfo = pynvml.nvmlDeviceGetMemoryInfo(handle)
-    free_mem = meminfo.free / (1024**2)  # MB
-    total_mem = meminfo.total / (1024**2)
-    usage = (meminfo.used / meminfo.total)
-    available_gpus.append((i, usage, free_mem))
+            for i in range(device_count):
+                handle = pynvml.nvmlDeviceGetHandleByIndex(i)
+                meminfo = pynvml.nvmlDeviceGetMemoryInfo(handle)
+                free_mem = meminfo.free / (1024**2)  # MB
+                total_mem = meminfo.total / (1024**2)
+                usage = (meminfo.used / meminfo.total)
+                available_gpus.append((i, usage, free_mem))
 
-# usageが少ない順にソート
-available_gpus.sort(key=lambda x: x[1])
+            # usageが少ない順にソート
+            available_gpus.sort(key=lambda x: x[1])
 
-best_gpu = available_gpus[0][0]
-print(f"Best GPU ID: {best_gpu}")
-os.environ["CUDA_VISIBLE_DEVICES"] = str(best_gpu)
-]]
+            best_gpu = available_gpus[0][0]
+            print(f"Best GPU ID: {best_gpu}")
+            os.environ["CUDA_VISIBLE_DEVICES"] = str(best_gpu)
+          ]]
         ),
         ls.parser.parse_snippet({ trig = "image_sequence", name = "A class that simulates video capture from a directory of images" },
           [[
-class ImageSequence:
-    def __init__(self, dirname):
-        self.dirname = dirname
-        self.files = sorted(Path(dirname).glob("*.(JPG|jpg|png|jpeg)"))
-        self.idx = 0
+            class ImageSequence:
+                def __init__(self, dirname):
+                    self.dirname = dirname
+                    self.files = sorted(Path(dirname).glob("*.(JPG|jpg|png|jpeg)"))
+                    self.idx = 0
 
-    def read(self):
-        if self.idx >= len(self.files):
-            return False, None
-        img = cv2.imread(str(self.files[self.idx]), cv2.IMREAD_COLOR)
-        self.idx += 1
-        return True, img
+                def read(self):
+                    if self.idx >= len(self.files):
+                        return False, None
+                    img = cv2.imread(str(self.files[self.idx]), cv2.IMREAD_COLOR)
+                    self.idx += 1
+                    return True, img
 
-    def release(self):
-        pass
-]]
+                def release(self):
+                    pass
+          ]]
         )
       })
 
@@ -1641,15 +1641,17 @@ class ImageSequence:
         ls.parser.parse_snippet("rb", "<ruby>$1<rp> (</rp><rt>$2</rt><rp>) </rp></ruby>$0"),
         ls.parser.parse_snippet("str", "<strong>$1</strong>$0"),
         ls.parser.parse_snippet({ trig = ",,", snippetType = "autosnippet" }, "$$1$$0"),
-        ls.parser.parse_snippet("details", [[
-<details>
-<summary>
-$1
-</summary>
-$2
-</details>
-$0
-]]),
+        ls.parser.parse_snippet("details",
+          [[
+            <details>
+            <summary>
+            $1
+            </summary>
+            $2
+            </details>
+            $0
+          ]]
+        ),
       })
       ls.add_snippets("tex", {
         ls.parser.parse_snippet("bf", "\\textbf{$1}"),
@@ -1661,114 +1663,114 @@ $0
         ls.parser.parse_snippet({ trig = ",,", snippetType = "autosnippet" }, "$$1$"),
         ls.parser.parse_snippet("jbase",
           [[
-\documentclass[12pt,a4paper,titlepage]{jlreq}
+            \documentclass[12pt,a4paper,titlepage]{jlreq}
 
-%%%% jlreq configurations
-% \jlreqsetup{caption_font=\normalfont}
+            %%%% jlreq configurations
+            % \jlreqsetup{caption_font=\normalfont}
 
-\usepackage{luatexja}
+            \usepackage{luatexja}
 
-%%%% some other packages
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{todonotes}
-\usepackage{siunitx}
-\usepackage{bm}
-\usepackage{tabularrary}
-\UseTblrLibrary{booktabs}
-\usepackage{capt-of}
+            %%%% some other packages
+            \usepackage{graphicx}
+            \usepackage{amsmath}
+            \usepackage{amssymb}
+            \usepackage{todonotes}
+            \usepackage{siunitx}
+            \usepackage{bm}
+            \usepackage{tabularrary}
+            \UseTblrLibrary{booktabs}
+            \usepackage{capt-of}
 
-%%%% if you use citations...
-% \usepackage[
-%     backend=biber,
-%     style=numeric,
-%     sortlocale=en_US,
-%     url=false,
-%     maxbibnames=99,
-%     doi=false,
-%     eprint=false
-% ]{biblatex}
-% \setlength{\biblabelsep}{0.5em} % ラベルと文献名の間隔を調整
-% \addbibresource{citations.bib}
+            %%%% if you use citations...
+            % \usepackage[
+            %     backend=biber,
+            %     style=numeric,
+            %     sortlocale=en_US,
+            %     url=false,
+            %     maxbibnames=99,
+            %     doi=false,
+            %     eprint=false
+            % ]{biblatex}
+            % \setlength{\biblabelsep}{0.5em} % ラベルと文献名の間隔を調整
+            % \addbibresource{citations.bib}
 
-%%%% luatexja choices with fonts
-%% default
-% \usepackage[haranoaji, jfm_yoko=jlreq,jfm_tate=jlreqv]{luatexja-preset}
-%% default with deluxe option (enables multi weight)
-\usepackage[haranoaji, deluxe, jfm_yoko=jlreq,jfm_tate=jlreqv]{luatexja-preset}
-%% source han
-% \usepackage[sourcehan, deluxe, jfm_yoko=jlreq,jfm_tate=jlreqv]{luatexja-preset}
-%% hiragino-pro
-% \usepackage[hiragino-pro, deluxe, jfm_yoko=jlreq,jfm_tate=jlreqv]{luatexja-preset}
+            %%%% luatexja choices with fonts
+            %% default
+            % \usepackage[haranoaji, jfm_yoko=jlreq,jfm_tate=jlreqv]{luatexja-preset}
+            %% default with deluxe option (enables multi weight)
+            \usepackage[haranoaji, deluxe, jfm_yoko=jlreq,jfm_tate=jlreqv]{luatexja-preset}
+            %% source han
+            % \usepackage[sourcehan, deluxe, jfm_yoko=jlreq,jfm_tate=jlreqv]{luatexja-preset}
+            %% hiragino-pro
+            % \usepackage[hiragino-pro, deluxe, jfm_yoko=jlreq,jfm_tate=jlreqv]{luatexja-preset}
 
-%%%% if you use ruby
-% \usepackage{luatexja-ruby}
+            %%%% if you use ruby
+            % \usepackage{luatexja-ruby}
 
-\title{report}
-\author{shu}
-%
-\begin{document}
-\maketitle
+            \title{report}
+            \author{shu}
+            %
+            \begin{document}
+            \maketitle
 
-\setcounter{tocdepth}{5}
-% \tableofcontents
+            \setcounter{tocdepth}{5}
+            % \tableofcontents
 
-日本語を勉強する
-\textbf{日本語を勉強する}
+            日本語を勉強する
+            \textbf{日本語を勉強する}
 
-% \printbibliography[title=参考文献]
-\end{document}
-]]
+            % \printbibliography[title=参考文献]
+            \end{document}
+          ]]
         ),
         ls.parser.parse_snippet("fig",
           [[
-\begin{figure}[b]
-    \centering
-    \includegraphics[width=\linewidth]{${1:path}}
-    \caption{${2:caption}}
-  \label{fig:${5:${1/[\W]+/_/g}}}
-\end{figure}$0
-    ]]
+            \begin{figure}[b]
+                \centering
+                \includegraphics[width=\linewidth]{${1:path}}
+                \caption{${2:caption}}
+              \label{fig:${5:${1/[\W]+/_/g}}}
+            \end{figure}$0
+          ]]
         ),
         ls.parser.parse_snippet("tblr",
           [[
-\begin{table}[t]
-    \centering
-    \SetTblrInner{rowsep=2pt,colsep=6pt,stretch=1,abovesep=2pt}
-    \begin{tblr}{@{}llll@{}}
-        \toprule
-        \midrule
-        \bottomrule
-    \end{tblr}
-    \caption{${1:caption}}
-    \label{tab:$2}
-\end{table}$0
-]]),
+            \begin{table}[t]
+                \centering
+                \SetTblrInner{rowsep=2pt,colsep=6pt,stretch=1,abovesep=2pt}
+                \begin{tblr}{@{}llll@{}}
+                    \toprule
+                    \midrule
+                    \bottomrule
+                \end{tblr}
+                \caption{${1:caption}}
+                \label{tab:$2}
+            \end{table}$0
+          ]]),
         ls.parser.parse_snippet("preview",
           [[
-\documentclass{article}
-\usepackage[active,tightpage]{preview}
-% some packages
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{todonotes}
-\usepackage{siunitx}
-\usepackage{bm}
-\usepackage{booktabs}
-\usepackage{capt-of}
-\usepackage{geometry}
-\geometry{paperwidth=2cm} % とりあえず小さくしておけば問題ない
+            \documentclass{article}
+            \usepackage[active,tightpage]{preview}
+            % some packages
+            \usepackage{graphicx}
+            \usepackage{amsmath}
+            \usepackage{amssymb}
+            \usepackage{todonotes}
+            \usepackage{siunitx}
+            \usepackage{bm}
+            \usepackage{booktabs}
+            \usepackage{capt-of}
+            \usepackage{geometry}
+            \geometry{paperwidth=2cm} % とりあえず小さくしておけば問題ない
 
-\begin{document}
-\begin{preview}
-    \begin{align*}
-      ${0}
-    \end{align*}
-\end{preview}
-\end{document}
-    ]]
+            \begin{document}
+            \begin{preview}
+                \begin{align*}
+                  ${0}
+                \end{align*}
+            \end{preview}
+            \end{document}
+          ]]
         )
       })
     end
