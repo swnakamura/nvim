@@ -831,9 +831,10 @@ require('lazy').setup({
           vim.wo.winfixwidth = true
         end
       })
+      local user = vim.env.USER or "User"
       require("CopilotChat").setup(
         {
-          question_header = "  User",
+          question_header = "  " .. user .. " ",
           answer_header = "  Copilot ",
           -- Since I use rendermarkdown, default fancy features are disabled
           highlight_headers = false,
