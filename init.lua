@@ -1055,7 +1055,7 @@ require('lazy').setup({
 
               -- See `:help K` for why this keymap
               nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-              -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+              nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
               -- Lesser used LSP functionality
               nmap('gD', vim.lsp.buf.declaration, 'Goto Declaration')
@@ -1085,10 +1085,12 @@ require('lazy').setup({
 
               nmap('<leader>i', function(_)
                 vim.lsp.inlay_hint.enable()
+                vim.diagnostic.config({virtual_lines = true})
                 vapi.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "InsertEnter" }, {
                   once = true,
                   callback = function()
                     vim.lsp.inlay_hint.enable(false)
+                    vim.diagnostic.config({virtual_lines = false})
                   end
                 })
               end, 'Toggle inlay hint')
