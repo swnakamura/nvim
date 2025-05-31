@@ -2721,7 +2721,7 @@ require('lazy').setup({
       on_open = function()
         vim.o.laststatus = 0
 
-        map('n', '<C-l>', '<cmd>redraw<CR>', { desc = 'Redraw', buffer = 0 })
+        map('n', '<C-l>', '<cmd>redraw<CR>', { desc = 'Redraw' })
 
         if vim.tbl_contains({ 'text', 'markdown' }, vim.o.filetype) then
           vim.o.number = false
@@ -2734,6 +2734,8 @@ require('lazy').setup({
       end,
       on_close = function()
         vim.o.laststatus = 3
+
+        map('n', '<C-l>', '<C-w>l')
 
         if vim.tbl_contains({ 'text', 'markdown' }, vim.o.filetype) then
           vim.o.number = true
