@@ -171,7 +171,7 @@ local treesitter_filetypes = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'go', 'html'
 
 local event = require("lazy.core.handler.event")
 
-event.mappings.LazyFile = { id = "LazyFile", event = { "BufReadPost", "BufNewFile", "BufWritePre" } }
+event.mappings.LazyFile = { id = "LazyFile", event = { "BufReadPost", "BufNewFile", "BufWritePre", "BufAdd" } }
 event.mappings["User LazyFile"] = event.mappings.LazyFile
 
 require('lazy').setup({
