@@ -1,72 +1,94 @@
+---@class CommandCheck
+---@field cmd string
+---@field expected { on: string, off: string }
+
+---@class PlatformCommands
+---@field on string
+---@field off string
+---@field check CommandCheck
+
+---@class Commands
+---@field macos PlatformCommands
+---@field linux PlatformCommands
+
 local M = {}
 
+---@type Commands
+M.commands = {
+  macos = {
+    on = 'macism com.justsystems.inputmethod.atok33.Japanese',
+    off = 'macism com.apple.keylayout.ABC',
+    check = {
+      cmd = 'macism',
+      expected = {
+        on = 'com.justsystems.inputmethod.atok33.Japanese',
+        off = 'com.apple.keylayout.ABC',
+      },
+    }
+  },
+  linux = {
+    on = 'fcitx5-remote -o',
+    off = 'fcitx5-remote -c',
+    check = {
+      cmd = 'fcitx5-remote',
+      expected = {
+        on = '2',
+        off = '1',
+      },
+    }
+  },
+}
+
+if vim.g.is_macos then
+  M.osname = 'macos'
+else
+  M.osname = 'linux'
+end
+
 M.save_status = function()
-  if vim.g.is_macos then
-    local handle = io.popen('macism')
-    M.status = handle:read("*l")
+  local check_cfg = M.commands[M.osname].check
+  local handle = io.popen(check_cfg.cmd)
+  local retval = nil
+  if handle then
+    retval = handle:read("*l")
     handle:close()
-  else
-    M.status = os.execute('fcitx5-remote -s') -- fixme
   end
+  if retval == nil then
+    print("Failed to get IME status.")
+    return -1
+  end
+  if retval == check_cfg.expected.on then
+    M.status = 'on'
+  elseif retval == check_cfg.expected.off then
+    M.status = 'off'
+  else
+    M.status = 'unknown'
+    print("Unknown IME status: " .. retval)
+  end
+  os.execute(M.commands[M.osname][M.status])
   return 0
 end
 
 M.restore_status = function()
-  if vim.g.is_macos then
-    os.execute('macism' .. M.status)
-  else
-    os.execute('fcitx5-remote -r') -- fixme
-  end
-end
-
-M.enable = function()
-  if vim.g.is_macos then
-    os.execute('macism com.justsystems.inputmethod.atok33.Japanese')
-  else
-    os.execute('fcitx5-remote -o')
-  end
-end
-
-M.disable = function()
-  if vim.g.is_macos then
-    os.execute('macism com.apple.keylayout.ABC')
-  else
-    os.execute('fcitx5-remote -c')
-  end
+  os.execute(M.commands[M.osname][M.status])
 end
 
 
-M.toggle_IME = function()
-  vim.b.IME_autoenable = not vim.b.IME_autoenable
-  if vim.b.IME_autoenable then
-    print('日本語入力モードON')
-    if vim.fn.mode() == 'i' then
-      M.enable()
-    end
-    -- also set keymap for FuzzyMotion, which is useful for Japanese text
-    vim.api.nvim_buf_set_keymap(0, 'n', 'S',     '<cmd>FuzzyMotion<CR>', { noremap = true, silent = true })
-    vim.api.nvim_buf_set_keymap(0, 'n', '<C-s>', '<cmd>FuzzyMotion<CR>', { noremap = true, silent = true })
-  else
-    print('日本語入力モードOFF')
-    vim.api.nvim_buf_del_keymap(0, 'n', 'S')
-    if vim.fn.mode() == 'i' then
-      M.disable()
-    end
-  end
-end
+M.setup = function()
+  M.status = 'off'
+  vim.api.nvim_create_autocmd("InsertLeave", {
+    pattern = "*",
+    callback = function()
+      M.save_status()
+    end,
+  })
 
-vim.api.nvim_create_autocmd("InsertLeave", {
-  pattern = "*",
-  callback = function()
-    M.save_status()
-  end,
-})
-
-vim.api.nvim_create_autocmd("InsertEnter", {
-  pattern = "*",
-  callback = function()
-    if vim.b.IME_autoenable then
+  vim.api.nvim_create_autocmd("InsertEnter", {
+    pattern = "*",
+    callback = function()
       M.restore_status()
-    end
-  end,
-})
+    end,
+  })
+end
+
+return M
