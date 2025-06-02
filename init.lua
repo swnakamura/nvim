@@ -3563,7 +3563,8 @@ map({ 'n', 'v' }, '<leader>k', [[<Cmd>lua MoveUntilNonWS(-1)<CR>]])
 map({ 'n', 'v' }, '<leader>j', [[<Cmd>lua MoveUntilNonWS(1)<CR>]])
 
 -- [[ autocmd-IME ]]
-require('japanese_keep').setup()
+-- require('japanese.keep').setup()
+map({'n', 'i'}, '<F2>', require('japanese.mode').toggle_IME, { noremap = true, silent = true, expr = true })
 
 
 -- [[ autosave ]]

@@ -11,41 +11,9 @@
 ---@field macos PlatformCommands
 ---@field linux PlatformCommands
 
-local M = {}
+local M = require('japanese.common')
 
----@type Commands
-M.commands = {
-  macos = {
-    on = 'macism com.justsystems.inputmethod.atok33.Japanese',
-    off = 'macism com.apple.keylayout.ABC',
-    check = {
-      cmd = 'macism',
-      expected = {
-        on = 'com.justsystems.inputmethod.atok33.Japanese',
-        off = 'com.apple.keylayout.ABC',
-      },
-    }
-  },
-  linux = {
-    on = 'fcitx5-remote -o',
-    off = 'fcitx5-remote -c',
-    check = {
-      cmd = 'fcitx5-remote',
-      expected = {
-        on = '2',
-        off = '1',
-      },
-    }
-  },
-}
-
-if vim.g.is_macos then
-  M.osname = 'macos'
-else
-  M.osname = 'linux'
-end
-
-M.save_status = function()
+M.stash_status = function()
   local check_cfg = M.commands[M.osname].check
   local handle = io.popen(check_cfg.cmd)
   local retval = nil
@@ -65,7 +33,7 @@ M.save_status = function()
     M.status = 'unknown'
     print("Unknown IME status: " .. retval)
   end
-  os.execute(M.commands[M.osname][M.status])
+  os.execute(M.commands[M.osname].off)
   return 0
 end
 
@@ -79,7 +47,7 @@ M.setup = function()
   vim.api.nvim_create_autocmd("InsertLeave", {
     pattern = "*",
     callback = function()
-      M.save_status()
+      M.stash_status()
     end,
   })
 
