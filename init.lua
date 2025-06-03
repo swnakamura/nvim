@@ -1453,7 +1453,7 @@ require('lazy').setup({
         ls.parser.parse_snippet("bp", [[breakpoint()]]),
         ls.parser.parse_snippet("pretty_traceback", [[import colored_traceback.always  # noqa: F401]]),
         ls.parser.parse_snippet("todo", "# TODO: "),
-        ls.parser.parse_snippet("pltimport", "import matplotlib.pyplot as plt"),
+        ls.parser.parse_snippet("import_plt", "import matplotlib.pyplot as plt"),
         ls.parser.parse_snippet("ifmain", [[if __name__ == "__main__":]]),
         ls.parser.parse_snippet({ trig = "plot_instantly", name = "plot_instantly" },
           [[
@@ -1627,7 +1627,24 @@ require('lazy').setup({
                 def release(self):
                     pass
           ]]
-        )
+        ),
+        ls.parser.parse_snippet({ trig = "import_jaxtyping", name = "Use beartype and jaxtyping for runtime type checking" },
+          [[
+            from beartype import beartype as typechecker
+            from jaxtyping import Bool, Float, jaxtyped
+          ]]
+        ),
+        ls.parser.parse_snippet({ trig = "import_beartype", name = "Use beartype and jaxtyping for runtime type checking" },
+          [[
+            from beartype import beartype as typechecker
+            from jaxtyping import Bool, Float, jaxtyped
+          ]]
+        ),
+        ls.parser.parse_snippet({ trig = "jaxtyped_decoration", name = "Use beartype and jaxtyping for runtime type checking" },
+          [[
+            @jaxtyped(typechecker=typechecker)
+          ]]
+        ),
       })
 
       ls.add_snippets("html", {
