@@ -923,6 +923,7 @@ require('lazy').setup({
             table.insert(words, word)
           end
           local server2setting = {
+            bashls = {},
             denols = {},
             clangd = {},
             -- pyright = {},
