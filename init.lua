@@ -342,7 +342,7 @@ require('lazy').setup({
         quickfile = { enabled = true },
         picker = { enabled = true, },
         scope = { enabled = true },
-        scroll = { enabled = true },
+        scroll = { enabled = not vim.g.neovide },
         words = { enabled = true },
       }
       require('snacks').setup(opts)
