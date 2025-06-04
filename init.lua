@@ -751,6 +751,10 @@ require('lazy').setup({
           html = true,
           css = true,
           gitcommit = true,
+          bash = true,
+          sh = true,
+          zsh = true,
+          vim = true,
         },
       })
     end,
