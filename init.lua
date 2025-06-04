@@ -2862,7 +2862,7 @@ vim.go.conceallevel = 1
 -- Set highlight on search
 vim.o.hlsearch = false
 
-vim.o.wrapscan = true
+vim.o.wrapscan = false
 
 -- Make relative line numbers default
 vim.wo.number = true
