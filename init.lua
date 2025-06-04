@@ -667,17 +667,6 @@ require('lazy').setup({
     },
   },
 
-  -- dmacro for recording automatically
-  -- disabled as it conflicts with blink.cmp (<CR> malfunctions with this plugin)
-  {
-    cond = false,
-    event = 'LazyFile',
-    'https://github.com/tani/dmacro.vim',
-    config = function()
-      map({ "i", "n" }, '<C-m>', '<Plug>(dmacro-play-macro)')
-    end
-  },
-
   -- floating terminal
   {
     cond = not env.is_vscode,
@@ -764,43 +753,6 @@ require('lazy').setup({
           gitcommit = true,
         },
       })
-    end,
-  },
-
-  -- neocodeium
-  {
-    cond=false,
-    "monkoose/neocodeium",
-    dependencies = {"Saghen/blink.cmp"},
-    event = "VeryLazy",
-    config = function()
-      local neocodeium = require("neocodeium")
-      local blink = require("blink.cmp")
-      neocodeium.setup({
-        filetypes = {
-          text = false,
-          markdown = false,
-          help = false,
-          gitcommit = false,
-          gitrebase = false,
-          ["."] = false,
-        },
-        filter = function()
-          return not blink.is_visible()
-        end,
-      })
-      vapi.nvim_create_autocmd('User', {
-        pattern = 'BlinkCmpMenuOpen',
-        callback = function()
-          neocodeium.clear()
-        end,
-      })
-      map("i", "<A-f>", neocodeium.accept)
-      map("i", "<Tab>", neocodeium.accept)
-      map("i", "<C-;>", neocodeium.accept)
-      map("i", "<A-e>", neocodeium.cycle_or_complete)
-      map("i", "<A-w>", neocodeium.accept_word)
-      map("i", "<A-a>", neocodeium.accept_line)
     end,
   },
 
