@@ -342,7 +342,12 @@ require('lazy').setup({
         quickfile = { enabled = true },
         picker = { enabled = true, },
         scope = { enabled = true },
-        scroll = { enabled = not vim.g.neovide },
+        scroll = {
+          enabled = not vim.g.neovide,
+          filter = function(buf)
+            return vim.bo[buf].buftype ~= "terminal" and vim.bo[buf].filetype ~= "copilot-chat"
+          end
+        },
         words = { enabled = true },
       }
       require('snacks').setup(opts)
