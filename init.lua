@@ -1095,7 +1095,11 @@ require('lazy').setup({
     'https://github.com/mfussenegger/nvim-dap',
     ft = { 'python', 'c', 'cpp', 'rust' },
     dependencies = {
-      'nvim-dap-ui',
+      {
+        'https://github.com/rcarriga/nvim-dap-ui',
+        dependencies = 'https://github.com/nvim-neotest/nvim-nio',
+        opts = {}
+      },
       'nvim-dap-python',
     },
     config = function()
@@ -1114,15 +1118,6 @@ require('lazy').setup({
       vapi.nvim_set_keymap('n', '<leader>Dl', '<cmd>lua require("dap").run_last()<CR>', { silent = true })
     end
 
-  },
-  {
-    event = 'LazyFile',
-    cond = not env.is_vscode,
-    'https://github.com/rcarriga/nvim-dap-ui',
-    dependencies = 'https://github.com/nvim-neotest/nvim-nio',
-    config = function()
-      require('dapui').setup()
-    end
   },
   {
     ft = { 'python' },
