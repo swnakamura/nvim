@@ -546,13 +546,13 @@ require('lazy').setup({
             -- make mapping to use the commit message with `q`
             vim.keymap.set("n", "q",
               function()
-                -- Remove the mapping for closing the copilotchat window
+                -- Restore the original mapping for closing the copilotchat window
                 vim.keymap.set("n", "q", require('CopilotChat').close, { buffer = 0, silent = true })
                 vim.keymap.del("n", "Q", { buffer = 0, silent = true })
                 vim.cmd('quit') -- quit the copilotchat window
                 -- if I'm currently in the commit message window, paste the commit message and close it
                 if vim.bo.filetype == 'gitcommit' then
-                  vim.cmd('normal ""p')
+                  vim.cmd('normal ""P')
                   vim.cmd('write') -- write the commit message
                   vim.cmd('quit') -- quit the commit message window
                 end
@@ -562,7 +562,7 @@ require('lazy').setup({
             -- Abort the commit message with `Q`
             vim.keymap.set("n", "Q",
               function()
-                -- Remove the mapping for closing the copilotchat window
+                -- Restore the original mapping for closing the copilotchat window
                 vim.keymap.set("n", "q", require('CopilotChat').close, { buffer = 0, silent = true })
                 vim.keymap.del("n", "Q", { buffer = 0, silent = true })
                 vim.cmd('quit') -- quit the copilotchat window
