@@ -1131,24 +1131,6 @@ require('lazy').setup({
     end
   },
 
-  {
-    cond = not env.is_vscode,
-    'mfussenegger/nvim-lint',
-    event = { "BufReadPost", "BufNewFile" },
-    config = function()
-      require('lint').linters_by_ft = {
-        -- markdown = { 'proselint' },
-        -- tex = { 'proselint' },
-        -- python = { 'cspell' }
-      }
-      vapi.nvim_create_autocmd({ "BufWritePost" }, {
-        callback = function()
-          require("lint").try_lint()
-        end,
-      })
-    end
-  },
-
   -- operator augmentation
   {
     event = 'LazyFile',
@@ -2439,14 +2421,6 @@ require('lazy').setup({
       require('telescope').load_extension('fzf')
     end,
     cmd = 'Telescope',
-  },
-
-  -- show image with kitty graphics protocol
-  {
-    cond = false,
-    'edluffy/hologram.nvim',
-    ft = 'markdown',
-    -- opts = { auto_display = true }
   },
 
   -- obsidian integration
