@@ -1093,7 +1093,21 @@ require('lazy').setup({
   {
     cond = not env.is_vscode,
     'https://github.com/mfussenegger/nvim-dap',
-    ft = { 'python', 'c', 'cpp', 'rust' },
+    -- ft = { 'python', 'c', 'cpp', 'rust' },
+    keys = {
+      -- https://zenn.dev/kawat/articles/51f9cc1f0f0aa9 を参考
+      {'<leader>Du', '<cmd>lua require("dapui").toggle()<CR>', mode = 'n', desc = "Toggle DAP UI" },
+      { '<F6>', '<cmd>DapContinue<CR>', mode = 'n', desc = "DAP Continue" },
+      { '<F10>', '<cmd>DapStepOver<CR>', mode = 'n', desc = "DAP Step Over" },
+      { '<F11>', '<cmd>DapStepInto<CR>', mode = 'n', desc = "DAP Step Into" },
+      { '<F12>', '<cmd>DapStepOut<CR>', mode = 'n', desc = "DAP Step Out" },
+      { '<leader>b', '<cmd>DapToggleBreakpoint<CR>', mode = 'n', desc = "DAP Toggle Breakpoint" },
+      { '<leader>B', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Breakpoint condition: "))<CR>', mode = 'n', desc = "DAP Set Breakpoint with condition" },
+      { '<leader>Dp', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', mode = 'n', desc = "DAP Set Log Point" },
+      { '<leader>De', '<cmd>lua require("dapui").eval()<CR>', mode = 'n', desc = "DAP Evaluate Expression" },
+      { '<leader>Dr', '<cmd>lua require("dap").repl.open()<CR>', mode = 'n', desc = "DAP Open REPL" },
+      { '<leader>Dl', '<cmd>lua require("dap").run_last()<CR>', mode = 'n', desc = "DAP Run Last Session" }
+    },
     dependencies = {
       {
         'https://github.com/rcarriga/nvim-dap-ui',
@@ -1102,22 +1116,6 @@ require('lazy').setup({
       },
       'nvim-dap-python',
     },
-    config = function()
-      vapi.nvim_set_keymap('n', '<leader>Du', '<cmd>lua require("dapui").toggle()<CR>', {})
-
-      -- https://zenn.dev/kawat/articles/51f9cc1f0f0aa9 を参考
-      vapi.nvim_set_keymap('n', '<F6>', '<cmd>DapContinue<CR>', { silent = true })
-      vapi.nvim_set_keymap('n', '<F10>', '<cmd>DapStepOver<CR>', { silent = true })
-      vapi.nvim_set_keymap('n', '<F11>', '<cmd>DapStepInto<CR>', { silent = true })
-      vapi.nvim_set_keymap('n', '<F12>', '<cmd>DapStepOut<CR>', { silent = true })
-      vapi.nvim_set_keymap('n', '<leader>b', '<cmd>DapToggleBreakpoint<CR>', { silent = true })
-      vapi.nvim_set_keymap('n', '<leader>B', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Breakpoint condition: "))<CR>', { silent = true })
-      vapi.nvim_set_keymap('n', '<leader>Dp', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { silent = true })
-      vapi.nvim_set_keymap('n', '<leader>De', '<cmd>lua require("dapui").eval()<CR>', { silent = true })
-      vapi.nvim_set_keymap('n', '<leader>Dr', '<cmd>lua require("dap").repl.open()<CR>', { silent = true })
-      vapi.nvim_set_keymap('n', '<leader>Dl', '<cmd>lua require("dap").run_last()<CR>', { silent = true })
-    end
-
   },
   {
     ft = { 'python' },
