@@ -541,7 +541,7 @@ require('lazy').setup({
             local layout_orig = vim.g.copilotchat_layout
             vim.g.copilotchat_layout = 'float'
             vim.cmd("CopilotChatReset")
-            vim.cmd("CopilotChatCommitStaged")
+            vim.cmd("CopilotChatGenAndCopyCommitMsg")
             vim.g.copilotchat_layout = layout_orig
             -- make mapping to use the commit message with `q`
             vim.keymap.set("n", "q",
@@ -824,7 +824,7 @@ require('lazy').setup({
             BetterNamings = {
               prompt = '/COPILOT_GENERATE\n\nPlease provide better names for the following variables and functions. Specify the range of the code to replace and wrap the whole message in code block with language markdown.',
             },
-            CommitStaged = {
+            GenAndCopyCommitMsg = {
               prompt = '> #git:staged\n\nSummarize and explain the change in the code. Then write commit message for the change with commitizen convention. Make sure the title has maximum 50 characters and message is wrapped at 72 characters. Wrap the whole message in code block with language gitcommit. Do not put spaces in front of the commit comment lines.',
               selection = nil,
               callback = function(response, _)
