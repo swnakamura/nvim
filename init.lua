@@ -2123,7 +2123,7 @@ require('lazy').setup({
   -- aerial (outline based on treesitter)
   {
     keys = {
-      { '<leader>ta', '<cmd>AerialToggle<CR>',  mode = {'n'} },
+      { '<leader>t', '<cmd>AerialToggle<CR>',  mode = {'n'} },
     },
     cmd = 'AerialToggle',
     'stevearc/aerial.nvim',
