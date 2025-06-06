@@ -3511,6 +3511,10 @@ map({ 'n', 'v' }, '<leader>j', [[<Cmd>lua MoveUntilNonWS(1)<CR>]])
 -- [[ autocmd-IME ]]
 -- require('japanese.keep').setup()
 map({'n', 'i'}, '<F2>', require('japanese.mode').toggle_IME, { noremap = true, silent = true, expr = true })
+-- also make a command to enable japanese mode
+vapi.nvim_create_user_command('JapaneseModeToggle', function()
+  require('japanese.mode').toggle_IME()
+end, { desc = 'Toggle Japanese IME mode' })
 
 
 -- [[ autosave ]]
