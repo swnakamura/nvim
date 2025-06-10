@@ -274,7 +274,7 @@ require('lazy').setup({
         picker = { enabled = true, },
         scope = { enabled = true },
         scroll = {
-          enabled = not vim.g.neovide,
+          enabled = not vim.g.neovide and not vim.g.is_vscode,
           filter = function(buf)
             return vim.bo[buf].buftype ~= "terminal" and vim.bo[buf].filetype ~= "copilot-chat"
           end
