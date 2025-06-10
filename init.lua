@@ -1975,6 +1975,9 @@ require('lazy').setup({
   {
     'dhruvasagar/vim-table-mode',
     ft = 'markdown',
+    init = function()
+      vim.g.table_mode_disable_mappings = 1
+    end,
     config = function()
       vapi.nvim_create_autocmd({ "FileType" }, {
         pattern = "markdown",
