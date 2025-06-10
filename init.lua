@@ -463,6 +463,7 @@ require('lazy').setup({
       vim.keymap.set("n", "<leader>gm",
         function()
           vim.cmd("Git commit -v")
+          vim.cmd("normal! gg") -- go to the top of the commit message window
           -- wait for 0.2 seconds to wait for the commit window to open
           vim.defer_fn(function()
             -- If not in the commit message window, something went wrong. Abort
