@@ -2672,9 +2672,10 @@ require('lazy').setup({
   {
     "chrisgrieser/nvim-origami",
     event = "LazyFile",
+    dependencies = {'kevinhwang91/nvim-ufo'},
     opts = {
       foldtextWithLineCount = {
-        enabled = false,
+        enabled = false, -- disabled as it conflicts with ufo.nvim
         template = "  ⤢ %s", -- `%s` gets the number of folded lines
         -- hlgroupForCount = "Comment",
       },
@@ -2682,6 +2683,8 @@ require('lazy').setup({
       foldKeymaps = {
         setup = true, -- modifies `h` and `l`
       },
+      pauseFoldOnSearch = false,
+      keepFoldsAcrossSessions = package.loaded["ufo"],
     },
   },
   {
