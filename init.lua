@@ -612,7 +612,7 @@ require('lazy').setup({
     init = function()
       vim.g.floaterm_width = 0.9
       vim.g.floaterm_height = 0.9
-      map({'n', 'i'}, '<C-z>', '<Cmd>FloatermToggle<CR>', { silent = true })
+      map({'n', 'i', 'v'}, '<C-z>', '<Cmd>FloatermToggle<CR>', { silent = true })
       map('t', [[<C-;>]], [[<C-\><C-n>:FloatermHide<CR>]], { silent = true })
       vapi.nvim_create_autocmd('FileType', {
         pattern = 'floaterm',
