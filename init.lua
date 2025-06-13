@@ -1974,6 +1974,7 @@ require('lazy').setup({
 
   -- vim table mode for markdown
   {
+    cond = false,
     'dhruvasagar/vim-table-mode',
     ft = 'markdown',
     init = function()
@@ -2687,7 +2688,7 @@ require('lazy').setup({
       foldKeymaps = {
         setup = true, -- modifies `h` and `l`
       },
-      pauseFoldOnSearch = false,
+      pauseFoldOnSearch = true,
       keepFoldsAcrossSessions = package.loaded["ufo"],
     },
   },
