@@ -3470,9 +3470,11 @@ local autosave = function(ctx)
     not vim.bo.modified
     or vfn.findfile(ctx.file, ".") == "" -- a new file
     or ctx.file:match("wezterm.lua")
-    or vim.tbl_contains(disabled_ft, vim.bo[ctx.buf].ft)
     or not vapi.nvim_buf_get_var(ctx.buf, "autosave_enabled")
   then
+    return
+  elseif vim.tbl_contains(disabled_ft, vim.bo[ctx.buf].ft) then
+    vim.notify("Leaving buffer with unsaved chages", { title = "Autosave" }, vim.log.levels.WARN)
     return
   end
   vim.cmd("silent lockmarks update")
