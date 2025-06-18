@@ -3246,7 +3246,7 @@ VisualMatch = function()
     return nil
   end
 
-  vim.w.visual_match_id = vfn.matchadd('VisualMatch', [[\V]] .. vim.g.text, -999)
+  vim.w.visual_match_id = vfn.matchadd('VisualMatch', [[\V]] .. vim.g.text, 11)
   return nil
 end
 
