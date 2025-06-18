@@ -618,10 +618,10 @@ require('lazy').setup({
         pattern = 'floaterm',
         callback = function()
           map('n', [[<C-;>]], [[<C-\><C-n>:FloatermHide<CR>]], { silent = true, buffer = 0 })
+          map('t', [[<C-/>]], [[<C-\><C-n>:FloatermHide<CR>]], { silent = true, buffer = 0 })
+          map('t', '<C-l>', [[<C-\><C-n>]], { silent = true, buffer = 0 })
         end
       })
-      map('t', [[<C-/>]], [[<C-\><C-n>:FloatermHide<CR>]], { silent = true })
-      map('t', '<C-l>', [[<C-\><C-n>]], { silent = true })
     end
   },
 
@@ -2911,22 +2911,6 @@ map({ 'n', 'v' }, '<leader><leader>', '<C-^>')
 -- map({ 'n', 'v' }, ';', ':')
 map({ 'n', 'v' }, '<leader>;', ':')
 
-
--- terminal
--- open terminal in new split with height 15
--- map('n', '<C-z>', '<Cmd>15split term://zsh<CR><cmd>set nobuflisted<CR>', { silent = true })
--- In terminal, use <C-[> to go back to the buffer above
--- map('t', '<C-[>', [[<C-\><C-n><C-w><C-k>]], { silent = true })
-map('t', '<C-l>', [[<C-\><C-n>]], { silent = true })
--- enter insert mode when entering terminal buffer
-vapi.nvim_create_autocmd("BufEnter", {
-  callback = function()
-    -- if entered to termianl buffer, enter insert mode
-    if vim.bo.buftype == 'terminal' then
-      vim.cmd('startinsert')
-    end
-  end
-})
 
 -- カーソルがインデント内部ならtrue
 local function in_indent()
