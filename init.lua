@@ -2109,19 +2109,19 @@ require('lazy').setup({
         hi clear CurSearch
         hi CurSearch             guibg=NvimDarkYellow
 
-        " Do not show unnecessary separation colors
-        hi LineNr                guibg=NONE
-        hi CursorLineNr          guibg=NONE
-        hi FoldColumn            guibg=NONE
-        hi SignColumn            guibg=NONE
-        hi DiagnosticSignError   guibg=NONE
-        hi DiagnosticSignWarn    guibg=NONE
-        hi DiagnosticSignInfo    guibg=NONE
-        hi DiagnosticSignHint    guibg=NONE
-        hi GitGutterAdd          guibg=NONE
-        hi GitGutterChange       guibg=NONE
-        hi GitGutterChangeDelete guibg=NONE
-        hi GitGutterDelete       guibg=NONE
+        " Do not show unnecessary separation colors (make the background the same as WinSeparator)
+        hi LineNr                guibg=#101218
+        hi CursorLineNr          guibg=#101218
+        hi FoldColumn            guibg=#101218
+        hi SignColumn            guibg=#101218
+        hi DiagnosticSignError   guibg=#101218
+        hi DiagnosticSignWarn    guibg=#101218
+        hi DiagnosticSignInfo    guibg=#101218
+        hi DiagnosticSignHint    guibg=#101218
+        hi GitGutterAdd          guibg=#101218
+        hi GitGutterChange       guibg=#101218
+        hi GitGutterChangeDelete guibg=#101218
+        hi GitGutterDelete       guibg=#101218
 
         " Nontext is way too dark
         hi NonText              guifg=#353b5e
@@ -2129,9 +2129,6 @@ require('lazy').setup({
         " Dim Neotree git signs
         hi! link NeoTreeGitUntracked Title
         hi! link NeoTreeGitUnstaged  Title
-
-        " Instead, show window separator
-        hi! link WinSeparator     LineNr
 
         " make Fold color pale purple
         hi Folded                guibg=#2d273f
