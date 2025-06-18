@@ -625,6 +625,12 @@ require('lazy').setup({
     end
   },
 
+  -- better diff
+  {
+    event = 'LazyFile',
+    'https://github.com/rickhowe/diffchar.vim',
+  },
+
   -- clever s
   {
     -- This one has japanese search functionality
