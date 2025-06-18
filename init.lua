@@ -2897,10 +2897,6 @@ map('o', 'iv', ':<C-u>normal! gg0vG$<CR>')
 map('v' , 'av', 'gg0oG$')
 map('o', 'av', ':<C-u>normal! gg0vG$<CR>')
 
--- Remap for dealing with word wrap
--- H/L for ^/$
-map({ 'n', 'x' }, 'H', '^')
-map({ 'n', 'x' }, 'L', '$')
 
 -- gj/gk submode
 map('n', 'gj', 'gj<Plug>(g-mode)', { remap = true })
@@ -2950,6 +2946,23 @@ function Quantized_l(cnt)
     vim.cmd('normal! l')
   end
 end
+
+-- H/L for ^/$
+map({ 'n', 'x' }, 'H', function()
+  if vfn.col('.')-1 <= vfn.indent('.') then
+    Quantized_h(vim.v.count1)
+  else
+    vim.cmd('normal! ^')
+  end
+end
+)
+map({ 'n', 'x' }, 'L', function()
+  if in_indent() then
+    Quantized_l(vim.v.count1)
+  else
+    vim.cmd('normal! $')
+  end
+end)
 
 map('n', 'h', '<cmd>lua Quantized_h(vim.v.count1)<CR>', { silent = true })
 map('n', 'l', '<cmd>lua Quantized_l(vim.v.count1)<CR>', { silent = true })
