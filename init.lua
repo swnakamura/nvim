@@ -39,6 +39,7 @@ local function detect_env()
   local env = {}
   env.is_wsl = vfn.has('wsl') == 1
   env.is_macos = vfn.has('mac') == 1
+  env.is_linux = vfn.has('unix') == 1 and not env.is_macos
   env.is_vscode = vfn.exists('g:vscode') == 1
   env.is_ssh = vfn.getenv('SSH_CONNECTION') ~= nil
   env.is_wide_for_neotree = vim.o.columns > 200 and vfn.argc() > 0
@@ -49,6 +50,7 @@ local env = detect_env()
 vim.g.is_wsl = env.is_wsl
 vim.g.is_macos = env.is_macos
 vim.g.is_vscode = env.is_vscode
+vim.g.is_linux = env.is_linux
 vim.g.is_ssh = env.is_ssh
 vim.g.is_wide_for_neotree = env.is_wide_for_neotree
 
@@ -71,7 +73,7 @@ end
 
 
 -- print warning if inotifywait not found on linux system
-if env.is_macos == false and vim.fn.executable('inotifywait') ~= 1 then
+if env.is_linux and vim.fn.executable('inotifywait') ~= 1 then
   vim.notify("inotifywait not found. Some features may not work properly.", vim.log.levels.WARN)
 end
 
