@@ -164,6 +164,8 @@ require('lazy').setup({
     keys = {
       -- Find
       { "<leader>fr", function() Snacks.picker.smart({ layout='telescope' }) end, desc = "Smart Find Files" },
+      { "<leader>fR", function() Snacks.picker.recent({ layout='telescope' }) end, desc = "Recent Files" },
+      { "<leader>fp", function() Snacks.picker.projects({ layout='telescope' }) end, desc = "Projects" },
       { "<leader>ff", function() Snacks.picker.files({ layout='telescope' }) end, desc = "Smart Find Files" },
       { "<leader>fb", function() Snacks.picker.buffers({ layout='telescope' }) end, desc = "Buffers" },
       { "<leader>fg", function() Snacks.picker.git_files({ layout='telescope' }) end, desc = "Find Git Files" },
