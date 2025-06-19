@@ -934,6 +934,47 @@ require('lazy').setup({
           --   end,
           -- }
 
+          -- efm language server for textlint
+          vim.lsp.config('efm', {
+            init_options = { documentFormatting = true },
+            single_file_support = true,
+            filetypes = { 'text' },
+            settings = {
+              rootMarkers = { ".git" },
+              root_markers = { ".git" },
+              languages = {
+                text = {
+                  {
+                    lintOnSave = true,
+                    lintAfterOpen = true,
+
+                    lintIgnoreExitCode = true,
+
+                    lintFormats = { '%E1;%E%l:%c:', '%C2;%m', '%C3;%m%Z' },
+                    lintCommand = [[npx textlint --parallel -f json "${INPUT}" | jq -r '.[] | .messages[] | "1;\(.line):\(.column):\n2;\(.message | split("\n")[0])\n3;[\(.ruleId)]"' 2> ~/out2.txt | tee ~/out.txt ]],
+
+                    -- もともとはこうだったが、ファイルにスペースが含まれている場合などでどうしてもうまくいかないので、ファイル名をlintFormatから省いた上のコマンドを使う。どうせシングルファイルの処理なので、ファイル名は必要ない
+                    -- cf. https://ryota2357.com/blog/2023/textlint-with-efm-nvimlsp/
+                    -- lintFormats = { '%E1;%E%f:%l:%c:', '%C2;%m', '%C3;%m%Z' },
+                    -- lintCommand = [[npx textlint -f json --stdin --stdin-filename ${INPUT} | jq -r '.[] | .filePath as $origPath | ($origPath | gsub(" " ; "\\ ")) as $filePath | .messages[] | "1;\($filePath):\(.line):\(.column):\n2;\(.message | split("\n")[0])\n3;[\(.ruleId)]"' 2> ~/out2.txt | tee ~/out.txt ]],
+
+                  },
+                }
+              }
+            }
+          })
+          -- Toggle efm language server
+          local function toggle_efm()
+            local efm_client = vim.lsp.get_clients({ name = 'efm' })[1]
+            if efm_client then
+              vim.lsp.enable('efm', false)
+              vim.notify('efm language server disabled')
+            else
+              vim.lsp.enable('efm')
+              vim.notify('efm language server enabled')
+            end
+          end
+          map('n', [[\e]], toggle_efm, { desc = 'Toggle efm language server' })
 
           vapi.nvim_create_autocmd('LspAttach', {
             group = vapi.nvim_create_augroup('my.lsp', {}),
