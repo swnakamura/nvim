@@ -3310,8 +3310,8 @@ VisualMatch = function()
   vim.w.visual_match_id = vfn.matchadd('VisualMatch', [[\V]] .. vim.g.text, 11)
   return nil
 end
-
-vapi.nvim_create_autocmd('CursorMoved', {
+-- WinLeave is needed to clear match when leaving the window. VisualMatch deletes the match for the current window only, so if you switch to another window, the match should be cleared before you leave.
+vapi.nvim_create_autocmd({'CursorMoved', 'WinLeave'}, {
   pattern = '*',
   callback = VisualMatch
 })
