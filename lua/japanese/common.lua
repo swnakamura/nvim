@@ -1,6 +1,18 @@
 local M = {}
 
----@type Commands
+---@class CommandCheck
+---@field cmd string
+---@field expected { on: string, off: string }
+
+---@class PlatformCommands
+---@field on string
+---@field off string
+---@field check CommandCheck
+
+---@class Commands
+---@field macos PlatformCommands
+---@field linux PlatformCommands
+
 M.commands = {
   macos = {
     on = 'macism com.justsystems.inputmethod.atok33.Japanese',

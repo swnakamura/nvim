@@ -1,16 +1,3 @@
----@class CommandCheck
----@field cmd string
----@field expected { on: string, off: string }
-
----@class PlatformCommands
----@field on string
----@field off string
----@field check CommandCheck
-
----@class Commands
----@field macos PlatformCommands
----@field linux PlatformCommands
-
 local M = require('japanese.common')
 
 M.stash_status = function()
@@ -38,7 +25,12 @@ M.stash_status = function()
 end
 
 M.restore_status = function()
-  os.execute(M.commands[M.osname][M.status])
+  local cmd = M.commands[M.osname][M.status]
+  if type(cmd) ~= 'string' then
+    print("Invalid command for IME status: " .. M.status)
+    return -1
+  end
+  os.execute(cmd)
 end
 
 
