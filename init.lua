@@ -2724,24 +2724,6 @@ require('lazy').setup({
 
   -- beautify fold
   {
-    "chrisgrieser/nvim-origami",
-    event = "LazyFile",
-    dependencies = {'kevinhwang91/nvim-ufo'},
-    opts = {
-      foldtextWithLineCount = {
-        enabled = false, -- disabled as it conflicts with ufo.nvim
-        template = "  ⤢ %s", -- `%s` gets the number of folded lines
-        -- hlgroupForCount = "Comment",
-      },
-
-      foldKeymaps = {
-        setup = true, -- modifies `h` and `l`
-      },
-      pauseFoldOnSearch = true,
-      keepFoldsAcrossSessions = package.loaded["ufo"],
-    },
-  },
-  {
     'kevinhwang91/nvim-ufo',
     dependencies = { 'kevinhwang91/promise-async' },
     event = 'LazyFile',
@@ -2956,6 +2938,7 @@ map({ 'n', 'v' }, '<leader><leader>', '<C-^>')
 -- map({ 'n', 'v' }, ';', ':')
 map({ 'n', 'v' }, '<leader>;', ':')
 
+-- [[ Quantized h/l ]]
 
 -- カーソルがインデント内部ならtrue
 local function in_indent()
@@ -2991,25 +2974,26 @@ function Quantized_l(cnt)
   end
 end
 
--- H/L for ^/$
+map('n', 'h', '<cmd>lua Quantized_h(vim.v.count1)<CR>', { silent = true })
+map('n', 'l', '<cmd>lua Quantized_l(vim.v.count1)<CR>', { silent = true })
+
+-- [[ H/L in indent]]
 map({ 'n', 'x' }, 'H', function()
   if vfn.col('.')-1 <= vfn.indent('.') then
-    Quantized_h(vim.v.count1)
+    vim.cmd('normal! zc')
   else
     vim.cmd('normal! ^')
   end
 end
 )
 map({ 'n', 'x' }, 'L', function()
-  if in_indent() then
-    Quantized_l(vim.v.count1)
+  if vfn.foldclosed('.') ~= -1 then
+    vim.cmd('normal! zo')
   else
     vim.cmd('normal! $')
   end
 end)
 
-map('n', 'h', '<cmd>lua Quantized_h(vim.v.count1)<CR>', { silent = true })
-map('n', 'l', '<cmd>lua Quantized_l(vim.v.count1)<CR>', { silent = true })
 
 -- do not copy when deleting by x
 map({ 'n', 'x' }, 'x', '"_x')
