@@ -2409,6 +2409,7 @@ require('lazy').setup({
   {
     cond = not env.is_vscode and not env.is_ssh, -- run only in local neovim
     'epwalsh/obsidian.nvim',
+    ft = 'markdown',
     dependencies = {
       -- Required.
       "nvim-lua/plenary.nvim",
