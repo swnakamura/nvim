@@ -41,7 +41,7 @@ local function detect_env()
   env.is_macos = vfn.has('mac') == 1
   env.is_linux = vfn.has('unix') == 1 and not env.is_macos
   env.is_vscode = vfn.exists('g:vscode') == 1
-  env.is_ssh = vfn.getenv('SSH_CONNECTION') ~= nil
+  env.is_ssh = vfn.getenv('SSH_CONNECTION') ~= vim.NIL
   env.is_wide_for_neotree = vim.o.columns > 200 and vfn.argc() > 0
   return env
 end
