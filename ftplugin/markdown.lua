@@ -1,6 +1,5 @@
 vim.cmd([[
   setlocal conceallevel=1
-  "command -range=% MDGHCopy call MDGHCopy(<line1>, <line2>)
-  command -range=% MDPTCopy lua require('markdown').MDPTCopy(<line1>, <line2>)
-  command -range=% MDGHCopy lua require('markdown').MDGHCopy(<line1>, <line2>)
+  command -range=% MDPTCopy lua require('markdown').obsidian_to_plain_text_copy(<line1>, <line2>)
+  command -range=% MDGHCopy lua require('markdown').obsidian_to_github_copy(<line1>, <line2>)
 ]])
