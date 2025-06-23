@@ -922,17 +922,17 @@ require('lazy').setup({
             })
           end
 
-          -- special configuration for grammarly
-          -- local lspconfig = require('lspconfig')
-          -- require 'lspconfig'.grammarly.setup {
-          --   filetypes = { "bibtex", "gitcommit", "org", "tex", "restructuredtext", "rsweave", "latex", "quarto", "rmd", "context", "html" },
+          -- -- special configuration for grammarly
+          -- vim.lsp.config('grammarly', {
+          --   filetypes = { "bibtex", "gitcommit", "org", "tex", "restructuredtext", "rsweave", "latex", "quarto", "rmd", "context", "html", "markdown" },
           --   -- This is necessary as grammary language server does not support newer versions of nodejs
           --   -- https://github.com/znck/grammarly/issues/334
           --   cmd = { "n", "run", "16", os.getenv("HOME") .. "/.local/share/nvim/mason/bin/grammarly-languageserver", "--stdio" },
           --   root_dir = function(fname)
           --     return require 'lspconfig'.util.find_git_ancestor(fname) or vim.loop.os_homedir()
           --   end,
-          -- }
+          -- })
+          -- vim.lsp.enable('grammarly')
 
           -- efm language server for textlint
           vim.lsp.config('efm', {
