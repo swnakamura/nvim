@@ -1,6 +1,6 @@
 local M = {}
 
-M.MDPTCopy = function(line1, line2)
+M.obsidian_to_plain_text_copy = function(line1, line2)
   local lines = vim.api.nvim_buf_get_lines(0, line1 - 1, line2, false)
 
   -- Remove lines with internal links to image files: [[*.png]] or [[*.jpg]]
@@ -46,7 +46,7 @@ M.MDPTCopy = function(line1, line2)
   vim.fn.setreg("+", text, "V")
 end
 
-M.MDGHCopy = function(line1, line2)
+M.obsidian_to_github_copy = function(line1, line2)
   local lines = vim.api.nvim_buf_get_lines(0, line1 - 1, line2, false)
 
   -- Remove lines with internal links to image files: [[*.png]] or [[*.jpg]]
