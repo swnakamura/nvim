@@ -21,29 +21,28 @@ M.MDPTCopy = function(line1, line2)
     line = vim.fn.substitute(line, [[^\s*\\<\([^>]\+\)>]],[[\n<\1>]],'ge') -- Remove preceding backslashes for html tags in the beginning of the line
     line = vim.fn.substitute(line, [=[^\v\\(!\[[^]]+\]\([^)]+\))]=],[[\n\1]],'ge') -- Remove preceding backslashes for image formats `![alias](path)` in the beginning of the line
     lines_filtered[i] = line
+
+    line = vim.fn.substitute(line, [[%%.\{-1,}%%]], [[]] ,'ge') -- Remove contents of obsidian comments
+
+    line = vim.fn.substitute(line, [[\$\([^$]\{-1,}\)\$]],[[\1]],'ge') -- Surround inline math with backticks: $inline math$ -> inline math
+    line = vim.fn.substitute(line, [[ --- ]],[[:]],'ge') -- Replace ' --- ' with ':'
+
+    line = vim.fn.substitute(line, [==[#[^# \]]\+]==], [[]], 'ge') -- remove tags e.g. #tags
+    line = vim.fn.substitute(line, [[[📅➕⏳✅] \d\d\d\d-\d\d-\d\d]], [[]], 'ge') -- remove emoji dates from obsidian-tasks
+    line = vim.fn.substitute(line, [[	]],[[    ]],'ge') -- Replace tabs with 4 spaces
+    line = vim.fn.substitute(line, [=[[^!]\[\[\zs[^]]\+|\([^]]\+\)\ze\]\]]=], [[\1]] ,'ge') -- Remove original link from aliased file name: [[original name|aliased name]] -> [[aliased name]]
+
+    -- double bracket link is followed by an http link, change the double bracket link to a markdown link
+    line = vim.fn.substitute(line, [=[[^!]\zs\[\[\([^]]\+\)\]\]\s\?(\(http[^)]\+\))]=], [[[\1](\2)]] ,'ge') -- Change double bracket link to markdown link: [[file.md]] <link> -> [file.md](<link>)
+    line = vim.fn.substitute(line, [=[[^!]\zs\[\[\([^]]\+\)\]\]\ze]=], [[\1]] ,'ge') -- Remove double square bracket from non-image link : [[file.md]] -> file.md
+
+    -- move any line decorations
+    line = vim.fn.substitute(line, [[\*\([^*]\+\)\*]],[[\1]],'ge') -- Remove bold text: *bold text* -> bold text
+    line = vim.fn.substitute(line, [[\*\*\([^*]\+\)\*\*]],[[\1]],'ge') -- Remove bold text: **bold text** -> bold text
+
   end
 
   local text = table.concat(lines_filtered, "\n")
-
-  text = vim.fn.substitute(text, [[%%.\{-1,}%%]], [[]] ,'ge') -- Remove contents of obsidian comments
-
-  text = vim.fn.substitute(text, [[\$\([^$]\{-1,}\)\$]],[[\1]],'ge') -- Surround inline math with backticks: $inline math$ -> inline math
-  text = vim.fn.substitute(text, [[ --- ]],[[:]],'ge') -- Replace ' --- ' with ':'
-
-  text = vim.fn.substitute(text, [[#\([^# ]\+\)]], [[]], 'ge') -- remove tags e.g. #tags
-  text = vim.fn.substitute(text, [[[📅➕⏳✅] \d\d\d\d-\d\d-\d\d]], [[]], 'ge') -- remove emoji dates from obsidian-tasks
-  text = vim.fn.substitute(text, [[	]],[[    ]],'ge') -- Replace tabs with 4 spaces
-  text = vim.fn.substitute(text, [=[[^!]\[\[\zs[^]]\+|\([^]]\+\)\ze\]\]]=], [[\1]] ,'ge') -- Remove original link from aliased file name: [[original name|aliased name]] -> [[aliased name]]
-
-  -- double bracket link is followed by an http link, change the double bracket link to a markdown link
-  text = vim.fn.substitute(text, [=[[^!]\zs\[\[\([^]]\+\)\]\]\s\?(\(http[^)]\+\))]=], [[[\1](\2)]] ,'ge') -- Change double bracket link to markdown link: [[file.md]] <link> -> [file.md](<link>)
-  text = vim.fn.substitute(text, [=[[^!]\zs\[\[\([^]]\+\)\]\]\ze]=], [[\1]] ,'ge') -- Remove double square bracket from non-image link : [[file.md]] -> file.md
-
-  -- move any text decorations
-  text = vim.fn.substitute(text, [[\*\([^*]\+\)\*]],[[\1]],'ge') -- Remove bold text: *bold text* -> bold text
-  text = vim.fn.substitute(text, [[\*\*\([^*]\+\)\*\*]],[[\1]],'ge') -- Remove bold text: **bold text** -> bold text
-
-
   vim.fn.setreg("+", text, "V")
 end
 
