@@ -18,9 +18,10 @@ M.toggle_IME = function()
       M.enable()
     end
     -- also set keymap for FuzzyMotion, which is useful for Japanese text
-    vim.api.nvim_buf_set_keymap(0, 'n', 'S',     '<cmd>FuzzyMotion<CR>', { noremap = true, silent = true })
-    vim.api.nvim_buf_set_keymap(0, 'n', 't',     '<cmd>FuzzyMotion<CR>', { noremap = true, silent = true })
-    vim.api.nvim_buf_set_keymap(0, 'n', '<C-s>', '<cmd>FuzzyMotion<CR>', { noremap = true, silent = true })
+    -- temporarily disabled because it resutls in an unknown error
+    -- vim.api.nvim_buf_set_keymap(0, 'n', 'S',     '<cmd>FuzzyMotion<CR>', { noremap = true, silent = true })
+    -- vim.api.nvim_buf_set_keymap(0, 'n', 't',     '<cmd>FuzzyMotion<CR>', { noremap = true, silent = true })
+    -- vim.api.nvim_buf_set_keymap(0, 'n', '<C-s>', '<cmd>FuzzyMotion<CR>', { noremap = true, silent = true })
   else
     print('日本語入力モードOFF')
     vim.api.nvim_buf_del_keymap(0, 'n', 'S')
