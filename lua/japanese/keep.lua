@@ -1,3 +1,4 @@
+-- Keep the IME status when leaving insert mode and restore it when entering insert mode
 local M = require('japanese.common')
 
 M.stash_status = function()
