@@ -1,3 +1,4 @@
+-- Define "Japanese input mode", in which the IME is enabled or disabled when entering or leaving insert mode.
 local M = require('japanese.common')
 
 -- Functions to enable/disable IME

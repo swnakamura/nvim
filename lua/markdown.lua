@@ -1,3 +1,4 @@
+-- This module provides functions to convert Obsidian markdown to plain text or GitHub markdown format.
 local M = {}
 
 M.obsidian_to_plain_text_copy = function(line1, line2)
