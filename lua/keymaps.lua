@@ -16,11 +16,16 @@ map({ 'n', 'v' }, '<Space>o', '<Nop>')
 map('n', '<C-h>', '<C-w>h')
 map('n', '<C-l>', '<C-w>l')
 
---https://zenn.dev/vim_jp/articles/67ec77641af3f2
--- map('n', 'zz', 'zz<Plug>(z1)', { remap = true })
--- map('n', '<Plug>(z1)z', 'zt<Plug>(z2)')
--- map('n', '<Plug>(z2)z', 'zb<Plug>(z3)')
--- map('n', '<Plug>(z3)z', 'zz<Plug>(z1)')
+-- copy and paste
+if vim.g.neovide then
+  for _, m in ipairs({'A', 'D'}) do
+    map('v', '<' .. m .. '-c>', '"+y') -- Copy
+    map('n', '<' .. m .. '-v>', '"+P') -- Paste normal mode
+    map('v', '<' .. m .. '-v>', '"+P') -- Paste visual mode
+    map('c', '<' .. m .. '-v>', '<C-R>+') -- Paste command mode
+    map('i', '<' .. m .. '-v>', '<C-R>+') -- Paste insert mode
+  end
+end
 
 -- move cursor to the center of the window lr
 map('n', 'z.', 'zezL')
