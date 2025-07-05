@@ -46,17 +46,17 @@ local function detect_env()
   return env
 end
 
-local env = detect_env()
-vim.g.is_wsl = env.is_wsl
-vim.g.is_macos = env.is_macos
-vim.g.is_vscode = env.is_vscode
-vim.g.is_linux = env.is_linux
-vim.g.is_ssh = env.is_ssh
-vim.g.is_wide_for_neotree = env.is_wide_for_neotree
+Env = detect_env()
+vim.g.is_wsl = Env.is_wsl
+vim.g.is_macos = Env.is_macos
+vim.g.is_vscode = Env.is_vscode
+vim.g.is_linux = Env.is_linux
+vim.g.is_ssh = Env.is_ssh
+vim.g.is_wide_for_neotree = Env.is_wide_for_neotree
 
 _G.LazyVim = require("lazyvim.util")
 
-if env.is_wsl then
+if Env.is_wsl then
   vim.g.clipboard = {
     name = 'WslClipboard',
     copy = {
@@ -73,14 +73,14 @@ end
 
 
 -- print warning if inotifywait not found on linux system
-if env.is_linux and vim.fn.executable('inotifywait') ~= 1 then
+if Env.is_linux and vim.fn.executable('inotifywait') ~= 1 then
   vim.notify("inotifywait not found. Some features may not work properly.", vim.log.levels.WARN)
 end
 
 -- [[ Neovide settings ]]
 vim.g.neovide_cursor_animation_length = 0.10 -- default 0.13
 vim.g.neovide_cursor_trail_size = 0.2 -- default 0.8
-if env.is_macos then
+if Env.is_macos then
   vim.o.guifont = "JetBrains Mono:h12"
 else
   vim.o.guifont = "JetBrains Mono Light:h12"
@@ -610,7 +610,7 @@ require('lazy').setup({
 
   -- floating terminal
   {
-    cond = not env.is_vscode,
+    cond = not Env.is_vscode,
     'voldikss/vim-floaterm',
     cmd = 'FloatermToggle',
     init = function()
@@ -663,7 +663,7 @@ require('lazy').setup({
 
   -- copilot
   {
-    cond = not env.is_vscode,
+    cond = not Env.is_vscode,
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",
@@ -833,7 +833,7 @@ require('lazy').setup({
 
   -- register preview
   {
-    cond = not env.is_vscode,
+    cond = not Env.is_vscode,
     'tversteeg/registers.nvim',
     config = true,
     keys = {
@@ -845,7 +845,7 @@ require('lazy').setup({
 
   -- undotree
   {
-    cond = not env.is_vscode,
+    cond = not Env.is_vscode,
     'mbbill/undotree',
     init = function()
       map('n', 'U', ':UndotreeToggle<CR>')
@@ -855,7 +855,7 @@ require('lazy').setup({
 
   -- nvim-lspconfig
   {
-    cond = not env.is_vscode,
+    cond = not Env.is_vscode,
     'neovim/nvim-lspconfig',
     event = { "LazyFile" },
     cmd = { "LspInfo", "LspInstall", "LspUninstall", "Mason" },
@@ -1055,7 +1055,7 @@ require('lazy').setup({
 
   -- lsp saga (useful lsp features)
   {
-    cond = not env.is_vscode,
+    cond = not Env.is_vscode,
     'nvimdev/lspsaga.nvim',
     event = 'LspAttach',
     config = function()
@@ -1074,7 +1074,7 @@ require('lazy').setup({
 
   -- DAP
   {
-    cond = not env.is_vscode,
+    cond = not Env.is_vscode,
     'https://github.com/mfussenegger/nvim-dap',
     -- ft = { 'python', 'c', 'cpp', 'rust' },
     keys = {
@@ -1102,7 +1102,7 @@ require('lazy').setup({
   },
   {
     ft = { 'python' },
-    cond = not env.is_vscode,
+    cond = not Env.is_vscode,
     'https://github.com/mfussenegger/nvim-dap-python',
     config = function()
       local venv = os.getenv('VIRTUAL_ENV')
@@ -1276,6 +1276,10 @@ require('lazy').setup({
           end
         end,
         providers = {
+          lsp = {
+            async = true, -- Whether we should show the completions before this provider returns, without waiting for it
+            timeout_ms = 2000, -- How long to wait for the provider to return before showing completions and treating it as asynchronous
+          },
           obsidian = {
             name = "obsidian",
             module = "blink.compat.source",
@@ -1311,7 +1315,7 @@ require('lazy').setup({
 
   -- lsp signature help
   {
-    cond = not env.is_vscode and not env.is_macos,
+    cond = not Env.is_vscode and not Env.is_macos,
     "ray-x/lsp_signature.nvim",
     event = "LazyFile",
     opts = {},
@@ -1738,7 +1742,7 @@ require('lazy').setup({
 
   -- Neotree (filer)
   {
-    cond = not env.is_vscode,
+    cond = not Env.is_vscode,
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     cmd = 'Neotree',
@@ -1806,7 +1810,7 @@ require('lazy').setup({
               local node = state.tree:get_node()
               local path = node:get_id()
               path = vfn.shellescape(path, true)
-              if env.is_macos then
+              if Env.is_macos then
                 vapi.nvim_command("silent !open -g " .. path)
               else
                 vapi.nvim_command("silent !xdg-open " .. path)
@@ -1867,7 +1871,7 @@ require('lazy').setup({
 
   -- yazi
   {
-    cond = not env.is_vscode,
+    cond = not Env.is_vscode,
     "mikavilpas/yazi.nvim",
     keys = {
       {
@@ -1910,7 +1914,7 @@ require('lazy').setup({
 
   -- barbar
   {
-    cond = not env.is_vscode,
+    cond = not Env.is_vscode,
     'romgrk/barbar.nvim',
     event = 'LazyFile',
     dependencies = {
@@ -2138,7 +2142,7 @@ require('lazy').setup({
 
   -- colorscheme
   {
-    cond = not env.is_vscode,
+    cond = not Env.is_vscode,
     'oahlen/iceberg.nvim',
     -- event = 'VimEnter',
     config = function()
@@ -2242,7 +2246,7 @@ require('lazy').setup({
 
   -- lualine (statusline implemented with lua)
   {
-    cond = not env.is_vscode,
+    cond = not Env.is_vscode,
     'nvim-lualine/lualine.nvim',
     event = 'LazyFile',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -2316,6 +2320,7 @@ require('lazy').setup({
               color = function() return { fg = Snacks.util.color("Special") } end,
             },
             'encoding', 'fileformat',
+            { 'searchcount', mexcount=9999, timeout=10000 },
           },
           lualine_x = {},
           lualine_y = {},
@@ -2407,7 +2412,7 @@ require('lazy').setup({
 
   -- obsidian integration
   {
-    cond = not env.is_vscode and not env.is_ssh, -- run only in local neovim
+    cond = not Env.is_vscode and not Env.is_ssh, -- run only in local neovim
     'epwalsh/obsidian.nvim',
     ft = 'markdown',
     dependencies = {
@@ -2436,7 +2441,7 @@ require('lazy').setup({
 
   -- treesitter
   {
-    cond = not env.is_vscode,
+    cond = not Env.is_vscode,
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     ft = treesitter_filetypes,
@@ -2520,7 +2525,7 @@ require('lazy').setup({
     end
   },
   {
-    cond = not env.is_vscode,
+    cond = not Env.is_vscode,
     'nvim-treesitter/nvim-treesitter-context',
     ft = treesitter_filetypes,
     dependencies = 'nvim-treesitter/nvim-treesitter',
@@ -2561,7 +2566,7 @@ require('lazy').setup({
       vim.g.tex_flavor = 'latex'
       vim.g.tex_conceal = 'abdmg'
       vim.g.vimtex_fold_enabled = 1
-      if env.is_macos then
+      if Env.is_macos then
         vim.g.vimtex_view_method = 'skim' -- skim
         -- vim.g.vimtex_view_general_viewer = 'zathura' -- zathura
       else
@@ -2643,7 +2648,7 @@ require('lazy').setup({
 
   -- Zen mode
   {
-    cond = not env.is_vscode,
+    cond = not Env.is_vscode,
     "folke/zen-mode.nvim",
     keys = {
       { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen mode" },
@@ -2701,7 +2706,7 @@ require('lazy').setup({
         command = 'set filetype=tex',
         group = 'nvim-ghost-user-autocmd'
       })
-      if env.is_macos then
+      if Env.is_macos then
         vim.g.nvim_ghost_use_script = 1
         vim.g.nvim_ghost_python_executable = '/usr/bin/python3'
       end
@@ -2790,397 +2795,11 @@ require('lazy').setup({
 }, require('lazy.core.config').defaults)
 
 -- [[ Setting options ]]
+require('options')
 
 -- tab width settings
-vim.o.tabstop = 8
-vim.o.softtabstop = 4
-vim.o.shiftwidth = 4
-vim.o.smartindent = true
-vim.o.expandtab = true
-
--- conceal level
-vim.go.conceallevel = 1
-
--- Set highlight on search
-vim.o.hlsearch = false
-
-vim.o.wrapscan = false
-
--- Make relative line numbers default
-vim.wo.number = true
-vim.go.relativenumber = true
-
--- Enable mouse mode
-vim.o.mouse = 'a'
-
--- window minimum size is 0
-vim.go.winminheight = 0
-vim.go.winminwidth = 0
-
--- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
-vim.o.clipboard = 'unnamedplus'
-
--- Enable break indent
-vim.o.breakindent = true
-
--- Save undo history
-vim.o.undofile = true
-
--- Case insensitive searching UNLESS /C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
-
--- Keep signcolumn on by default
-vim.wo.signcolumn = 'yes'
-
--- Decrease update time
-vim.o.updatetime = 250
-vim.o.timeout = true
-vim.o.timeoutlen = 1000
-
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
-
--- NOTE: You should make sure your terminal supports this
-vim.o.termguicolors = true
-
--- Open quickfix window after some commands
-vim.cmd("au QuickfixCmdPost make,grep,grepadd,vimgrep copen")
-
-vim.o.cursorline = true
-
-vim.o.shada = "!,'50,<1000,s100,h"
-
-vim.opt.sessionoptions:remove({ 'blank', 'buffers' })
-
-vim.o.fileencodings = 'utf-8,ios-2022-jp,euc-jp,sjis,cp932'
-
-vim.o.previewheight = 999
-
-vim.o.list = true
-vim.o.listchars = 'leadmultispace:---|,tab:» ,trail:~,extends:»,precedes:«,nbsp:%'
-
-vim.o.scrolloff = 15
-
-vim.go.laststatus = 3
-
-vim.o.showtabline = 2
-
-vim.o.winblend = 0
-vim.o.pumblend = 20
-
-vim.o.smartindent = true
-vim.o.expandtab = true
-
-vim.opt.formatoptions:append({ 'm', 'M' })
-
-vim.o.inccommand = 'split'
-
-vim.o.colorcolumn = "+1"
-
-vim.opt.diffopt:append('vertical,algorithm:patience,indent-heuristic')
-
-vim.o.wildmode = 'list:full'
-
-vim.opt.wildignore:append({ '*.o', '*.obj', '*.pyc', '*.so', '*.dll' })
-
-vim.o.splitbelow = true
-vim.o.splitright = true
-
-vim.o.title = true
-vim.o.titlestring = '%f%M%R%H'
-
-vim.opt.matchpairs:append({ '「:」', '（:）', '『:』', '【:】', '〈:〉', '《:》', '〔:〕', '｛:｝', '<:>' })
-
-vim.o.spelllang = 'en,cjk'
-
-vim.go.signcolumn = 'yes:1'
-
 -- [[ Basic Keymaps ]]
-
-map({ 'n', 'v' }, '<Space>o', '<Nop>')
-map('n', '<C-h>', '<C-w>h')
-map('n', '<C-l>', '<C-w>l')
-
---https://zenn.dev/vim_jp/articles/67ec77641af3f2
--- map('n', 'zz', 'zz<Plug>(z1)', { remap = true })
--- map('n', '<Plug>(z1)z', 'zt<Plug>(z2)')
--- map('n', '<Plug>(z2)z', 'zb<Plug>(z3)')
--- map('n', '<Plug>(z3)z', 'zz<Plug>(z1)')
-
--- move cursor to the center of the window lr
-map('n', 'z.', 'zezL')
-
--- Tabs is used as %, while <C-i> remains as go to next location
-map({ 'n', 'v', 'o' }, '<Tab>', '%', { remap = true })
-map({ 'n', 'v' }, '<C-i>', '<C-i>')
-
--- Pseudo operator for selecting the whole text
-map('v' , 'iv', 'gg0oG$')
-map('o', 'iv', ':<C-u>normal! gg0vG$<CR>')
-map('v' , 'av', 'gg0oG$')
-map('o', 'av', ':<C-u>normal! gg0vG$<CR>')
-
-
--- gj/gk submode
-map('n', 'gj', 'gj<Plug>(g-mode)', { remap = true })
-map('n', 'gk', 'gk<Plug>(g-mode)', { remap = true })
-map('n', '<Plug>(g-mode)j', 'gj<Plug>(g-mode)')
-map('n', '<Plug>(g-mode)k', 'gk<Plug>(g-mode)')
-map('n', '<Plug>(g-mode)', '<Nop>', { remap = true })
-
--- keymap for alternate file
-map({ 'n', 'v' }, '<leader><leader>', '<C-^>')
-
--- keymap for ex command
--- map({ 'n', 'v' }, ';', ':')
-map({ 'n', 'v' }, '<leader>;', ':')
-
--- [[ Quantized h/l ]]
-
--- カーソルがインデント内部ならtrue
-local function in_indent()
-  return vfn.col('.') <= vfn.indent('.')
-end
-
--- カーソルがインデントとずれた位置ならtrue
-local function not_fit_indent()
-  return ((vfn.col('.') - 1) % vfn.shiftwidth()) ~= 0
-end
-
-function Quantized_h(cnt)
-  cnt = cnt or 1
-  if cnt > 1 or not vim.o.expandtab then
-    vim.cmd(string.format('normal! %sh', cnt))
-    return
-  end
-  vim.cmd('normal! h')
-  while in_indent() and not_fit_indent() do
-    vim.cmd('normal! h')
-  end
-end
-
-function Quantized_l(cnt)
-  cnt = cnt or 1
-  if cnt > 1 or not vim.o.expandtab then
-    vim.cmd(string.format('normal! %sl', cnt))
-    return
-  end
-  vim.cmd('normal! l')
-  while in_indent() and not_fit_indent() do
-    vim.cmd('normal! l')
-  end
-end
-
-map('n', 'h', '<cmd>lua Quantized_h(vim.v.count1)<CR>', { silent = true })
-map('n', 'l', '<cmd>lua Quantized_l(vim.v.count1)<CR>', { silent = true })
-
--- [[ H/L in indent]]
-map({ 'n', 'x' }, 'H', function()
-  if vfn.col('.')-1 <= vfn.indent('.') then
-    vim.cmd('normal! zc')
-  else
-    vim.cmd('normal! ^')
-  end
-end
-)
-map({ 'n', 'x' }, 'L', function()
-  if vfn.foldclosed('.') ~= -1 then
-    vim.cmd('normal! zo')
-  else
-    vim.cmd('normal! $')
-  end
-end)
-
-
--- do not copy when deleting by x
-map({ 'n', 'x' }, 'x', '"_x')
-
--- commenting using <C-;>
-do
-  local operator_rhs = function()
-    return require('vim._comment').operator()
-  end
-  vim.keymap.set({ 'n', 'x' }, '<C-;>', operator_rhs, { expr = true, desc = 'Toggle comment' })
-
-  local line_rhs = function()
-    return require('vim._comment').operator() .. '_'
-  end
-  vim.keymap.set('n', '<C-;>', line_rhs, { expr = true, desc = 'Toggle comment line' })
-end
-
--- comment after copying
-map({ "n" }, "<leader>cy", "yygcc", { remap = true })
-map({ "v" }, "<leader>cy", "ygvgc", { remap = true })
-
--- window control by s
-map('n', '<Plug>(my-win)', '<Nop>')
-map('n', 's', '<Plug>(my-win)', { remap = true })
--- window control
-map('n', '<Plug>(my-win)s', '<Cmd>split<CR>')
-map('n', '<Plug>(my-win)v', '<Cmd>vsplit<CR>')
--- st is used by nvim-tree
-map('n', '<Plug>(my-win)c', '<Cmd>tab sp<CR>')
-map('n', '<Plug>(my-win)C', '<Cmd>tabc<CR>')
-map('n', '<Plug>(my-win)j', '<C-w>j')
-map('n', '<Plug>(my-win)k', '<C-w>k')
-map('n', '<Plug>(my-win)l', '<C-w>l')
-map('n', '<Plug>(my-win)h', '<C-w>h')
-map('n', '<Plug>(my-win)J', '<C-w>J')
-map('n', '<Plug>(my-win)K', '<C-w>K')
-map('n', '<Plug>(my-win)n', 'gt')
-map('n', '<Plug>(my-win)p', 'gT')
-map('n', '<Plug>(my-win)L', '<C-w>L')
-map('n', '<Plug>(my-win)H', '<C-w>H')
-map('n', '<Plug>(my-win)r', '<C-w>r')
-map('n', '<Plug>(my-win)=', '<C-w>=')
-map('n', '<Plug>(my-win)O', '<C-w>o')
-map('n', '<Plug>(my-win)o', '<C-w>o')
-map('n', '<Plug>(my-win)1', '<Cmd>1tabnext<CR>')
-map('n', '<Plug>(my-win)2', '<Cmd>2tabnext<CR>')
-map('n', '<Plug>(my-win)3', '<Cmd>3tabnext<CR>')
-map('n', '<Plug>(my-win)4', '<Cmd>4tabnext<CR>')
-map('n', '<Plug>(my-win)5', '<Cmd>5tabnext<CR>')
-map('n', '<Plug>(my-win)6', '<Cmd>6tabnext<CR>')
-map('n', '<Plug>(my-win)7', '<Cmd>7tabnext<CR>')
-map('n', '<Plug>(my-win)8', '<Cmd>8tabnext<CR>')
-map('n', '<Plug>(my-win)9', '<Cmd>9tabnext<CR>')
-
--- disable Fn in insert mode
-for i = 1, 12 do
-  map('i', '<F' .. tostring(i) .. '>', '<Nop>')
-end
-
--- save&exit
-map('i', '<c-l>', '<cmd>update<cr>')
-map('n', '<leader>fs', '<cmd>update<cr>')
-map('n', '<leader>fS', '<cmd>wall<cr>')
--- map('n', 'sq', '<Cmd>quit<CR>')
--- map('n', 'se', '<cmd>silent! %bdel|edit #|normal `"<C-n><leader>q<cr>')
--- map('n', 'sQ', '<Cmd>tabc<CR>')
-map('n', '<leader>qq', '<Cmd>quitall<CR>')
-map('n', '<leader>qs', '<Cmd>update<cr><cmd>quit<CR>')
-map('n', '<leader>qQ', '<Cmd>quitall!<CR>')
-
--- On certain files, quit by <leader>q
-vapi.nvim_create_augroup('bdel-quit', {})
-vapi.nvim_create_autocmd('FileType', {
-  pattern = { 'gitcommit', 'lazy', 'help', 'man', 'noice', 'lspinfo', 'qf' },
-  callback = function()
-    map('n', '<leader>q', '<Cmd>q<CR>', { buffer = true })
-  end,
-  group = 'bdel-quit'
-})
-
--- On git commit message file, set colorcolumn at 51
-vapi.nvim_create_augroup('gitcommit-colorcolumn', {})
-vapi.nvim_create_autocmd('FileType', {
-  pattern = 'gitcommit',
-  command = 'setlocal colorcolumn=51,+1',
-  group = 'gitcommit-colorcolumn'
-})
-
--- always replace considering doublewidth
-map('n', 'r', 'gr')
-map('n', 'R', 'gR')
-map('n', 'gr', 'r')
-map('n', 'gR', 'R')
-
--- do not copy when deleting by x
-map({ 'n', 'x' }, 'gR', 'R')
-
--- increase and decrease by plus/minus
-map({ 'n', 'x' }, '+', '<c-a>')
-map({ 'n', 'x' }, '-', '<c-x>')
-map('x', 'g+', 'g<c-a>')
-map('x', 'g-', 'g<c-x>')
-
--- I can remember only one mark anyway
--- map('n', 'm', 'ma')
--- map('n', "'", '`a')
-
--- select pasted text
-map('n', 'gp', '`[v`]')
-map('n', 'gP', '`[V`]')
-
--- quickfix jump
-map('n', '[q', '<Cmd>cprevious<CR>')
-map('n', ']q', '<Cmd>cnext<CR>')
-map('n', '[Q', '<Cmd>cfirst<CR>')
-map('n', ']Q', '<Cmd>clast<CR>')
-
--- window-local quickfix jump
-map('n', '[w', '<Cmd>lprevious<CR>')
-map('n', ']w', '<Cmd>lnext<CR>')
-map('n', '[W', '<Cmd>lfirst<CR>')
-map('n', ']W', '<Cmd>llast<CR>')
-
--- argument jump
-map('n', '[a', '<Cmd>previous<CR>')
-map('n', ']a', '<Cmd>next<CR>')
-map('n', '[A', '<Cmd>first<CR>')
-map('n', ']A', '<Cmd>last<CR>')
-
--- search with C-p/C-n
-map('c', '<C-p>', '<Up>')
-map('c', '<C-n>', '<Down>')
-
--- one push to add/remove tabs
-map('n', '>', '>>')
-map('n', '<', '<<')
-
--- tagsジャンプの時に複数ある時は一覧表示
--- map('n', '<C-]>', 'g<C-]>')
-
-map('i', '<C-b>', "<Cmd>normal! b<CR>")
-map('i', '<C-f>', "<Cmd>normal! w<CR>")
-map('i', '<C-p>', "<Cmd>normal! gk<CR>")
-map('i', '<C-n>', "<Cmd>normal! gj<CR>")
-
--- 行頭/行末へ移動
-map({ 'i', 'c' }, '<C-A>', '<Home>')
-map({ 'i', 'c' }, '<C-E>', '<End>')
-
--- Open quickfix window
--- nnoremap Q <Cmd>copen<CR>
--- autocmd for quickfix window
-vapi.nvim_create_augroup('quick-fix-window', {})
-vapi.nvim_create_autocmd('FileType', {
-  pattern = 'qf',
-  callback = function()
-    map('n', 'p', '<CR>zz<C-w>p', { buffer = true })
-    map('n', 'j', 'j', { buffer = true })
-    map('n', 'k', 'k', { buffer = true })
-    map('n', 'J', 'jp', { buffer = true, remap = true })
-    map('n', 'K', 'kp', { buffer = true, remap = true })
-    map('n', '<C-j>', 'jp', { buffer = true, remap = true })
-    map('n', '<C-k>', 'kp', { buffer = true, remap = true })
-    map('n', 'q', '<Cmd>quit<CR>', { buffer = true })
-    map('n', '<cr>', '<cr>', { buffer = true })
-    vim.opt_local.wrap = false
-  end,
-  group = 'quick-fix-window'
-})
-
-vapi.nvim_create_augroup('markdown-mapping', {})
-vapi.nvim_create_autocmd('FileType', {
-  pattern = 'markdown',
-  callback = function()
-    map('v', '<C-b>', '<Plug>(operator-surround-append)d*', { buffer = true, silent = true })
-    map('v', '<C-i>', '<Plug>(operator-surround-append)*', { buffer = true, silent = true })
-    map('v', '<Tab>', '%', { buffer = true, silent = true, remap = true })
-  end,
-  group = 'markdown-mapping'
-})
-
--- [[ frequenly used files ]]
-map('n', '<leader>oo', '<cmd>e ~/org/inbox.org<cr>zR')
-map('n', '<leader>on', '<cmd>e ~/research_vault/notes/note.md<cr>G')
-map('n', '<leader>oi', '<cmd>e ~/research_vault/weekly-issues/issue.md<cr>')
--- <leader>fed to open init.lua
-map('n', '<leader>fed', '<Cmd>edit $MYVIMRC<CR>')
+require('keymaps')
 
 -- [[minor functionalities]]
 -- abbreviation for substitution
@@ -3453,29 +3072,6 @@ vapi.nvim_create_autocmd(
     end
   })
 
--- [[ Float keymap (jump until non-whitespace is found) ]]
-MoveUntilNonWS = function(up)
-  local curpos = vfn.getcurpos()
-  -- 現在位置に文字がある間……
-  while true do
-    curpos[2] = curpos[2] + up
-    vfn.cursor(curpos[2], curpos[3])
-    if vfn.line('.') <= 1 or vfn.line('.') >= vfn.line('$') or (vfn.strlen(vfn.getline('.')) < vfn.col('.') or vfn.getline("."):sub(vfn.col('.'), vfn.col('.')) == ' ') then
-      break
-    end
-  end
-  -- 現在位置が空白文字である間……
-  while true do
-    curpos[2] = curpos[2] + up
-    vfn.cursor(curpos[2], curpos[3])
-    if vfn.line('.') <= 1 or vfn.line('.') >= vfn.line('$') or not (vfn.strlen(vfn.getline('.')) < vfn.col('.') or vfn.getline("."):sub(vfn.col('.'), vfn.col('.')) == ' ') then
-      break
-    end
-  end
-end
-
-map({ 'n', 'v' }, '<leader>k', [[<Cmd>lua MoveUntilNonWS(-1)<CR>]])
-map({ 'n', 'v' }, '<leader>j', [[<Cmd>lua MoveUntilNonWS(1)<CR>]])
 
 -- [[ autocmd-IME ]]
 -- require('japanese.keep').setup()
@@ -3513,64 +3109,5 @@ vapi.nvim_create_autocmd({"BufLeave", "FocusLost"}, {
   pattern = "*",
   callback = autosave,
 })
-
--- [[ toggle/switch settings with local leader ]]
-local toggle_prefix = [[\]]
-map('n', toggle_prefix .. 's',     '<Cmd>setl spell! spell?<CR>', { silent = true, desc = 'toggle spell' })
-map('n', toggle_prefix .. 'a', function()
-  if vim.b.autosave_enabled then
-    vim.b.autosave_enabled = false
-    print('Autosave disabled')
-  else
-    vim.b.autosave_enabled = true
-    print('Autosave enabled')
-  end
-end, { silent = true, desc = 'toggle autosave' })
-map('n', toggle_prefix .. 'l', '<Cmd>setl list! list?<CR>', { silent = true, desc = 'toggle list' })
-map('n', toggle_prefix .. 't', '<Cmd>setl expandtab! expandtab?<CR>', { silent = true, desc = 'toggle expandtab' })
-map('n', toggle_prefix .. 'w', '<Cmd>setl wrap! wrap?<CR>', { silent = true, desc = 'toggle wrap' })
-map('n', toggle_prefix .. 'b', '<Cmd>setl cursorbind! cursorbind?<CR>', { silent = true, desc = 'toggle cursorbind' })
-map('n', toggle_prefix .. 'd', function()
-  if vim.o.diff then
-    vim.cmd('diffoff')
-    print('Diff off')
-  else
-    vim.cmd('diffthis')
-    print('Diff on')
-  end
-end, { silent = true, desc = 'toggle diff' })
-map('n', toggle_prefix .. 'c', function()
-  if vim.o.conceallevel > 0 then
-    vim.o.conceallevel = 0
-    print('Conceal off')
-  else
-    vim.o.conceallevel = 2
-    print('Conceal on')
-  end
-end, { silent = true, desc = 'toggle conceallevel' })
-map('n', toggle_prefix .. 'y', function()
-  if vim.o.clipboard == 'unnamedplus' then
-    vim.o.clipboard = ''
-    print('clipboard=')
-  else
-    vim.o.clipboard = 'unnamedplus'
-    print('clipboard=unnamedplus')
-  end
-end, { silent = true, desc = 'toggle clipboard' })
-
-env.is_noice_enabled = true
-Toggle_noice = function()
-  if env.is_noice_enabled then
-    env.is_noice_enabled = false
-    vim.cmd('Noice disable')
-    vim.opt.cmdheight=1
-    print('Noice disabled')
-  else
-    env.is_noice_enabled = true
-    vim.cmd('Noice enable')
-    print('Noice enabled')
-  end
-end
-map('n', toggle_prefix .. 'n', Toggle_noice, { silent = true, desc = 'toggle noice' })
 
 -- vim: ts=2 sts=2 sw=2 et
