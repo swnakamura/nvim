@@ -857,7 +857,7 @@ require('lazy').setup({
   {
     cond = not env.is_vscode,
     'neovim/nvim-lspconfig',
-    event = { "BufReadPost", "BufNewFile" },
+    event = { "LazyFile" },
     cmd = { "LspInfo", "LspInstall", "LspUninstall", "Mason" },
     dependencies = {
       {'Saghen/blink.cmp'},
