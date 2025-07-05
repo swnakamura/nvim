@@ -86,17 +86,6 @@ else
   vim.o.guifont = "JetBrains Mono Light:h12"
 end
 
--- copy and paste
-if vim.g.neovide then
-  for _, m in ipairs({'A', 'D'}) do
-    map('v', '<' .. m .. '-c>', '"+y') -- Copy
-    map('n', '<' .. m .. '-v>', '"+P') -- Paste normal mode
-    map('v', '<' .. m .. '-v>', '"+P') -- Paste visual mode
-    map('c', '<' .. m .. '-v>', '<C-R>+') -- Paste command mode
-    map('i', '<' .. m .. '-v>', '<C-R>+') -- Paste insert mode
-  end
-end
-
 -- [[ Plugin settings ]]
 
 local treesitter_filetypes = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'go', 'html', 'lua', 'markdown', 'markdown_inline', 'python', 'rust', 'latex', 'tsx', 'typescript', 'vimdoc', 'vim', 'yaml' }
