@@ -3449,7 +3449,7 @@ vapi.nvim_create_autocmd(
         RestoreWinAfter(':silent %!ruff check --fix-only -q --extend-select I -')
         vim.cmd('update')
       end
-      map('n', 'gF', FormatPython, { buffer = true })
+      map('n', 'grf', FormatPython, { buffer = true })
     end
   })
 
