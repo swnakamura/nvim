@@ -2309,7 +2309,16 @@ require('lazy').setup({
               color = function() return { fg = Snacks.util.color("Special") } end,
             },
             'encoding', 'fileformat',
-            { 'searchcount', mexcount=9999, timeout=10000 },
+            -- search count
+            {
+              function()
+                local ok, count = pcall(vfn.searchcount, {recompute = 0})
+                if not ok then
+                  return ''
+                end
+                return string.format('%d/%d', count.current, count.total)
+              end
+            },
           },
           lualine_x = {},
           lualine_y = {},
