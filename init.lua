@@ -599,7 +599,7 @@ require('lazy').setup({
 
   -- floating terminal
   {
-    cond = not Env.is_vscode,
+    cond = false,
     'voldikss/vim-floaterm',
     cmd = 'FloatermToggle',
     init = function()
@@ -613,6 +613,30 @@ require('lazy').setup({
           map('n', [[<C-;>]], [[<C-\><C-n>:FloatermHide<CR>]], { silent = true, buffer = 0 })
           map('t', [[<C-/>]], [[<C-\><C-n>:FloatermHide<CR>]], { silent = true, buffer = 0 })
           map('t', '<C-l>', [[<C-\><C-n>]], { silent = true, buffer = 0 })
+        end
+      })
+    end
+  },
+
+  {
+    "nvzone/floaterm",
+    dependencies = "nvzone/volt",
+    opts = {
+      border = false,
+      size = { h = 80, w = 90 },
+    },
+    cmd = "FloatermToggle",
+    init = function()
+      map({'n', 'i', 'v'}, '<C-z>', '<Cmd>FloatermToggle<CR>', { silent = true })
+      map('t', [[<C-;>]], [[<C-\><C-n>:FloatermToggle<CR>]], { silent = true })
+      map('t', [[<C-l>]], [[<C-\><C-n>]], { silent = true })
+      vapi.nvim_create_autocmd('BufEnter', {
+        callback = function()
+          if vim.bo.buftype ~= 'terminal' then
+            return
+          end
+          map('n', [[<C-;>]], [[<C-\><C-n>:FloatermToggle<CR>]], { silent = true, buffer = 0 })
+          map('n', [[<C-l>]], [[<C-\><C-n>]], { silent = true, buffer = 0 })
         end
       })
     end
