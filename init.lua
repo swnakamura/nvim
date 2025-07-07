@@ -620,26 +620,21 @@ require('lazy').setup({
 
   {
     "nvzone/floaterm",
+    keys = {
+     {'<C-z>', mode = {'n', 'i', 'v'},  '<Cmd>FloatermToggle<CR>'}
+    },
+    cmd = "FloatermToggle",
     dependencies = "nvzone/volt",
     opts = {
       border = false,
       size = { h = 80, w = 90 },
-    },
-    cmd = "FloatermToggle",
-    init = function()
-      map({'n', 'i', 'v'}, '<C-z>', '<Cmd>FloatermToggle<CR>', { silent = true })
-      map('t', [[<C-;>]], [[<C-\><C-n>:FloatermToggle<CR>]], { silent = true })
-      map('t', [[<C-l>]], [[<C-\><C-n>]], { silent = true })
-      vapi.nvim_create_autocmd('BufEnter', {
-        callback = function()
-          if vim.bo.buftype ~= 'terminal' then
-            return
-          end
-          map('n', [[<C-;>]], [[<C-\><C-n>:FloatermToggle<CR>]], { silent = true, buffer = 0 })
-          map('n', [[<C-l>]], [[<C-\><C-n>]], { silent = true, buffer = 0 })
+      mappings = {
+        term = function(buf)
+          map({'n', 't'}, '<C-;>', [[<C-\><C-n>:FloatermToggle<CR>]], { silent = true, buffer = buf })
+          map({'n', 't'}, '<C-l>', [[<C-\><C-n>]], { silent = true, buffer = buf })
         end
-      })
-    end
+      }
+    },
   },
 
   -- better diff
