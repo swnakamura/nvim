@@ -1846,6 +1846,7 @@ require('lazy').setup({
       require('oil').setup({
         keymaps = {
           ["~"] = "<cmd>edit $HOME<CR>",
+          ["<C-\\>"] = {"actions.cd", mode="n"},
           ["H"] = "actions.toggle_hidden",
           ['cy'] = {
             desc = 'Copy filepath to system clipboard',
