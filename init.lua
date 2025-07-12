@@ -2556,7 +2556,7 @@ require('lazy').setup({
       map({ "n", "v" }, "[c", function()
         require("treesitter-context").go_to_context()
       end, { silent = true })
-      map("n", "<C-w><C-o>", "<C-w>o<cmd>TSContextEnable<CR>", { silent = true })
+      map("n", "<C-w><C-o>", "<C-w>o<cmd>TSContext enable<CR>", { silent = true })
     end,
   },
 
