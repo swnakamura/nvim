@@ -450,6 +450,26 @@ require('lazy').setup({
   {
     'tpope/vim-fugitive',
     cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep', 'GBrowse', 'Dispatch' },
+    keys = {
+      { "<leader>gh", "<cmd>tab sp<CR>:0Gclog<CR>", desc = "Git history" },
+      { "<leader>gp", "<cmd>Dispatch! git push<CR>", desc = "Git async push" },
+      { "<leader>gf", "<cmd>Dispatch! git fetch<CR>", desc = "Git async fetch" },
+      { "<leader>gg", [[:<C-u>Glgrep ""<Left>]], desc = "Git grep" },
+      { "<leader>gd", function()
+          if not vim.o.diff then
+            return [[<Cmd>tab sp<CR>]] ..
+                   [[<Cmd>vert Gdiffsplit!<CR>]] ..
+                   [[<C-w><C-w>]] ..
+                   [[<Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>]] ..
+                   [[<C-w><C-w>]] ..
+                   [[<Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>]]
+          else
+            return [[<Cmd>tabclose<CR>]]
+          end
+        end,
+        expr = true, silent = true, desc = "Git diff"
+      }
+    },
     dependencies = { 'tpope/vim-dispatch', 'tpope/vim-rhubarb', 'tyru/open-browser.vim' },
     init = function()
       -- Generate commit message with copilot and commit with `q`. Abort with `Q`
@@ -500,27 +520,6 @@ require('lazy').setup({
             )
           end, 200)
         end, { silent = true, desc = "Git commit with copilot commit message" })
-      map("n", "<leader>gh", "<cmd>tab sp<CR>:0Gclog<CR>", { silent = true, desc = 'Git history' })
-      map("n", "<leader>gp", "<cmd>Dispatch! git push<CR>", { silent = true, desc = 'Git async push' })
-      map("n", "<leader>gf", "<cmd>Dispatch! git fetch<CR>", { silent = true, desc = 'Git async fetch' })
-      map("n", "<leader>gg", [[:<C-u>Glgrep ""<Left>]])
-
-      map("n", "<leader>gd",
-        function()
-          if not vim.o.diff then
-            return
-              [[<Cmd>tab sp<CR>]] ..
-              [[<Cmd>vert Gdiffsplit!<CR>]] ..
-              [[<C-w><C-w>]] ..
-              [[<Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>]] ..
-              [[<C-w><C-w>]] ..
-              [[<Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>]]
-          else
-            return [[<Cmd>tabclose<CR>]]
-          end
-        end,
-        { expr = true, silent = true, desc = "Git diff" }
-      )
 
       -- With the help of rhubarb and open-browser.vim, you can open the current line in the browser with `:GBrowse`
       vim.cmd([[command! -nargs=1 Browse OpenBrowser <args>]])
