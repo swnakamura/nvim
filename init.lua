@@ -482,11 +482,12 @@ require('lazy').setup({
             if vim.bo.filetype ~= 'gitcommit' then
               return
             end
-            local layout_orig = vim.g.copilotchat_layout
             vim.g.copilotchat_layout = 'float'
             vim.cmd("CopilotChatReset")
             vim.cmd("CopilotChatGenAndCopyCommitMsg")
-            vim.g.copilotchat_layout = layout_orig
+            vim.g.copilotchat_layout = nil
+            -- Set the copilot chat window width to 80
+            vim.cmd("vertical resize 80")
             -- make mapping to use the commit message with `q`
             vim.keymap.set("n", "q",
               function()
