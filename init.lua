@@ -725,17 +725,13 @@ require('lazy').setup({
     },
     build = "make tiktoken", -- Only on MacOS or Linux
     cmd = { "CopilotChat", "CopilotChatReset" },
-    keys = {{ '<C-k>', mode = 'v' }, { '<leader>-', mode={'n','v'} }, { '<leader>9', mode={'n','v'} }},
+    keys = {
+      { '<C-k>', "<Cmd>CopilotChatReset <CR><Cmd>CopilotChat <CR><C-l>i/COPILOT_GENERATE<CR><CR>", mode = 'v' },
+      { '<C-k>', "<Cmd>CopilotChatReset <CR><Cmd>CopilotChat <CR><C-l>i#buffer<CR><CR>/COPILOT_GENERATE<CR><CR>", mode = 'n' },
+      { '<leader>-', function() require("CopilotChat").select_prompt() end,  mode={'n','v'}, desc = "CopilotChat - Prompt actions" },
+      { '<leader>9', function() require("CopilotChat").open() end, mode={'n','v'}, desc = "CopilotChat - Open" }
+    },
     config = function()
-      map("n", "<C-k>", "<Cmd>CopilotChat <CR>i#buffer<CR><CR>/COPILOT_GENERATE<CR><CR>", { silent = true })
-      map("v", "<C-k>", "<Cmd>CopilotChat <CR>i/COPILOT_GENERATE<CR><CR>", { silent = true })
-      map({"n", "v"}, "<leader>-",
-        function()
-          require("CopilotChat").select_prompt()
-        end,
-        {desc = "CopilotChat - Prompt actions"}
-      )
-      map({"n", "v"}, "<leader>9", require("CopilotChat").open, { desc = "CopilotChat - Open" })
       vapi.nvim_create_autocmd('BufWinEnter', {
         pattern = 'copilot-chat',
         callback = function()
