@@ -944,7 +944,7 @@ require('lazy').setup({
                     lintIgnoreExitCode = true,
 
                     lintFormats = { '%E1;%E%l:%c:', '%C2;%m', '%C3;%m%Z' },
-                    lintCommand = [[npx textlint --parallel -f json "${INPUT}" | jq -r '.[] | .messages[] | "1;\(.line):\(.column):\n2;\(.message | split("\n")[0])\n3;[\(.ruleId)]"' 2> ~/out2.txt | tee ~/out.txt ]],
+                    lintCommand = [[npx textlint --parallel -f json "${INPUT}" | jq -r '.[] | .messages[] | "1;\(.line):\(.column):\n2;\(.message | split("\n")[0])\n3;[\(.ruleId)]"']],
 
                     -- もともとはこうだったが、ファイルにスペースが含まれている場合などでどうしてもうまくいかないので、ファイル名をlintFormatから省いた上のコマンドを使う。どうせシングルファイルの処理なので、ファイル名は必要ない
                     -- cf. https://ryota2357.com/blog/2023/textlint-with-efm-nvimlsp/
