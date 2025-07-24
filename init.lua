@@ -2562,9 +2562,8 @@ require('lazy').setup({
       vim.g.vimtex_fold_enabled = 1
       if Env.is_macos then
         vim.g.vimtex_view_method = 'skim' -- skim
-        -- vim.g.vimtex_view_general_viewer = 'zathura' -- zathura
       else
-        vim.g.vimtex_view_method = 'zathura'
+        vim.g.vimtex_view_method = 'general'
       end
       vim.g.vimtex_quickfix_enabled = 1
       vim.g.vimtex_quickfix_mode = 2
