@@ -18,10 +18,10 @@ map('n', '<C-l>', '<C-w>l')
 
 -- copy and paste
 if vim.g.neovide then
-  for _, m in ipairs({'A', 'D'}) do
-    map('v', '<' .. m .. '-c>', '"+y') -- Copy
-    map('n', '<' .. m .. '-v>', '"+P') -- Paste normal mode
-    map('v', '<' .. m .. '-v>', '"+P') -- Paste visual mode
+  for _, m in ipairs({ 'A', 'D' }) do
+    map('v', '<' .. m .. '-c>', '"+y')    -- Copy
+    map('n', '<' .. m .. '-v>', '"+P')    -- Paste normal mode
+    map('v', '<' .. m .. '-v>', '"+P')    -- Paste visual mode
     map('c', '<' .. m .. '-v>', '<C-R>+') -- Paste command mode
     map('i', '<' .. m .. '-v>', '<C-R>+') -- Paste insert mode
   end
@@ -35,9 +35,9 @@ map({ 'n', 'v', 'o' }, '<Tab>', '%', { remap = true })
 map({ 'n', 'v' }, '<C-i>', '<C-i>')
 
 -- Pseudo operator for selecting the whole text
-map('v' , 'iv', 'gg0oG$')
+map('v', 'iv', 'gg0oG$')
 map('o', 'iv', ':<C-u>normal! gg0vG$<CR>')
-map('v' , 'av', 'gg0oG$')
+map('v', 'av', 'gg0oG$')
 map('o', 'av', ':<C-u>normal! gg0vG$<CR>')
 
 
@@ -96,7 +96,7 @@ map('n', 'l', '<cmd>lua Quantized_l(vim.v.count1)<CR>', { silent = true })
 
 -- [[ H/L in indent]]
 map({ 'n', 'x' }, 'H', function()
-  if vfn.col('.')-1 <= vfn.indent('.') then
+  if vfn.col('.') - 1 <= vfn.indent('.') then
     vim.cmd('normal! zc')
   else
     vim.cmd('normal! ^')
@@ -325,7 +325,7 @@ map({ 'n', 'v' }, '<leader>j', [[<Cmd>lua MoveUntilNonWS(1)<CR>]])
 
 -- [[ toggle/switch settings with local leader ]]
 local toggle_prefix = [[\]]
-map('n', toggle_prefix .. 's',     '<Cmd>setl spell! spell?<CR>', { silent = true, desc = 'toggle spell' })
+map('n', toggle_prefix .. 's', '<Cmd>setl spell! spell?<CR>', { silent = true, desc = 'toggle spell' })
 map('n', toggle_prefix .. 'a', function()
   if vim.b.autosave_enabled then
     vim.b.autosave_enabled = false
@@ -372,7 +372,7 @@ Toggle_noice = function()
   if Env.is_noice_enabled then
     Env.is_noice_enabled = false
     vim.cmd('Noice disable')
-    vim.opt.cmdheight=1
+    vim.opt.cmdheight = 1
     print('Noice disabled')
   else
     Env.is_noice_enabled = true

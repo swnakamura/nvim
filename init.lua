@@ -79,7 +79,7 @@ end
 
 -- [[ Neovide settings ]]
 vim.g.neovide_cursor_animation_length = 0.10 -- default 0.13
-vim.g.neovide_cursor_trail_size = 0.2 -- default 0.8
+vim.g.neovide_cursor_trail_size = 0.2        -- default 0.8
 if Env.is_macos then
   vim.o.guifont = "JetBrains Mono:h12"
 else
@@ -88,7 +88,8 @@ end
 
 -- [[ Plugin settings ]]
 
-local treesitter_filetypes = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'go', 'html', 'lua', 'markdown', 'markdown_inline', 'python', 'rust', 'latex', 'tsx', 'typescript', 'vimdoc', 'vim', 'yaml' }
+local treesitter_filetypes = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'go', 'html', 'lua', 'markdown', 'markdown_inline',
+  'python', 'rust', 'latex', 'tsx', 'typescript', 'vimdoc', 'vim', 'yaml' }
 
 
 local event = require("lazy.core.handler.event")
@@ -132,7 +133,7 @@ require('lazy').setup({
         -- command_palette = true,       -- position the cmdline and popupmenu together
         long_message_to_split = true, -- long messages will be sent to a split
         inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = true,       -- add a border to hover docs and signature help
+        lsp_doc_border = true,        -- add a border to hover docs and signature help
       },
     },
     dependencies = {
@@ -152,35 +153,43 @@ require('lazy').setup({
     lazy = false,
     keys = {
       -- Find
-      { "<leader>fr", function() Snacks.picker.smart({ layout='telescope' }) end, desc = "Smart Find Files" },
-      { "<leader>fR", function() Snacks.picker.recent({ layout='telescope' }) end, desc = "Recent Files" },
-      { "<leader>fp", function() Snacks.picker.projects({ layout='telescope' }) end, desc = "Projects" },
-      { "<leader>ff", function() Snacks.picker.files({ layout='telescope' }) end, desc = "Smart Find Files" },
-      { "<leader>fb", function() Snacks.picker.buffers({ layout='telescope' }) end, desc = "Buffers" },
-      { "<leader>fg", function() Snacks.picker.git_files({ layout='telescope' }) end, desc = "Find Git Files" },
-      { "<leader>fc", function() Snacks.picker.command_history({ layout='telescope' }) end, desc = "Command History" },
-      { "<leader>fn", function() Snacks.picker.notifications({ layout='telescope' }) end, desc = "Notification History" },
+      { "<leader>fr", function() Snacks.picker.smart({ layout = 'telescope' }) end,           desc = "Smart Find Files" },
+      { "<leader>fR", function() Snacks.picker.recent({ layout = 'telescope' }) end,          desc = "Recent Files" },
+      { "<leader>fp", function() Snacks.picker.projects({ layout = 'telescope' }) end,        desc = "Projects" },
+      { "<leader>ff", function() Snacks.picker.files({ layout = 'telescope' }) end,           desc = "Smart Find Files" },
+      { "<leader>fb", function() Snacks.picker.buffers({ layout = 'telescope' }) end,         desc = "Buffers" },
+      { "<leader>fg", function() Snacks.picker.git_files({ layout = 'telescope' }) end,       desc = "Find Git Files" },
+      { "<leader>fc", function() Snacks.picker.command_history({ layout = 'telescope' }) end, desc = "Command History" },
+      { "<leader>fn", function() Snacks.picker.notifications({ layout = 'telescope' }) end,   desc = "Notification History" },
 
       -- Grep
-      { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
-      { "<leader>sB", function() Snacks.picker.grep_buffers({ layout='telescope' }) end, desc = "Grep Open Buffers" },
-      { "<leader>sw", function() Snacks.picker.grep_word({ layout='telescope' }) end, desc = "Visual selection or word", mode = { "n", "x" } },
-      { "<leader>sg", function() Snacks.picker.grep({ layout='telescope',
-        args = {
-          "--color=never",
-          "--no-heading",
-          "--with-filename",
-          "--line-number",
-          "--column",
-          "--smart-case",
-          "--max-columns=500",
-          "--max-columns-preview",
-          "-g",
-          "!.git",
-          "-u", -- added
-        }
-      }) end, desc = "Grep" },
-      { "<leader>sG",
+      { "<leader>sb", function() Snacks.picker.lines() end,                                   desc = "Buffer Lines" },
+      { "<leader>sB", function() Snacks.picker.grep_buffers({ layout = 'telescope' }) end,    desc = "Grep Open Buffers" },
+      { "<leader>sw", function() Snacks.picker.grep_word({ layout = 'telescope' }) end,       desc = "Visual selection or word", mode = { "n", "x" } },
+      {
+        "<leader>sg",
+        function()
+          Snacks.picker.grep({
+            layout = 'telescope',
+            args = {
+              "--color=never",
+              "--no-heading",
+              "--with-filename",
+              "--line-number",
+              "--column",
+              "--smart-case",
+              "--max-columns=500",
+              "--max-columns-preview",
+              "-g",
+              "!.git",
+              "-u", -- added
+            }
+          })
+        end,
+        desc = "Grep"
+      },
+      {
+        "<leader>sG",
         function()
           local cwd = vfn.expand "%:p:h"
           -- for Oil buffers such as "oil://~", remove "oil://"
@@ -188,7 +197,7 @@ require('lazy').setup({
             cwd = cwd:gsub("oil://", "")
           end
           Snacks.picker.grep({
-            layout='telescope',
+            layout = 'telescope',
             dirs = { cwd },
             args = {
               "--color=never",
@@ -209,24 +218,24 @@ require('lazy').setup({
       },
 
       -- other search functionalities
-      { '<leader>s"', function() Snacks.picker.registers({ layout='telescope' }) end, desc = "Registers" },
-      { '<leader>s/', function() Snacks.picker.search_history({ layout='telescope' }) end, desc = "Search History" },
-      { "<leader>sa", function() Snacks.picker.autocmds({ layout='telescope' }) end, desc = "Autocmds" },
-      { "<leader>sc", function() Snacks.picker.command_history({ layout='telescope' }) end, desc = "Command History" },
-      { "<leader>sC", function() Snacks.picker.commands({ layout='telescope' }) end, desc = "Commands" },
-      { "<leader>sd", function() Snacks.picker.diagnostics({ layout='telescope' }) end, desc = "Diagnostics" },
-      { "<leader>sD", function() Snacks.picker.diagnostics_buffer({ layout='telescope' }) end, desc = "Buffer Diagnostics" },
-      { "<leader>sh", function() Snacks.picker.help({ layout='telescope' }) end, desc = "Help Pages" },
-      { "<leader>sH", function() Snacks.picker.highlights({ layout='telescope' }) end, desc = "Highlights" },
-      { "<leader>si", function() Snacks.picker.icons({ layout='telescope' }) end, desc = "Icons" },
-      { "<leader>sj", function() Snacks.picker.jumps({ layout='telescope' }) end, desc = "Jumps" },
-      { "<leader>sk", function() Snacks.picker.keymaps({ layout='telescope' }) end, desc = "Keymaps" },
-      { "<leader>sl", function() Snacks.picker.loclist({ layout='telescope' }) end, desc = "Location List" },
-      { "<leader>sm", function() Snacks.picker.marks({ layout='telescope' }) end, desc = "Marks" },
-      { "<leader>sM", function() Snacks.picker.man({ layout='telescope' }) end, desc = "Man Pages" },
-      { "<leader>sq", function() Snacks.picker.qflist({ layout='telescope' }) end, desc = "Quickfix List" },
-      { "<leader>sR", function() Snacks.picker.resume({ layout='telescope' }) end, desc = "Resume" },
-      { "<leader>su", function() Snacks.picker.undo({ layout='telescope' }) end, desc = "Undo History" },
+      { '<leader>s"', function() Snacks.picker.registers({ layout = 'telescope' }) end,          desc = "Registers" },
+      { '<leader>s/', function() Snacks.picker.search_history({ layout = 'telescope' }) end,     desc = "Search History" },
+      { "<leader>sa", function() Snacks.picker.autocmds({ layout = 'telescope' }) end,           desc = "Autocmds" },
+      { "<leader>sc", function() Snacks.picker.command_history({ layout = 'telescope' }) end,    desc = "Command History" },
+      { "<leader>sC", function() Snacks.picker.commands({ layout = 'telescope' }) end,           desc = "Commands" },
+      { "<leader>sd", function() Snacks.picker.diagnostics({ layout = 'telescope' }) end,        desc = "Diagnostics" },
+      { "<leader>sD", function() Snacks.picker.diagnostics_buffer({ layout = 'telescope' }) end, desc = "Buffer Diagnostics" },
+      { "<leader>sh", function() Snacks.picker.help({ layout = 'telescope' }) end,               desc = "Help Pages" },
+      { "<leader>sH", function() Snacks.picker.highlights({ layout = 'telescope' }) end,         desc = "Highlights" },
+      { "<leader>si", function() Snacks.picker.icons({ layout = 'telescope' }) end,              desc = "Icons" },
+      { "<leader>sj", function() Snacks.picker.jumps({ layout = 'telescope' }) end,              desc = "Jumps" },
+      { "<leader>sk", function() Snacks.picker.keymaps({ layout = 'telescope' }) end,            desc = "Keymaps" },
+      { "<leader>sl", function() Snacks.picker.loclist({ layout = 'telescope' }) end,            desc = "Location List" },
+      { "<leader>sm", function() Snacks.picker.marks({ layout = 'telescope' }) end,              desc = "Marks" },
+      { "<leader>sM", function() Snacks.picker.man({ layout = 'telescope' }) end,                desc = "Man Pages" },
+      { "<leader>sq", function() Snacks.picker.qflist({ layout = 'telescope' }) end,             desc = "Quickfix List" },
+      { "<leader>sR", function() Snacks.picker.resume({ layout = 'telescope' }) end,             desc = "Resume" },
+      { "<leader>su", function() Snacks.picker.undo({ layout = 'telescope' }) end,               desc = "Undo History" },
     },
     config = function()
       local opts = {
@@ -252,9 +261,9 @@ require('lazy').setup({
           },
           sections = {
             { section = "header" },
-            { icon = " ",          title = "Recent Files",    section = "recent_files",                      indent = 2,  padding = 1 },
-            { icon = " ",          title = "Projects",        section = "projects",                          indent = 2,  padding = 1 },
-            { icon = " ",          title = "Keymaps",         section = "keys",                              indent = 2,  padding = 1 },
+            { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
+            { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
+            { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
             { section = "startup" },
           },
         },
@@ -280,16 +289,16 @@ require('lazy').setup({
       -- somehow we need to defer the highlight setting not to be overridden by the default
       vim.defer_fn(
         function()
-          vim.cmd[[hi! SnacksIndentChunk guifg=#7469c4]]
-          vim.cmd[[hi! SnacksIndentScope guifg=#7469c4]]
-        -- No need for default listchars
+          vim.cmd [[hi! SnacksIndentChunk guifg=#7469c4]]
+          vim.cmd [[hi! SnacksIndentScope guifg=#7469c4]]
+          -- No need for default listchars
         end, 200
       )
       vim.defer_fn(
         function()
-        -- No need for default listchars
-        -- This needs to be deferred as it should override the default
-        vim.cmd([[set listchars-=leadmultispace:---\|]])
+          -- No need for default listchars
+          -- This needs to be deferred as it should override the default
+          vim.cmd([[set listchars-=leadmultispace:---\|]])
         end, 100
       )
     end
@@ -301,7 +310,7 @@ require('lazy').setup({
     event = "LazyFile",
     priority = 1000, -- needs to be loaded in first
     config = function()
-        require('tiny-inline-diagnostic').setup({
+      require('tiny-inline-diagnostic').setup({
         options = {
           multilines = {
             enabled = true,
@@ -310,7 +319,7 @@ require('lazy').setup({
           show_all_diags_on_cursorline = true,
         }
       })
-        vim.diagnostic.config({ virtual_text = false }) -- Only if needed in your configuration, if you already have native LSP diagnostics
+      vim.diagnostic.config({ virtual_text = false }) -- Only if needed in your configuration, if you already have native LSP diagnostics
     end
   },
   -- lazydev
@@ -381,10 +390,10 @@ require('lazy').setup({
   {
     cmd = { "RemoteStart" },
     "hmk114/remote-nvim.nvim",
-    version = "*", -- Pin to GitHub releases
+    version = "*",                     -- Pin to GitHub releases
     dependencies = {
-      "nvim-lua/plenary.nvim", -- For standard functions
-      "MunifTanjim/nui.nvim", -- To build the plugin UI
+      "nvim-lua/plenary.nvim",         -- For standard functions
+      "MunifTanjim/nui.nvim",          -- To build the plugin UI
       "nvim-telescope/telescope.nvim", -- For picking b/w different remote methods
     },
     opts = {
@@ -405,25 +414,28 @@ require('lazy').setup({
   {
     "NeogitOrg/neogit",
     dependencies = {
-      "nvim-lua/plenary.nvim",         -- required
-      "sindrets/diffview.nvim",        -- optional - Diff integration
+      "nvim-lua/plenary.nvim",  -- required
+      "sindrets/diffview.nvim", -- optional - Diff integration
 
       -- Only one of these is needed.
       "nvim-telescope/telescope.nvim", -- optional
     },
     keys = {
-      {'<leader>gs'},
-      {'gs'},
-      {'<leader>ga'},
-      {'<leader>gc'},
-      {'<leader>gl'}
+      { '<leader>gs' },
+      { 'gs' },
+      { '<leader>ga' },
+      { '<leader>gc' },
+      { '<leader>gl' }
     },
     config = function()
-      map("n", "<leader>gs", function() require('neogit').open() end, { desc = "Git status (neogit)"})
-      map("n", "gs",         function() require('neogit').open() end, { desc = "Git status (neogit)"})
-      map("n", "<leader>ga", '<cmd>silent !git add %<CR>', {silent = true, desc = "Git add current file"})
-      map("n", "<leader>gc", require('neogit').action('commit', 'commit', {'--verbose'}), {silent = true, desc = "Git commit"}) -- TODO: wrapping this command with function enables lazy loading of neogit, but it results in an error
-      map("n", "<leader>gl", require('neogit').action('log', 'log_all_branches', {'--graph', '--topo-order', '--decorate'}), {silent = true, desc = "Git log"})
+      map("n", "<leader>gs", function() require('neogit').open() end, { desc = "Git status (neogit)" })
+      map("n", "gs", function() require('neogit').open() end, { desc = "Git status (neogit)" })
+      map("n", "<leader>ga", '<cmd>silent !git add %<CR>', { silent = true, desc = "Git add current file" })
+      map("n", "<leader>gc", require('neogit').action('commit', 'commit', { '--verbose' }),
+        { silent = true, desc = "Git commit" }) -- TODO: wrapping this command with function enables lazy loading of neogit, but it results in an error
+      map("n", "<leader>gl",
+        require('neogit').action('log', 'log_all_branches', { '--graph', '--topo-order', '--decorate' }),
+        { silent = true, desc = "Git log" })
       require('neogit').setup {
         status = {
           recent_commit_count = 30
@@ -445,30 +457,34 @@ require('lazy').setup({
       date_format = "%Y.%m.%d",
     },
     keys = {
-      { "<Left>", "<Cmd>BlameToggle<CR>"}
+      { "<Left>", "<Cmd>BlameToggle<CR>" }
     }
   },
   {
     'tpope/vim-fugitive',
     cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep', 'GBrowse', 'Dispatch' },
     keys = {
-      { "<leader>gh", "<cmd>tab sp<CR>:0Gclog<CR>", desc = "Git history" },
-      { "<leader>gp", "<cmd>Dispatch! git push<CR>", desc = "Git async push" },
+      { "<leader>gh", "<cmd>tab sp<CR>:0Gclog<CR>",   desc = "Git history" },
+      { "<leader>gp", "<cmd>Dispatch! git push<CR>",  desc = "Git async push" },
       { "<leader>gf", "<cmd>Dispatch! git fetch<CR>", desc = "Git async fetch" },
-      { "<leader>gg", [[:<C-u>Glgrep ""<Left>]], desc = "Git grep" },
-      { "<leader>gd", function()
+      { "<leader>gg", [[:<C-u>Glgrep ""<Left>]],      desc = "Git grep" },
+      {
+        "<leader>gd",
+        function()
           if not vim.o.diff then
             return [[<Cmd>tab sp<CR>]] ..
-                   [[<Cmd>vert Gdiffsplit!<CR>]] ..
-                   [[<C-w><C-w>]] ..
-                   [[<Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>]] ..
-                   [[<C-w><C-w>]] ..
-                   [[<Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>]]
+                [[<Cmd>vert Gdiffsplit!<CR>]] ..
+                [[<C-w><C-w>]] ..
+                [[<Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>]] ..
+                [[<C-w><C-w>]] ..
+                [[<Cmd>setlocal nonumber norelativenumber foldcolumn=0 signcolumn=no wrap<CR>]]
           else
             return [[<Cmd>tabclose<CR>]]
           end
         end,
-        expr = true, silent = true, desc = "Git diff"
+        expr = true,
+        silent = true,
+        desc = "Git diff"
       }
     },
     dependencies = { 'tpope/vim-dispatch', 'tpope/vim-rhubarb', 'tyru/open-browser.vim' },
@@ -500,8 +516,8 @@ require('lazy').setup({
                 if vim.bo.filetype == 'gitcommit' then
                   vim.cmd("normal! gg") -- go to the top of the commit message window
                   vim.cmd('normal ""P')
-                  vim.cmd('write') -- write the commit message
-                  vim.cmd('quit') -- quit the commit message window
+                  vim.cmd('write')      -- write the commit message
+                  vim.cmd('quit')       -- quit the commit message window
                 end
               end
               , { buffer = 0, silent = true }
@@ -533,17 +549,17 @@ require('lazy').setup({
     event = 'LazyFile',
     opts = {
       signs_staged_enable = true,
-      signcolumn = true,
-      numhl      = true,
-      signs = {
-        add          = { text = '▏' },
-        change       = { text = '▏' },
+      signcolumn          = true,
+      numhl               = true,
+      signs               = {
+        add    = { text = '▏' },
+        change = { text = '▏' },
       },
-      signs_staged = {
-        add          = { text = '▏' },
-        change       = { text = '▏' },
+      signs_staged        = {
+        add    = { text = '▏' },
+        change = { text = '▏' },
       },
-      on_attach  = function(bufnr)
+      on_attach           = function(bufnr)
         local gs = package.loaded.gitsigns
 
         -- Use the global map helper, always set buffer
@@ -554,8 +570,8 @@ require('lazy').setup({
         end
 
         -- Navigation
-        local hunk_nav_opts = {wrap = false}
-        for _, downkey in ipairs({'<PageDown>', ']h', '<Down>'}) do
+        local hunk_nav_opts = { wrap = false }
+        for _, downkey in ipairs({ '<PageDown>', ']h', '<Down>' }) do
           bufmap('n', downkey, function()
             if vim.wo.diff then return ']c' end
             vim.schedule(function() gs.nav_hunk('next', hunk_nav_opts) end)
@@ -564,7 +580,7 @@ require('lazy').setup({
           end, { expr = true })
         end
 
-        for _, upkey in ipairs({'<PageUp>', '[h', '<Up>'}) do
+        for _, upkey in ipairs({ '<PageUp>', '[h', '<Up>' }) do
           bufmap('n', upkey, function()
             if vim.wo.diff then return '[c' end
             vim.schedule(function() gs.nav_hunk('prev', hunk_nav_opts) end)
@@ -582,12 +598,14 @@ require('lazy').setup({
           gs.stage_hunk(nil, {})
         end, { desc = "Git stage hunk" })
         bufmap('n', '<leader>hu', gs.reset_hunk, { desc = "Git reset hunk" })
-        bufmap('v', '<leader>hs', function() gs.stage_hunk { vfn.line("."), vfn.line("v") } end, { desc = "Git stage hunk" })
-        bufmap('v', '<leader>hu', function() gs.reset_hunk { vfn.line("."), vfn.line("v") } end, { desc = "Git reset hunk" })
+        bufmap('v', '<leader>hs', function() gs.stage_hunk { vfn.line("."), vfn.line("v") } end,
+          { desc = "Git stage hunk" })
+        bufmap('v', '<leader>hu', function() gs.reset_hunk { vfn.line("."), vfn.line("v") } end,
+          { desc = "Git reset hunk" })
         bufmap('n', '<leader>hS', gs.stage_buffer, { desc = "Git stage buffer" })
         bufmap('n', '<leader>hr', gs.undo_stage_hunk, { desc = "Git undo stage hunk" })
         bufmap('n', '<leader>hR', gs.reset_buffer, { desc = "Git reset buffer" })
-        bufmap('n', '<leader>hp', gs.preview_hunk, { desc = "Git preview hunk"})
+        bufmap('n', '<leader>hp', gs.preview_hunk, { desc = "Git preview hunk" })
         bufmap('n', '<leader>hb', function() gs.blame_line { full = true } end, { desc = "Git blame hunk" })
         bufmap('n', '<leader>hd', gs.diffthis, { desc = 'Git diff this' })
         bufmap('n', '<leader>hD', function() gs.diffthis('~') end, { desc = 'Git diff this' })
@@ -606,7 +624,7 @@ require('lazy').setup({
     init = function()
       vim.g.floaterm_width = 0.9
       vim.g.floaterm_height = 0.9
-      map({'n', 'i', 'v'}, '<C-z>', '<Cmd>FloatermToggle<CR>', { silent = true })
+      map({ 'n', 'i', 'v' }, '<C-z>', '<Cmd>FloatermToggle<CR>', { silent = true })
       map('t', [[<C-;>]], [[<C-\><C-n>:FloatermHide<CR>]], { silent = true })
       vapi.nvim_create_autocmd('FileType', {
         pattern = 'floaterm',
@@ -622,7 +640,7 @@ require('lazy').setup({
   {
     "nvzone/floaterm",
     keys = {
-     {'<C-z>', mode = {'n', 'i', 'v'},  '<Cmd>FloatermToggle<CR>'}
+      { '<C-z>', mode = { 'n', 'i', 'v' }, '<Cmd>FloatermToggle<CR>' }
     },
     cmd = "FloatermToggle",
     dependencies = "nvzone/volt",
@@ -631,8 +649,8 @@ require('lazy').setup({
       size = { h = 80, w = 90 },
       mappings = {
         term = function(buf)
-          map({'n', 't'}, '<C-;>', [[<C-\><C-n>:FloatermToggle<CR>]], { silent = true, buffer = buf })
-          map({'n', 't'}, '<C-l>', [[<C-\><C-n>]], { silent = true, buffer = buf })
+          map({ 'n', 't' }, '<C-;>', [[<C-\><C-n>:FloatermToggle<CR>]], { silent = true, buffer = buf })
+          map({ 'n', 't' }, '<C-l>', [[<C-\><C-n>]], { silent = true, buffer = buf })
         end
       }
     },
@@ -667,7 +685,7 @@ require('lazy').setup({
   -- performance (faster macro execution)
   {
     "https://github.com/pteroctopus/faster.nvim",
-    event='LazyFile'
+    event = 'LazyFile'
   },
 
   -- copilot
@@ -728,10 +746,10 @@ require('lazy').setup({
     build = "make tiktoken", -- Only on MacOS or Linux
     cmd = { "CopilotChat", "CopilotChatReset" },
     keys = {
-      { '<C-k>', "<Cmd>CopilotChatReset <CR><Cmd>CopilotChat <CR><C-l>i/COPILOT_GENERATE<CR><CR>", mode = 'v' },
-      { '<C-k>', "<Cmd>CopilotChatReset <CR><Cmd>CopilotChat <CR><C-l>i#buffer<CR><CR>/COPILOT_GENERATE<CR><CR>", mode = 'n' },
-      { '<leader>-', function() require("CopilotChat").select_prompt() end,  mode={'n','v'}, desc = "CopilotChat - Prompt actions" },
-      { '<leader>9', function() require("CopilotChat").open() end, mode={'n','v'}, desc = "CopilotChat - Open" }
+      { '<C-k>',     "<Cmd>CopilotChatReset <CR><Cmd>CopilotChat <CR><C-l>i/COPILOT_GENERATE<CR><CR>",                mode = 'v' },
+      { '<C-k>',     "<Cmd>CopilotChatReset <CR><Cmd>CopilotChat <CR><C-l>i#buffer<CR><CR>/COPILOT_GENERATE<CR><CR>", mode = 'n' },
+      { '<leader>-', function() require("CopilotChat").select_prompt() end,                                           mode = { 'n', 'v' }, desc = "CopilotChat - Prompt actions" },
+      { '<leader>9', function() require("CopilotChat").open() end,                                                    mode = { 'n', 'v' }, desc = "CopilotChat - Open" }
     },
     config = function()
       vapi.nvim_create_autocmd('BufWinEnter', {
@@ -763,22 +781,26 @@ require('lazy').setup({
 
           prompts = {
             ArgTypeAnnot = {
-              prompt = '/COPILOT_GENERATE\n\nGive type annotation for the selected function arguments. Generate only the function declaration. Specify the range of the code to replace above the code snippet (even if it\' a single line, specify start and end of the range to replace).',
+              prompt =
+              '/COPILOT_GENERATE\n\nGive type annotation for the selected function arguments. Generate only the function declaration. Specify the range of the code to replace above the code snippet (even if it\' a single line, specify start and end of the range to replace).',
             },
             DocString = {
-              prompt = '/COPILOT_GENERATE\n\nWrite docstring for the selected function or class in Google style. Specify the range of code to replace the snippet in the aforementioned syntax and wrap the docstring in code block with python language. If the selected text already contains docstring, specify the range of the code to replace and generate a new one. You can generate function declaration if you need to, but should not make any modification to that.',
+              prompt =
+              '/COPILOT_GENERATE\n\nWrite docstring for the selected function or class in Google style. Specify the range of code to replace the snippet in the aforementioned syntax and wrap the docstring in code block with python language. If the selected text already contains docstring, specify the range of the code to replace and generate a new one. You can generate function declaration if you need to, but should not make any modification to that.',
             },
 
             BetterNamings = {
-              prompt = '/COPILOT_GENERATE\n\nPlease provide better names for the following variables and functions. Specify the range of the code to replace and wrap the whole message in code block with language markdown.',
+              prompt =
+              '/COPILOT_GENERATE\n\nPlease provide better names for the following variables and functions. Specify the range of the code to replace and wrap the whole message in code block with language markdown.',
             },
             GenAndCopyCommitMsg = {
-              prompt = '> #git:staged\n\nSummarize and explain the change in the code. Then write commit message for the change with commitizen convention. Make sure the title has maximum 50 characters and message is wrapped at 72 characters. Wrap the whole message in code block with language gitcommit. Do not put spaces in front of the commit comment lines.',
+              prompt =
+              '> #git:staged\n\nSummarize and explain the change in the code. Then write commit message for the change with commitizen convention. Make sure the title has maximum 50 characters and message is wrapped at 72 characters. Wrap the whole message in code block with language gitcommit. Do not put spaces in front of the commit comment lines.',
               selection = nil,
               callback = function(response, _)
                 local commit_message = response:match("```gitcommit\n(.-)```")
                 if commit_message then
-                  vfn.setreg('"', commit_message , 'c')
+                  vfn.setreg('"', commit_message, 'c')
                 end
                 return ''
               end,
@@ -824,8 +846,8 @@ require('lazy').setup({
       "MunifTanjim/nui.nvim",
       --- The below dependencies are optional,
       "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-      "zbirenbaum/copilot.lua", -- for providers='copilot'
+      "nvim-tree/nvim-web-devicons",   -- or echasnovski/mini.icons
+      "zbirenbaum/copilot.lua",        -- for providers='copilot'
     },
     init = function()
       vapi.nvim_create_autocmd('FileType', {
@@ -866,7 +888,7 @@ require('lazy').setup({
     event = { "LazyFile" },
     cmd = { "LspInfo", "LspInstall", "LspUninstall", "Mason" },
     dependencies = {
-      {'Saghen/blink.cmp'},
+      { 'Saghen/blink.cmp' },
       { 'williamboman/mason.nvim', config = true },
       {
         'williamboman/mason-lspconfig.nvim',
@@ -921,12 +943,12 @@ require('lazy').setup({
           end
 
           vim.lsp.config('ltex', {
-            filetypes =  {"bibtex", "org", "tex", "restructuredtext", "latex", "html", "markdown"} ,
-              ltex = {
-                dictionary = {
-                  ["en-US"] = words,
-                },
+            filetypes = { "bibtex", "org", "tex", "restructuredtext", "latex", "html", "markdown" },
+            ltex = {
+              dictionary = {
+                ["en-US"] = words,
               },
+            },
           })
 
           -- efm language server for textlint
@@ -946,7 +968,8 @@ require('lazy').setup({
                     lintIgnoreExitCode = true,
 
                     lintFormats = { '%E1;%E%l:%c:', '%C2;%m', '%C3;%m%Z' },
-                    lintCommand = [[npx textlint --parallel -f json "${INPUT}" | jq -r '.[] | .messages[] | "1;\(.line):\(.column):\n2;\(.message | split("\n")[0])\n3;[\(.ruleId)]"']],
+                    lintCommand =
+                    [[npx textlint --parallel -f json "${INPUT}" | jq -r '.[] | .messages[] | "1;\(.line):\(.column):\n2;\(.message | split("\n")[0])\n3;[\(.ruleId)]"']],
 
                     -- もともとはこうだったが、ファイルにスペースが含まれている場合などでどうしてもうまくいかないので、ファイル名をlintFormatから省いた上のコマンドを使う。どうせシングルファイルの処理なので、ファイル名は必要ない
                     -- cf. https://ryota2357.com/blog/2023/textlint-with-efm-nvimlsp/
@@ -1014,12 +1037,12 @@ require('lazy').setup({
 
               nmap('<leader>i', function(_)
                 vim.lsp.inlay_hint.enable()
-                vim.diagnostic.config({virtual_lines = true})
+                vim.diagnostic.config({ virtual_lines = true })
                 vapi.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "InsertEnter" }, {
                   once = true,
                   callback = function()
                     vim.lsp.inlay_hint.enable(false)
-                    vim.diagnostic.config({virtual_lines = false})
+                    vim.diagnostic.config({ virtual_lines = false })
                   end
                 })
               end, 'Toggle inlay hint')
@@ -1033,7 +1056,7 @@ require('lazy').setup({
           })
         end
       },
-      { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
+      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
     },
   },
 
@@ -1063,17 +1086,17 @@ require('lazy').setup({
     -- ft = { 'python', 'c', 'cpp', 'rust' },
     keys = {
       -- https://zenn.dev/kawat/articles/51f9cc1f0f0aa9 を参考
-      {'<leader>Du', '<cmd>lua require("dapui").toggle()<CR>', mode = 'n', desc = "Toggle DAP UI" },
-      { '<F6>', '<cmd>DapContinue<CR>', mode = 'n', desc = "DAP Continue" },
-      { '<F10>', '<cmd>DapStepOver<CR>', mode = 'n', desc = "DAP Step Over" },
-      { '<F11>', '<cmd>DapStepInto<CR>', mode = 'n', desc = "DAP Step Into" },
-      { '<F12>', '<cmd>DapStepOut<CR>', mode = 'n', desc = "DAP Step Out" },
-      { '<leader>b', '<cmd>DapToggleBreakpoint<CR>', mode = 'n', desc = "DAP Toggle Breakpoint" },
-      { '<leader>B', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Breakpoint condition: "))<CR>', mode = 'n', desc = "DAP Set Breakpoint with condition" },
-      { '<leader>Dp', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', mode = 'n', desc = "DAP Set Log Point" },
-      { '<leader>De', '<cmd>lua require("dapui").eval()<CR>', mode = 'n', desc = "DAP Evaluate Expression" },
-      { '<leader>Dr', '<cmd>lua require("dap").repl.open()<CR>', mode = 'n', desc = "DAP Open REPL" },
-      { '<leader>Dl', '<cmd>lua require("dap").run_last()<CR>', mode = 'n', desc = "DAP Run Last Session" }
+      { '<leader>Du', '<cmd>lua require("dapui").toggle()<CR>',                                                       mode = 'n', desc = "Toggle DAP UI" },
+      { '<F6>',       '<cmd>DapContinue<CR>',                                                                         mode = 'n', desc = "DAP Continue" },
+      { '<F10>',      '<cmd>DapStepOver<CR>',                                                                         mode = 'n', desc = "DAP Step Over" },
+      { '<F11>',      '<cmd>DapStepInto<CR>',                                                                         mode = 'n', desc = "DAP Step Into" },
+      { '<F12>',      '<cmd>DapStepOut<CR>',                                                                          mode = 'n', desc = "DAP Step Out" },
+      { '<leader>b',  '<cmd>DapToggleBreakpoint<CR>',                                                                 mode = 'n', desc = "DAP Toggle Breakpoint" },
+      { '<leader>B',  '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Breakpoint condition: "))<CR>', mode = 'n', desc = "DAP Set Breakpoint with condition" },
+      { '<leader>Dp', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>',    mode = 'n', desc = "DAP Set Log Point" },
+      { '<leader>De', '<cmd>lua require("dapui").eval()<CR>',                                                         mode = 'n', desc = "DAP Evaluate Expression" },
+      { '<leader>Dr', '<cmd>lua require("dap").repl.open()<CR>',                                                      mode = 'n', desc = "DAP Open REPL" },
+      { '<leader>Dl', '<cmd>lua require("dap").run_last()<CR>',                                                       mode = 'n', desc = "DAP Run Last Session" }
     },
     dependencies = {
       {
@@ -1165,7 +1188,7 @@ require('lazy').setup({
   {
     'https://github.com/Saghen/blink.cmp',
 
-    event = { 'InsertEnter' , 'CmdlineEnter' },
+    event = { 'InsertEnter', 'CmdlineEnter' },
 
     dependencies = {
       { "epwalsh/obsidian.nvim" },
@@ -1261,7 +1284,7 @@ require('lazy').setup({
         end,
         providers = {
           lsp = {
-            async = true, -- Whether we should show the completions before this provider returns, without waiting for it
+            async = true,      -- Whether we should show the completions before this provider returns, without waiting for it
             timeout_ms = 2000, -- How long to wait for the provider to return before showing completions and treating it as asynchronous
           },
           obsidian = {
@@ -1492,7 +1515,8 @@ require('lazy').setup({
                 logger.add(sys.stderr, level="ERROR")
           ]]
         ),
-        ls.parser.parse_snippet({ trig = "sort_gpu_by_usage", name = "sort available gpu by usage using pynvml and cuda functionality" },
+        ls.parser.parse_snippet(
+          { trig = "sort_gpu_by_usage", name = "sort available gpu by usage using pynvml and cuda functionality" },
           [[
             import pynvml
 
@@ -1517,7 +1541,8 @@ require('lazy').setup({
             os.environ["CUDA_VISIBLE_DEVICES"] = str(best_gpu)
           ]]
         ),
-        ls.parser.parse_snippet({ trig = "image_sequence", name = "A class that simulates video capture from a directory of images" },
+        ls.parser.parse_snippet(
+          { trig = "image_sequence", name = "A class that simulates video capture from a directory of images" },
           [[
             class ImageSequence:
                 def __init__(self, dirname):
@@ -1536,19 +1561,22 @@ require('lazy').setup({
                     pass
           ]]
         ),
-        ls.parser.parse_snippet({ trig = "import_jaxtyping", name = "Use beartype and jaxtyping for runtime type checking" },
+        ls.parser.parse_snippet(
+          { trig = "import_jaxtyping", name = "Use beartype and jaxtyping for runtime type checking" },
           [[
             from beartype import beartype as typechecker
             from jaxtyping import Bool, Float, jaxtyped
           ]]
         ),
-        ls.parser.parse_snippet({ trig = "import_beartype", name = "Use beartype and jaxtyping for runtime type checking" },
+        ls.parser.parse_snippet(
+          { trig = "import_beartype", name = "Use beartype and jaxtyping for runtime type checking" },
           [[
             from beartype import beartype as typechecker
             from jaxtyping import Bool, Float, jaxtyped
           ]]
         ),
-        ls.parser.parse_snippet({ trig = "jaxtyped_decoration", name = "Use beartype and jaxtyping for runtime type checking" },
+        ls.parser.parse_snippet(
+          { trig = "jaxtyped_decoration", name = "Use beartype and jaxtyping for runtime type checking" },
           [[
             @jaxtyped(typechecker=typechecker)
           ]]
@@ -1743,7 +1771,7 @@ require('lazy').setup({
         's1n7ax/nvim-window-picker',
         name = 'window-picker',
         version = '2.*',
-        opts = {hint = 'floating-big-letter'},
+        opts = { hint = 'floating-big-letter' },
       },
     },
     config = function()
@@ -1760,8 +1788,8 @@ require('lazy').setup({
               modified  = "",
               renamed   = "",
               untracked = "?",
-              unstaged = "U",
-              staged = "S",
+              unstaged  = "U",
+              staged    = "S",
             }
           }
         },
@@ -1822,11 +1850,11 @@ require('lazy').setup({
       require('oil').setup({
         keymaps = {
           ["~"] = "<cmd>edit $HOME<CR>",
-          ["<C-\\>"] = {"actions.cd", mode="n"},
+          ["<C-\\>"] = { "actions.cd", mode = "n" },
           ["H"] = "actions.toggle_hidden",
           ['cy'] = {
             desc = 'Copy filepath to system clipboard',
-            callback = function ()
+            callback = function()
               require('oil.actions').copy_entry_path.callback()
               vfn.setreg("+", vfn.getreg(vim.v.register))
             end,
@@ -1893,7 +1921,7 @@ require('lazy').setup({
 
   -- emmet
   {
-    cond=false, -- not to occupy <C-y> mapping
+    cond = false, -- not to occupy <C-y> mapping
     'mattn/emmet-vim',
     ft = { 'html', 'xml', 'vue', 'htmldjango', 'markdown' }
   },
@@ -2058,11 +2086,11 @@ require('lazy').setup({
     event = 'InsertEnter',
     'echasnovski/mini.pairs',
     version = false,
-    config=true,
+    config = true,
   },
 
   -- rust
-  { 'rust-lang/rust.vim',                        ft = 'rust' },
+  { 'rust-lang/rust.vim',    ft = 'rust' },
 
   -- tagbar
   {
@@ -2098,7 +2126,7 @@ require('lazy').setup({
   -- aerial (outline based on treesitter)
   {
     keys = {
-      { '<leader>t', '<cmd>AerialToggle<CR>',  mode = {'n'} },
+      { '<leader>t', '<cmd>AerialToggle<CR>', mode = { 'n' } },
     },
     cmd = 'AerialToggle',
     'stevearc/aerial.nvim',
@@ -2187,7 +2215,7 @@ require('lazy').setup({
         ]])
 
       -- Black background in tabline for inactive buffers
-      for _, group in ipairs({'', 'ADDED', 'Btn', 'CHANGED', 'DELETED', 'ERROR', 'HINT', 'Icon', 'Index', 'INFO', 'Mod', 'ModBtn', 'Number', 'Pin', 'PinBtn', 'Sign', 'SignRight', 'Target', 'WARN'}) do
+      for _, group in ipairs({ '', 'ADDED', 'Btn', 'CHANGED', 'DELETED', 'ERROR', 'HINT', 'Icon', 'Index', 'INFO', 'Mod', 'ModBtn', 'Number', 'Pin', 'PinBtn', 'Sign', 'SignRight', 'Target', 'WARN' }) do
         vapi.nvim_set_hl(0, 'BufferInactive' .. group, { bg = '#000000' })
       end
 
@@ -2201,13 +2229,12 @@ require('lazy').setup({
       -- Bold highlight group for filename
       hl = vapi.nvim_get_hl(0, { name = 'Normal' })
       vapi.nvim_set_hl(0, 'Bold', { bold = true, fg = hl.fg, bg = hl.bg })
-
     end
   },
 
   -- Show modes with the current line color instead of the statusline
   {
-    cond=false,
+    cond = false,
     'mvllow/modes.nvim',
     config = function()
       require('modes').setup({
@@ -2246,7 +2273,7 @@ require('lazy').setup({
           component_separators = { left = '', right = '' },
           section_separators = { left = '', right = '' },
           disabled_filetypes = {
-            statusline = {'snacks_dashboard'},
+            statusline = { 'snacks_dashboard' },
             winbar = {},
           },
           ignore_focus = {},
@@ -2271,8 +2298,8 @@ require('lazy').setup({
           },
           lualine_b = {
             'branch',
-            { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-            { require'lazyvim.util.lualine'.pretty_path() },
+            { "filetype",                                  icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+            { require 'lazyvim.util.lualine'.pretty_path() },
             'progress', 'location',
           },
           lualine_c = {
@@ -2309,7 +2336,7 @@ require('lazy').setup({
             -- search count
             {
               function()
-                local ok, count = pcall(vfn.searchcount, {recompute = 0})
+                local ok, count = pcall(vfn.searchcount, { recompute = 0 })
                 if not ok then
                   return ''
                 end
@@ -2418,7 +2445,7 @@ require('lazy').setup({
       "nvim-telescope/telescope.nvim",
     },
     config = function()
-      map('n', '<leader>fo', function() vim.cmd([[ObsidianQuickSwitch]]) end, {desc='Obsidian Quick Switch'})
+      map('n', '<leader>fo', function() vim.cmd([[ObsidianQuickSwitch]]) end, { desc = 'Obsidian Quick Switch' })
       require('obsidian').setup(
         {
           disable_frontmatter = true,
@@ -2431,10 +2458,10 @@ require('lazy').setup({
           follow_img_func = function(img)
             -- This function doesn't work when the image path is not absolute.
             if Env.is_macos then
-              vim.fn.jobstart { "qlmanage", "-p", vim.fn.shellescape(img) }  -- Mac OS quick look preview
+              vim.fn.jobstart { "qlmanage", "-p", vim.fn.shellescape(img) } -- Mac OS quick look preview
               print("Opening image in Quick Look: " .. img)
             elseif Env.is_linux then
-              vim.fn.jobstart({"xdg-open", vim.fn.shellescape(img)})  -- linux
+              vim.fn.jobstart({ "xdg-open", vim.fn.shellescape(img) }) -- linux
             end
           end
         }
@@ -2535,7 +2562,7 @@ require('lazy').setup({
     dependencies = 'nvim-treesitter/nvim-treesitter',
     config = function()
       require "treesitter-context".setup {
-        max_lines = 10, -- maximum number of lines to show in the context
+        max_lines = 10,          -- maximum number of lines to show in the context
         multiline_threshold = 1, -- Maximum number of lines to show for a single context
         trim_scope = 'inner',
       }
@@ -2601,9 +2628,9 @@ require('lazy').setup({
     end
   },
   {
-    cond=false,
+    cond = false,
     "https://github.com/atusy/budouxify.nvim",
-    dependencies = {"https://github.com/atusy/budoux.lua"},
+    dependencies = { "https://github.com/atusy/budoux.lua" },
     config = function()
       map("n", "W", function()
         local pos = require("budouxify.motion").find_forward({
@@ -2720,12 +2747,12 @@ require('lazy').setup({
   -- color picker
   {
     'uga-rosa/ccc.nvim',
-    cmd = {'CccPick', 'CccConvert', 'CccHighlighterEnable', 'CccHighlighterToggle', 'CccHighlighterDisable' },
+    cmd = { 'CccPick', 'CccConvert', 'CccHighlighterEnable', 'CccHighlighterToggle', 'CccHighlighterDisable' },
     config = true
   },
 
   -- expl3
-  { 'wtsnjp/vim-expl3',  ft = 'expl3' },
+  { 'wtsnjp/vim-expl3',      ft = 'expl3' },
 
   -- better quickfix window
   { 'kevinhwang91/nvim-bqf', ft = 'qf' },
@@ -2740,7 +2767,8 @@ require('lazy').setup({
       vim.o.foldlevel = 99
       vim.o.foldlevelstart = 99
       vim.opt.foldcolumn = "1"
-      vim.o.statuscolumn = '%#FoldColumn#%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "▼" : "▶") : " " }%*%=%-l %s'
+      vim.o.statuscolumn =
+      '%#FoldColumn#%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "▼" : "▶") : " " }%*%=%-l %s'
 
       UFOVirtTextHandler = function(virtText, lnum, endLnum, width, truncate)
         local newVirtText = {}
@@ -2756,7 +2784,7 @@ require('lazy').setup({
           else
             chunkText = truncate(chunkText, targetWidth - curWidth)
             local hlGroup = chunk[2]
-            table.insert(newVirtText, {chunkText, hlGroup})
+            table.insert(newVirtText, { chunkText, hlGroup })
             chunkWidth = vfn.strdisplaywidth(chunkText)
             -- str width returned from truncate() may less than 2nd argument, need padding
             if curWidth + chunkWidth < targetWidth then
@@ -2766,7 +2794,7 @@ require('lazy').setup({
           end
           curWidth = curWidth + chunkWidth
         end
-        table.insert(newVirtText, {suffix, 'MoreMsg'})
+        table.insert(newVirtText, { suffix, 'MoreMsg' })
         return newVirtText
       end
     end,
@@ -2776,7 +2804,7 @@ require('lazy').setup({
           if filetype == 'NeogitStatus' then
             return ''
           else
-            return {'treesitter', 'indent'}
+            return { 'treesitter', 'indent' }
           end
         end,
         fold_virt_text_handler = UFOVirtTextHandler,
@@ -2806,7 +2834,8 @@ require('keymaps')
 
 -- [[minor functionalities]]
 -- abbreviation for substitution
-vim.cmd([[cnoreabbrev <expr> ss getcmdtype() .. getcmdline() ==# ':ss' ? [getchar(), ''][1] .. "%s///g<Left><Left>" : 'ss']])
+vim.cmd(
+  [[cnoreabbrev <expr> ss getcmdtype() .. getcmdline() ==# ':ss' ? [getchar(), ''][1] .. "%s///g<Left><Left>" : 'ss']])
 
 -- visual modeで複数行を選択して'/'を押すと，その範囲内での検索を行う
 vim.cmd([[
@@ -2880,23 +2909,23 @@ VisualMatch = function()
   local line = vfn.line
   local charcol = vfn.charcol
 
-  if charcol'.' < charcol'v' then
+  if charcol '.' < charcol 'v' then
     vim.g.colrange = { charcol('.'), charcol('v') }
-  elseif charcol'.' > charcol'v' then
+  elseif charcol '.' > charcol 'v' then
     vim.g.colrange = { charcol('v'), charcol('.') }
-  elseif line'.' ~= line'v' then
+  elseif line '.' ~= line 'v' then
     -- same column, different line
     vim.g.colrange = { charcol('v'), charcol('.') }
   else
     return nil
   end
 
-  if line'.' == line'v' then
+  if line '.' == line 'v' then
     vim.cmd([[
       let g:text = getline('.')->strcharpart(g:colrange[0]-1, g:colrange[1]-g:colrange[0]+1)->escape('\')
       ]])
   else
-    if line'.' > line'v' then
+    if line '.' > line 'v' then
       vim.g.linerange = { 'v', '.' }
     else
       vim.g.linerange = { '.', 'v' }
@@ -2918,7 +2947,7 @@ VisualMatch = function()
   return nil
 end
 -- WinLeave is needed to clear match when leaving the window. VisualMatch deletes the match for the current window only, so if you switch to another window, the match should be cleared before you leave.
-vapi.nvim_create_autocmd({'CursorMoved', 'WinLeave'}, {
+vapi.nvim_create_autocmd({ 'CursorMoved', 'WinLeave' }, {
   pattern = '*',
   callback = VisualMatch
 })
@@ -2980,7 +3009,7 @@ augroup END
 
 function RestoreWinAfter(command)
   local curw = vfn.winsaveview()
-  vapi.nvim_exec2(command, {output = true})
+  vapi.nvim_exec2(command, { output = true })
   vfn.winrestview(curw)
 end
 
@@ -2993,7 +3022,7 @@ function Is_joblog()
 end
 
 vapi.nvim_create_autocmd(
-  {'BufReadPost', 'BufWritePost'},
+  { 'BufReadPost', 'BufWritePost' },
   {
     pattern = '*.csv',
     callback = function()
@@ -3006,7 +3035,7 @@ vapi.nvim_create_autocmd(
   }
 )
 vapi.nvim_create_autocmd(
-  {'BufReadPost', 'BufWritePost'},
+  { 'BufReadPost', 'BufWritePost' },
   {
     pattern = '*.tsv',
     callback = function()
@@ -3018,7 +3047,7 @@ vapi.nvim_create_autocmd(
   }
 )
 vapi.nvim_create_autocmd(
-  {'BufWritePre'},
+  { 'BufWritePre' },
   {
     pattern = '*.csv',
     callback = function()
@@ -3028,7 +3057,7 @@ vapi.nvim_create_autocmd(
   }
 )
 vapi.nvim_create_autocmd(
-  {'BufWritePre'},
+  { 'BufWritePre' },
   {
     pattern = '*.tsv',
     callback = function()
@@ -3063,14 +3092,15 @@ augroup END
 vapi.nvim_create_autocmd(
   'FileType',
   {
-    pattern='python',
-    callback=function()
+    pattern = 'python',
+    callback = function()
       function FormatPython()
         pcall(vim.cmd, 'update')
         RestoreWinAfter(':silent %!ruff format --line-length=140 -')
         RestoreWinAfter(':silent %!ruff check --fix-only -q --extend-select I -')
         vim.cmd('update')
       end
+
       map('n', 'gF', FormatPython, { buffer = true })
     end
   })
@@ -3078,7 +3108,7 @@ vapi.nvim_create_autocmd(
 
 -- [[ autocmd-IME ]]
 -- require('japanese.keep').setup()
-map({'n', 'i'}, '<F2>', require('japanese.mode').toggle_IME, { noremap = true, silent = true, expr = true })
+map({ 'n', 'i' }, '<F2>', require('japanese.mode').toggle_IME, { noremap = true, silent = true, expr = true })
 -- also make a command to enable japanese mode
 vapi.nvim_create_user_command('JapaneseModeToggle', function()
   require('japanese.mode').toggle_IME()
@@ -3086,7 +3116,7 @@ end, { desc = 'Toggle Japanese IME mode' })
 
 
 -- [[ autosave ]]
-local autosave_disabled_ft = { "acwrite", "oil", "yazi", "neo-tree", "yaml", "toml", "json", "csv", "tsv", "gitcommit"}
+local autosave_disabled_ft = { "acwrite", "oil", "yazi", "neo-tree", "yaml", "toml", "json", "csv", "tsv", "gitcommit" }
 vapi.nvim_create_autocmd("BufRead", {
   pattern = "*",
   group = vapi.nvim_create_augroup("autosave", {}),
@@ -3096,10 +3126,10 @@ vapi.nvim_create_autocmd("BufRead", {
 })
 local autosave = function(ctx)
   if
-    not vim.bo.modified
-    or vfn.findfile(ctx.file, ".") == "" -- a new file
-    or ctx.file:match("wezterm.lua")
-    or not vapi.nvim_buf_get_var(ctx.buf, "autosave_enabled")
+      not vim.bo.modified
+      or vfn.findfile(ctx.file, ".") == "" -- a new file
+      or ctx.file:match("wezterm.lua")
+      or not vapi.nvim_buf_get_var(ctx.buf, "autosave_enabled")
   then
     return
   elseif vim.tbl_contains(autosave_disabled_ft, vim.bo[ctx.buf].ft) then
@@ -3108,7 +3138,7 @@ local autosave = function(ctx)
   end
   vim.cmd("silent lockmarks update")
 end
-vapi.nvim_create_autocmd({"BufLeave", "FocusLost"}, {
+vapi.nvim_create_autocmd({ "BufLeave", "FocusLost" }, {
   pattern = "*",
   callback = autosave,
 })

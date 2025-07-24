@@ -107,4 +107,3 @@ o.matchpairs:append({ '「:」', '（:）', '『:』', '【:】', '〈:〉', '�
 o.spelllang = 'en,cjk'
 
 go.signcolumn = 'yes:1'
-
