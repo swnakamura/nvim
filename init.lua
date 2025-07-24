@@ -988,13 +988,9 @@ require('lazy').setup({
               nmap('<leader>ld', "<cmd>Lspsaga peek_definition<CR>", 'Goto Definition')
               nmap('<leader>lr', require('telescope.builtin').lsp_references, 'Goto References')
               nmap('<leader>li', vim.lsp.buf.implementation, 'Goto Implementation')
-              -- nmap('<leader>D', vim.lsp.buf.type_definition, 'Type Definition')
-              -- nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, 'Document Symbols')
-              -- nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Workspace Symbols')
 
               -- See `:help K` for why this keymap
               nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-              nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
               -- Lesser used LSP functionality
               nmap('gD', vim.lsp.buf.declaration, 'Goto Declaration')
@@ -1005,22 +1001,15 @@ require('lazy').setup({
               end, 'Workspace List Folders')
 
               -- Diagnostic keymaps
-              -- nmap('[d', function() vim.diagnostic.jump({ count = -1 }) end, 'Go to previous diagnostic message')
-              -- nmap(']d', function() vim.diagnostic.jump({ count = 1 }) end, 'Go to next diagnostic message')
-              -- nmap('[d', function() vim.diagnostic.goto_prev() end, 'Go to previous diagnostic message')
-              -- nmap(']d', function() vim.diagnostic.goto_next() end, 'Go to next diagnostic message')
               nmap('[d', function() require("lspsaga.diagnostic"):goto_prev() end, 'Go to previous diagnostic message')
               nmap(']d', function() require("lspsaga.diagnostic"):goto_next() end, 'Go to next diagnostic message')
               nmap('<leader>le', vim.diagnostic.open_float, 'Open floating diagnostic message')
               nmap('<leader>ll', vim.diagnostic.setloclist, 'Open diagnostics list')
 
-              -- nmap('<leader>a', '<cmd>Lspsaga outline<cr>', 'Open outline')
-
               -- Create a command `:Format` local to the LSP buffer
               vapi.nvim_buf_create_user_command(bufnr, 'Format', function(_)
                 vim.lsp.buf.format()
               end, { desc = 'Format current buffer with LSP' })
-              -- map('n', 'gF', vim.lsp.buf.format)
 
               nmap('<leader>i', function(_)
                 vim.lsp.inlay_hint.enable()
