@@ -705,6 +705,7 @@ require('lazy').setup({
           typescript = true,
           lua = true,
           html = true,
+          tex = false,
           css = true,
           gitcommit = true,
           bash = true,
