@@ -2427,6 +2427,15 @@ require('lazy').setup({
               path = "~/research_vault",
             }
           },
+          follow_img_func = function(img)
+            -- This function doesn't work when the image path is not absolute.
+            if Env.is_macos then
+              vim.fn.jobstart { "qlmanage", "-p", vim.fn.shellescape(img) }  -- Mac OS quick look preview
+              print("Opening image in Quick Look: " .. img)
+            elseif Env.is_linux then
+              vim.fn.jobstart({"xdg-open", vim.fn.shellescape(img)})  -- linux
+            end
+          end
         }
       )
     end
