@@ -418,7 +418,7 @@ require('lazy').setup({
       "sindrets/diffview.nvim", -- optional - Diff integration
 
       -- Only one of these is needed.
-      "nvim-telescope/telescope.nvim", -- optional
+      "folke/snacks.nvim", -- optional
     },
     keys = {
       { '<leader>gs' },
@@ -741,7 +741,6 @@ require('lazy').setup({
     dependencies = {
       { "zbirenbaum/copilot.lua" },
       { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
-      -- { "nvim-telescope/telescope-ui-select.nvim" } -- for telescope picker?
     },
     build = "make tiktoken", -- Only on MacOS or Linux
     cmd = { "CopilotChat", "CopilotChatReset" },
@@ -1010,7 +1009,6 @@ require('lazy').setup({
               nmap('<leader>la', vim.lsp.buf.code_action, 'Code Action')
 
               nmap('<leader>ld', "<cmd>Lspsaga peek_definition<CR>", 'Goto Definition')
-              nmap('<leader>lr', require('telescope.builtin').lsp_references, 'Goto References')
               nmap('<leader>li', vim.lsp.buf.implementation, 'Goto Implementation')
 
               -- See `:help K` for why this keymap
@@ -1744,14 +1742,6 @@ require('lazy').setup({
     end,
   },
 
-  -- show luasnip snippets in telescope
-  {
-    'benfowler/telescope-luasnip.nvim',
-    keys = {
-      { "<leader>ss", "<cmd>Telescope luasnip<CR>", desc = "Telescope: Show Luasnip snippets" },
-    },
-  },
-
   -- Neotree (filer)
   {
     cond = not Env.is_vscode,
@@ -2381,57 +2371,6 @@ require('lazy').setup({
     }
   },
 
-  -- Telescope Fuzzy Finder (files, lsp, etc)
-  {
-    'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
-    dependencies = { 'nvim-lua/plenary.nvim', {
-      'nvim-telescope/telescope-fzf-native.nvim',
-      build = 'make',
-      cond = function()
-        return vfn.executable 'make' == 1
-      end,
-    } },
-    config = function()
-      local actions = require('telescope.actions')
-      require('telescope').setup {
-        defaults = {
-          mappings = {
-            i = {
-              ['<C-u>'] = false,
-              ['<C-d>'] = false,
-              ['<ScrollWheelUp>'] = actions.move_selection_previous,
-              ['<ScrollWheelDown>'] = actions.move_selection_next,
-            },
-          },
-          vimgrep_arguments = {
-            "rg",
-            "--color=never",
-            "--no-heading",
-            "--with-filename",
-            "--line-number",
-            "--column",
-            "--smart-case",
-            "-u" -- added
-          }
-        },
-      }
-
-      -- To avoid entering insert mode after search
-      vapi.nvim_create_autocmd("WinLeave", {
-        callback = function()
-          if vim.bo.ft == "TelescopePrompt" and vfn.mode() == "i" then
-            vapi.nvim_feedkeys(vapi.nvim_replace_termcodes("<Esc>", true, false, true), "i", false)
-          end
-        end,
-      })
-
-      -- Enable telescope fzf native, if installed
-      require('telescope').load_extension('fzf')
-    end,
-    cmd = 'Telescope',
-  },
-
   -- obsidian integration
   {
     cond = not Env.is_vscode and not Env.is_ssh, -- run only in local neovim
@@ -2442,7 +2381,7 @@ require('lazy').setup({
       "nvim-lua/plenary.nvim",
 
       -- Optional, for search and quick-switch functionality.
-      "nvim-telescope/telescope.nvim",
+      -- "nvim-telescope/telescope.nvim",
     },
     config = function()
       map('n', '<leader>fo', function() vim.cmd([[ObsidianQuickSwitch]]) end, { desc = 'Obsidian Quick Switch' })
