@@ -1671,7 +1671,7 @@ require('lazy').setup({
             \end{document}
           ]]
         ),
-        ls.parser.parse_snippet("fig",
+        ls.parser.parse_snippet("figure",
           [[
             \begin{figure}[b]
                 \centering
@@ -1681,7 +1681,12 @@ require('lazy').setup({
             \end{figure}$0
           ]]
         ),
-        ls.parser.parse_snippet("tblr",
+        ls.parser.parse_snippet("usepackage-tblr",
+          [[
+            \usepackage{tabularray}
+            \UseTblrLibrary{booktabs}
+          ]]),
+        ls.parser.parse_snippet("table",
           [[
             \begin{table}[t]
                 \centering
