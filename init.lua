@@ -625,27 +625,6 @@ require('lazy').setup({
     },
   },
 
-  -- floating terminal
-  {
-    cond = false,
-    'voldikss/vim-floaterm',
-    cmd = 'FloatermToggle',
-    init = function()
-      vim.g.floaterm_width = 0.9
-      vim.g.floaterm_height = 0.9
-      map({ 'n', 'i', 'v' }, '<C-z>', '<Cmd>FloatermToggle<CR>', { silent = true })
-      map('t', [[<C-;>]], [[<C-\><C-n>:FloatermHide<CR>]], { silent = true })
-      vapi.nvim_create_autocmd('FileType', {
-        pattern = 'floaterm',
-        callback = function()
-          map('n', [[<C-;>]], [[<C-\><C-n>:FloatermHide<CR>]], { silent = true, buffer = 0 })
-          map('t', [[<C-/>]], [[<C-\><C-n>:FloatermHide<CR>]], { silent = true, buffer = 0 })
-          map('t', '<C-l>', [[<C-\><C-n>]], { silent = true, buffer = 0 })
-        end
-      })
-    end
-  },
-
   {
     cond = not Env.is_vscode,
     "nvzone/floaterm",
@@ -2099,37 +2078,6 @@ require('lazy').setup({
 
   -- rust
   { 'rust-lang/rust.vim',    ft = 'rust' },
-
-  -- tagbar
-  {
-    cond = false,
-    'majutsushi/tagbar',
-    init = function()
-      vim.keymap.set('n', '<leader>t', '<cmd>TagbarToggle<CR>')
-    end,
-    config = function()
-      vim.cmd([[
-        let g:tagbar_sort = 0
-        let g:tagbar_autoclose = 0
-
-        let g:tagbar_map_togglesort = "S"
-
-        let g:tagbar_type_help = {
-        \ 'ctagstype' : 'vimhelp',
-        \ 'kinds'     : [
-        \ 's:Sections',
-        \ 'b:Subsections',
-        \ ],
-        \ 'kind2scope':{'s': 'section', 'b': 'subsection'},
-        \ 'scope2kind':{'section': 's'},
-        \ 'sro': ',',
-        \ 'sort'    : 0,
-        \ 'deffile' : $HOME . '.ctags.d/vim.ctags'
-        \ }
-        ]])
-    end,
-    cmd = 'TagbarToggle'
-  },
 
   -- aerial (outline based on treesitter)
   {
