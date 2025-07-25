@@ -101,6 +101,7 @@ require('lazy').setup({
 
   -- noice
   {
+    cond = not Env.is_vscode,
     "folke/noice.nvim",
     event = "LazyFile",
     opts = {
@@ -148,6 +149,7 @@ require('lazy').setup({
 
   -- snacks.nvim (many QoL plugins)
   {
+    cond = not Env.is_vscode,
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
@@ -306,6 +308,7 @@ require('lazy').setup({
 
   -- prettier diagnostics
   {
+    cond = not Env.is_vscode,
     "rachartier/tiny-inline-diagnostic.nvim",
     event = "LazyFile",
     priority = 1000, -- needs to be loaded in first
@@ -324,6 +327,7 @@ require('lazy').setup({
   },
   -- lazydev
   {
+    cond = not Env.is_vscode,
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files
     opts = {
@@ -388,6 +392,7 @@ require('lazy').setup({
 
   -- remote-nvim
   {
+    cond = not Env.is_vscode,
     cmd = { "RemoteStart" },
     "hmk114/remote-nvim.nvim",
     version = "*",                     -- Pin to GitHub releases
@@ -412,6 +417,7 @@ require('lazy').setup({
 
   -- Git related plugins
   {
+    cond = not Env.is_vscode,
     "NeogitOrg/neogit",
     dependencies = {
       "nvim-lua/plenary.nvim",  -- required
@@ -451,6 +457,7 @@ require('lazy').setup({
     end
   },
   {
+    cond = not Env.is_vscode,
     "FabijanZulj/blame.nvim",
     opts = {
       virtual_style = 'float',
@@ -461,6 +468,7 @@ require('lazy').setup({
     }
   },
   {
+    cond = not Env.is_vscode,
     'tpope/vim-fugitive',
     cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep', 'GBrowse', 'Dispatch' },
     keys = {
@@ -544,6 +552,7 @@ require('lazy').setup({
     end,
   },
   {
+    cond = not Env.is_vscode,
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     event = 'LazyFile',
@@ -638,6 +647,7 @@ require('lazy').setup({
   },
 
   {
+    cond = not Env.is_vscode,
     "nvzone/floaterm",
     keys = {
       { '<C-z>', mode = { 'n', 'i', 'v' }, '<Cmd>FloatermToggle<CR>' }
@@ -658,6 +668,7 @@ require('lazy').setup({
 
   -- better diff
   {
+    cond = not Env.is_vscode,
     event = 'LazyFile',
     'https://github.com/rickhowe/diffchar.vim',
   },
@@ -737,6 +748,7 @@ require('lazy').setup({
 
   -- copilot chat
   {
+    cond = not Env.is_vscode,
     "CopilotC-Nvim/CopilotChat.nvim",
     dependencies = {
       { "zbirenbaum/copilot.lua" },
@@ -811,6 +823,7 @@ require('lazy').setup({
     -- See Commands section for default commands if you want to lazy load on them
   },
   {
+    cond = not Env.is_vscode,
     "yetone/avante.nvim",
     version = false, -- Never set this value to "*"! Never!
     keys = {
@@ -1184,6 +1197,7 @@ require('lazy').setup({
 
   -- completion
   {
+    cond = not Env.is_vscode,
     'https://github.com/Saghen/blink.cmp',
 
     event = { 'InsertEnter', 'CmdlineEnter' },
@@ -1309,6 +1323,7 @@ require('lazy').setup({
     opts_extend = { "sources.default" }
   },
   {
+    cond = not Env.is_vscode,
     'saghen/blink.compat',
     -- use the latest release, via version = '*', if you also use the latest release for blink.cmp
     version = '*',
@@ -1834,6 +1849,7 @@ require('lazy').setup({
 
   -- oil
   {
+    cond = not Env.is_vscode,
     keys = { "<leader>e", "<leader>E" },
     'https://github.com/stevearc/oil.nvim',
     config = function()
@@ -1996,10 +2012,12 @@ require('lazy').setup({
 
   -- markdown
   {
+    cond = not Env.is_vscode,
     'https://github.com/preservim/vim-markdown',
     ft = 'markdown',
   },
   {
+    cond = not Env.is_vscode,
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
     ft = { 'markdown', 'copilot-chat' },
@@ -2115,6 +2133,7 @@ require('lazy').setup({
 
   -- aerial (outline based on treesitter)
   {
+    cond = not Env.is_vscode,
     keys = {
       { '<leader>t', '<cmd>AerialToggle<CR>', mode = { 'n' } },
     },
@@ -2356,6 +2375,7 @@ require('lazy').setup({
 
   -- dev icons
   {
+    cond = not Env.is_vscode,
     lazy = true,
     'nvim-tree/nvim-web-devicons',
     opts = {
@@ -2514,6 +2534,7 @@ require('lazy').setup({
 
   -- automatic session save and restore
   {
+    cond = not Env.is_vscode,
     "folke/persistence.nvim",
     event = "BufReadPre", -- this will only start session saving when an actual file was opened
     opts = {}
@@ -2528,6 +2549,7 @@ require('lazy').setup({
 
   -- vimtex
   {
+    cond = not Env.is_vscode,
     'lervag/vimtex',
     -- lazy loading not allowed
     ft = 'tex',
@@ -2685,6 +2707,7 @@ require('lazy').setup({
 
   -- color picker
   {
+    cond = not Env.is_vscode,
     'uga-rosa/ccc.nvim',
     cmd = { 'CccPick', 'CccConvert', 'CccHighlighterEnable', 'CccHighlighterToggle', 'CccHighlighterDisable' },
     config = true
@@ -2698,6 +2721,7 @@ require('lazy').setup({
 
   -- beautify fold
   {
+    cond = not Env.is_vscode,
     'kevinhwang91/nvim-ufo',
     dependencies = { 'kevinhwang91/promise-async' },
     event = 'LazyFile',
