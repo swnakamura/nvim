@@ -17,7 +17,7 @@ o.hlsearch = false
 o.wrapscan = false
 
 -- Make relative line numbers default
-vim.wo.number = true
+go.number = true
 go.relativenumber = true
 
 -- Enable mouse mode
@@ -43,7 +43,8 @@ o.ignorecase = true
 o.smartcase = true
 
 -- Keep signcolumn on by default
-vim.wo.signcolumn = 'yes'
+go.signcolumn = 'yes:1'
+go.foldcolumn = '0'
 
 -- Decrease update time
 o.updatetime = 250
@@ -106,5 +107,3 @@ o.matchpairs:append({ '「:」', '（:）', '『:』', '【:】', '〈:〉', '�
 
 o.spelllang = 'en,cjk'
 o.spellfile = vim.fn.stdpath('config') .. '/spell/en.utf-8.add'
-
-go.signcolumn = 'yes:1'

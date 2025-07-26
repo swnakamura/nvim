@@ -2682,9 +2682,7 @@ require('lazy').setup({
       vim.o.foldenable = true
       vim.o.foldlevel = 99
       vim.o.foldlevelstart = 99
-      vim.opt.foldcolumn = "1"
-      vim.o.statuscolumn =
-      '%#FoldColumn#%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "▼" : "▶") : " " }%*%=%-l %s'
+      vim.o.statuscolumn = '%*%-l %s'
 
       UFOVirtTextHandler = function(virtText, lnum, endLnum, width, truncate)
         local newVirtText = {}
