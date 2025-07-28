@@ -1357,28 +1357,29 @@ require('lazy').setup({
         end
       end, { silent = true, expr = true })
 
-      local ls = require("luasnip")
+      local add = require("luasnip").add_snippets
+      local parse = require("luasnip").parser.parse_snippet
 
-      ls.add_snippets("sh", {
-        ls.parser.parse_snippet('cdhere', [[cd "$(dirname "\$0")"]])
+      add("sh", {
+        parse('cdhere', [[cd "$(dirname "\$0")"]])
       })
 
-      ls.add_snippets("bash", {
-        ls.parser.parse_snippet('cdhere', 'cd "$(dirname "$0")"')
+      add("bash", {
+        parse('cdhere', 'cd "$(dirname "$0")"')
       })
 
-      ls.add_snippets("zsh", {
-        ls.parser.parse_snippet('cdhere', 'cd "$(dirname "$0")"')
+      add("zsh", {
+        parse('cdhere', 'cd "$(dirname "$0")"')
       })
 
-      ls.add_snippets("python", {
-        ls.parser.parse_snippet("pf", [[print(f"{$1}")$0]]),
-        ls.parser.parse_snippet("bp", [[breakpoint()]]),
-        ls.parser.parse_snippet("pretty_traceback", [[import colored_traceback.always  # noqa: F401]]),
-        ls.parser.parse_snippet("todo", "# TODO: "),
-        ls.parser.parse_snippet("import_plt", "import matplotlib.pyplot as plt"),
-        ls.parser.parse_snippet("ifmain", [[if __name__ == "__main__":]]),
-        ls.parser.parse_snippet({ trig = "plot_instantly", name = "plot_instantly" },
+      add("python", {
+        parse("pf", [[print(f"{$1}")$0]]),
+        parse("bp", [[breakpoint()]]),
+        parse("pretty_traceback", [[import colored_traceback.always  # noqa: F401]]),
+        parse("todo", "# TODO: "),
+        parse("import_plt", "import matplotlib.pyplot as plt"),
+        parse("ifmain", [[if __name__ == "__main__":]]),
+        parse({ trig = "plot_instantly", name = "plot_instantly" },
           [[
             import matplotlib.pyplot as plt
             fig = plt.figure()
@@ -1388,7 +1389,7 @@ require('lazy').setup({
             $0
           ]]
         ),
-        ls.parser.parse_snippet({ trig = "set_axes_equal", name = "set x y z axes equal for same aspect ratio." },
+        parse({ trig = "set_axes_equal", name = "set x y z axes equal for same aspect ratio." },
           [[
             def set_axes_equal(ax):
                 """
@@ -1420,7 +1421,7 @@ require('lazy').setup({
 
           ]]
         ),
-        ls.parser.parse_snippet({ trig = "argument_parser", name = "argument_parser" },
+        parse({ trig = "argument_parser", name = "argument_parser" },
           [[
             import argparse
             p = argparse.ArgumentParser()
@@ -1428,7 +1429,7 @@ require('lazy').setup({
             args = p.parse_args()
           ]]
         ),
-        ls.parser.parse_snippet({ trig = "tyro_argument_parser", name = "tyro_argument_parser" },
+        parse({ trig = "tyro_argument_parser", name = "tyro_argument_parser" },
           [[
             import dataclasses
 
@@ -1454,7 +1455,7 @@ require('lazy').setup({
                 $0
           ]]
         ),
-        ls.parser.parse_snippet({ trig = "read_movie_using_cv2", name = "read movie using cv2" },
+        parse({ trig = "read_movie_using_cv2", name = "read movie using cv2" },
           [[
             cap = cv2.VideoCapture(movie_path)
             FPS = round(cap.get(cv2.CAP_PROP_FPS), 2)
@@ -1467,7 +1468,7 @@ require('lazy').setup({
             cap.release()
           ]]
         ),
-        ls.parser.parse_snippet({ trig = "write_movie_using_cv2", name = "write movie using cv2" },
+        parse({ trig = "write_movie_using_cv2", name = "write movie using cv2" },
           [[
             out = cv2.VideoWriter(
                 f"out.mp4",
@@ -1479,7 +1480,7 @@ require('lazy').setup({
             out.release()
           ]]
         ),
-        ls.parser.parse_snippet({ trig = "read_write_movie_using_cv2", name = "read and write movie using cv2" },
+        parse({ trig = "read_write_movie_using_cv2", name = "read and write movie using cv2" },
           [[
             cap = cv2.VideoCapture(movie_path)
             FPS = round(cap.get(cv2.CAP_PROP_FPS), 2)
@@ -1500,14 +1501,14 @@ require('lazy').setup({
             out.release()
           ]]
         ),
-        ls.parser.parse_snippet({ trig = "loguru_debugonly", name = "loguru_debugonly" },
+        parse({ trig = "loguru_debugonly", name = "loguru_debugonly" },
           [[
             if not args.debug:
                 logger.remove()
                 logger.add(sys.stderr, level="ERROR")
           ]]
         ),
-        ls.parser.parse_snippet(
+        parse(
           { trig = "sort_gpu_by_usage", name = "sort available gpu by usage using pynvml and cuda functionality" },
           [[
             import pynvml
@@ -1533,7 +1534,7 @@ require('lazy').setup({
             os.environ["CUDA_VISIBLE_DEVICES"] = str(best_gpu)
           ]]
         ),
-        ls.parser.parse_snippet(
+        parse(
           { trig = "image_sequence", name = "A class that simulates video capture from a directory of images" },
           [[
             class ImageSequence:
@@ -1553,21 +1554,21 @@ require('lazy').setup({
                     pass
           ]]
         ),
-        ls.parser.parse_snippet(
+        parse(
           { trig = "import_jaxtyping", name = "Use beartype and jaxtyping for runtime type checking" },
           [[
             from beartype import beartype as typechecker
             from jaxtyping import Bool, Float, jaxtyped
           ]]
         ),
-        ls.parser.parse_snippet(
+        parse(
           { trig = "import_beartype", name = "Use beartype and jaxtyping for runtime type checking" },
           [[
             from beartype import beartype as typechecker
             from jaxtyping import Bool, Float, jaxtyped
           ]]
         ),
-        ls.parser.parse_snippet(
+        parse(
           { trig = "jaxtyped_decoration", name = "Use beartype and jaxtyping for runtime type checking" },
           [[
             @jaxtyped(typechecker=typechecker)
@@ -1575,21 +1576,21 @@ require('lazy').setup({
         ),
       })
 
-      ls.add_snippets("html", {
-        ls.parser.parse_snippet("rb", "<ruby>$1<rp> (</rp><rt>$2</rt><rp>) </rp></ruby>$0")
+      add("html", {
+        parse("rb", "<ruby>$1<rp> (</rp><rt>$2</rt><rp>) </rp></ruby>$0")
       })
 
-      ls.add_snippets("text", {
-        ls.parser.parse_snippet("rb", "[[rb:$1>$2]]$0"),
-        ls.parser.parse_snippet("np", "[newpage]"),
-        ls.parser.parse_snippet("sp", "◇　◇　◇"),
+      add("text", {
+        parse("rb", "[[rb:$1>$2]]$0"),
+        parse("np", "[newpage]"),
+        parse("sp", "◇　◇　◇"),
       })
 
-      ls.add_snippets("markdown", {
-        ls.parser.parse_snippet("rb", "<ruby>$1<rp> (</rp><rt>$2</rt><rp>) </rp></ruby>$0"),
-        ls.parser.parse_snippet("str", "<strong>$1</strong>$0"),
-        ls.parser.parse_snippet({ trig = ",,", snippetType = "autosnippet" }, "$$1$$0"),
-        ls.parser.parse_snippet("details",
+      add("markdown", {
+        parse("rb", "<ruby>$1<rp> (</rp><rt>$2</rt><rp>) </rp></ruby>$0"),
+        parse("str", "<strong>$1</strong>$0"),
+        parse({ trig = ",,", snippetType = "autosnippet" }, "$$1$$0"),
+        parse("details",
           [[
             <details>
             <summary>
@@ -1601,15 +1602,15 @@ require('lazy').setup({
           ]]
         ),
       })
-      ls.add_snippets("tex", {
-        ls.parser.parse_snippet("bf", "\\textbf{$1}"),
-        ls.parser.parse_snippet("it", "\\textit{$1}"),
-        ls.parser.parse_snippet("sc", "\\textsc{$1}"),
-        ls.parser.parse_snippet("sf", "\\textsf{$1}"),
-        ls.parser.parse_snippet("tt", "\\texttt{$1}"),
-        ls.parser.parse_snippet("em", "\\emph{$1}"),
-        ls.parser.parse_snippet({ trig = ",,", snippetType = "autosnippet" }, "$$1$"),
-        ls.parser.parse_snippet("jbase",
+      add("tex", {
+        parse("bf", "\\textbf{$1}"),
+        parse("it", "\\textit{$1}"),
+        parse("sc", "\\textsc{$1}"),
+        parse("sf", "\\textsf{$1}"),
+        parse("tt", "\\texttt{$1}"),
+        parse("em", "\\emph{$1}"),
+        parse({ trig = ",,", snippetType = "autosnippet" }, "$$1$"),
+        parse("jbase",
           [[
             \documentclass[12pt,a4paper,titlepage]{jlreq}
 
@@ -1671,7 +1672,7 @@ require('lazy').setup({
             \end{document}
           ]]
         ),
-        ls.parser.parse_snippet("figure",
+        parse("figure",
           [[
             \begin{figure}[b]
                 \centering
@@ -1681,12 +1682,12 @@ require('lazy').setup({
             \end{figure}$0
           ]]
         ),
-        ls.parser.parse_snippet("usepackage-tblr",
+        parse("usepackage-tblr",
           [[
             \usepackage{tabularray}
             \UseTblrLibrary{booktabs}
           ]]),
-        ls.parser.parse_snippet("table",
+        parse("table",
           [[
             \begin{table}[t]
                 \centering
@@ -1700,7 +1701,7 @@ require('lazy').setup({
                 \label{tab:$2}
             \end{table}$0
           ]]),
-        ls.parser.parse_snippet("preview",
+        parse("preview",
           [[
             \documentclass{article}
             \usepackage[active,tightpage]{preview}
