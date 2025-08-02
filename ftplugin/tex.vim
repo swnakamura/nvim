@@ -3,6 +3,7 @@ inoremap <buffer> ##s \subsection{}<Left>
 inoremap <buffer> ###s \subsubsection{}<Left>
 
 setlocal foldmethod=indent
+setlocal spell
 
 noremap <buffer> <localleader>s <plug>(vimtex-env-toggle-star)
 noremap <buffer> <localleader>t <plug>(vimtex-toc-toggle)
