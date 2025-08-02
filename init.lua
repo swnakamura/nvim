@@ -733,7 +733,7 @@ require('lazy').setup({
       { "zbirenbaum/copilot.lua" },
       { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
     },
-    build = "make tiktoken", -- Only on MacOS or Linux
+    build = "make tiktoken",                          -- Only on MacOS or Linux
     cmd = { "CopilotChat", "CopilotChatReset" },
     keys = {
       { '<C-k>',     "<Cmd>CopilotChatReset <CR><Cmd>CopilotChat <CR><C-l>i/COPILOT_GENERATE<CR><CR>",                mode = 'v' },
@@ -785,7 +785,7 @@ require('lazy').setup({
             },
             GenAndCopyCommitMsg = {
               prompt =
-              '> #git:staged\n\nSummarize and explain the change in the code. Then write commit message for the change with commitizen convention. Make sure the title has maximum 50 characters and message is wrapped at 72 characters. Wrap the whole message in code block with language gitcommit. Do not put spaces in front of the commit comment lines.',
+              '> #gitdiff:staged\n\nSummarize and explain the change in the code. Then write commit message for the change with commitizen convention. Make sure the title has maximum 50 characters and message is wrapped at 72 characters. Wrap the whole message in code block with language gitcommit. Do not put spaces in front of the commit comment lines.',
               selection = nil,
               callback = function(response, _)
                 local commit_message = response:match("```gitcommit\n(.-)```")
@@ -884,12 +884,13 @@ require('lazy').setup({
       {
         'williamboman/mason-lspconfig.nvim',
         config = function()
-          local words = {}
-          for word in io.open(vfn.stdpath("config") .. "/spell/en.utf-8.add", 'r'):lines() do
-            table.insert(words, word)
+          local goodwords = {}
+          for word in io.open(vim.fn.stdpath("config") .. "/spell/en.utf-8.add", 'r'):lines() do
+            table.insert(goodwords, word)
           end
           local server2setting = {
             bashls = {},
+            -- shellcheck = {},
             denols = {},
             clangd = {},
             -- pyright = {},
@@ -933,24 +934,36 @@ require('lazy').setup({
             })
           end
 
-          vim.lsp.config('ltex', {
-            filetypes = { "bibtex", "org", "tex", "restructuredtext", "latex", "html", "markdown" },
-            ltex = {
-              dictionary = {
-                ["en-US"] = words,
-              },
-            },
-          })
+          -- vim.lsp.config('ltex', {
+          --   filetypes = { "bibtex", "org", "tex", "restructuredtext", "latex", "html", "markdown" },
+          --   ltex = {
+          --     dictionary = {
+          --       ["en-US"] = goodwords,
+          --     },
+          --   },
+          -- })
 
           -- efm language server for textlint
+          local shellcheck_config = {
+            lintOnSave = true,
+            lintAfterOpen = true,
+            lintCommand = [[shellcheck -f gcc -x]],
+            lintFormats = {
+              '%f:%l:%c: %trror: %m',
+              '%f:%l:%c: %tarning: %m',
+              '%f:%l:%c: %tote: %m',
+            },
+          }
           vim.lsp.config('efm', {
             init_options = { documentFormatting = true },
             single_file_support = true,
-            filetypes = { 'text' },
+            filetypes = { 'text', 'bash', 'zsh', 'sh' },
             settings = {
               rootMarkers = { ".git" },
-              root_markers = { ".git" },
               languages = {
+                bash = { shellcheck_config },
+                zsh = { shellcheck_config },
+                sh = { shellcheck_config },
                 text = {
                   {
                     lintOnSave = true,
@@ -1042,11 +1055,11 @@ require('lazy').setup({
           require('mason').setup()
           require('mason-lspconfig').setup({
             automatic_enable = true,
-            ensure_installed = vim.tbl_keys(server2setting),
+            ensure_installed = vim.tbl_filter(function(k) return k ~= '*' end, vim.tbl_keys(vim.lsp.config._configs)),
           })
         end
       },
-      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+      { 'j-hui/fidget.nvim', opts = {} },
     },
   },
 
@@ -2394,6 +2407,7 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
     config = function()
+      vim.treesitter.language.register('bash', { 'sh', 'zsh' })
       require('nvim-treesitter.configs').setup {
         -- Add languages to be installed here that you want installed for treesitter
         ensure_installed = treesitter_filetypes,
@@ -2517,7 +2531,7 @@ require('lazy').setup({
       else
         vim.g.vimtex_view_method = 'general'
       end
-      vim.g.vimtex_quickfix_enabled = 1
+      vim.g.vimtex_quickfix_enabled = 0
       vim.g.vimtex_quickfix_mode = 2
       vim.g.vimtex_quickfix_ignore_filters = {
         'Japanese fonts will be scaled by 1',
@@ -2683,7 +2697,7 @@ require('lazy').setup({
       vim.o.foldenable = true
       vim.o.foldlevel = 99
       vim.o.foldlevelstart = 99
-      vim.o.statuscolumn = '%*%-l %s'
+      vim.wo.number = true
 
       UFOVirtTextHandler = function(virtText, lnum, endLnum, width, truncate)
         local newVirtText = {}

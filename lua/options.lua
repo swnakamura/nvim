@@ -1,6 +1,5 @@
 local o = vim.opt
 local go = vim.opt_global
-local bo = vim.opt_buffer
 
 o.tabstop = 8
 o.softtabstop = 4
@@ -17,8 +16,8 @@ o.hlsearch = false
 o.wrapscan = false
 
 -- Make relative line numbers default
-go.number = true
-go.relativenumber = true
+o.number = true
+o.relativenumber = true
 
 -- Enable mouse mode
 o.mouse = 'a'
