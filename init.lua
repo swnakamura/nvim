@@ -523,8 +523,8 @@ require('lazy').setup({
                 -- if I'm currently in the commit message window, paste the commit message and close it
                 if vim.bo.filetype == 'gitcommit' then
                   vim.cmd("normal! gg") -- go to the top of the commit message window
-                  vim.cmd('normal ""P')
-                  vim.cmd('normal! `[`]gq') -- wrap the commit message
+                  vim.cmd('normal! ""P')
+                  vim.cmd('normal! `[v`]gq') -- wrap the commit message
                   vim.cmd('write')      -- write the commit message
                   vim.cmd('quit')       -- quit the commit message window
                 end
@@ -793,7 +793,7 @@ require('lazy').setup({
                 if commit_message then
                   vfn.setreg('"', commit_message, 'c')
                 end
-                return ''
+                return
               end,
             },
           }
