@@ -40,6 +40,9 @@ map('o', 'iv', ':<C-u>normal! gg0vG$<CR>')
 map('v', 'av', 'gg0oG$')
 map('o', 'av', ':<C-u>normal! gg0vG$<CR>')
 
+-- Swap p and P in visual mode pasting (p should not overwrite the register)
+map('v', 'p', 'P')
+map('v', 'P', 'p')
 
 -- gj/gk submode
 map('n', 'gj', 'gj<Plug>(g-mode)', { remap = true })
