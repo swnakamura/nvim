@@ -2550,6 +2550,7 @@ require('lazy').setup({
   -- Japanese
   {
     'swnakamura/jpmoveword.vim',
+    cond = vfn.isdirectory(vfn.expand('~/ghq/github.com/swnakamura/novel_formatter')) == 1,
     init = function()
       vim.g.jpmoveword_separator = '，．、。・「」『』（）【】'
       vim.g.jpmoveword_enable_WBE = 2
