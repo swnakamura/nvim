@@ -1828,7 +1828,7 @@ require('lazy').setup({
             enabled = true,
           },
           window = {
-            width = '60',
+            width = 60,
             max_width = '30%',
             mappings = {
               ["o"] = "open",
