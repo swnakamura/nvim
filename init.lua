@@ -2248,7 +2248,13 @@ require('lazy').setup({
           visual = "#c0f36e",
         },
         -- set_number = false,
-        line_opacity = 0.3,
+        line_opacity = 0.1,
+        ignore = {
+          'text',
+          'markdown',
+          'markdown.mdx',
+          'tex',
+        }
       })
       vim.o.showmode = false
     end
