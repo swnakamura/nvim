@@ -523,7 +523,7 @@ require('lazy').setup({
                 -- if I'm currently in the commit message window, paste the commit message and close it
                 if vim.bo.filetype == 'gitcommit' then
                   vim.cmd("normal! gg")      -- go to the top of the commit message window
-                  vim.cmd('normal! ""P')
+                  vim.cmd('normal! ""P')     -- paste the commit message
                   vim.cmd('normal! `[v`]gq') -- wrap the commit message
                   vim.cmd('write')           -- write the commit message
                   vim.cmd('quit')            -- quit the commit message window
@@ -784,12 +784,13 @@ require('lazy').setup({
               prompt =
               'Please provide better names for the following variables and functions. Specify the range of the code to replace and wrap the whole message in code block with language markdown.',
             },
+            -- Generates commit message with commitizen convention and save it to the unnamed register
             GenAndCopyCommitMsg = {
               prompt =
               '> #gitdiff:staged\n\nSummarize and explain the change in the code. Then write commit message for the change with commitizen convention. Make sure the title has maximum 50 characters. Wrap the whole message in code block with language gitcommit. Do not put spaces in front of the commit comment lines.',
               selection = nil,
               callback = function(response, _)
-                local commit_message = response:match("```gitcommit\n(.-)```")
+                local commit_message = response.content:match("```gitcommit\n(.-)```")
                 if commit_message then
                   vfn.setreg('"', commit_message, 'c')
                 end
