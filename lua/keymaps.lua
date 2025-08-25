@@ -327,7 +327,7 @@ map({ 'n', 'v' }, '<leader>k', [[<Cmd>lua MoveUntilNonWS(-1)<CR>]])
 map({ 'n', 'v' }, '<leader>j', [[<Cmd>lua MoveUntilNonWS(1)<CR>]])
 
 -- [[ toggle/switch settings with local leader ]]
-local toggle_prefix = [[\\]]
+local toggle_prefix = [[\]]
 map('n', toggle_prefix .. 's', '<Cmd>setl spell! spell?<CR>', { silent = true, desc = 'toggle spell' })
 map('n', toggle_prefix .. 'a', function()
   if vim.b.autosave_enabled then

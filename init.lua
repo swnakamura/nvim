@@ -17,7 +17,9 @@ end
 -- Do not load some of the default plugins
 vim.g.loaded_netrwPlugin = true
 
+-- Set leader and localleader
 vim.g.mapleader = " "
+vim.g.maplocalleader = "\\\\"
 
 -- Install lazy.nvim (package manager)
 local lazypath = vfn.stdpath 'data' .. '/lazy/lazy.nvim'
