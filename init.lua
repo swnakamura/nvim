@@ -21,7 +21,7 @@ vim.g.loaded_netrwPlugin = true
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\\\"
 
--- Install lazy.nvim (package manager)
+-- [[ Install lazy.nvim (package manager) ]]
 local lazypath = vfn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.uv.fs_stat(lazypath) then
   vfn.system {
@@ -306,6 +306,13 @@ require('lazy').setup({
         end, 100
       )
     end
+  },
+
+  -- todo-comments
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {}
   },
 
   -- prettier diagnostics
@@ -648,15 +655,16 @@ require('lazy').setup({
     },
   },
 
-  -- better diff
+  -- word-wise diff
   {
     cond = not Env.is_vscode,
     event = 'LazyFile',
     'https://github.com/rickhowe/diffchar.vim',
   },
 
-  -- clever s
+  -- Japanese compatible fuzzy motion
   {
+    cond=false,
     -- This one has japanese search functionality
     'yuki-yano/fuzzy-motion.vim',
     cmd = { 'FuzzyMotion' },
@@ -665,7 +673,7 @@ require('lazy').setup({
     end
   },
 
-  -- leap.nvim
+  -- fuzzy motion (t to jump)
   {
     'https://github.com/ggandor/leap.nvim',
     keys = {
@@ -681,7 +689,7 @@ require('lazy').setup({
     event = 'LazyFile'
   },
 
-  -- copilot
+  -- copilot.lua
   {
     cond = not Env.is_vscode,
     "zbirenbaum/copilot.lua",
@@ -728,7 +736,7 @@ require('lazy').setup({
     end,
   },
 
-  -- copilot chat
+  -- chat with copilot
   {
     cond = not Env.is_vscode,
     "CopilotC-Nvim/CopilotChat.nvim",
@@ -792,7 +800,7 @@ require('lazy').setup({
               '> #gitdiff:staged\n\nSummarize and explain the change in the code. Then write commit message for the change with commitizen convention. Make sure the title has maximum 50 characters. Wrap the whole message in code block with language gitcommit. Do not put spaces in front of the commit comment lines.',
               selection = nil,
               callback = function(response, _)
-                local commit_message = response.content:match("```gitcommit\n(.-)```")
+                local commit_message = response:match("```gitcommit\n(.-)```")
                 if commit_message then
                   vfn.setreg('"', commit_message, 'c')
                 end
@@ -1067,7 +1075,7 @@ require('lazy').setup({
     },
   },
 
-  -- lsp saga (useful lsp features)
+  -- lspsaga (useful lsp features)
   {
     cond = not Env.is_vscode,
     'nvimdev/lspsaga.nvim',
@@ -1951,7 +1959,6 @@ require('lazy').setup({
       },
     },
   },
-
 
   -- emmet
   {
@@ -3049,7 +3056,7 @@ augroup END
 
 augroup yank-highlight
 autocmd!
-autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup='DiffText', timeout=300}
+autocmd TextYankPost * silent! lua vim.hl.on_yank {higroup='DiffText', timeout=300}
 augroup END
 ]])
 
