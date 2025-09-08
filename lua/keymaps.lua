@@ -351,6 +351,15 @@ map('n', toggle_prefix .. 'd', function()
     print('Diff on')
   end
 end, { silent = true, desc = 'toggle diff' })
+map('n', toggle_prefix .. 'D', function()
+  if vim.o.diff then
+    vim.cmd('diffoff!')
+    print('Diff off for all buffers')
+  else
+    vim.cmd('windo diffthis')
+    print('Diff on for all buffers')
+  end
+end, { silent = true, desc = 'toggle diff' })
 map('n', toggle_prefix .. 'c', function()
   if vim.o.conceallevel > 0 then
     vim.o.conceallevel = 0
