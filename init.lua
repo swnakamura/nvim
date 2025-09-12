@@ -369,6 +369,16 @@ require('lazy').setup({
           augend.date.alias["%H:%M:%S"],
           augend.constant.alias.ja_weekday_full,
           augend.constant.alias.ja_weekday,
+          augend.constant.new {
+            elements = { "True", "False" },
+            word = true,
+            cyclic = true,
+          },
+          augend.constant.new {
+            elements = { "true", "false" },
+            word = true,
+            cyclic = true,
+          },
         },
       }
 
