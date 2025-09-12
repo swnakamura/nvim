@@ -3104,7 +3104,8 @@ end, { desc = 'Toggle Japanese IME mode' })
 
 
 -- [[ autosave ]]
-local autosave_disabled_ft = { "acwrite", "oil", "yazi", "neo-tree", "yaml", "toml", "json", "csv", "tsv", "gitcommit", "gitignore" }
+local autosave_disabled_ft = { "acwrite", "oil", "yazi", "neo-tree", "yaml", "toml", "json", "csv", "tsv", "gitcommit",
+  "gitignore" }
 local autosave_disabled_suffix = { ".ipynb" }
 vapi.nvim_create_autocmd("BufRead", {
   pattern = "*",
@@ -3115,14 +3116,15 @@ vapi.nvim_create_autocmd("BufRead", {
 })
 local autosave = function(ctx)
   if
-      not vim.bo.modified
-      or vfn.findfile(ctx.file, ".") == "" -- a new file
-      or ctx.file:match("wezterm.lua")
-      or not vapi.nvim_buf_get_var(ctx.buf, "autosave_enabled")
+    not vim.bo.modified
+    or vfn.findfile(ctx.file, ".") == "" -- a new file
+    or ctx.file:match("wezterm.lua")
+    or not vapi.nvim_buf_get_var(ctx.buf, "autosave_enabled")
+    or vim.fn.system({ "git", "ls-files", "--error-unmatch", ctx.file }):find("error") ~= nil
+    or vim.tbl_contains(autosave_disabled_ft, vim.bo[ctx.buf].ft)
+    or vim.tbl_contains(autosave_disabled_suffix, ctx.file:sub(- #autosave_disabled_suffix[1]))
   then
-    return
-  elseif vim.tbl_contains(autosave_disabled_ft, vim.bo[ctx.buf].ft) or vim.tbl_contains(autosave_disabled_suffix, ctx.file:sub(-#autosave_disabled_suffix[1])) then
-    vim.notify("Leaving buffer with unsaved chages", { title = "Autosave" }, vim.log.levels.WARN)
+    vim.notify("Autosave disabled for the left buffer", { title = "Autosave" }, vim.log.levels.WARN)
     return
   end
   vim.cmd("silent lockmarks update")
