@@ -3089,7 +3089,8 @@ end, { desc = 'Toggle Japanese IME mode' })
 
 
 -- [[ autosave ]]
-local autosave_disabled_ft = { "acwrite", "oil", "yazi", "neo-tree", "yaml", "toml", "json", "csv", "tsv", "gitcommit" }
+local autosave_disabled_ft = { "acwrite", "oil", "yazi", "neo-tree", "yaml", "toml", "json", "csv", "tsv", "gitcommit", "gitignore" }
+local autosave_disabled_suffix = { ".ipynb" }
 vapi.nvim_create_autocmd("BufRead", {
   pattern = "*",
   group = vapi.nvim_create_augroup("autosave", {}),
@@ -3105,7 +3106,7 @@ local autosave = function(ctx)
       or not vapi.nvim_buf_get_var(ctx.buf, "autosave_enabled")
   then
     return
-  elseif vim.tbl_contains(autosave_disabled_ft, vim.bo[ctx.buf].ft) then
+  elseif vim.tbl_contains(autosave_disabled_ft, vim.bo[ctx.buf].ft) or vim.tbl_contains(autosave_disabled_suffix, ctx.file:sub(-#autosave_disabled_suffix[1])) then
     vim.notify("Leaving buffer with unsaved chages", { title = "Autosave" }, vim.log.levels.WARN)
     return
   end
