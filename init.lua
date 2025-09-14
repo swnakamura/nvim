@@ -462,7 +462,7 @@ require('lazy').setup({
       map("n", "gs", function() require('neogit').open() end, { desc = "Git status (neogit)" })
       map("n", "<leader>ga", '<cmd>silent !git add %<CR>', { silent = true, desc = "Git add current file" })
       map("n", "<leader>gc", require('neogit').action('commit', 'commit', { '--verbose' }),
-        { silent = true, desc = "Git commit" }) -- TODO: wrapping this command with function enables lazy loading of neogit, but it results in an error
+        { silent = true, desc = "Git commit" })
       map("n", "<leader>gl",
         require('neogit').action('log', 'log_all_branches', { '--graph', '--topo-order', '--decorate' }),
         { silent = true, desc = "Git log" })
