@@ -1134,19 +1134,17 @@ require('lazy').setup({
         dependencies = 'https://github.com/nvim-neotest/nvim-nio',
         opts = {}
       },
-      'nvim-dap-python',
-    },
+    }
   },
+
   {
     ft = { 'python' },
     cond = not Env.is_vscode,
     'https://github.com/mfussenegger/nvim-dap-python',
     config = function()
-      local venv = os.getenv('VIRTUAL_ENV')
-      local command = string.format('%s/bin/python', venv)
-
-      require('dap-python').setup(command)
-    end
+      require('dap-python').setup('uv')
+    end,
+    dependencies = { 'mfussenegger/nvim-dap' }
   },
 
   -- operator augmentation
