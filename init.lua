@@ -815,11 +815,10 @@ require('lazy').setup({
               '> #gitdiff:staged\n\nSummarize and explain the change in the code. Then write commit message for the change with commitizen convention. Make sure the title has maximum 50 characters. Wrap the whole message in code block with language gitcommit. Do not put spaces in front of the commit comment lines.',
               selection = nil,
               callback = function(response, _)
-                local commit_message = response:match("```gitcommit\n(.-)```")
+                local commit_message = response.content:match("```gitcommit\n(.-)```")
                 if commit_message then
                   vfn.setreg('"', commit_message, 'c')
                 end
-                return
               end,
             },
           }
