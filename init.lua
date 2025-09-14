@@ -3115,7 +3115,10 @@ local autosave = function(ctx)
   if
       not vim.bo.modified
       or vfn.findfile(ctx.file, ".") == "" -- a new file
-      or ctx.file:match("wezterm.lua")
+  then
+    return
+  elseif
+      ctx.file:match("wezterm.lua")
       or not vapi.nvim_buf_get_var(ctx.buf, "autosave_enabled")
       or vim.fn.system({ "git", "ls-files", "--error-unmatch", ctx.file }):find("error") ~= nil
       or vim.tbl_contains(autosave_disabled_ft, vim.bo[ctx.buf].ft)
