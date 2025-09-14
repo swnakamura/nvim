@@ -679,7 +679,7 @@ require('lazy').setup({
 
   -- Japanese compatible fuzzy motion
   {
-    cond=false,
+    cond = false,
     -- This one has japanese search functionality
     'yuki-yano/fuzzy-motion.vim',
     cmd = { 'FuzzyMotion' },
@@ -3113,13 +3113,13 @@ vapi.nvim_create_autocmd("BufRead", {
 })
 local autosave = function(ctx)
   if
-    not vim.bo.modified
-    or vfn.findfile(ctx.file, ".") == "" -- a new file
-    or ctx.file:match("wezterm.lua")
-    or not vapi.nvim_buf_get_var(ctx.buf, "autosave_enabled")
-    or vim.fn.system({ "git", "ls-files", "--error-unmatch", ctx.file }):find("error") ~= nil
-    or vim.tbl_contains(autosave_disabled_ft, vim.bo[ctx.buf].ft)
-    or vim.tbl_contains(autosave_disabled_suffix, ctx.file:sub(- #autosave_disabled_suffix[1]))
+      not vim.bo.modified
+      or vfn.findfile(ctx.file, ".") == "" -- a new file
+      or ctx.file:match("wezterm.lua")
+      or not vapi.nvim_buf_get_var(ctx.buf, "autosave_enabled")
+      or vim.fn.system({ "git", "ls-files", "--error-unmatch", ctx.file }):find("error") ~= nil
+      or vim.tbl_contains(autosave_disabled_ft, vim.bo[ctx.buf].ft)
+      or vim.tbl_contains(autosave_disabled_suffix, ctx.file:sub(- #autosave_disabled_suffix[1]))
   then
     vim.notify("Autosave disabled for the left buffer", { title = "Autosave" }, vim.log.levels.WARN)
     return
