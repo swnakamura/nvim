@@ -1116,7 +1116,7 @@ require('lazy').setup({
     keys = {
       -- https://zenn.dev/kawat/articles/51f9cc1f0f0aa9 を参考
       { '<leader>Du', '<cmd>lua require("dapui").toggle()<CR>',                                                       mode = 'n', desc = "Toggle DAP UI" },
-      { '<F6>',       '<cmd>DapContinue<CR>',                                                                         mode = 'n', desc = "DAP Continue" },
+      { '<F6>',       '<cmd>lua require("dapui").open()<CR><cmd>DapContinue<CR>',                                     mode = 'n', desc = "DAP Continue" },
       { '<F10>',      '<cmd>DapStepOver<CR>',                                                                         mode = 'n', desc = "DAP Step Over" },
       { '<F11>',      '<cmd>DapStepInto<CR>',                                                                         mode = 'n', desc = "DAP Step Into" },
       { '<F12>',      '<cmd>DapStepOut<CR>',                                                                          mode = 'n', desc = "DAP Step Out" },
