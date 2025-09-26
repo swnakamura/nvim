@@ -1898,43 +1898,43 @@ require('lazy').setup({
   -- oil
   {
     cond = not Env.is_vscode,
-    keys = { "<leader>e", "<leader>E" },
-    'https://github.com/stevearc/oil.nvim',
-    config = function()
-      require('oil').setup({
-        keymaps = {
-          ["~"] = "<cmd>edit $HOME<CR>",
-          ["<C-\\>"] = { "actions.cd", mode = "n" },
-          ["H"] = "actions.toggle_hidden",
-          ['cy'] = {
-            desc = 'Copy filepath to system clipboard',
-            callback = function()
-              require('oil.actions').copy_entry_path.callback()
-              vfn.setreg("+", vfn.getreg(vim.v.register))
-            end,
-          },
-          ["gd"] = {
-            desc = "Toggle file detail view",
-            callback = function()
-              Oil_detail = not Oil_detail
-              if Oil_detail then
-                require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
-              else
-                require("oil").set_columns({ "icon" })
-              end
-            end,
-          },
-        }
-      })
-      vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-      vim.keymap.set("n", "<leader>E",
-        function()
+    keys = {
+      { "<leader>e", "<CMD>Oil<CR>", desc = "Oil parent directory" },
+      { "<leader>E", function()
           local cwd = vfn.getcwd()
           vim.cmd("Oil " .. cwd)
-        end,
-        { desc = "Open cwd" }
-      )
-    end
+        end, desc = "Oil cwd"
+      },
+    },
+    'https://github.com/stevearc/oil.nvim',
+    opts = {
+      keymaps = {
+        ["~"] = "<cmd>edit $HOME<CR>",
+        ["<C-\\>"] = { "actions.cd", mode = "n" },
+        ["H"] = "actions.toggle_hidden",
+        ['cy'] = {
+          desc = 'Copy filepath to system clipboard',
+          callback = function()
+            require('oil.actions').copy_entry_path.callback()
+            vfn.setreg("+", vfn.getreg(vim.v.register))
+          end,
+        },
+        ["<C-l>"] = false,
+        ["<C-S-l>"] = "actions.refresh",
+        ["<C-h>"] = false,
+        ["gd"] = {
+          desc = "Toggle file detail view",
+          callback = function()
+            Oil_detail = not Oil_detail
+            if Oil_detail then
+              require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
+            else
+              require("oil").set_columns({ "icon" })
+            end
+          end,
+        },
+      }
+    }
   },
 
   -- yazi
