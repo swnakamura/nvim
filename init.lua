@@ -2939,7 +2939,7 @@ vapi.nvim_create_autocmd({ 'CursorMoved', 'WinLeave' }, {
   callback = VisualMatch
 })
 
-vim.cmd([[hi CursorWord guibg=#2a2e41]])
+vim.cmd([[hi CursorWord gui=underline]])
 WordMatch = function()
   if vim.tbl_contains({ 'fern', 'neo-tree', 'floaterm', 'oil', 'org', 'NeogitStatus', 'aerial' }, vim.bo.filetype) then
     return
