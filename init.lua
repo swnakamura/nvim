@@ -2821,6 +2821,8 @@ require('keymaps')
 -- abbreviation for substitution
 vim.cmd(
   [[cnoreabbrev <expr> ss getcmdtype() .. getcmdline() ==# ':ss' ? [getchar(), ''][1] .. "%s///g<Left><Left>" : 'ss']])
+vim.cmd(
+  [[cnoreabbrev <expr> sd getcmdtype() .. getcmdline() ==# ':sd' ? [getchar(), ''][1] .. "%s///g<Left><Left><Left>" : 'sd']])
 
 -- visual modeで複数行を選択して'/'を押すと，その範囲内での検索を行う
 vim.cmd([[
