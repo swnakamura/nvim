@@ -1101,12 +1101,11 @@ require('lazy').setup({
     'https://github.com/mfussenegger/nvim-dap',
     -- ft = { 'python', 'c', 'cpp', 'rust' },
     keys = {
-      -- https://zenn.dev/kawat/articles/51f9cc1f0f0aa9 を参考
       { '<leader>Du', '<cmd>lua require("dapui").toggle()<CR>',                                                       mode = 'n', desc = "Toggle DAP UI" },
       { '<F6>',       '<cmd>lua require("dapui").open()<CR><cmd>DapContinue<CR>',                                     mode = 'n', desc = "DAP Continue" },
-      { '<F10>',      '<cmd>DapStepOver<CR>',                                                                         mode = 'n', desc = "DAP Step Over" },
-      { '<F11>',      '<cmd>DapStepInto<CR>',                                                                         mode = 'n', desc = "DAP Step Into" },
-      { '<F12>',      '<cmd>DapStepOut<CR>',                                                                          mode = 'n', desc = "DAP Step Out" },
+      { '<F10>',      function() require('dap').step_over() end,                                                      mode = 'n', desc = "DAP Step Over" },
+      { '<F11>',      function() require('dap').step_into() end,                                                      mode = 'n', desc = "DAP Step Into" },
+      { '<F12>',      function() require('dap').step_out() end,                                                       mode = 'n', desc = "DAP Step Out" },
       { '<leader>b',  '<cmd>DapToggleBreakpoint<CR>',                                                                 mode = 'n', desc = "DAP Toggle Breakpoint" },
       { '<leader>B',  '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Breakpoint condition: "))<CR>', mode = 'n', desc = "DAP Set Breakpoint with condition" },
       { '<leader>Dp', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>',    mode = 'n', desc = "DAP Set Log Point" },
