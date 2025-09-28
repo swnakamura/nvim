@@ -1097,19 +1097,26 @@ require('lazy').setup({
   {
     cond = not Env.is_vscode,
     'https://github.com/mfussenegger/nvim-dap',
-    -- ft = { 'python', 'c', 'cpp', 'rust' },
     keys = {
-      { '<leader>Du', '<cmd>lua require("dapui").toggle()<CR>',                                                       mode = 'n', desc = "Toggle DAP UI" },
-      { '<F6>',       '<cmd>lua require("dapui").open()<CR><cmd>DapContinue<CR>',                                     mode = 'n', desc = "DAP Continue" },
-      { '<F10>',      function() require('dap').step_over() end,                                                      mode = 'n', desc = "DAP Step Over" },
-      { '<F11>',      function() require('dap').step_into() end,                                                      mode = 'n', desc = "DAP Step Into" },
-      { '<F12>',      function() require('dap').step_out() end,                                                       mode = 'n', desc = "DAP Step Out" },
-      { '<leader>b',  '<cmd>DapToggleBreakpoint<CR>',                                                                 mode = 'n', desc = "DAP Toggle Breakpoint" },
-      { '<leader>B',  '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Breakpoint condition: "))<CR>', mode = 'n', desc = "DAP Set Breakpoint with condition" },
-      { '<leader>Dp', '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>',    mode = 'n', desc = "DAP Set Log Point" },
-      { '<leader>De', '<cmd>lua require("dapui").eval()<CR>',                                                         mode = 'n', desc = "DAP Evaluate Expression" },
-      { '<leader>Dr', '<cmd>lua require("dap").repl.open()<CR>',                                                      mode = 'n', desc = "DAP Open REPL" },
-      { '<leader>Dl', '<cmd>lua require("dap").run_last()<CR>',                                                       mode = 'n', desc = "DAP Run Last Session" }
+      { '<leader>Du', function() require('dapui').toggle() end,                                                       mode = 'n', desc = 'Toggle DAP UI' },
+      {
+        '<F6>',
+        function()
+          require('dapui').open()
+          require('dap').continue()
+        end,
+        mode = 'n',
+        desc = 'DAP Continue'
+      },
+      { '<F10>',      function() require('dap').step_over() end,                                                      mode = 'n', desc = 'DAP Step Over' },
+      { '<F11>',      function() require('dap').step_into() end,                                                      mode = 'n', desc = 'DAP Step Into' },
+      { '<F12>',      function() require('dap').step_out() end,                                                       mode = 'n', desc = 'DAP Step Out' },
+      { '<leader>b',  function() require('dap').toggle_breakpoint() end,                                              mode = 'n', desc = 'DAP Toggle Breakpoint' },
+      { '<leader>B',  function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Breakpoint condition: ')) end, mode = 'n', desc = 'DAP Set Breakpoint with condition' },
+      { '<leader>Dp', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,    mode = 'n', desc = 'DAP Set Log Point' },
+      { '<leader>De', function() require('dapui').eval() end,                                                         mode = 'n', desc = 'DAP Evaluate Expression' },
+      { '<leader>Dr', function() require('dap').repl.open() end,                                                      mode = 'n', desc = 'DAP Open REPL' },
+      { '<leader>Dl', function() require('dap').run_last() end,                                                       mode = 'n', desc = 'DAP Run Last Session' }
     },
     dependencies = {
       {
