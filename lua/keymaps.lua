@@ -15,6 +15,8 @@ local vfn = vim.fn
 map({ 'n', 'v' }, '<Space>o', '<Nop>')
 map('n', '<C-h>', '<C-w>h')
 map('n', '<C-l>', '<C-w>l')
+map('n', '<C-j>', '<C-w>j')
+map('n', '<C-k>', '<C-w>k')
 
 -- copy and paste
 if vim.g.neovide then
