@@ -1885,10 +1885,13 @@ require('lazy').setup({
     cond = not Env.is_vscode,
     keys = {
       { "<leader>e", "<CMD>Oil<CR>", desc = "Oil parent directory" },
-      { "<leader>E", function()
+      {
+        "<leader>E",
+        function()
           local cwd = vfn.getcwd()
           vim.cmd("Oil " .. cwd)
-        end, desc = "Oil cwd"
+        end,
+        desc = "Oil cwd"
       },
     },
     'https://github.com/stevearc/oil.nvim',
