@@ -451,34 +451,19 @@ require('lazy').setup({
       "folke/snacks.nvim", -- optional
     },
     keys = {
-      { '<leader>gs' },
-      { 'gs' },
-      { '<leader>ga' },
-      { '<leader>gc' },
-      { '<leader>gl' }
+      { '<leader>gs', function() require('neogit').open() end,                                      desc = "Git status (neogit)" },
+      { 'gs',         function() require('neogit').open() end,                                      desc = "Git status (neogit)" },
+      { '<leader>ga', '<cmd>silent !git add %<CR>',                                                 { silent = true, desc = "Git add current file" } },
+      { '<leader>gc', function() require('neogit').action('commit', 'commit', { '--verbose' }) end, { silent = true, desc = "Git commit" } },
+      { '<leader>gl', function() require('neogit').action('log', 'log_all_branches',
+          { '--graph', '--topo-order', '--decorate' }) end,
+        { silent = true, desc = "Git log" } }
     },
-    config = function()
-      map("n", "<leader>gs", function() require('neogit').open() end, { desc = "Git status (neogit)" })
-      map("n", "gs", function() require('neogit').open() end, { desc = "Git status (neogit)" })
-      map("n", "<leader>ga", '<cmd>silent !git add %<CR>', { silent = true, desc = "Git add current file" })
-      map("n", "<leader>gc", require('neogit').action('commit', 'commit', { '--verbose' }),
-        { silent = true, desc = "Git commit" })
-      map("n", "<leader>gl",
-        require('neogit').action('log', 'log_all_branches', { '--graph', '--topo-order', '--decorate' }),
-        { silent = true, desc = "Git log" })
-      require('neogit').setup {
-        status = {
-          recent_commit_count = 30
-        }
+    opts = {
+      status = {
+        recent_commit_count = 30
       }
-      -- Close neogit status tab with <BS>
-      vapi.nvim_create_autocmd('FileType', {
-        pattern = 'NeogitStatus',
-        callback = function()
-          map('n', '<BS>', '<Cmd>q<CR>', { buffer = 0, desc = "Close neogit status" })
-        end
-      })
-    end
+    }
   },
   {
     cond = not Env.is_vscode,
