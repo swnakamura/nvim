@@ -2010,12 +2010,12 @@ require('lazy').setup({
         buffer_number = false,
         button = '',
         -- Enables / disables diagnostic symbols
-        -- diagnostics = {
-        --   [vim.diagnostic.severity.ERROR] = { enabled = true, icon = 'ﬀ' },
-        --   [vim.diagnostic.severity.WARN] = { enabled = false },
-        --   [vim.diagnostic.severity.INFO] = { enabled = false },
-        --   [vim.diagnostic.severity.HINT] = { enabled = true },
-        -- },
+        diagnostics = {
+          [vim.diagnostic.severity.ERROR] = { enabled = true },
+          [vim.diagnostic.severity.WARN] = { enabled = false },
+          [vim.diagnostic.severity.INFO] = { enabled = false },
+          [vim.diagnostic.severity.HINT] = { enabled = true },
+        },
         -- gitsigns = {
         --   added = { enabled = true, icon = '+' },
         --   changed = { enabled = true, icon = '~' },
@@ -2031,13 +2031,6 @@ require('lazy').setup({
         -- Supports all the base icon options.
         modified = { button = '●' },
         pinned = { button = '', filename = true },
-
-        -- Configure the icons on the bufferline based on the visibility of a buffer.
-        -- Supports all the base icon options, plus `modified` and `pinned`.
-        alternate = { separator = { left = '　', right = '　' } },
-        current = { separator = { left = '【', right = '】' } },
-        inactive = { separator = { left = '　', right = '　' } },
-        visible = { separator = { left = '　', right = '　' } },
       },
     }
   },
