@@ -1443,6 +1443,28 @@ require('lazy').setup({
             $0
           ]]
         ),
+        parse({ trig = "debugpy", name = "debugpy" },
+          [[
+            import os
+            import sys
+
+            if os.environ.get("DEBUGPY") == "1":
+                try:
+                    import debugpy
+                except ImportError:
+                    print("Error: debugpy is not installed. Please run 'pip install debugpy'", file=sys.stderr)
+                    sys.exit(1)
+
+                # VS Codeのデフォルトであるポート5678で待ち受けを開始
+                debug_port = os.environ.get("DEBUGPY_PORT", 5678)
+                print(f"DEBUGPY: Listening for debugger on port {debug_port}...", file=sys.stderr)
+
+                # 0.0.0.0で待ち受けることで、リモート環境からも接続可能
+                debugpy.listen(("0.0.0.0", int(debug_port)))
+                debugpy.wait_for_client() # クライアント（エディタ）が接続するまでプログラムを停止
+                print("DEBUGPY: Debugger attached. Continuing execution.", file=sys.stderr)
+          ]]
+        ),
         parse({ trig = "set_axes_equal", name = "set x y z axes equal for same aspect ratio." },
           [[
             def set_axes_equal(ax):
