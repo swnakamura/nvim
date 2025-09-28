@@ -1977,7 +1977,6 @@ require('lazy').setup({
       'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
     },
     init = function()
-      vim.g.barbar_auto_setup = false
       local opts = { noremap = true, silent = true }
       -- Use the global map helper
       map('n', '<C-p>', '<Cmd>BufferPrevious<CR>', opts)
@@ -2001,48 +2000,44 @@ require('lazy').setup({
       map('n', '<C-9>', '<Cmd>BufferGoto 9<CR>', opts)
       map('n', '<C-0>', '<Cmd>BufferLast<CR>', opts)
     end,
-    config = function()
-      vim.g.barbar_auto_setup = false -- disable auto-setup
+    opts = {
+      icons = {
+        -- Configure the base icons on the bufferline.
+        -- Valid options to display the buffer index and -number are `true`, 'superscript' and 'subscript'
+        buffer_index = false,
+        buffer_number = false,
+        button = '',
+        -- Enables / disables diagnostic symbols
+        -- diagnostics = {
+        --   [vim.diagnostic.severity.ERROR] = { enabled = true, icon = 'ﬀ' },
+        --   [vim.diagnostic.severity.WARN] = { enabled = false },
+        --   [vim.diagnostic.severity.INFO] = { enabled = false },
+        --   [vim.diagnostic.severity.HINT] = { enabled = true },
+        -- },
+        -- gitsigns = {
+        --   added = { enabled = true, icon = '+' },
+        --   changed = { enabled = true, icon = '~' },
+        --   deleted = { enabled = true, icon = '-' },
+        -- },
+        separator = { left = '', right = '' },
+        separator_at_end = false,
 
-      require 'barbar'.setup {
-        icons = {
-          -- Configure the base icons on the bufferline.
-          -- Valid options to display the buffer index and -number are `true`, 'superscript' and 'subscript'
-          buffer_index = false,
-          buffer_number = false,
-          button = '',
-          -- Enables / disables diagnostic symbols
-          -- diagnostics = {
-          --   [vim.diagnostic.severity.ERROR] = { enabled = true, icon = 'ﬀ' },
-          --   [vim.diagnostic.severity.WARN] = { enabled = false },
-          --   [vim.diagnostic.severity.INFO] = { enabled = false },
-          --   [vim.diagnostic.severity.HINT] = { enabled = true },
-          -- },
-          -- gitsigns = {
-          --   added = { enabled = true, icon = '+' },
-          --   changed = { enabled = true, icon = '~' },
-          --   deleted = { enabled = true, icon = '-' },
-          -- },
-          separator = { left = '', right = '' },
-          separator_at_end = false,
+        maximum_padding = 0,
+        minimum_padding = 0,
 
-          maximum_padding = 0,
-          minimum_padding = 0,
+        -- Configure the icons on the bufferline when modified or pinned.
+        -- Supports all the base icon options.
+        modified = { button = '●' },
+        pinned = { button = '', filename = true },
 
-          -- Configure the icons on the bufferline when modified or pinned.
-          -- Supports all the base icon options.
-          modified = { button = '●' },
-          pinned = { button = '', filename = true },
-
-          -- Configure the icons on the bufferline based on the visibility of a buffer.
-          -- Supports all the base icon options, plus `modified` and `pinned`.
-          alternate = { separator = { left = '　', right = '　' } },
-          current = { separator = { left = '【', right = '】' } },
-          inactive = { separator = { left = '　', right = '　' } },
-          visible = { separator = { left = '　', right = '　' } },
-        },
-      }
-    end,
+        -- Configure the icons on the bufferline based on the visibility of a buffer.
+        -- Supports all the base icon options, plus `modified` and `pinned`.
+        alternate = { separator = { left = '　', right = '　' } },
+        current = { separator = { left = '【', right = '】' } },
+        inactive = { separator = { left = '　', right = '　' } },
+        visible = { separator = { left = '　', right = '　' } },
+      },
+    }
   },
 
   -- markdown
