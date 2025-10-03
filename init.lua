@@ -591,12 +591,11 @@ require('lazy').setup({
         end
 
         -- Navigation
-        local hunk_nav_opts = { wrap = false }
+        local hunk_nav_opts = { wrap = false, preview = true }
         for _, downkey in ipairs({ '<PageDown>', ']h', '<Down>' }) do
           bufmap('n', downkey, function()
             if vim.wo.diff then return ']c' end
             vim.schedule(function() gs.nav_hunk('next', hunk_nav_opts) end)
-            vim.defer_fn(function() gs.preview_hunk_inline() end, 500)
             return '<Ignore>'
           end, { expr = true })
         end
@@ -605,7 +604,6 @@ require('lazy').setup({
           bufmap('n', upkey, function()
             if vim.wo.diff then return '[c' end
             vim.schedule(function() gs.nav_hunk('prev', hunk_nav_opts) end)
-            vim.defer_fn(function() gs.preview_hunk_inline() end, 500)
             return '<Ignore>'
           end, { expr = true })
         end
