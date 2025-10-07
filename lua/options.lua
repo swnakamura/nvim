@@ -90,7 +90,7 @@ o.inccommand = 'split'
 
 o.colorcolumn = "+1"
 
-o.diffopt:append('vertical,algorithm:patience,indent-heuristic')
+o.diffopt:append('vertical,algorithm:patience,indent-heuristic,hiddenoff')
 
 o.wildmode = 'list:full'
 
