@@ -2425,7 +2425,7 @@ require('lazy').setup({
     cond = not Env.is_vscode,
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
-    ft = treesitter_filetypes,
+    ft = { unpack(treesitter_filetypes), 'tex' }, -- 'tex' is the name of vim filetype for LaTeX files.
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
