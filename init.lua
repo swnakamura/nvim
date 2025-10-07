@@ -1954,7 +1954,7 @@ require('lazy').setup({
     opts = {
       keymaps = {
         ["~"] = "<cmd>edit $HOME<CR>",
-        ["<C-\\>"] = { "actions.cd", mode = "n" },
+        ["<C-\\>"] = { "actions.tcd", mode = "n" },
         ["H"] = "actions.toggle_hidden",
         ['cy'] = {
           desc = 'Copy filepath to system clipboard',

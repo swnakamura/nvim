@@ -32,6 +32,19 @@ end
 -- move cursor to the center of the window lr
 map('n', 'z.', 'zezL')
 
+-- <C-\> to tcd to the current buffer location
+map('n', '<C-\\>', function()
+  -- If current buffer is not a file, do nothing
+  local bufname = vfn.expand('%:p')
+  if bufname == '' then
+    print('Current buffer is not a file')
+    return
+  end
+  local bufdir = vfn.fnamemodify(bufname, ':h')
+  vim.cmd('tcd ' .. bufdir)
+  print('Changed directory to ' .. bufdir)
+end)
+
 -- Tabs is used as %, while <C-i> remains as go to next location
 map({ 'n', 'v', 'o' }, '<Tab>', '%', { remap = true })
 map({ 'n', 'v' }, '<C-i>', '<C-i>')
