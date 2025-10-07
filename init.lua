@@ -272,7 +272,25 @@ require('lazy').setup({
             { section = "startup" },
           },
         },
-        image = {},
+        image = {
+          math = {
+            latex = {
+              font_size = "Large", -- see https://www.sascha-frank.com/latex-font-size.html
+              -- for latex documents, the doc packages are included automatically,
+              -- but you can add more packages here. Useful for markdown documents.
+              packages = { "amsmath", "amssymb", "amsfonts", "amscd", "mathtools" },
+              tpl = [[
+            \documentclass[preview,border=0pt,varwidth,12pt]{standalone}
+            \usepackage{amsmath,amssymb,amsfonts,amscd,mathtools,siunitx,bm,xcolor} % Changed here from the original config: original config tries to use local .sty files which may not be available
+            \begin{document}
+            ${header}
+            { \${font_size} \selectfont
+              \color[HTML]{${color}}
+            ${content}}
+            \end{document}]],
+            }
+          }
+        },
         -- input = { enabled = true },
         indent = {
           enabled = true,
