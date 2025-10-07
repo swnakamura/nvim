@@ -258,6 +258,7 @@ require('lazy').setup({
               { icon = " ", key = "s", desc = "Restore Session", section = "session" },
               { icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
               { icon = "󰪶 ", key = "y", desc = "yazi", action = ":Yazi cwd", enabled = package.loaded.lazy ~= nil },
+              { icon = "󰖌 ",  key = "e", desc = "Oil", action = ":Oil" },
               { icon = " ", key = "q", desc = "Quit", action = ":qa" },
               { icon = " ", key = "R", desc = "Remote Neovim", action = ":RemoteStart" },
               { icon = " ", key = "p", desc = "search for a project", action = ":lua Snacks.picker.projects()" },
@@ -1948,6 +1949,7 @@ require('lazy').setup({
         desc = "Oil cwd"
       },
     },
+    cmd = { "Oil", "OilOpen" },
     'https://github.com/stevearc/oil.nvim',
     opts = {
       keymaps = {
