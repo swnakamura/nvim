@@ -2185,81 +2185,20 @@ require('lazy').setup({
   -- colorscheme
   {
     cond = not Env.is_vscode,
-    'oahlen/iceberg.nvim',
-    -- event = 'VimEnter',
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
     config = function()
-      if vim.o.bg == 'light' then
-        vim.cmd.colorscheme 'iceberg-light'
-      else
-        vim.cmd.colorscheme 'iceberg'
-      end
-      vim.cmd([[
-        " Less bright search color
-        hi clear Search
-        hi Search                guibg=NvimDarkYellow
-        hi clear CurSearch
-        hi CurSearch             guibg=NvimDarkYellow
-
-        " Do not show unnecessary separation colors (make the background the same as WinSeparator)
-        hi LineNr                guibg=#101218
-        hi CursorLineNr          guibg=#101218
-        hi FoldColumn            guibg=#101218
-        hi SignColumn            guibg=#101218
-        hi DiagnosticSignError   guibg=#101218
-        hi DiagnosticSignWarn    guibg=#101218
-        hi DiagnosticSignInfo    guibg=#101218
-        hi DiagnosticSignHint    guibg=#101218
-        hi GitGutterAdd          guibg=#101218
-        hi GitGutterChange       guibg=#101218
-        hi GitGutterChangeDelete guibg=#101218
-        hi GitGutterDelete       guibg=#101218
-
-        " Nontext is way too dark
-        hi NonText              guifg=#353b5e
-
-        " Dim Neotree git signs
-        hi! link NeoTreeGitUntracked Title
-        hi! link NeoTreeGitUnstaged  Title
-
-        " make Fold color pale purple
-        hi Folded                guibg=#2d273f
-        " Disable hl for winbar which is used by dropbar
-        hi WinBar guibg=NONE
-
-        hi link LspInlayHint ModeMsg
-
-        " Dimmer floating windows
-        hi! Pmenu guifg=#c7c9d1 guibg=#242633
-        hi! PmenuSbar guifg=NONE guibg=#242633
-        hi! PmenuSel guifg=#e0e2eb guibg=#33374d
-        hi! DiagnosticFloatingHint guifg=#c7c9d1 guibg=#242633
-
-        " Highlighting every text expression is annoying
-        hi LspReferenceText guibg=None
-
-        " Dimmer TabLine
-        hi TabLine    guifg=#828597 guibg=#24283d
-        hi TabLineSel guifg=#e9e9ed guibg=#373c59
-        ]])
-
-      -- Black background in tabline for inactive buffers
-      for _, group in ipairs({ '', 'ADDED', 'Btn', 'CHANGED', 'DELETED', 'ERROR', 'HINT', 'Icon', 'Index', 'INFO', 'Mod', 'ModBtn', 'Number', 'Pin', 'PinBtn', 'Sign', 'SignRight', 'Target', 'WARN' }) do
-        vapi.nvim_set_hl(0, 'BufferInactive' .. group, { bg = '#000000' })
-      end
-
-      -- Use Pmenu color for floating windows
-      -- but not for TreesitterContext
-      local hl = vapi.nvim_get_hl(0, { name = 'NormalFloat' })
-      vapi.nvim_set_hl(0, 'TreesitterContext', hl)
-      vapi.nvim_set_hl(0, 'NormalFloat', { link = 'Normal' })
-      vapi.nvim_set_hl(0, 'FloatBorder', { fg = '#6c7189', bg = '#161822' })
-
-      -- Bold highlight group for filename
-      hl = vapi.nvim_get_hl(0, { name = 'Normal' })
-      vapi.nvim_set_hl(0, 'Bold', { bold = true, fg = hl.fg, bg = hl.bg })
+      require('tokyonight').setup({
+        on_colors = function(_) end,
+        on_highlights = function(hl, c)
+          hl.CursorLineNr = { fg = c.fg_dark, bold = true }
+          hl.BufferCurrent = { fg = c.orange, bold = true }
+        end
+      })
+      vim.cmd.colorscheme 'tokyonight-moon'
     end
   },
-
   -- Show modes with the current line color instead of the statusline
   {
     cond = false,
