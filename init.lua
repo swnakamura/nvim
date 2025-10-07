@@ -592,7 +592,7 @@ require('lazy').setup({
         end
 
         -- Navigation
-        local hunk_nav_opts = { wrap = false, preview = true }
+        local hunk_nav_opts = { wrap = false, preview = true, greedy = false }
         for _, downkey in ipairs({ '<PageDown>', ']h', '<Down>' }) do
           bufmap('n', downkey, function()
             if vim.wo.diff then return ']c' end
