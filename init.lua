@@ -272,6 +272,7 @@ require('lazy').setup({
             { section = "startup" },
           },
         },
+        image = {},
         -- input = { enabled = true },
         indent = {
           enabled = true,
@@ -307,6 +308,14 @@ require('lazy').setup({
         end, 100
       )
     end
+  },
+
+  -- share edit with vscode
+  {
+    cond = false,
+    "git@github.com:kbwo/vim-shareedit.git",
+    dependencies = "vim-denops/denops.vim",
+    cmd = { "ShareEditStart" }
   },
 
   -- todo-comments
