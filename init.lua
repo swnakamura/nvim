@@ -3082,22 +3082,23 @@ vapi.nvim_create_autocmd("BufReadPost", {
   group = vapi.nvim_create_augroup("autosave", {}),
   callback = function(ctx)
     if ctx.file:match("wezterm.lua")
-      or vim.fn.system({ "git", "status" }):find("fatal") ~= nil
-      or vim.fn.system({ "git", "ls-files", "--error-unmatch", ctx.file }):find("error") ~= nil
-      or vim.tbl_contains(autosave_disabled_ft, vim.bo[ctx.buf].ft)
-      or vim.tbl_contains(autosave_disabled_suffix, ctx.file:sub(- #autosave_disabled_suffix[1]))
+        or vim.fn.system({ "git", "status" }):find("fatal") ~= nil
+        or vim.fn.system({ "git", "ls-files", "--error-unmatch", ctx.file }):find("error") ~= nil
+        or vim.tbl_contains(autosave_disabled_ft, vim.bo[ctx.buf].ft)
+        or vim.tbl_contains(autosave_disabled_suffix, ctx.file:sub(- #autosave_disabled_suffix[1]))
     then
       vim.notify("Autosave disabled for this buffer", { title = "Autosave" }, vim.log.levels.WARN)
-      vapi.nvim_buf_set_var(ctx.buf, "autosave_enabled", false)
+      vim.b.autosave_enabled = false
     else
-      vapi.nvim_buf_set_var(ctx.buf, "autosave_enabled", true)
+      vim.b.autosave_enabled = true
     end
   end,
 })
 local autosave = function(ctx)
   if
-    not vim.bo.modified
-    or vfn.findfile(ctx.file, ".") == "" -- a new file
+      not vim.bo.modified                         -- not modified
+      or vfn.findfile(ctx.file, ".") == ""        -- is a new file
+      or (vim.b.autosave_enabled or false) == false -- autosave is disabled for this buffer
   then
     return
   end
