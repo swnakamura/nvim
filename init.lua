@@ -2982,54 +2982,56 @@ function Is_joblog()
   return false
 end
 
-vapi.nvim_create_autocmd(
-  { 'BufReadPost', 'BufWritePost' },
-  {
-    pattern = '*.csv',
-    callback = function()
-      if vfn.has('uniz') then
-        RestoreWinAfter('silent %!column -s, -o, -t -L')
-      else
-        RestoreWinAfter([[silent %!column -s -t]])
+if Env.is_linux then
+  vapi.nvim_create_autocmd(
+    { 'BufReadPost', 'BufWritePost' },
+    {
+      pattern = '*.csv',
+      callback = function()
+        if vfn.has('uniz') then
+          RestoreWinAfter('silent %!column -s, -o, -t -L')
+        else
+          RestoreWinAfter([[silent %!column -s -t]])
+        end
       end
-    end
-  }
-)
-vapi.nvim_create_autocmd(
-  { 'BufReadPost', 'BufWritePost' },
-  {
-    pattern = '*.tsv',
-    callback = function()
-      if Is_joblog() then
-        return
+    }
+  )
+  vapi.nvim_create_autocmd(
+    { 'BufReadPost', 'BufWritePost' },
+    {
+      pattern = '*.tsv',
+      callback = function()
+        if Is_joblog() then
+          return
+        end
+        RestoreWinAfter([[silent %!column -s "$(printf '\t')" -o "$(printf '\t')" -t -L]])
       end
-      RestoreWinAfter([[silent %!column -s "$(printf '\t')" -o "$(printf '\t')" -t -L]])
-    end
-  }
-)
-vapi.nvim_create_autocmd(
-  { 'BufWritePre' },
-  {
-    pattern = '*.csv',
-    callback = function()
-      RestoreWinAfter([[silent %s/ \+\ze,/,/ge]])
-      RestoreWinAfter([[silent %s/\s\+$//ge]])
-    end
-  }
-)
-vapi.nvim_create_autocmd(
-  { 'BufWritePre' },
-  {
-    pattern = '*.tsv',
-    callback = function()
-      if Is_joblog() then
-        return
+    }
+  )
+  vapi.nvim_create_autocmd(
+    { 'BufWritePre' },
+    {
+      pattern = '*.csv',
+      callback = function()
+        RestoreWinAfter([[silent %s/ \+\ze,/,/ge]])
+        RestoreWinAfter([[silent %s/\s\+$//ge]])
       end
-      RestoreWinAfter([[silent %s/ \+\ze	//ge]])
-      RestoreWinAfter([[silent %s/\s\+$//ge]])
-    end
-  }
-)
+    }
+  )
+  vapi.nvim_create_autocmd(
+    { 'BufWritePre' },
+    {
+      pattern = '*.tsv',
+      callback = function()
+        if Is_joblog() then
+          return
+        end
+        RestoreWinAfter([[silent %s/ \+\ze	//ge]])
+        RestoreWinAfter([[silent %s/\s\+$//ge]])
+      end
+    }
+  )
+end
 
 vim.cmd([[
 augroup jupyter-notebook
