@@ -27,9 +27,8 @@ go.winminheight = 0
 go.winminwidth = 0
 
 -- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
 o.clipboard = 'unnamedplus'
+vim.g.clipboard = 'osc52'
 
 -- Enable break indent
 o.breakindent = true
