@@ -3079,39 +3079,41 @@ end, { desc = 'Toggle Japanese IME mode' })
 
 
 -- [[ autosave ]]
-local autosave_disabled_ft = { "acwrite", "oil", "yazi", "neo-tree", "yaml", "toml", "json", "csv", "tsv", "gitcommit",
-  "gitignore" }
-local autosave_disabled_suffix = { ".ipynb" }
-vapi.nvim_create_autocmd("BufReadPost", {
-  pattern = "*",
-  group = vapi.nvim_create_augroup("autosave", {}),
-  callback = function(ctx)
-    if ctx.file:match("wezterm.lua")
-        or vim.fn.system({ "git", "status" }):find("fatal") ~= nil
-        or vim.fn.system({ "git", "ls-files", "--error-unmatch", ctx.file }):find("error") ~= nil
-        or vim.tbl_contains(autosave_disabled_ft, vim.bo[ctx.buf].ft)
-        or vim.tbl_contains(autosave_disabled_suffix, ctx.file:sub(- #autosave_disabled_suffix[1]))
+if not Env.is_vscode then
+  local autosave_disabled_ft = { "acwrite", "oil", "yazi", "neo-tree", "yaml", "toml", "json", "csv", "tsv", "gitcommit",
+    "gitignore" }
+  local autosave_disabled_suffix = { ".ipynb" }
+  vapi.nvim_create_autocmd("BufReadPost", {
+    pattern = "*",
+    group = vapi.nvim_create_augroup("autosave", {}),
+    callback = function(ctx)
+      if ctx.file:match("wezterm.lua")
+          or vim.fn.system({ "git", "status" }):find("fatal") ~= nil
+          or vim.fn.system({ "git", "ls-files", "--error-unmatch", ctx.file }):find("error") ~= nil
+          or vim.tbl_contains(autosave_disabled_ft, vim.bo[ctx.buf].ft)
+          or vim.tbl_contains(autosave_disabled_suffix, ctx.file:sub(- #autosave_disabled_suffix[1]))
+      then
+        vim.notify("Autosave disabled for this buffer", { title = "Autosave" }, vim.log.levels.WARN)
+        vim.b.autosave_enabled = false
+      else
+        vim.b.autosave_enabled = true
+      end
+    end,
+  })
+  local autosave = function(ctx)
+    if
+        not vim.bo.modified                           -- not modified
+        or vfn.findfile(ctx.file, ".") == ""          -- is a new file
+        or (vim.b.autosave_enabled or false) == false -- autosave is disabled for this buffer
     then
-      vim.notify("Autosave disabled for this buffer", { title = "Autosave" }, vim.log.levels.WARN)
-      vim.b.autosave_enabled = false
-    else
-      vim.b.autosave_enabled = true
+      return
     end
-  end,
-})
-local autosave = function(ctx)
-  if
-      not vim.bo.modified                         -- not modified
-      or vfn.findfile(ctx.file, ".") == ""        -- is a new file
-      or (vim.b.autosave_enabled or false) == false -- autosave is disabled for this buffer
-  then
-    return
+    vim.cmd("silent lockmarks update")
   end
-  vim.cmd("silent lockmarks update")
+  vapi.nvim_create_autocmd({ "BufLeave", "FocusLost" }, {
+    pattern = "*",
+    callback = autosave,
+  })
 end
-vapi.nvim_create_autocmd({ "BufLeave", "FocusLost" }, {
-  pattern = "*",
-  callback = autosave,
-})
 
 -- vim: ts=2 sts=2 sw=2 et
