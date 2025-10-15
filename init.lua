@@ -90,7 +90,8 @@ end
 
 -- [[ Plugin settings ]]
 
-local treesitter_filetypes = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'fish', 'go', 'html', 'lua', 'markdown', 'markdown_inline',
+local treesitter_filetypes = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'fish', 'go', 'html', 'lua', 'markdown',
+  'markdown_inline',
   'python', 'rust', 'latex', -- no need for 'tex' as it's covered by latex
   'tsx', 'typescript', 'vimdoc', 'vim', 'yaml' }
 
