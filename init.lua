@@ -760,6 +760,7 @@ require('lazy').setup({
           bash = true,
           sh = true,
           zsh = true,
+          fish = true,
           vim = true,
         },
       })
