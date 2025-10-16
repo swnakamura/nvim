@@ -92,7 +92,7 @@ end
 
 local treesitter_filetypes = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'fish', 'go', 'html', 'lua', 'markdown',
   'markdown_inline',
-  'python', 'rust', 'latex', -- no need for 'tex' as it's covered by latex
+  'python', 'rust', 'latex', -- 'latex' is used for treesitter and 'tex' is used for vim
   'tsx', 'typescript', 'vimdoc', 'vim', 'yaml' }
 
 
@@ -2514,7 +2514,7 @@ require('lazy').setup({
   {
     cond = not Env.is_vscode,
     'nvim-treesitter/nvim-treesitter-context',
-    ft = treesitter_filetypes,
+    ft = { unpack(treesitter_filetypes), 'tex' },
     dependencies = 'nvim-treesitter/nvim-treesitter',
     config = function()
       require "treesitter-context".setup {
