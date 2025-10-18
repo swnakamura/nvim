@@ -842,53 +842,84 @@ require('lazy').setup({
     end,
     -- See Commands section for default commands if you want to lazy load on them
   },
+
+  -- sidekick (AI assistant)
   {
-    cond = not Env.is_vscode,
-    "yetone/avante.nvim",
-    version = false, -- Never set this value to "*"! Never!
-    keys = {
-      '<leader>aa',
-      '<leader>ae',
-      '<leader>ad',
-      '<leader>af',
-      '<leader>ah',
-      '<leader>an',
-      '<leader>ar',
-      '<leader>aR',
-      '<leader>as',
-      '<leader>aS',
-      '<leader>at',
-      '<leader>a?',
-    },
+    "folke/sidekick.nvim",
     opts = {
-      -- add any opts here
-      -- for example
-      provider = "copilot",
-      copilot = {
-        model = "gpt-4.1",
-      }
+      -- add any options here
+      cli = {
+        mux = {
+          backend = "zellij",
+          enabled = true,
+        },
+      },
     },
-    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-    build = "make",
-    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "stevearc/dressing.nvim",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      --- The below dependencies are optional,
-      "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-      "nvim-tree/nvim-web-devicons",   -- or echasnovski/mini.icons
-      "zbirenbaum/copilot.lua",        -- for providers='copilot'
+    keys = {
+      {
+        "<tab>",
+        function()
+          -- if there is a next edit, jump to it, otherwise apply it if any
+          if not require("sidekick").nes_jump_or_apply() then
+            return "<Tab>" -- fallback to normal tab
+          end
+        end,
+        expr = true,
+        desc = "Goto/Apply Next Edit Suggestion",
+      },
+      {
+        "<c-.>",
+        function() require("sidekick.cli").toggle() end,
+        desc = "Sidekick Toggle",
+        mode = { "n", "t", "i", "x" },
+      },
+      {
+        "<leader>aa",
+        function() require("sidekick.cli").toggle() end,
+        desc = "Sidekick Toggle CLI",
+      },
+      {
+        "<leader>as",
+        function() require("sidekick.cli").select() end,
+        -- Or to select only installed tools:
+        -- require("sidekick.cli").select({ filter = { installed = true } })
+        desc = "Select CLI",
+      },
+      {
+        "<leader>ad",
+        function() require("sidekick.cli").close() end,
+        desc = "Detach a CLI Session",
+      },
+      {
+        "<leader>at",
+        function() require("sidekick.cli").send({ msg = "{this}" }) end,
+        mode = { "x", "n" },
+        desc = "Send This",
+      },
+      {
+        "<leader>af",
+        function() require("sidekick.cli").send({ msg = "{file}" }) end,
+        desc = "Send File",
+      },
+      {
+        "<leader>av",
+        function() require("sidekick.cli").send({ msg = "{selection}" }) end,
+        mode = { "x" },
+        desc = "Send Visual Selection",
+      },
+      {
+        "<leader>ap",
+        function() require("sidekick.cli").prompt() end,
+        mode = { "n", "x" },
+        desc = "Sidekick Select Prompt",
+      },
+      -- Example of a keybinding to open Claude directly
+      {
+        "<leader>ac",
+        function() require("sidekick.cli").toggle({ name = "claude", focus = true }) end,
+        desc = "Sidekick Toggle Claude",
+      },
     },
-    init = function()
-      vapi.nvim_create_autocmd('FileType', {
-        pattern = 'Avante',
-        callback = function()
-          vim.wo.conceallevel = 2
-        end
-      })
-    end
   },
 
   -- register preview
