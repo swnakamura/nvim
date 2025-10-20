@@ -2886,92 +2886,94 @@ au CmdlineLeave /,\? autocmd CursorHold * ++once autocmd CursorMoved,BufLeave,Wi
 augroup END
 ]])
 
--- 選択した領域を自動でハイライトする
-vim.cmd([[hi link VisualMatch Search]])
-VisualMatch = function()
-  if vim.w.visual_match_id then
-    vfn.matchdelete(vim.w.visual_match_id)
-    vim.w.visual_match_id = nil
-  end
-
-  if vfn.mode() ~= 'v' then
-    return nil
-  end
-
-  local line = vfn.line
-  local charcol = vfn.charcol
-
-  if charcol '.' < charcol 'v' then
-    vim.g.colrange = { charcol('.'), charcol('v') }
-  elseif charcol '.' > charcol 'v' then
-    vim.g.colrange = { charcol('v'), charcol('.') }
-  elseif line '.' ~= line 'v' then
-    -- same column, different line
-    vim.g.colrange = { charcol('v'), charcol('.') }
-  else
-    return nil
-  end
-
-  if line '.' == line 'v' then
-    vim.cmd([[
-      let g:text = getline('.')->strcharpart(g:colrange[0]-1, g:colrange[1]-g:colrange[0]+1)->escape('\')
-      ]])
-  else
-    if line '.' > line 'v' then
-      vim.g.linerange = { 'v', '.' }
-    else
-      vim.g.linerange = { '.', 'v' }
+if not Env.is_vscode then
+  -- 選択した領域を自動でハイライトする
+  vim.cmd([[hi link VisualMatch Search]])
+  VisualMatch = function()
+    if vim.w.visual_match_id then
+      vfn.matchdelete(vim.w.visual_match_id)
+      vim.w.visual_match_id = nil
     end
-    vim.cmd([[
-      let g:lines=getline(g:linerange[0], g:linerange[1])
-      let g:lines[0] = g:lines[0]->strcharpart(charcol(g:linerange[0])-1)
-      let g:lines[-1] = g:lines[-1]->strcharpart(0,charcol(g:linerange[1]))
-      let g:text = g:lines->map({key, line -> line->escape('\')})->join('\n')
-      ]])
-  end
 
-  -- if length of the text is too long, do not highlight
-  if #vim.g.text > 5000 then
+    if vfn.mode() ~= 'v' then
+      return nil
+    end
+
+    local line = vfn.line
+    local charcol = vfn.charcol
+
+    if charcol '.' < charcol 'v' then
+      vim.g.colrange = { charcol('.'), charcol('v') }
+    elseif charcol '.' > charcol 'v' then
+      vim.g.colrange = { charcol('v'), charcol('.') }
+    elseif line '.' ~= line 'v' then
+      -- same column, different line
+      vim.g.colrange = { charcol('v'), charcol('.') }
+    else
+      return nil
+    end
+
+    if line '.' == line 'v' then
+      vim.cmd([[
+        let g:text = getline('.')->strcharpart(g:colrange[0]-1, g:colrange[1]-g:colrange[0]+1)->escape('\')
+        ]])
+    else
+      if line '.' > line 'v' then
+        vim.g.linerange = { 'v', '.' }
+      else
+        vim.g.linerange = { '.', 'v' }
+      end
+      vim.cmd([[
+        let g:lines=getline(g:linerange[0], g:linerange[1])
+        let g:lines[0] = g:lines[0]->strcharpart(charcol(g:linerange[0])-1)
+        let g:lines[-1] = g:lines[-1]->strcharpart(0,charcol(g:linerange[1]))
+        let g:text = g:lines->map({key, line -> line->escape('\')})->join('\n')
+        ]])
+    end
+
+    -- if length of the text is too long, do not highlight
+    if #vim.g.text > 5000 then
+      return nil
+    end
+
+    vim.w.visual_match_id = vfn.matchadd('VisualMatch', [[\V]] .. vim.g.text, 11)
     return nil
   end
+  -- WinLeave is needed to clear match when leaving the window. VisualMatch deletes the match for the current window only, so if you switch to another window, the match should be cleared before you leave.
+  vapi.nvim_create_autocmd({ 'CursorMoved', 'WinLeave' }, {
+    pattern = '*',
+    callback = VisualMatch
+  })
 
-  vim.w.visual_match_id = vfn.matchadd('VisualMatch', [[\V]] .. vim.g.text, 11)
-  return nil
+  vim.cmd([[hi CursorWord gui=underline]])
+  WordMatch = function()
+    if vim.tbl_contains({ 'fern', 'neo-tree', 'floaterm', 'oil', 'org', 'NeogitStatus', 'aerial' }, vim.bo.filetype) then
+      return
+    end
+    DelWordMatch()
+    if vim.o.hlsearch then
+      return
+    end
+
+    local cursorword = vfn.expand('<cword>')
+    if cursorword == '' then
+      return
+    end
+    vim.w.wordmatch_id = vfn.matchadd('CursorWord', [[\V\<]] .. cursorword .. [[\>]])
+  end
+
+  DelWordMatch = function()
+    if vim.w.wordmatch_id then
+      vfn.matchdelete(vim.w.wordmatch_id)
+      vim.w.wordmatch_id = nil
+    end
+  end
+
+  vapi.nvim_create_autocmd('CursorHold', {
+    pattern = '*',
+    callback = WordMatch
+  })
 end
--- WinLeave is needed to clear match when leaving the window. VisualMatch deletes the match for the current window only, so if you switch to another window, the match should be cleared before you leave.
-vapi.nvim_create_autocmd({ 'CursorMoved', 'WinLeave' }, {
-  pattern = '*',
-  callback = VisualMatch
-})
-
-vim.cmd([[hi CursorWord gui=underline]])
-WordMatch = function()
-  if vim.tbl_contains({ 'fern', 'neo-tree', 'floaterm', 'oil', 'org', 'NeogitStatus', 'aerial' }, vim.bo.filetype) then
-    return
-  end
-  DelWordMatch()
-  if vim.o.hlsearch then
-    return
-  end
-
-  local cursorword = vfn.expand('<cword>')
-  if cursorword == '' then
-    return
-  end
-  vim.w.wordmatch_id = vfn.matchadd('CursorWord', [[\V\<]] .. cursorword .. [[\>]])
-end
-
-DelWordMatch = function()
-  if vim.w.wordmatch_id then
-    vfn.matchdelete(vim.w.wordmatch_id)
-    vim.w.wordmatch_id = nil
-  end
-end
-
-vapi.nvim_create_autocmd('CursorHold', {
-  pattern = '*',
-  callback = WordMatch
-})
 
 vim.cmd([[
 augroup numbertoggle
