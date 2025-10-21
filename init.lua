@@ -1925,8 +1925,8 @@ require('lazy').setup({
             enabled = true,
           },
           window = {
-            width = 60,
-            max_width = '30%',
+            width = 30,
+            max_width = '20%',
             mappings = {
               ["o"] = "open",
               ["x"] = "system_open",
@@ -1961,7 +1961,7 @@ require('lazy').setup({
           {
             event = "neo_tree_buffer_enter",
             handler = function(arg)
-              vim.opt.relativenumber = true
+              vim.opt.relativenumber = false
             end,
           }
         }
