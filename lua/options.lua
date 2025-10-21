@@ -29,27 +29,28 @@ go.winminwidth = 0
 -- Sync clipboard between OS and Neovim.
 vim.o.clipboard = "unnamedplus"
 
--- "dummy" paste function that just pastes from the unnamed register.
--- https://zenn.dev/goropikari/articles/506e08e7ad52af
-local function paste()
-  return {
-    vim.fn.split(vim.fn.getreg(""), "\n"),
-    vim.fn.getregtype(""),
+if not Env.is_vscode then
+  -- "dummy" paste function that just pastes from the unnamed register.
+  -- https://zenn.dev/goropikari/articles/506e08e7ad52af
+  local function paste()
+    return {
+      vim.fn.split(vim.fn.getreg(""), "\n"),
+      vim.fn.getregtype(""),
+    }
+  end
+
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = {
+      ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+    },
+    paste = {
+      ["+"] = paste,
+      ["*"] = paste,
+    },
   }
 end
-
-vim.g.clipboard = {
-  name = "OSC 52",
-  copy = {
-    ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-    ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
-  },
-  paste = {
-    ["+"] = paste,
-    ["*"] = paste,
-  },
-}
-
 -- Enable break indent
 o.breakindent = true
 
