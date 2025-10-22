@@ -1276,7 +1276,13 @@ require('lazy').setup({
       -- See the full "keymap" documentation for information on defining your own keymap.
       keymap = {
         preset = 'default',
-        ['<Tab>'] = {},
+        ['<Tab>'] = {
+          "snippet_forward",
+          function() -- sidekick next edit suggestion
+            return require("sidekick").nes_jump_or_apply()
+          end,
+          "fallback",
+        },
       },
 
       enabled = function()
