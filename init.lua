@@ -2245,8 +2245,10 @@ require('lazy').setup({
       require('tokyonight').setup({
         on_colors = function(_) end,
         on_highlights = function(hl, c)
-          hl.CursorLineNr = { fg = c.fg_dark, bold = true }
-          hl.BufferCurrent = { fg = c.orange, bold = true }
+          hl.CursorLineNr       = { fg = c.fg_dark, bold = true }
+          hl.BufferCurrent      = { fg = c.orange, bold = true }
+          hl.NeoTreeGitModified = { link = 'DiagnosticWarn' }
+          hl.NeoTreeGitUnstaged = { link = 'DiagnosticWarn' }
         end
       })
       vim.cmd.colorscheme 'tokyonight-moon'
