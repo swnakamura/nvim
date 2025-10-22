@@ -58,22 +58,6 @@ vim.g.is_wide_for_neotree = Env.is_wide_for_neotree
 
 _G.LazyVim = require("lazyvim.util")
 
-if Env.is_wsl then
-  vim.g.clipboard = {
-    name = 'WslClipboard',
-    copy = {
-      ['+'] = { 'sh', '-c', 'iconv -t sjis | clip.exe' },
-      ['*'] = { 'sh', '-c', 'iconv -t sjis | clip.exe' },
-    },
-    paste = {
-      ['+'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-      ['*'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-    },
-    cache_enabled = 0,
-  }
-end
-
-
 -- print warning if inotifywait not found on linux system
 if Env.is_linux and vim.fn.executable('inotifywait') ~= 1 then
   vim.notify("inotifywait not found. Some features may not work properly.", vim.log.levels.WARN)

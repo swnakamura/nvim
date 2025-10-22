@@ -29,7 +29,20 @@ go.winminwidth = 0
 -- Sync clipboard between OS and Neovim.
 vim.o.clipboard = "unnamedplus"
 
-if not Env.is_vscode then
+if Env.is_wsl then
+  vim.g.clipboard = {
+    name = 'WslClipboard',
+    copy = {
+      ['+'] = { 'sh', '-c', 'iconv -t sjis | clip.exe' },
+      ['*'] = { 'sh', '-c', 'iconv -t sjis | clip.exe' },
+    },
+    paste = {
+      ['+'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+      ['*'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+    },
+    cache_enabled = 0,
+  }
+elseif not Env.is_vscode then
   -- "dummy" paste function that just pastes from the unnamed register.
   -- https://zenn.dev/goropikari/articles/506e08e7ad52af
   local function paste()
