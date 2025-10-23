@@ -441,10 +441,10 @@ require('lazy').setup({
       "folke/snacks.nvim", -- optional
     },
     keys = {
-      { '<leader>gs', function() require('neogit').open() end,                                      desc = "Git status (neogit)" },
-      { 'gs',         function() require('neogit').open() end,                                      desc = "Git status (neogit)" },
-      { '<leader>ga', '<cmd>silent !git add %<CR>',                                                 { silent = true, desc = "Git add current file" } },
-      { '<leader>gc', function() require('neogit').action('commit', 'commit', { '--verbose' }) end, { silent = true, desc = "Git commit" } },
+      { '<leader>gs', function() require('neogit').open() end,                                        desc = "Git status (neogit)" },
+      { 'gs',         function() require('neogit').open() end,                                        desc = "Git status (neogit)" },
+      { '<leader>ga', '<cmd>silent !git add %<CR>',                                                   { silent = true, desc = "Git add current file" } },
+      { '<leader>gc', function() require('neogit').action('commit', 'commit', { '--verbose' })() end, { silent = true, desc = "Git commit" } },
       { '<leader>gl', function()
         require('neogit').action('log', 'log_all_branches',
           { '--graph', '--topo-order', '--decorate' })
