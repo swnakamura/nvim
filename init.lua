@@ -253,6 +253,7 @@ require('lazy').setup({
           },
         },
         image = {
+          enabled = false,
           math = {
             latex = {
               font_size = "Large", -- see https://www.sascha-frank.com/latex-font-size.html
