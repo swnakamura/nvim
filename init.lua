@@ -74,12 +74,6 @@ end
 
 -- [[ Plugin settings ]]
 
-local treesitter_filetypes = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'fish', 'go', 'html', 'lua', 'markdown',
-  'markdown_inline',
-  'python', 'rust', 'latex', -- 'latex' is used for treesitter and 'tex' is used for vim
-  'tsx', 'typescript', 'vimdoc', 'vim', 'yaml' }
-
-
 local event = require("lazy.core.handler.event")
 
 event.mappings.LazyFile = { id = "LazyFile", event = { "BufReadPost", "BufNewFile", "BufWritePre", "BufAdd" } }
@@ -2450,19 +2444,19 @@ require('lazy').setup({
 
   -- treesitter
   {
+    lazy = true, -- load only when needed
     cond = not Env.is_vscode,
-    -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
-    ft = { unpack(treesitter_filetypes), 'tex' }, -- 'tex' is the name of vim filetype for LaTeX files.
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
     build = ':TSUpdate',
     config = function()
       vim.treesitter.language.register('bash', { 'sh', 'zsh' })
+      vim.treesitter.language.register('latex', { 'tex' })
       require('nvim-treesitter.configs').setup {
         -- Add languages to be installed here that you want installed for treesitter
-        ensure_installed = treesitter_filetypes,
+        ensure_installed = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'fish', 'go', 'html', 'lua', 'markdown', 'markdown_inline', 'python', 'rust', 'latex', 'tsx', 'typescript', 'vimdoc', 'vim', 'yaml' },
 
         -- List of parsers to ignore installing (for "all")
         ignore_install = { "json" },
@@ -2535,9 +2529,9 @@ require('lazy').setup({
     end
   },
   {
-    cond = not Env.is_vscode,
+    cond = false,
     'nvim-treesitter/nvim-treesitter-context',
-    ft = { unpack(treesitter_filetypes), 'tex' },
+    ft = { 'bibtex', 'sh', 'c', 'cpp', 'css', 'fish', 'go', 'html', 'lua', 'markdown', 'markdown_inline', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim', 'yaml' }, -- somehow tex causes error
     dependencies = 'nvim-treesitter/nvim-treesitter',
     config = function()
       require "treesitter-context".setup {
