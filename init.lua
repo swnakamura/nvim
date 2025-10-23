@@ -918,10 +918,9 @@ require('lazy').setup({
   {
     cond = not Env.is_vscode,
     'mbbill/undotree',
-    init = function()
-      map('n', 'U', ':UndotreeToggle<CR>')
-    end,
-    cmd = 'UndotreeToggle'
+    keys = {
+      { 'U', '<Cmd>UndotreeToggle<CR>', desc = "Toggle undotree" },
+    },
   },
 
   -- nvim-lspconfig
