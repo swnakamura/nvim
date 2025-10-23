@@ -2019,9 +2019,12 @@ require('lazy').setup({
 
   -- emmet
   {
-    cond = false, -- not to occupy <C-y> mapping
     'mattn/emmet-vim',
-    ft = { 'html', 'xml', 'vue', 'htmldjango', 'markdown' }
+    ft = { 'html', 'xml', 'vue', 'htmldjango', 'markdown' },
+    cmd = {'EmmetInstall'},
+    init = function()
+      vim.g.user_emmet_leader_key = '<C-,>'
+    end,
   },
 
   -- barbar
