@@ -1869,11 +1869,11 @@ require('lazy').setup({
     cond = not Env.is_vscode,
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
-    cmd = 'Neotree',
+    keys = {
+      { mode='n', "<leader>d", '<Cmd>Neotree focus<CR>', desc = "Focus neo-tree" },
+    },
     init = function()
       vim.g.neo_tree_remove_legacy_commands = 1
-
-      vim.keymap.set('n', "<leader>d", '<Cmd>Neotree focus<CR>')
     end,
     dependencies = {
       "nvim-lua/plenary.nvim",
