@@ -364,11 +364,17 @@ require('lazy').setup({
 
   -- smart increment/decrement
   {
-    keys = {
-      { "<C-a>", mode = { "n", "v" }, desc = "Increment" },
-      { "<C-x>", mode = { "n", "v" }, desc = "Decrement" },
-    },
     'monaqa/dial.nvim',
+    keys = {
+      { mode = "n", "<C-a>",  function() require("dial.map").manipulate("increment", "normal") end,  { desc = "Increment" } },
+      { mode = "n", "<C-x>",  function() require("dial.map").manipulate("decrement", "normal") end,  { desc = "Decrement" } },
+      { mode = "n", "g<C-a>", function() require("dial.map").manipulate("increment", "gnormal") end, { desc = "Increment g" } },
+      { mode = "n", "g<C-x>", function() require("dial.map").manipulate("decrement", "gnormal") end, { desc = "Decrement g" } },
+      { mode = "v", "<C-a>",  function() require("dial.map").manipulate("increment", "visual") end,  { desc = "Increment" } },
+      { mode = "v", "<C-x>",  function() require("dial.map").manipulate("decrement", "visual") end,  { desc = "Decrement" } },
+      { mode = "v", "g<C-a>", function() require("dial.map").manipulate("increment", "gvisual") end, { desc = "Increment g" } },
+      { mode = "v", "g<C-x>", function() require("dial.map").manipulate("decrement", "gvisual") end, { desc = "Decrement g" } },
+    },
     config = function()
       local augend = require("dial.augend")
       require("dial.config").augends:register_group {
@@ -395,32 +401,7 @@ require('lazy').setup({
           },
         },
       }
-
-      map("n", "<C-a>", function()
-        require("dial.map").manipulate("increment", "normal")
-      end)
-      map("n", "<C-x>", function()
-        require("dial.map").manipulate("decrement", "normal")
-      end)
-      map("n", "g<C-a>", function()
-        require("dial.map").manipulate("increment", "gnormal")
-      end)
-      map("n", "g<C-x>", function()
-        require("dial.map").manipulate("decrement", "gnormal")
-      end)
-      map("v", "<C-a>", function()
-        require("dial.map").manipulate("increment", "visual")
-      end)
-      map("v", "<C-x>", function()
-        require("dial.map").manipulate("decrement", "visual")
-      end)
-      map("v", "g<C-a>", function()
-        require("dial.map").manipulate("increment", "gvisual")
-      end)
-      map("v", "g<C-x>", function()
-        require("dial.map").manipulate("decrement", "gvisual")
-      end)
-    end
+    end,
   },
 
   -- remote-nvim
