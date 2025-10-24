@@ -323,19 +323,35 @@ MoveUntilNonWS = function(up)
   -- 現在位置に文字がある間……
   while true do
     curpos[2] = curpos[2] + up
-    vfn.cursor(curpos[2], curpos[3])
-    if vfn.line('.') <= 1 or vfn.line('.') >= vfn.line('$') or (vfn.strlen(vfn.getline('.')) < vfn.col('.') or vfn.getline("."):sub(vfn.col('.'), vfn.col('.')) == ' ') then
+    if curpos[2] < 1 or curpos[2] > vfn.line('$') then
+      break
+    end
+    local text = vfn.getline(curpos[2])
+    if #text == 0 then -- その行が空行なら抜ける
+      break
+    end
+    local checkcolmn = math.min(curpos[3], #text)
+    if text:sub(checkcolmn, checkcolmn) == ' ' then
       break
     end
   end
   -- 現在位置が空白文字である間……
   while true do
     curpos[2] = curpos[2] + up
-    vfn.cursor(curpos[2], curpos[3])
-    if vfn.line('.') <= 1 or vfn.line('.') >= vfn.line('$') or not (vfn.strlen(vfn.getline('.')) < vfn.col('.') or vfn.getline("."):sub(vfn.col('.'), vfn.col('.')) == ' ') then
+    if curpos[2] < 1 or curpos[2] > vfn.line('$') then
+      break
+    end
+    local text = vfn.getline(curpos[2])
+    if #text == 0 then -- その行が空行なら、空白と解釈して継続
+      text = ' '
+    end
+    local checkcolmn = math.min(curpos[3], #text)
+    if text:sub(checkcolmn, checkcolmn) ~= ' ' then
       break
     end
   end
+
+  vfn.cursor( curpos[2], curpos[3] )
 end
 
 map({ 'n', 'v' }, '<leader>k', [[<Cmd>lua MoveUntilNonWS(-1)<CR>]])
