@@ -562,14 +562,14 @@ require('lazy').setup({
     opts = {
       signs_staged_enable = true,
       signcolumn          = true,
-      numhl               = true,
+      numhl               = false,
       signs               = {
-        add    = { text = '▏' },
-        change = { text = '▏' },
+        add    = { text = '┋' },
+        change = { text = '┃' },
       },
       signs_staged        = {
-        add    = { text = '▏' },
-        change = { text = '▏' },
+        add    = { text = '┋' },
+        change = { text = '┃' },
       },
       on_attach           = function(bufnr)
         local gs = package.loaded.gitsigns
