@@ -2281,6 +2281,11 @@ require('lazy').setup({
     event = 'LazyFile',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
+      local lualine_diff = nil
+      if string.find(vim.fn.getcwd(), 'my%-text') then
+        lualine_diff = require('char_count').lualine_diff_with_char_count
+        require('char_count').setup()
+      end
       require('lualine').setup {
         options = {
           icons_enabled = true,
@@ -2317,7 +2322,7 @@ require('lazy').setup({
             'branch',
             { "filetype",                                  icon_only = true, separator = "", padding = { left = 1, right = 0 } },
             { require 'lazyvim.util.lualine'.pretty_path() },
-            'progress', 'location',
+            'progress', 'location', lualine_diff
           },
           lualine_c = {
             {
