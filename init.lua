@@ -1852,7 +1852,7 @@ require('lazy').setup({
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     keys = {
-      { mode='n', "<leader>d", '<Cmd>Neotree focus<CR>', desc = "Focus neo-tree" },
+      { mode = 'n', "<leader>d", '<Cmd>Neotree focus<CR>', desc = "Focus neo-tree" },
     },
     init = function()
       vim.g.neo_tree_remove_legacy_commands = 1
@@ -2021,7 +2021,7 @@ require('lazy').setup({
   {
     'mattn/emmet-vim',
     ft = { 'html', 'xml', 'vue', 'htmldjango', 'markdown' },
-    cmd = {'EmmetInstall'},
+    cmd = { 'EmmetInstall' },
     init = function()
       vim.g.user_emmet_leader_key = '<C-,>'
     end,
