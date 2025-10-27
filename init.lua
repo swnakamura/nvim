@@ -2926,7 +2926,7 @@ if not Env.is_vscode then
     callback = VisualMatch
   })
 
-  vim.cmd([[hi CursorWord gui=underline]])
+  vim.cmd([[hi CursorWord guibg=#3b4261]])
   WordMatch = function()
     if vim.tbl_contains({ 'fern', 'neo-tree', 'floaterm', 'oil', 'org', 'NeogitStatus', 'aerial' }, vim.bo.filetype) then
       return
