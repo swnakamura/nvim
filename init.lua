@@ -444,7 +444,7 @@ require('lazy').setup({
     keys = {
       { '<leader>gs', function() require('neogit').open() end,                                        desc = "Git status (neogit)" },
       { 'gs',         function() require('neogit').open() end,                                        desc = "Git status (neogit)" },
-      { '<leader>ga', '<cmd>silent !git add %<CR>',                                                   { silent = true, desc = "Git add current file" } },
+      { '<leader>ga', [[<cmd>silent !git add '%'<CR>]],                                               { silent = true, desc = "Git add current file" } },
       { '<leader>gc', function() require('neogit').action('commit', 'commit', { '--verbose' })() end, { silent = true, desc = "Git commit" } },
       { '<leader>gl', function()
         require('neogit').action('log', 'log_all_branches',
@@ -562,7 +562,7 @@ require('lazy').setup({
     opts = {
       signs_staged_enable = true,
       signcolumn          = true,
-      numhl               = false,
+      numhl               = true,
       signs               = {
         add    = { text = '┋' },
         change = { text = '┃' },
@@ -807,6 +807,7 @@ require('lazy').setup({
 
   -- sidekick (AI assistant)
   {
+    cond = not Env.is_vscode,
     "folke/sidekick.nvim",
     opts = {
       -- add any options here
@@ -2100,7 +2101,7 @@ require('lazy').setup({
     ft = 'markdown',
   },
   {
-    cond = not Env.is_vscode,
+    cond = false,
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
     ft = { 'markdown', 'copilot-chat' },
@@ -2648,6 +2649,7 @@ require('lazy').setup({
   -- japanese kensaku
   {
     event = 'LazyFile',
+    cond = vfn.isdirectory(vfn.expand('~/ghq/github.com/swnakamura/novel-preview.vim')) == 1,
     'lambdalisue/kensaku.vim',
     dependencies = { 'vim-denops/denops.vim', 'lambdalisue/kensaku-search.vim' },
   },
