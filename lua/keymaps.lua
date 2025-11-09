@@ -150,38 +150,41 @@ end
 map({ "n" }, "<leader>cy", "yygcc", { remap = true })
 map({ "v" }, "<leader>cy", "ygvgc", { remap = true })
 
--- window control by s
-map('n', '<Plug>(my-win)', '<Nop>')
-map('n', 's', '<Plug>(my-win)', { remap = true })
+-- Window control functionalities should have remap=true for vscode as it is internally remapped to vscode specific commands internally
+local window_opts = {}
+if Env.is_vscode then
+  window_opts.remap = true
+end
+
 -- window control
-map('n', '<Plug>(my-win)s', '<Cmd>split<CR>')
-map('n', '<Plug>(my-win)v', '<Cmd>vsplit<CR>')
+map('n', 'ss', '<C-w>s', window_opts)
+map('n', 'sv', '<C-w>v', window_opts)
 -- st is used by nvim-tree
-map('n', '<Plug>(my-win)c', '<Cmd>tab sp<CR>')
-map('n', '<Plug>(my-win)C', '<Cmd>tabc<CR>')
-map('n', '<Plug>(my-win)j', '<C-w>j')
-map('n', '<Plug>(my-win)k', '<C-w>k')
-map('n', '<Plug>(my-win)l', '<C-w>l')
-map('n', '<Plug>(my-win)h', '<C-w>h')
-map('n', '<Plug>(my-win)J', '<C-w>J')
-map('n', '<Plug>(my-win)K', '<C-w>K')
-map('n', '<Plug>(my-win)n', 'gt')
-map('n', '<Plug>(my-win)p', 'gT')
-map('n', '<Plug>(my-win)L', '<C-w>L')
-map('n', '<Plug>(my-win)H', '<C-w>H')
-map('n', '<Plug>(my-win)r', '<C-w>r')
-map('n', '<Plug>(my-win)=', '<C-w>=')
-map('n', '<Plug>(my-win)O', '<Cmd>tabonly<CR>')
-map('n', '<Plug>(my-win)o', '<C-w>|<C-w>_')
-map('n', '<Plug>(my-win)1', '<Cmd>1tabnext<CR>')
-map('n', '<Plug>(my-win)2', '<Cmd>2tabnext<CR>')
-map('n', '<Plug>(my-win)3', '<Cmd>3tabnext<CR>')
-map('n', '<Plug>(my-win)4', '<Cmd>4tabnext<CR>')
-map('n', '<Plug>(my-win)5', '<Cmd>5tabnext<CR>')
-map('n', '<Plug>(my-win)6', '<Cmd>6tabnext<CR>')
-map('n', '<Plug>(my-win)7', '<Cmd>7tabnext<CR>')
-map('n', '<Plug>(my-win)8', '<Cmd>8tabnext<CR>')
-map('n', '<Plug>(my-win)9', '<Cmd>9tabnext<CR>')
+map('n', 'sc', '<Cmd>tab sp<CR>', window_opts)
+map('n', 'sC', '<Cmd>tabc<CR>', window_opts)
+map('n', 'sj', '<C-w>j', window_opts)
+map('n', 'sk', '<C-w>k', window_opts)
+map('n', 'sl', '<C-w>l', window_opts)
+map('n', 'sh', '<C-w>h', window_opts)
+map('n', 'sJ', '<C-w>J', window_opts)
+map('n', 'sK', '<C-w>K', window_opts)
+map('n', 'sn', 'gt', window_opts)
+map('n', 'sp', 'gT', window_opts)
+map('n', 'sL', '<C-w>L', window_opts)
+map('n', 'sH', '<C-w>H', window_opts)
+map('n', 'sr', '<C-w>r', window_opts)
+map('n', 's=', '<C-w>=', window_opts)
+map('n', 'sO', '<Cmd>tabonly<CR>', window_opts)
+map('n', 'so', '<C-w>|<C-w>_', window_opts)
+map('n', 's1', '<Cmd>1tabnext<CR>', window_opts)
+map('n', 's2', '<Cmd>2tabnext<CR>', window_opts)
+map('n', 's3', '<Cmd>3tabnext<CR>', window_opts)
+map('n', 's4', '<Cmd>4tabnext<CR>', window_opts)
+map('n', 's5', '<Cmd>5tabnext<CR>', window_opts)
+map('n', 's6', '<Cmd>6tabnext<CR>', window_opts)
+map('n', 's7', '<Cmd>7tabnext<CR>', window_opts)
+map('n', 's8', '<Cmd>8tabnext<CR>', window_opts)
+map('n', 's9', '<Cmd>9tabnext<CR>', window_opts)
 
 -- disable Fn in insert mode
 for i = 1, 12 do
