@@ -15,7 +15,7 @@ local M = {}
 
 M.commands = {
   macos = {
-    on = 'macism com.justsystems.inputmethod.atok33.Japanese',
+    on = 'macism dev.ensan.inputmethod.azooKeyMac.Japanese',
     off = 'macism com.apple.keylayout.ABC',
     check = {
       cmd = 'macism',

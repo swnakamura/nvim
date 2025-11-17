@@ -349,12 +349,13 @@ MoveUntilNonWS = function(up)
       text = ' '
     end
     local checkcolmn = math.min(curpos[3], #text)
-    if text:sub(checkcolmn, checkcolmn) ~= ' ' then
+    local char_to_check = text:sub(checkcolmn, checkcolmn)
+     if char_to_check ~= ' ' and char_to_check ~= '\t' then
       break
     end
   end
 
-  vfn.cursor( curpos[2], curpos[3] )
+  vfn.cursor(curpos[2], curpos[3])
 end
 
 map({ 'n', 'v' }, '<leader>k', [[<Cmd>lua MoveUntilNonWS(-1)<CR>]])

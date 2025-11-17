@@ -42,7 +42,7 @@ if Env.is_wsl then
     },
     cache_enabled = 0,
   }
-elseif not Env.is_vscode then
+elseif not Env.is_vscode and not vim.g.neovide then
   -- "dummy" paste function that just pastes from the unnamed register.
   -- https://zenn.dev/goropikari/articles/506e08e7ad52af
   local function paste()
