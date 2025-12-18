@@ -326,7 +326,7 @@ MoveUntilNonWS = function(up)
   -- 現在位置に文字がある間……
   while true do
     curpos[2] = curpos[2] + up
-    if curpos[2] < 1 or curpos[2] > vfn.line('$') then
+    if curpos[2] <= 1 or curpos[2] > vfn.line('$') then
       break
     end
     local text = vfn.getline(curpos[2])
@@ -341,7 +341,7 @@ MoveUntilNonWS = function(up)
   -- 現在位置が空白文字である間……
   while true do
     curpos[2] = curpos[2] + up
-    if curpos[2] < 1 or curpos[2] > vfn.line('$') then
+    if curpos[2] <= 1 or curpos[2] > vfn.line('$') then
       break
     end
     local text = vfn.getline(curpos[2])
@@ -353,6 +353,12 @@ MoveUntilNonWS = function(up)
      if char_to_check ~= ' ' and char_to_check ~= '\t' then
       break
     end
+  end
+
+  if curpos[2] < 1 then
+    curpos[2] = 1
+  elseif curpos[2] > vfn.line('$') then
+    curpos[2] = vfn.line('$')
   end
 
   vfn.cursor(curpos[2], curpos[3])
