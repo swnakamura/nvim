@@ -807,7 +807,7 @@ require('lazy').setup({
 
   -- sidekick (AI assistant)
   {
-    cond = not Env.is_vscode,
+    cond = false,
     "folke/sidekick.nvim",
     opts = {
       -- add any options here
@@ -1252,16 +1252,16 @@ require('lazy').setup({
       -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
       -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
       -- See the full "keymap" documentation for information on defining your own keymap.
-      keymap = {
-        preset = 'default',
-        ['<Tab>'] = {
-          "snippet_forward",
-          function() -- sidekick next edit suggestion
-            return require("sidekick").nes_jump_or_apply()
-          end,
-          "fallback",
-        },
-      },
+      -- keymap = {
+      --   preset = 'default',
+      --   ['<Tab>'] = {
+      --     "snippet_forward",
+      --     function() -- sidekick next edit suggestion
+      --       return require("sidekick").nes_jump_or_apply()
+      --     end,
+      --     "fallback",
+      --   },
+      -- },
 
       enabled = function()
         -- Enable when all of the following are true:
