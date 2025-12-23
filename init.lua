@@ -3101,16 +3101,13 @@ end, { desc = 'Toggle Japanese IME mode' })
 
 -- [[ autosave ]]
 if not Env.is_vscode then
-  local autosave_disabled_ft = { "acwrite", "oil", "yazi", "neo-tree", "yaml", "toml", "json", "csv", "tsv", "gitcommit",
+  local autosave_disabled_ft = { "oil", "yazi", "neo-tree", "yaml", "toml", "json", "csv", "tsv", "gitcommit",
     "gitignore" }
   local autosave_disabled_suffix = { ".ipynb" }
   vapi.nvim_create_autocmd("BufReadPost", {
     pattern = "*",
-    group = vapi.nvim_create_augroup("autosave", {}),
     callback = function(ctx)
-      if ctx.file:match("wezterm.lua")
-          or vim.fn.system({ "git", "status" }):find("fatal") ~= nil
-          or vim.fn.system({ "git", "ls-files", "--error-unmatch", ctx.file }):find("error") ~= nil
+      if vim.system({ "git", "ls-files", "--error-unmatch", ctx.file }):wait().code ~= 0
           or vim.tbl_contains(autosave_disabled_ft, vim.bo[ctx.buf].ft)
           or vim.tbl_contains(autosave_disabled_suffix, ctx.file:sub(- #autosave_disabled_suffix[1]))
       then
@@ -3124,7 +3121,7 @@ if not Env.is_vscode then
   local autosave = function(ctx)
     if
         not vim.bo.modified                           -- not modified
-        or vfn.findfile(ctx.file, ".") == ""          -- is a new file
+        or ctx.file == ''                             -- doesn't have a name
         or (vim.b.autosave_enabled or false) == false -- autosave is disabled for this buffer
     then
       return
