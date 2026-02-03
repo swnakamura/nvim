@@ -475,7 +475,8 @@ require('lazy').setup({
     cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep', 'GBrowse', 'Dispatch' },
     keys = {
       { "<leader>gh", "<cmd>tab sp<CR>:0Gclog<CR>",   desc = "Git history" },
-      { "<leader>gp", "<cmd>Dispatch! git push<CR>",  desc = "Git async push" },
+      { "<leader>gp", "<cmd>Dispatch! git pull<CR>",  desc = "Git async pull" },
+      { "<leader>gP", "<cmd>Dispatch! git push<CR>",  desc = "Git async push" },
       { "<leader>gf", "<cmd>Dispatch! git fetch<CR>", desc = "Git async fetch" },
       { "<leader>gg", [[:<C-u>Glgrep ""<Left>]],      desc = "Git grep" },
       {
@@ -2241,7 +2242,7 @@ require('lazy').setup({
           hl.NeoTreeGitUnstaged = { link = 'DiagnosticWarn' }
         end
       })
-      vim.cmd.colorscheme 'tokyonight-moon'
+      vim.cmd.colorscheme 'tokyonight-night'
     end
   },
   -- Show modes with the current line color instead of the statusline
