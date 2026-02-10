@@ -25,16 +25,20 @@ M.toggle_IME = function()
     -- vim.api.nvim_buf_set_keymap(0, 'n', '<C-s>', '<cmd>FuzzyMotion<CR>', { noremap = true, silent = true })
   else
     print('日本語入力モードOFF')
-    vim.api.nvim_buf_del_keymap(0, 'n', 'S')
-    vim.api.nvim_buf_del_keymap(0, 'n', 't')
-    vim.api.nvim_buf_del_keymap(0, 'n', '<C-s>')
+    pcall(vim.api.nvim_buf_del_keymap, 0, 'n', 'S')
+    pcall(vim.api.nvim_buf_del_keymap, 0, 'n', 't')
+    pcall(vim.api.nvim_buf_del_keymap, 0, 'n', '<C-s>')
     if vim.fn.mode() == 'i' then
       M.disable()
     end
   end
 end
 
--- Autocommands that are controlled by the above functions
+-- Autocommands that are controlled by the above functions (only if IME is enabled)
+if not M.ime_enabled then
+  return M
+end
+
 vim.api.nvim_create_augroup("IME_autotoggle", { clear = true })
 vim.api.nvim_create_autocmd("InsertEnter", {
   group = "IME_autotoggle",

@@ -105,7 +105,7 @@ o.previewheight = 999
 o.list = true
 o.listchars = 'leadmultispace:---|,tab:» ,trail:~,extends:»,precedes:«,nbsp:%'
 
-o.scrolloff = 15
+-- o.scrolloff = 15
 
 go.laststatus = 3
 

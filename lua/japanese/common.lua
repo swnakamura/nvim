@@ -44,4 +44,18 @@ else
   M.osname = 'linux'
 end
 
+-- Check if the check command is available
+local function is_check_command_available()
+  local check_cmd = M.commands[M.osname].check.cmd
+  local handle = io.popen('which ' .. check_cmd .. ' 2>/dev/null')
+  if handle then
+    local result = handle:read('*a')
+    handle:close()
+    return result ~= ''
+  end
+  return false
+end
+
+M.ime_enabled = is_check_command_available()
+
 return M
