@@ -1238,7 +1238,6 @@ require('lazy').setup({
     event = { 'InsertEnter', 'CmdlineEnter' },
 
     dependencies = {
-      { "epwalsh/obsidian.nvim" },
       { 'L3MON4D3/LuaSnip' },
       { 'ribru17/blink-cmp-spell' },
     },
@@ -1304,28 +1303,12 @@ require('lazy').setup({
 
       sources = {
         default = function()
-          if vim.bo.filetype == 'markdown' then
-            return { 'obsidian', 'spell', 'obsidian_new', 'obsidian_tags', 'lazydev', 'lsp', 'path', 'snippets', 'buffer' }
-          else
-            return { 'lazydev', 'lsp', 'spell', 'path', 'snippets', 'buffer' }
-          end
+          return { 'lazydev', 'lsp', 'spell', 'path', 'snippets', 'buffer' }
         end,
         providers = {
           lsp = {
             async = true,      -- Whether we should show the completions before this provider returns, without waiting for it
             timeout_ms = 2000, -- How long to wait for the provider to return before showing completions and treating it as asynchronous
-          },
-          obsidian = {
-            name = "obsidian",
-            module = "blink.compat.source",
-          },
-          obsidian_new = {
-            name = "obsidian_new",
-            module = "blink.compat.source",
-          },
-          obsidian_tags = {
-            name = "obsidian_tags",
-            module = "blink.compat.source",
           },
           lazydev = {
             name = "LazyDev",
