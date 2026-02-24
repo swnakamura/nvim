@@ -636,7 +636,8 @@ require('lazy').setup({
     cond = not Env.is_vscode,
     "nvzone/floaterm",
     keys = {
-      { '<C-z>', mode = { 'n', 'i', 'v', 'o' }, '<Cmd>FloatermToggle<CR>' }
+      { '<C-z>', mode = { 'n', 'i', 'v', 'o' }, '<Cmd>FloatermToggle<CR>' },
+      { '<C-`>', mode = { 'n', 'i', 'v', 'o', 't' }, '<Cmd>FloatermToggle<CR>' }
     },
     cmd = "FloatermToggle",
     dependencies = "nvzone/volt",
