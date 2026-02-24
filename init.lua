@@ -72,6 +72,9 @@ else
   vim.o.guifont = "JetBrains Mono Light:h12"
 end
 
+local novel_formatter_dir = vfn.expand('~/novel_formatter') -- Japanese writing computer if this directory exists
+local obsidian_vault_dir = vfn.expand('~/research_vault')
+
 -- [[ Plugin settings ]]
 
 local event = require("lazy.core.handler.event")
@@ -2408,7 +2411,7 @@ require('lazy').setup({
 
   -- obsidian integration
   {
-    cond = not Env.is_vscode and not Env.is_ssh, -- run only in local neovim
+    cond = not Env.is_vscode and not Env.is_ssh and vfn.isdirectory(obsidian_vault_dir), -- run only in local neovim
     'epwalsh/obsidian.nvim',
     ft = 'markdown',
     dependencies = {
@@ -2426,7 +2429,7 @@ require('lazy').setup({
           workspaces = {
             {
               name = "work",
-              path = "~/research_vault",
+              path = obsidian_vault_dir,
             }
           },
           follow_img_func = function(img)
@@ -2597,7 +2600,7 @@ require('lazy').setup({
   -- Japanese
   {
     'swnakamura/jpmoveword.vim',
-    cond = vfn.isdirectory(vfn.expand('~/ghq/github.com/swnakamura/novel_formatter')) == 1,
+    cond = vfn.isdirectory(novel_formatter_dir) == 1,
     init = function()
       vim.g.jpmoveword_separator = '，．、。・「」『』（）【】'
       vim.g.jpmoveword_enable_WBE = 2
@@ -2629,9 +2632,9 @@ require('lazy').setup({
     end
   },
   {
-    cond = vfn.isdirectory(vfn.expand('~/ghq/github.com/swnakamura/novel_formatter')) == 1,
+    cond = vfn.isdirectory(novel_formatter_dir) == 1,
     event = 'LazyFile',
-    dir = '~/ghq/github.com/swnakamura/novel_formatter'
+    dir = novel_formatter_dir
   },
   {
     cond = vfn.isdirectory(vfn.expand('~/ghq/github.com/swnakamura/novel-preview.vim')) == 1,
@@ -2650,7 +2653,7 @@ require('lazy').setup({
   -- japanese kensaku
   {
     event = 'LazyFile',
-    cond = vfn.isdirectory(vfn.expand('~/ghq/github.com/swnakamura/novel-preview.vim')) == 1,
+    cond = vfn.isdirectory(novel_formatter_dir) == 1,
     'lambdalisue/kensaku.vim',
     dependencies = { 'vim-denops/denops.vim', 'lambdalisue/kensaku-search.vim' },
   },
