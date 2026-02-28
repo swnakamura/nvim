@@ -2792,7 +2792,7 @@ vim.cmd([[
 augroup file-type
 au!
 au FileType go                                    setlocal tabstop=4 shiftwidth=4 noexpandtab formatoptions+=r
-au FileType yaml                                  setlocal tabstop=4 shiftwidth=4
+au FileType yaml                                  setlocal tabstop=2 shiftwidth=2
 au FileType lua                                   setlocal tabstop=2 shiftwidth=2
 au FileType html,csv,tsv                          setlocal nowrap
 au FileType text,mail,markdown,help               setlocal noet      spell
